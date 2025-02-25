@@ -1,11 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    // @ts-expect-error
     import * as d3 from "d3";
 
-    // data and interfaces
-    let { data } = $props();
-    const nodes = $derived(data.nodes);
-    const edges = $derived(data.edges);
+
     interface networkNodes {
         x: number,
         y: number,
@@ -19,6 +17,15 @@
         strength: number
     }
 
+    // data and interfaces
+    // for now doing some filtering to manage the network better
+    let { data } = $props();
+    const nodes = $derived(data.nodes.filter((node:networkNodes) => node.count >= 30));
+    const edges = $derived(data.edges.filter((edge:any) => 
+        nodes.some((node: networkNodes) => node.keyword === edge.source) &&
+        nodes.some((node: networkNodes) => node.keyword === edge.target)
+    ));
+    
     let innerWidth = $state(window.innerWidth);
     let innerHeight = $state(window.innerHeight);
     
@@ -34,7 +41,7 @@
     const strengthScale = $derived(
             d3.scaleLinear()
               .domain(d3.extent(edges.map((edge: networkEdges) => edge.strength)))
-              .range([0, 1])
+              .range([0,1000])
     )
 
     onMount(() => {
@@ -51,15 +58,15 @@
             .force('center', 
                 d3.forceCenter(width / 2, height / 2)
             )
+            // .force("charge", d3.forceManyBody().strength(-200)) 
             .force("link", 
                 d3.forceLink(edges)
-                  .id((d: networkNodes) => d.keyword)
-                  .strength((link: networkEdges) => strengthScale(link.strength))
-                  .distance(1)
+                  .id((d:networkNodes) => d.keyword)
+                  .distance((d:networkEdges) => strengthScale(d.strength))
                 )
-            .force('collide', 
-                d3.forceCollide((d: networkNodes) => Math.sqrt(d.count) + 2)
-                 .iterations(10))
+            // .force('collide', 
+            //     d3.forceCollide((d: networkNodes) => Math.sqrt(d.count) + 2)
+            //      .iterations(10))
             .on("tick", simulationUpdate)
     })
 
@@ -69,16 +76,18 @@
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
 
-        // edges.forEach((d:networkEdges) => {
-        //     context.beginPath();
-        //     context.moveTo(d.source.x, d.source.y);
-        //     context.lineTo(d.target.x, d.target.y);
-        //     context.globalAlpha = 0.3;
-        //     context.strokeStyle = "black";
-        //     context.lineWidth = Math.cbrt(d.strength)
-        //     context.stroke()
-        //     context.globalAlpha = 1;
-        // })
+        edges.forEach((d:networkEdges) => {
+            if(d.strength > 10) {
+                context.beginPath();
+                context.moveTo(d.source.x, d.source.y);
+                context.lineTo(d.target.x, d.target.y);
+                context.globalAlpha = 0.3;
+                context.strokeStyle = "black";
+                context.lineWidth = Math.cbrt(d.strength)
+                context.stroke()
+                context.globalAlpha = 1;
+            }
+        })
 
         nodes.forEach((d:networkNodes) => {
             context.beginPath();
