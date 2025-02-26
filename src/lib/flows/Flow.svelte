@@ -101,7 +101,7 @@
     .range([0, 270])
     .domain(globalDomain)
 
-    const xAxis = $derived(xScale.ticks(5).map((tick) => {
+    const xAxis = $derived(xScale.ticks(5).map((tick:number) => {
         const pub_date = new Date(tick)
         const month = pub_date.getMonth()
         const day = pub_date.getDate()
