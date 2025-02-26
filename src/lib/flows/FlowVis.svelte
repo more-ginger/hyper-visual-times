@@ -6,7 +6,7 @@
 
 
     let { data } = $props();
-    const filterCategory = "World"
+    const filterCategory = "Movies"
     const filteredData: baseData[] = $state(data.filter((d:baseData) => d.section_name == filterCategory));
     const groupedData: Partial<Record<number, baseData[]>> = $state(Object.groupBy(filteredData, (d:baseData) => d.pub_month));
     const monthsForFlows: number[] = $state(Object.keys(groupedData).map(Number))

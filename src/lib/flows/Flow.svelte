@@ -47,25 +47,29 @@
     // Push 0 values for dates that do not exist in the original dataset
     const uniqueKeywords = [...new Set(data.map((d:baseData) => d.keyword))]
     uniqueKeywords.forEach((keyword) => {
+        // Get current keyword
         const currentKeyword = dataWithParsedDate.filter((d: baseData) => d.keyword == keyword)
-        
+        // New object that only contains existing dates, use dates as key
         const dateHash = currentKeyword.reduce(function(agg: any, d: any) {
             agg[d.pub_date] = true;
             return agg;
         }, {})
 
+        // Get every day in the year
         d3.timeDay.range(firstDay, lastDay)
         .filter(function(date: Date){
+            // Keep all dates that do not exist
             return !dateHash[date.toString()]
         })
         .forEach(function(date: Date) {
+            // Generate a dummy entry with count: 0 that matches the correct date
             var emptyRow = { 
                 count: 0,
                 pub_date: date,
                 keyword: keyword,
                 pub_month: month
                 };
-
+            // Push the new data in the existing dataset
             dataWithParsedDate.push(emptyRow);
         });
     })
@@ -84,17 +88,30 @@
     const stackedData = stack(d3.index(dataWithParsedDate, (d: baseData) => d.pub_date, (d: baseData) => d.keyword))
     ////
 
-    
-    ////
     // Scales and constructors
     const domainXscale = [firstDay, lastDay]
     
-    const xScale = $derived(d3.scaleLinear().range([0, visWidth - pixelBufferForShorterMonths]).domain(domainXscale))
-    const yScale = d3.scaleLinear().range([0, 300]).domain(globalDomain)
+    const xScale = $derived(
+        d3.scaleLinear()
+        .range([0, visWidth - pixelBufferForShorterMonths])
+        .domain(domainXscale)
+    )
+    
+    const yScale = d3.scaleLinear()
+    .range([0, 270])
+    .domain(globalDomain)
 
-    const xAxis = $derived(xScale.ticks())
+    const xAxis = $derived(xScale.ticks(5).map((tick) => {
+        const pub_date = new Date(tick)
+        const month = pub_date.getMonth()
+        const day = pub_date.getDate()
+        
+        return {
+            raw: tick,
+            formatted: `${day}.${month + 1}`
+        }
+    }))
     const yAxis = yScale.ticks(5)
-
 
     const area = $derived(d3.area()
         .x((d:HybridArray) => xScale(d.data[0]))
@@ -102,8 +119,7 @@
         .y1((d:NestedHybridArray) => 300 - yScale(d[1]))
         .curve(d3.curveBumpX))
     ////
-    
-    ////
+
     // Computed data, ready to render
     const computedFlowData = $derived(
         stackedData.map((group:NestedHybridArray) => {
@@ -118,20 +134,23 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<main class="border-t border-2 border-black">
+<main class="">
     <div>{month}</div>
     <svg width={visWidth} height="300" class="m-auto">
-        <g>
-            {#each xAxis as tick}
-                <line x1={xScale(tick)} x2={xScale(tick)} y1={300} y2={0} stroke="black"/>
-            {/each}
-         </g>
-         <g>
+         <g class="back-annotations">
             {#each yAxis as tick}
-                <line x1="0" x2={innerWidth - pixelBufferForShorterMonths} y1={yScale(tick)} y2={yScale(tick)} stroke="black"/>
+                <g>
+                    <line 
+                        x1="0" 
+                        x2={innerWidth - pixelBufferForShorterMonths} 
+                        y1={270 - yScale(tick)} 
+                        y2={270 - yScale(tick)} 
+                        stroke="black"
+                    />
+                </g>
             {/each}
          </g>
-        <g>
+        <g class="flow-chart">
             {#each computedFlowData as flow}
                 <path 
                     d={flow.area} 
@@ -141,18 +160,53 @@
                 />
             {/each}
         </g>
-        <g>
+        <g class="front-annotations">
+            <g>
+                <line
+                    x1={xScale(firstDay)} 
+                    x2={xScale(lastDay)} 
+                    y1={300} 
+                    y2={300} 
+                    stroke="black"
+                    stroke-width=4
+                />
+            </g>
+            <g class="x-axis">
+                {#each xAxis as tick}
+                    <text
+                        y={295} 
+                        x={xScale(tick.raw) + 10}
+                        fill="none"
+                        stroke="white"
+                        stroke-width=4
+                        >
+                            {tick.formatted}
+                    </text>
+                    <text
+                        y={295} 
+                        x={xScale(tick.raw) + 10}>
+                            {tick.formatted}
+                    </text>
+                    <line
+                        x1={xScale(tick.raw)} 
+                        x2={xScale(tick.raw)} 
+                        y1={290} 
+                        y2={300} 
+                        stroke="black"
+                        stroke-width=2
+                    />
+                {/each}
+            </g>
+            <g class="y-labels">
+                {#each yAxis as tick}
+                    <text
+                    x={0} 
+                    y={300 - yScale(tick) - 10}>
+                        {tick}
+                    </text>
+                {/each}
+             </g>
+         </g>
 
-        </g>
-        <!-- <g>
-            <line 
-                x1={xScale(firstDay)} 
-                x2={xScale(lastDay)} 
-                y1={300} 
-                y2={300} 
-                stroke="black" 
-                stroke-width="2"
-            />
-        </g> -->
     </svg>
 </main>
