@@ -19,8 +19,6 @@
     let filteredData: baseData[] = $derived(data.filter((d:baseData) => d.section_name == filterCategory.key));
     const groupedData: Partial<Record<number, baseData[]>> = $derived(Object.groupBy(filteredData, (d:baseData) => d.pub_month));
     const monthsForFlows: number[] = $derived(Object.keys(groupedData).map(Number))
-
-    
    
     $effect(() => {
         // I define a global domain to have a even representation of the coverage throughout the months

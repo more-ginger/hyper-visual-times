@@ -22,9 +22,9 @@
         return new Date(year, month, 0).getDate();
     }
     // Retrieve the first and last day of the month
-    const firstDay = new Date(2024, month - 1, 1);
-    const lastDay = new Date(2024, month, 0);
-    const pixelBufferForShorterMonths = (31 - daysInMonth(month, 2024)) * 50
+    const firstDay = $derived(new Date(2024, month - 1, 1));
+    const lastDay = $derived(new Date(2024, month, 0));
+    const pixelBufferForShorterMonths = $derived((31 - daysInMonth(month, 2024)) * 50)
 
     // Parse data to return valid date
     const dataWithParsedDate = $derived(data.map((d:baseData) => {
@@ -41,14 +41,15 @@
             keyword: d.keyword,
             pub_month: d.pub_month
         }
-    }).sort((a:baseData, b:baseData) => a.pub_date - b.pub_date))
+    }))
 
     // Push 0 values for dates that do not exist in the original dataset
-    $effect(() => {
+    $effect.pre(() => {
         const uniqueKeywords = [...new Set(data.map((d:baseData) => d.keyword))]
         uniqueKeywords.forEach((keyword) => {
             // Get current keyword
             const currentKeyword = dataWithParsedDate.filter((d: baseData) => d.keyword == keyword)
+            
             // New object that only contains existing dates, use dates as key
             const dateHash = currentKeyword.reduce(function(agg: any, d: any) {
                 agg[d.pub_date] = true;
@@ -62,6 +63,7 @@
                 return !dateHash[date.toString()]
             })
             .forEach(function(date: Date) {
+                
                 // Generate a dummy entry with count: 0 that matches the correct date
                 var emptyRow = { 
                     count: 0,
@@ -73,6 +75,8 @@
                 dataWithParsedDate.push(emptyRow);
             });
         })
+
+        dataWithParsedDate.sort((a:baseData, b:baseData) => a.pub_date - b.pub_date)
     })
 
     // Generates stack for area charts
@@ -87,7 +91,7 @@
     ////
 
     // Scales and constructors
-    const domainXscale = [firstDay, lastDay]
+    const domainXscale = $derived([firstDay, lastDay])
     
     const xScale = $derived(
         d3.scaleLinear()
@@ -133,9 +137,9 @@
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
-{#await data}
+{#await computedFlowData}
     <div>Waiting for data to be loaded</div>
-{:then}
+{:then computedFlowData}
 <main class="">
     <div>{month}</div>
     <svg width={visWidth} height="300" class="m-auto">
