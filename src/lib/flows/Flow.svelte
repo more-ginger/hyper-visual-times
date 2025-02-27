@@ -98,7 +98,7 @@
     )
     
     const yScale = d3.scaleLinear()
-    .range([0, 270])
+    .range([0, 300])
     .domain(globalDomain)
 
     const xAxis = $derived(xScale.ticks(5).map((tick:number) => {

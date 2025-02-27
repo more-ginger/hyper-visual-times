@@ -58,15 +58,15 @@
             .force('center', 
                 d3.forceCenter(width / 2, height / 2)
             )
-            // .force("charge", d3.forceManyBody().strength(-200)) 
+            .force("charge", d3.forceManyBody().strength(-200)) 
             .force("link", 
                 d3.forceLink(edges)
                   .id((d:networkNodes) => d.keyword)
                   .distance((d:networkEdges) => strengthScale(d.strength))
                 )
-            // .force('collide', 
-            //     d3.forceCollide((d: networkNodes) => Math.sqrt(d.count) + 2)
-            //      .iterations(10))
+            .force('collide', 
+                d3.forceCollide((d: networkNodes) => Math.sqrt(d.count) + 2)
+                 .iterations(10))
             .on("tick", simulationUpdate)
     })
 

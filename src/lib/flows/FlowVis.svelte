@@ -34,7 +34,9 @@
 </script>
 
 <div>
-    <h1>Flows vis about {filterCategory}</h1>
+    <div class="mx-4">
+        <h1>Flows vis about <span class="underline">{filterCategory}</span> in the NYT 2024 Coverage</h1>
+    </div>
     <div>
         {#each monthsForFlows as Month}
             <Flow month={Month} data={groupedData[Month]} globalDomain={globalDomain}></Flow>

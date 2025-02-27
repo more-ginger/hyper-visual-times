@@ -3,9 +3,10 @@
 	let { children } = $props();
 </script>
 
-<nav>
-	<a href="/network">Network vis</a>
-	<a href="/flows">Flow vis</a>
+<nav class="m-4">
+	<div class="border border-black inline-block px-2"><a href="/">Back</a></div>
+	<div class="border border-black inline-block px-2"><a href="/network">Network vis</a></div>
+	<div class="border border-black inline-block px-2"><a href="/flows">Flow vis</a></div>
 </nav>
 
 {@render children()}
