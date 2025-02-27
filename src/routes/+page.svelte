@@ -1,9 +1,6 @@
 <main>
-    <nav>
-        <a href="/network">Network vis</a>
-    </nav>
-    <div class="base">
-        <h1>Welcome to SvelteKit</h1>
-        <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+    <div class="base mx-4">
+        <h1>Basic scaffolding for Hyper Visual Times</h1>
+        <p>This is an extremely WIP web app with the different chapters of the HVT project. Each page is a different visualization.</p>
     </div>
 </main>
