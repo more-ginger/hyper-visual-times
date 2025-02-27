@@ -26,6 +26,10 @@
     const lastDay = $derived(new Date(2024, month, 0));
     const pixelBufferForShorterMonths = $derived((31 - daysInMonth(month, 2024)) * 50)
 
+    let currentMonth = $derived(new Date(2024, month, 0))
+    let monthInString = $derived(currentMonth.toLocaleString('default', { month: 'long' }))
+    $inspect(monthInString)
+
     // Parse data to return valid date
     const dataWithParsedDate = $derived(data.map((d:baseData) => {
             
@@ -140,80 +144,81 @@
 {#await computedFlowData}
     <div>Waiting for data to be loaded</div>
 {:then computedFlowData}
-<main class="">
-    <div>{month}</div>
-    <svg width={visWidth} height="300" class="m-auto">
-         <g class="back-annotations">
-            {#each yAxis as tick}
-                <g>
-                    <line 
-                        x1="0" 
-                        x2={innerWidth - pixelBufferForShorterMonths} 
-                        y1={270 - yScale(tick)} 
-                        y2={270 - yScale(tick)} 
-                        stroke="black"
-                    />
-                </g>
-            {/each}
-         </g>
-        <g class="flow-chart">
-            {#each computedFlowData as flow}
-                <path 
-                    d={flow.area} 
-                    fill="white" 
-                    stroke="#9494b8" 
-                    id={flow.keyword}
-                />
-            {/each}
-        </g>
-        <g class="front-annotations">
-            <g>
-                <line
-                    x1={xScale(firstDay)} 
-                    x2={xScale(lastDay)} 
-                    y1={300} 
-                    y2={300} 
-                    stroke="black"
-                    stroke-width=4
-                />
+<main class="my-10">
+    <div class="px-4">{monthInString}</div>
+    <div class="my-2">
+        <svg width={visWidth} height="300" class="m-auto">
+            <g class="back-annotations">
+                {#each yAxis as tick}
+                    <g>
+                        <line 
+                            x1="0" 
+                            x2={innerWidth - pixelBufferForShorterMonths} 
+                            y1={270 - yScale(tick)} 
+                            y2={270 - yScale(tick)} 
+                            stroke="black"
+                        />
+                    </g>
+                {/each}
             </g>
-            <g class="x-axis">
-                {#each xAxis as tick}
-                    <text
-                        y={295} 
-                        x={xScale(tick.raw) + 10}
-                        fill="none"
-                        stroke="white"
-                        stroke-width=4
-                        >
-                            {tick.formatted}
-                    </text>
-                    <text
-                        y={295} 
-                        x={xScale(tick.raw) + 10}>
-                            {tick.formatted}
-                    </text>
+            <g class="flow-chart">
+                {#each computedFlowData as flow}
+                    <path 
+                        d={flow.area} 
+                        fill="white" 
+                        stroke="#9494b8" 
+                        id={flow.keyword}
+                    />
+                {/each}
+            </g>
+            <g class="front-annotations">
+                <g>
                     <line
-                        x1={xScale(tick.raw)} 
-                        x2={xScale(tick.raw)} 
-                        y1={290} 
+                        x1={xScale(firstDay)} 
+                        x2={xScale(lastDay)} 
+                        y1={300} 
                         y2={300} 
                         stroke="black"
-                        stroke-width=2
+                        stroke-width=4
                     />
-                {/each}
+                </g>
+                <g class="x-axis">
+                    {#each xAxis as tick}
+                        <text
+                            y={295} 
+                            x={xScale(tick.raw) + 10}
+                            fill="none"
+                            stroke="white"
+                            stroke-width=4
+                            >
+                                {tick.formatted}
+                        </text>
+                        <text
+                            y={295} 
+                            x={xScale(tick.raw) + 10}>
+                                {tick.formatted}
+                        </text>
+                        <line
+                            x1={xScale(tick.raw)} 
+                            x2={xScale(tick.raw)} 
+                            y1={290} 
+                            y2={300} 
+                            stroke="black"
+                            stroke-width=2
+                        />
+                    {/each}
+                </g>
+                <g class="y-labels">
+                    {#each yAxis as tick}
+                        <text
+                        x={0} 
+                        y={300 - yScale(tick) - 10}>
+                            {tick}
+                        </text>
+                    {/each}
+                </g>
             </g>
-            <g class="y-labels">
-                {#each yAxis as tick}
-                    <text
-                    x={0} 
-                    y={300 - yScale(tick) - 10}>
-                        {tick}
-                    </text>
-                {/each}
-             </g>
-         </g>
-
-    </svg>
+        </svg>
+    </div>
 </main>
 {/await}

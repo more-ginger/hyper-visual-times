@@ -38,14 +38,16 @@
             }) 
         })
 
-        globalDomain = [0, d3.max(maxValueForDomain)]
+        // For now this is a work-around to avoid the U.S. section to be illegible. 
+        globalDomain = [0, Math.min(500, d3.max(maxValueForDomain))]
+        
     })
 
 </script>
 
-<div>
-    <div class="mx-4">
-        <h1>
+<div class="my-10">
+    <div class="mx-4 w-full">
+        <h1 class="text-center">
             Flows vis about 
             <span>
             <Dropdown availableFilter={keysForFilter} bind:selected={filterCategory}/>
