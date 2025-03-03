@@ -33,5 +33,18 @@
             font-weight: var(--font-weight-semibold);      
             color: var(--color-gray-950);
         }
+
+        #tooltip-container {
+            
+        }
+
+        #tooltip {
+            max-width: 200px;
+            display: flex;
+            background-color: white;
+            padding: 0rem 0.5rem;
+            border: 1px solid black;
+            
+        }
     }
 }

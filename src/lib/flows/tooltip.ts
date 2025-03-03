@@ -3,18 +3,9 @@ interface TooltipReturn {
 }
 
 export function tooltip(node: HTMLElement, params: string): TooltipReturn {
-    node.setAttribute("tabindex", "0");
     const container = document.querySelector("#tooltip-container")
 
-    function handleFocus(event): void {
-        // const child = document.createElementNS('http://www.w3.org/2000/svg', "text");
-        // child.setAttributeNS(null, "x", event.clientX);
-        // child.setAttributeNS(null, "y", event.clientY);
-        // const textNode = document.createTextNode(params);
-        // child.appendChild(textNode);
-        // child.setAttribute("id", "tooltip");
-        // node.appendChild(child);
-
+    function handleFocus(event:any): void {
         
         const paragraph = document.createElement("p")
         paragraph.setAttribute("id", "tooltip");

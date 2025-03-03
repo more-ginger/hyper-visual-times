@@ -46,13 +46,13 @@
 </script>
 
 <div class="my-10">
-    <div class="mx-4 w-full ">
+    <div class="w-3/4 m-auto">
         <h1 class="text-center">
-            Flows vis about 
-            <span>
+            How much coverage did the top categories in the 
+            <span class="">
             <Dropdown availableFilter={keysForFilter} bind:selected={filterCategory}/>
             </span>
-            in the NYT 2024 Coverage
+            section of The New York Times receive in 2024?
         </h1>
     </div>
     <div>
