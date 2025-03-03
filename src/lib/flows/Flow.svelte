@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { baseData } from '../../types';
+    import { tooltip } from './tooltip'
     // @ts-expect-error
     import * as d3 from "d3";
     ////
@@ -144,9 +145,9 @@
 {#await computedFlowData}
     <div>Waiting for data to be loaded</div>
 {:then computedFlowData}
-<main class="my-10">
+<main class="my-10 bg-red-100">
     <div class="px-4">{monthInString}</div>
-    <div class="my-2">
+    <div class="my-2 ">
         <svg width={visWidth} height="300" class="m-auto">
             <g class="back-annotations">
                 {#each yAxis as tick}
@@ -163,12 +164,14 @@
             </g>
             <g class="flow-chart">
                 {#each computedFlowData as flow}
+                <g use:tooltip={flow.keyword}>
                     <path 
                         d={flow.area} 
                         fill="white" 
                         stroke="#9494b8" 
                         id={flow.keyword}
                     />
+                </g>
                 {/each}
             </g>
             <g class="front-annotations">
@@ -220,5 +223,6 @@
             </g>
         </svg>
     </div>
+    <div id="tooltip-container"></div>
 </main>
 {/await}

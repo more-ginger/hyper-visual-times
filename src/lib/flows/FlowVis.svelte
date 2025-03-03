@@ -46,7 +46,7 @@
 </script>
 
 <div class="my-10">
-    <div class="mx-4 w-full">
+    <div class="mx-4 w-full ">
         <h1 class="text-center">
             Flows vis about 
             <span>
