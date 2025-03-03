@@ -156,16 +156,16 @@
 {#await computedFlowData}
     <div>Waiting for data to be loaded</div>
 {:then computedFlowData}
-<main class="my-10">
-    <div class="px-4">{monthInString}</div>
+<main class="">
+    <div class="px-12">{monthInString}</div>
     <div>
-        <svg width={visWidth} height="300" class="m-auto">
+        <svg width={visWidth} height="310" class="m-auto">
             <g class="back-annotations">
                 {#each allDays as tick}
                         <line
                         x1={xScale(tick)} 
                         x2={xScale(tick)} 
-                        y1={30} 
+                        y1={0} 
                         y2={300} 
                         stroke="#d69539"
                         stroke-width=0.75
@@ -206,12 +206,20 @@
                 <g>
                     <line
                         x1={xScale(firstDay)} 
-                        x2={xScale(lastDay)} 
+                        x2={innerWidth - pixelBufferForShorterMonths} 
                         y1={300} 
                         y2={300} 
                         stroke="#946017"
                         stroke-width=4
                     />
+                    <line
+                    x1={xScale(firstDay)} 
+                    x2={innerWidth - pixelBufferForShorterMonths} 
+                    y1={2} 
+                    y2={2} 
+                    stroke="#946017"
+                    stroke-width=4
+                />
                 </g>
                 <g class="x-axis">
                     {#each xAxis as tick}

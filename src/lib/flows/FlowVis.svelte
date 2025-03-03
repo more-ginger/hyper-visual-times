@@ -55,7 +55,7 @@
             section of The New York Times receive in 2024?
         </h1>
     </div>
-    <div>
+    <div class="my-10">
         {#each monthsForFlows as Month}
             <Flow month={Month} data={groupedData[Month]} globalDomain={globalDomain}></Flow>
         {/each}
