@@ -127,7 +127,7 @@
         .x((d:HybridArray) => xScale(d.data[0]))
         .y0((d:NestedHybridArray) => 300 - yScale(d[0]))
         .y1((d:NestedHybridArray) => 300 - yScale(d[1]))
-        .curve(d3.curveBumpX)
+        .curve(d3.curveStep)
     )
     ////
 
