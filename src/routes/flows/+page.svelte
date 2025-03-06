@@ -7,7 +7,7 @@ export let data: { flowData: Record<string, any> }
 </script>
 <div class="base">
     {#await data.flowData}
-            <div>Waiting</div>
+            <div class="w-full">Waiting for data to be loaded</div>
         {:then flowData}
             <FlowVis data={flowData}/> 
     {/await}
