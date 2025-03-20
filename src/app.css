@@ -30,6 +30,10 @@
     
     /* Colors */
     --color-ivory-default: #fcf4e9;
+    --color-zeit-peach-default: #FB9193;
+    --color-zeit-peach-dark: #c65b5d;
+    --color-nyt-violet-default: #444bd0;
+    --color-nyt-violet-dark: #1b207b;
 }
 
 @layer components {
@@ -45,6 +49,11 @@
             font-family: var(--font-serif);
             font-size: var(--text-xl);
             font-style: italic;
+        }
+
+        h4 {
+            font-family: var(--font-serif);
+            font-size: var(--text-lg);
         }
 
         .step {

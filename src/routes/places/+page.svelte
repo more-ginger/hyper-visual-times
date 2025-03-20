@@ -5,6 +5,7 @@
 
     let { data }: PageProps = $props();
     const scroller = scrollama();
+    let step = $state(0);
 
     $effect(() => {
         scroller
@@ -12,6 +13,7 @@
             step: ".step",
         })
         .onStepEnter((response) => {
+            step = response.index
             // { element, index, direction }
         })
         .onStepExit((response) => {
@@ -38,7 +40,7 @@
             </div>
         </section>
         <section id="scrolly" class="md:flex">
-            <figure class="sticky w-full h-dvh top-50 md:w-5/7 md:top-0 p-4 bg-red-100"><TotalCoverageBar countryData={data}/></figure>
+            <figure class="sticky w-full h-dvh top-50 md:w-5/7 md:top-0 p-4"><TotalCoverageBar countryData={data} step={step}/></figure>
             <article class="w-full z-10 relative md:w-2/7">
                 <div data-step="0" class="step bg-green-200" style="height:900px">Step 1</div>
                 <div data-step="1" class="step bg-green-100" style="height:900px">Step 2</div>

@@ -4,7 +4,6 @@ import type { countryDataType } from '../../types';
 
 export const load: PageServerLoad = async () => {
     const github_url = "https://raw.githubusercontent.com/more-ginger/pn-analysis/refs/heads/place-analysis/data/places/coverage_by_country.csv"
-
     const response = await fetch(github_url);
     if (!response.ok) {
         throw new Error(`Failed to load data: ${response.statusText}`)
