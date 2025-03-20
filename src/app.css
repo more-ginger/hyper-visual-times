@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 :root {
-    background-color: rgb(252, 244, 233);
+    background-color: var(--color-ivory-default);
 }
 
 @font-face {
@@ -21,8 +21,15 @@
 
 
 @theme {  
+    /* Typography */
     --font-sans: "Atkinson_Hyperlegible_Next", "sans-serif"; 
     --font-serif: "Bodoni_Moda", "serif";
+
+    /* Sizes */
+    --container-desktop-size: 1920px;
+    
+    /* Colors */
+    --color-ivory-default: #fcf4e9;
 }
 
 @layer components {
