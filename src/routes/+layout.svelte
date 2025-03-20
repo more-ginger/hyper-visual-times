@@ -18,8 +18,8 @@
   }
 </script>
 
-<div class="w-full px-4 max-w-desktop-size m-auto">
-<nav class="w-full px-4 pb-2 mt-4 border-b flex justify-between">
+<div class="w-full max-w-desktop-size m-auto">
+<nav class="w-11/12 m-auto px-4 pb-2 mt-4 border-b flex justify-between">
 	<div class="w-1/2">
 		<a href="/">
 			<p>Panopticum News</p>

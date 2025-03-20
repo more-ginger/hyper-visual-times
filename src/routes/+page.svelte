@@ -4,7 +4,7 @@
 </script>
 <main>
     <div class="base">
-        <div id="essay-container" class="w-full flex my-10 bg-red-100">
+        <div id="essay-container" class="w-full flex my-4 bg-red-100">
             <div class="w-3/4">
                 <MainIllustration/>
             </div>
