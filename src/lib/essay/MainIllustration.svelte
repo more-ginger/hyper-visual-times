@@ -1,4 +1,4 @@
 <script lang="ts"></script>
-<div>
-    Main Illustration content
+<div class="w-full h-full">
+    <img src="/img/placeholder-main-illustration.png"/>
 </div>

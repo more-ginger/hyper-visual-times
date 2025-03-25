@@ -22,7 +22,10 @@
 <nav class="w-11/12 m-auto px-4 pb-2 mt-4 border-b flex justify-between">
 	<div class="w-1/2">
 		<a href="/">
-			<p>Panopticum News</p>
+			<div class="flex w-full">
+				<img class="w-1/12 max-h-full object-fit" src="img/pn-logo.png"/>
+				<p class="w-11/12 ml-2 self-center">Panopticum News</p>
+			</div>
 		</a>
 	</div>
 	<div>
