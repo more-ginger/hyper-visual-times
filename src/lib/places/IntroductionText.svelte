@@ -2,7 +2,7 @@
 import markedFootnote from "marked-footnote";
 import { marked } from "marked";
 import { setFootnotes } from "$lib/utils/actions.svelte";
-import places_essay from "../../../static/text/places-essay.md?raw";
+import places_essay from "@/content/places-essay.md?raw";
 let shown = $state(true);
 
 marked.use({async: true, breaks:true}, markedFootnote())
