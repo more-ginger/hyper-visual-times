@@ -15,7 +15,7 @@
     <div>Loading essay content</div>
     {:then essayContent} 
     <div use:setFootnotes>
-        <div class="m-10 essay" class:optional-hidden={!shown}>
+        <div class="mx-5 my-5 essay" class:optional-hidden={!shown}>
             {@html essayContent}
         </div>
         </div>

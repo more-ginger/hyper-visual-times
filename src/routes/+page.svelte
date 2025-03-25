@@ -1,5 +1,5 @@
 <script lang="ts">
-    import IntroductionText from "$lib/common/IntroductionText.svelte";
+    import IntroductionText from "$lib/essay/IntroductionText.svelte";
     import MainIllustration from "$lib/essay/MainIllustration.svelte";
     import rawIntroText from "@/content/main-essay.md?raw";
 
@@ -7,7 +7,7 @@
 <main>
     <div class="base w-11/12 m-auto">
         <div id="essay-container" class="w-full flex my-4">
-            <div class="md:w-6/9 sticky h-dvh top-50 md:top-0 p-4">
+            <div class="md:w-6/9 sticky h-dvh top-50 md:top-0">
                 <MainIllustration/>
             </div>
             <div class="md:w-3/9">

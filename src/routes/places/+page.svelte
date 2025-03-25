@@ -3,7 +3,7 @@
     import scrollama from "scrollama";
 
     import rawIntroText from "@/content/places-essay.md?raw";
-    import IntroductionText from '$lib/common/IntroductionText.svelte';
+    import IntroductionText from '$lib/essay/IntroductionText.svelte';
     import TotalCoverageBar from "$lib/places/totalCoverageBar.svelte";
 
     let { data }: PageProps = $props();
