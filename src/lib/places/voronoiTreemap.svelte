@@ -28,20 +28,30 @@
         
         for (var a=0, i=0; i<points; i++, a+=increment) {
           circlingPolygon.push(
-            [radius + radius*Math.cos(a), radius + radius*Math.sin(a)]
+            [
+                radius + radius*Math.cos(a), 
+                radius + radius*Math.sin(a)
+            ]
         )}
         
         return circlingPolygon
     }
 
-    let circlingLayout = $derived(computeCirclingPolygon(smallestSide / 2))
-    var voronoiClip = $derived(voronoiTreemap().clip(circlingLayout)); // sets the clipping polygon
-
     function weightAccessor(d:any) {
         return d.count;
     }
 
-    var rootNode = $derived(hierarchy(regionData).sort((a, b) => b.count - a.count || b.count - a.count).sum(weightAccessor))
+    let circlingLayout = $derived(
+        computeCirclingPolygon(smallestSide / 2.2)
+    )
+
+    var voronoiClip = $derived(
+        voronoiTreemap().clip(circlingLayout)
+    ); // sets the clipping polygon
+
+    var rootNode = $derived(
+        hierarchy(regionData).sum(weightAccessor)
+    ); // creates hierarchy of voronoi map
     
     $effect(() => {
         voronoiClip(rootNode);
@@ -49,8 +59,6 @@
         descendants = rootNode.descendants()
         $inspect(rootNode.descendants())
     })
-
-   
 
 </script>
 <div class="h-full">
@@ -65,19 +73,20 @@
             bind:clientWidth={fullWidth} 
             bind:clientHeight={fullHeight}    
             class="border"
-        >
-            {#if leaves}
-                {#each descendants as leave}
-                    <path 
-                        d={"M"+(leave.polygon.join(",") || "")+"z"} 
-                        fill="transparent"
-                        stroke="white"
-                        stroke-width={leave.height + 1 % 2}
-                        rx=100
-                    />
-                {/each}
-            {/if}
-
+        >   
+            <g class="origin-center" transform={`translate(25, 25)`}>
+                {#if leaves}
+                    {#each descendants as leave}
+                        <path 
+                            d={"M"+(leave.polygon.join(",") || "")+"z"} 
+                            fill="transparent"
+                            stroke="white"
+                            stroke-width={leave.height + 1 % 2}
+                            rx=100
+                        />
+                    {/each}
+                {/if}
+            </g>
         </svg>
     </div>
 </div>
