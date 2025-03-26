@@ -9,6 +9,7 @@
     let fullHeight = $state(10);
     let leaves = $state([]);
     let descendants = $state([]);
+
     let smallestSide = $derived(Math.min(fullWidth, fullHeight))
 
     let regionColors = {
@@ -57,8 +58,10 @@
         voronoiClip(rootNode);
         leaves = rootNode.leaves()
         descendants = rootNode.descendants()
-        $inspect(rootNode.descendants())
+        
     })
+
+    let regionDesc = $derived(descendants.filter((d) => d.height == 2))
 
 </script>
 <div class="h-full">
@@ -72,10 +75,16 @@
             height="100%"
             bind:clientWidth={fullWidth} 
             bind:clientHeight={fullHeight}    
-            class="border"
         >   
-            <g class="origin-center" transform={`translate(25, 25)`}>
-                {#if leaves}
+            <g class="origin-center" transform={`translate(100, 25)`}>
+                {#if descendants}
+                    {#each regionDesc as leave}
+                            <path 
+                                class={leave.data.outlet == "Zeit" ? "fill-zeit-peach-default" : "fill-nyt-violet-default"}
+                                d={"M"+(leave.polygon.join(",") || "")+"z"} 
+                                rx=100
+                            />
+                    {/each}
                     {#each descendants as leave}
                         <path 
                             d={"M"+(leave.polygon.join(",") || "")+"z"} 
