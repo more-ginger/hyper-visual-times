@@ -43,7 +43,7 @@
             </article>
         </section>
         <section id="scrolly-2" class="md:flex md:flex-row-reverse">
-            <figure class="sticky w-full h-dvh top-0 md:basis-2/3 p-4 bg-red-100">
+            <figure class="sticky w-full h-dvh top-0 md:basis-2/3 p-4">
                 <VoronoiTreemap regionData={data.coverageByRegion}/>
             </figure>
             <article class="w-full relative md:basis-1/3">
