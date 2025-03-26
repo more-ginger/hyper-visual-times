@@ -5,6 +5,7 @@
     import rawIntroText from "@/content/places-essay.md?raw";
     import IntroductionText from '$lib/essay/IntroductionText.svelte';
     import TotalCoverageBar from "$lib/places/totalCoverageBar.svelte";
+    import VoronoiTreemap from '$lib/places/voronoiTreemap.svelte';
 
     let { data }: PageProps = $props();
     const scroller = scrollama();
@@ -30,15 +31,26 @@
         <section id="intro" class="mt-12 mb-30">
             <div class="w-full md:w-3/7 m-auto"><IntroductionText rawIntroText={rawIntroText}/></div>
         </section>
-        <section id="scrolly" class="md:flex">
-            <figure class="sticky w-full h-dvh top-50 md:w-5/7 md:top-0 p-4">
+        <section id="scrolly-1" class="md:flex">
+            <figure class="sticky w-full h-dvh top-50 md:basis-2/3 md:top-0 p-4">
                 <TotalCoverageBar countryData={data} step={step}/>
             </figure>
-            <article class="w-full z-10 relative md:w-2/7">
-                <div data-step="0" class="step bg-green-200" style="height:900px">Step 1</div>
-                <div data-step="1" class="step bg-green-100" style="height:900px">Step 2</div>
-                <div data-step="2" class="step bg-green-100" style="height:900px">Step 3</div>
-                <div data-step="3" class="step bg-green-100" style="height:900px">Step 4</div>
+            <article class="w-full z-10 relative md:basis-1/3">
+                <div data-step="0" class="step border" style="height:900px">Step 1</div>
+                <div data-step="1" class="step border" style="height:900px">Step 2</div>
+                <div data-step="2" class="step border" style="height:900px">Step 3</div>
+                <div data-step="3" class="step border" style="height:900px">Step 4</div>
+            </article>
+        </section>
+        <section id="scrolly-2" class="md:flex md:flex-row-reverse">
+            <figure class="sticky w-full h-dvh top-0 md:basis-2/3 p-4">
+                <VoronoiTreemap regionData={data.coverageByRegion}/>
+            </figure>
+            <article class="w-full relative md:basis-1/3">
+                <div data-step="4" class="step border" style="height:900px">Step 1</div>
+                <div data-step="5" class="step border" style="height:900px">Step 2</div>
+                <div data-step="6" class="step border" style="height:900px">Step 3</div>
+                <div data-step="7" class="step border" style="height:900px">Step 4</div>
             </article>
         </section>
         <section id="outro" style="height:500px"></section>
