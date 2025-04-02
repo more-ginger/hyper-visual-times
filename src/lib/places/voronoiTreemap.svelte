@@ -3,14 +3,25 @@
     import { voronoiTreemap } from "d3-voronoi-treemap";
     // @ts-expect-error
     import { hierarchy } from "d3-hierarchy";
+    import seedrandom  from "seedrandom";
     import VoronoiSegment from "./voronoiSegment.svelte";
+
+    var rng = seedrandom('World');
     
     let { regionData } = $props();
-    let fullWidth = $state(10); 
-    let fullHeight = $state(10);
+    let fullWidth = $state(100); 
+    let fullHeight = $state(100);
     let descendants = $state<Array<{ height: number; [key: string]: any }>>([]);
+   
 
     let smallestSide = $derived(Math.min(fullWidth, fullHeight))
+
+    const _voronoiTreemap = voronoiTreemap()
+    
+    // Add prng function with constant value
+    function prng() {
+        return Math.random();
+    }
 
     function computeCirclingPolygon(radius:number) {
         var points = 60,
@@ -36,18 +47,17 @@
         computeCirclingPolygon(smallestSide / 2.2)
     )
 
-    var voronoiClip = $derived(
-        voronoiTreemap().clip(circlingLayout)
-    ); // sets the clipping polygon
-
     var rootNode = $derived(
         hierarchy(regionData).sum(weightAccessor)
     ); // creates hierarchy of voronoi map
+
     
     $effect(() => {
+        const voronoiClip = _voronoiTreemap
+            .prng(rng)
+            .clip(circlingLayout);
         voronoiClip(rootNode);
         descendants = rootNode.descendants()
-        $inspect(descendants)
     })
 
    const groupedLeaves: { [key: string]: any[] } = $derived(
