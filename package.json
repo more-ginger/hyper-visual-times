@@ -45,6 +45,7 @@
 		"marked": "^15.0.7",
 		"marked-footnote": "^1.2.4",
 		"papaparse": "^5.5.2",
-		"scrollama": "^3.2.0"
+		"scrollama": "^3.2.0",
+		"seedrandom": "^3.0.5"
 	}
 }

@@ -3,24 +3,26 @@
     import { voronoiTreemap } from "d3-voronoi-treemap";
     // @ts-expect-error
     import { hierarchy } from "d3-hierarchy";
+    // @ts-expect-error
+    import seedrandom  from "seedrandom";
+    import VoronoiSegment from "./voronoiSegment.svelte";
+
+    var rng = seedrandom('World');
     
     let { regionData } = $props();
-    let fullWidth = $state(10); 
-    let fullHeight = $state(10);
-    let leaves = $state([]);
-    let descendants = $state([]);
+    let fullWidth = $state(100); 
+    let fullHeight = $state(100);
+    let descendants = $state<Array<{ height: number; [key: string]: any }>>([]);
+   
 
     let smallestSide = $derived(Math.min(fullWidth, fullHeight))
 
-    let regionColors = {
-        "Africa": "#FF5733",
-        "Asia": "#33FF57",
-        "Europe": "#3357FF",
-        "North America": "#FF33A1",
-        "South America": "#A133FF",
-        "Oceania": "#33FFF5",
-        "Antarctica": "#F5FF33"
-    };
+    const _voronoiTreemap = voronoiTreemap()
+    
+    // Add prng function with constant value
+    function prng() {
+        return Math.random();
+    }
 
     function computeCirclingPolygon(radius:number) {
         var points = 60,
@@ -46,23 +48,29 @@
         computeCirclingPolygon(smallestSide / 2.2)
     )
 
-    var voronoiClip = $derived(
-        voronoiTreemap().clip(circlingLayout)
-    ); // sets the clipping polygon
-
     var rootNode = $derived(
         hierarchy(regionData).sum(weightAccessor)
     ); // creates hierarchy of voronoi map
+
     
     $effect(() => {
+        const voronoiClip = _voronoiTreemap
+            .prng(rng)
+            .clip(circlingLayout);
         voronoiClip(rootNode);
-        leaves = rootNode.leaves()
         descendants = rootNode.descendants()
-        
     })
 
-    let regionDesc = $derived(descendants.filter((d) => d.height == 2))
+   const groupedLeaves: { [key: string]: any[] } = $derived(
+       Object.entries(Object.groupBy(descendants, ({ height }) => height))
+           .reduce((acc, [key, value]) => {
+               if (value) acc[key.toString()] = value;
+               return acc;
+           }, {} as { [key: string]: any[] })
+   );
 
+
+   const keysOfLeaves = $derived(Object.keys(groupedLeaves))
 </script>
 <div class="h-full">
     <div>
@@ -73,29 +81,37 @@
         <svg 
             width="100%" 
             height="100%"
+            class="visualization"
             bind:clientWidth={fullWidth} 
             bind:clientHeight={fullHeight}    
         >   
-            <g class="origin-center" transform={`translate(100, 25)`}>
-                {#if descendants}
-                    {#each regionDesc as leave}
-                            <path 
-                                class={leave.data.outlet == "Zeit" ? "fill-zeit-peach-default" : "fill-nyt-violet-default"}
-                                d={"M"+(leave.polygon.join(",") || "")+"z"} 
-                                rx=100
-                            />
+           <g transform={`translate(${1/8*fullWidth}, ${1/24*fullWidth})`}>
+                {#if keysOfLeaves}
+                    <g>
+                    {#each keysOfLeaves as key}
+                        <g class={"treemap-" + key}>
+                            {#each groupedLeaves[key] as segment} 
+                                <VoronoiSegment segment={segment}/>
+                            {/each}
+                        </g>
                     {/each}
-                    {#each descendants as leave}
-                        <path 
-                            d={"M"+(leave.polygon.join(",") || "")+"z"} 
-                            fill="transparent"
-                            stroke="white"
-                            stroke-width={leave.height + 1 % 2}
-                            rx=100
-                        />
+                    {#each keysOfLeaves as key}
+                        {#if key === "1"}
+                            {#each groupedLeaves[key] as label}
+                                <text 
+                                    class={"fill-ivory-default text-xs" + " " + label.parent.data.outlet}
+                                    x={label.polygon.site.x} 
+                                    y={label.polygon.site.y}
+                                    text-anchor="middle"
+                                >
+                                        {label.data.Region}
+                                </text>
+                            {/each}
+                        {/if}
                     {/each}
+                    </g>
                 {/if}
-            </g>
+           </g>
         </svg>
     </div>
 </div>

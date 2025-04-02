@@ -14,7 +14,7 @@ export const load: PageServerLoad = async () => {
     const csvText = await response.text();
     const parsedCsv = Papa.parse(csvText, {header:true}).data as countryDataType[];
 
-    const coverage_by_region_url = "https://raw.githubusercontent.com/more-ginger/pn-analysis/refs/heads/place-analysis/data/places/coverage_by_region.json"
+    const coverage_by_region_url = "https://raw.githubusercontent.com/more-ginger/pn-analysis/refs/heads/main/data/places/coverage_by_region.json"
     
     const coverage_by_region_response = await fetch(coverage_by_region_url);
     
