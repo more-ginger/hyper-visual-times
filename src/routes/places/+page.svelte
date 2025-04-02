@@ -36,19 +36,19 @@
                 <TotalCoverageBar countryData={data} step={step}/>
             </figure>
             <article class="w-full z-10 mx-4 relative md:basis-1/3">
-                <div data-step="0" class="step px-4" style="height:600px">
+                <div data-step="0" class="step px-4 border-b" style="height:800px">
                     In both newspapers, global conflicts receive the lion share of mentions. 
                     The meta-keywords for Israel, Palestine (Gaza), Russia, China, Ukraine, United Kingdom, France, Iran, Lebanon and Europe are in the top 10 of the New York Times.
                 </div>
-                <div data-step="1" class="step px-4" style="height:300px">
+                <div data-step="1" class="step px-4 border-b" style="height:600px">
                     For Zeit, the outlook is similar, with important differences. 
                     First, the US is the most referenced country. Then, Palestine is seldom referenced – outside of the top 20.
                 </div>
-                <div data-step="2" class="step px-4" style="height:300px">
+                <div data-step="2" class="step px-4 border-b" style="height:600px">
                     The following 10 countries express more closely the interest in countries that are either geographically or economically close. 
                     For the NYT these are Canada, Georgia, Germany, Mexico, Japan, Syria, India, Italy, South Korea, and Brazil.
                 </div>
-                <div data-step="3" class="step px-4" style="height:300px">From the Zeit perspective, relevant keywords relate to countries mostly part of the EU or with a direct shared border with Germany. 
+                <div data-step="3" class="step px-4 border-b" style="height:600px">From the Zeit perspective, relevant keywords relate to countries mostly part of the EU or with a direct shared border with Germany. 
                     Exceptions are Turkey (close to Germany for political and social reasons) and Middle Eastern countries close to the Israel-Palestine or Russia-Ukraine conflicts.</div>
             </article>
         </section>

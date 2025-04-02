@@ -7,8 +7,7 @@
     let { regionData } = $props();
     let fullWidth = $state(10); 
     let fullHeight = $state(10);
-    let leaves = $state([]);
-    let descendants = $state([]);
+    let descendants = $state<Array<{ height: number; [key: string]: any }>>([]);
 
     let smallestSide = $derived(Math.min(fullWidth, fullHeight))
 
@@ -56,12 +55,8 @@
     
     $effect(() => {
         voronoiClip(rootNode);
-        leaves = rootNode.leaves()
         descendants = rootNode.descendants()
-        
     })
-
-    let regionDesc = $derived(descendants.filter((d) => d.height == 2))
 
 </script>
 <div class="h-full">
@@ -78,21 +73,42 @@
         >   
             <g class="origin-center" transform={`translate(100, 25)`}>
                 {#if descendants}
-                    {#each regionDesc as leave}
-                            <path 
-                                class={leave.data.outlet == "Zeit" ? "fill-zeit-peach-default" : "fill-nyt-violet-default"}
-                                d={"M"+(leave.polygon.join(",") || "")+"z"} 
-                                rx=100
-                            />
-                    {/each}
                     {#each descendants as leave}
-                        <path 
-                            d={"M"+(leave.polygon.join(",") || "")+"z"} 
-                            fill="transparent"
-                            stroke="white"
-                            stroke-width={leave.height + 1 % 2}
-                            rx=100
-                        />
+                        <g class="region">
+                            {#if leave.height == 1}
+                                <path 
+                                    class={leave.parent.data.outlet 
+                                        == "Zeit" 
+                                        ? "fill-zeit-peach-default" 
+                                        : "fill-nyt-violet-default"
+                                    }
+                                    d={"M"+(leave.polygon.join(",") || "")+"z"} 
+                                    stroke="white"
+                                    stroke-width=4
+                                />
+                            {/if}
+                        </g>
+                        <g class="country" id={leave.data.country}>
+                            {#if leave.height == 0}
+                                <path 
+                                    id={leave.data.country}
+                                    d={"M"+(leave.polygon.join(",") || "")+"z"} 
+                                    stroke="white"
+                                    fill={regionColors[leave.parent.data.Region]}
+                                />
+                                <text 
+                                x={leave.polygon.site.x} 
+                                y={leave.polygon.site.y}
+                                text-anchor="middle"
+                                font-size=10
+                            >
+                               {leave.data.country}:{leave.data.count}
+                            </text>
+                            {/if}
+
+                        </g>
+                    {/each}
+                    {#each descendants.filter((d) => d.height == 0) as leave}
                     {/each}
                 {/if}
             </g>
