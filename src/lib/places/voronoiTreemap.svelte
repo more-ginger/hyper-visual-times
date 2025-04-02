@@ -47,6 +47,7 @@
     $effect(() => {
         voronoiClip(rootNode);
         descendants = rootNode.descendants()
+        $inspect(descendants)
     })
 
    const groupedLeaves: { [key: string]: any[] } = $derived(
@@ -56,7 +57,8 @@
                return acc;
            }, {} as { [key: string]: any[] })
    );
-   
+
+
    const keysOfLeaves = $derived(Object.keys(groupedLeaves))
 </script>
 <div class="h-full">
@@ -68,19 +70,35 @@
         <svg 
             width="100%" 
             height="100%"
+            class="visualization"
             bind:clientWidth={fullWidth} 
             bind:clientHeight={fullHeight}    
         >   
-           <g>
+           <g transform={`translate(${1/8*fullWidth}, ${1/24*fullWidth})`}>
                 {#if keysOfLeaves}
+                    <g>
                     {#each keysOfLeaves as key}
                         <g class={"treemap-" + key}>
-                            <text>{key}</text>
                             {#each groupedLeaves[key] as segment} 
                                 <VoronoiSegment segment={segment}/>
                             {/each}
                         </g>
                     {/each}
+                    {#each keysOfLeaves as key}
+                        {#if key === "1"}
+                            {#each groupedLeaves[key] as label}
+                                <text 
+                                    class={"fill-ivory-default text-xs" + " " + label.parent.data.outlet}
+                                    x={label.polygon.site.x} 
+                                    y={label.polygon.site.y}
+                                    text-anchor="middle"
+                                >
+                                        {label.data.Region}
+                                </text>
+                            {/each}
+                        {/if}
+                    {/each}
+                    </g>
                 {/if}
            </g>
         </svg>

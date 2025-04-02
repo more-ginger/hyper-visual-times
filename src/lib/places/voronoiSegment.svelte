@@ -33,6 +33,6 @@
 <g>
     <path 
         class={defineSegmentStroke(segment)}
-        d={"M"+(segment.polygon.join(",") || "")+"z"}   
+        d={"M"+(segment.polygon.join(",") || "")+"z"}  
     />
 </g>
