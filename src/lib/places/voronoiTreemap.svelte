@@ -3,6 +3,7 @@
     import { voronoiTreemap } from "d3-voronoi-treemap";
     // @ts-expect-error
     import { hierarchy } from "d3-hierarchy";
+    // @ts-expect-error
     import seedrandom  from "seedrandom";
     import VoronoiSegment from "./voronoiSegment.svelte";
 
