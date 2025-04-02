@@ -3,6 +3,7 @@
     import { voronoiTreemap } from "d3-voronoi-treemap";
     // @ts-expect-error
     import { hierarchy } from "d3-hierarchy";
+    import VoronoiSegment from "./voronoiSegment.svelte";
     
     let { regionData } = $props();
     let fullWidth = $state(10); 
@@ -10,16 +11,6 @@
     let descendants = $state<Array<{ height: number; [key: string]: any }>>([]);
 
     let smallestSide = $derived(Math.min(fullWidth, fullHeight))
-
-    let regionColors = {
-        "Africa": "#FF5733",
-        "Asia": "#33FF57",
-        "Europe": "#3357FF",
-        "North America": "#FF33A1",
-        "South America": "#A133FF",
-        "Oceania": "#33FFF5",
-        "Antarctica": "#F5FF33"
-    };
 
     function computeCirclingPolygon(radius:number) {
         var points = 60,
@@ -58,6 +49,15 @@
         descendants = rootNode.descendants()
     })
 
+   const groupedLeaves: { [key: string]: any[] } = $derived(
+       Object.entries(Object.groupBy(descendants, ({ height }) => height))
+           .reduce((acc, [key, value]) => {
+               if (value) acc[key.toString()] = value;
+               return acc;
+           }, {} as { [key: string]: any[] })
+   );
+   
+   const keysOfLeaves = $derived(Object.keys(groupedLeaves))
 </script>
 <div class="h-full">
     <div>
@@ -71,47 +71,18 @@
             bind:clientWidth={fullWidth} 
             bind:clientHeight={fullHeight}    
         >   
-            <g class="origin-center" transform={`translate(100, 25)`}>
-                {#if descendants}
-                    {#each descendants as leave}
-                        <g class="region">
-                            {#if leave.height == 1}
-                                <path 
-                                    class={leave.parent.data.outlet 
-                                        == "Zeit" 
-                                        ? "fill-zeit-peach-default" 
-                                        : "fill-nyt-violet-default"
-                                    }
-                                    d={"M"+(leave.polygon.join(",") || "")+"z"} 
-                                    stroke="white"
-                                    stroke-width=4
-                                />
-                            {/if}
+           <g>
+                {#if keysOfLeaves}
+                    {#each keysOfLeaves as key}
+                        <g class={"treemap-" + key}>
+                            <text>{key}</text>
+                            {#each groupedLeaves[key] as segment} 
+                                <VoronoiSegment segment={segment}/>
+                            {/each}
                         </g>
-                        <g class="country" id={leave.data.country}>
-                            {#if leave.height == 0}
-                                <path 
-                                    id={leave.data.country}
-                                    d={"M"+(leave.polygon.join(",") || "")+"z"} 
-                                    stroke="white"
-                                    fill={regionColors[leave.parent.data.Region]}
-                                />
-                                <text 
-                                x={leave.polygon.site.x} 
-                                y={leave.polygon.site.y}
-                                text-anchor="middle"
-                                font-size=10
-                            >
-                               {leave.data.country}:{leave.data.count}
-                            </text>
-                            {/if}
-
-                        </g>
-                    {/each}
-                    {#each descendants.filter((d) => d.height == 0) as leave}
                     {/each}
                 {/if}
-            </g>
+           </g>
         </svg>
     </div>
 </div>
