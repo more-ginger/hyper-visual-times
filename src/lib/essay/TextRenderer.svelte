@@ -3,11 +3,11 @@
     import { marked } from "marked";
     import { setFootnotes } from "$lib/utils/actions.svelte";
 
-    let { rawIntroText } = $props();
+    let { rawtext } = $props();
     let shown = $state(true);
 
     marked.use({async: true, breaks:true}, markedFootnote())
-    const essayContent = marked.parse(rawIntroText)
+    const essayContent = marked.parse(rawtext)
 </script>
 
 <div>

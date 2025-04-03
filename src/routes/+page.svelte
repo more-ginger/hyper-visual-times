@@ -1,5 +1,5 @@
 <script lang="ts">
-    import IntroductionText from "$lib/essay/IntroductionText.svelte";
+    import TextRenderer from "$lib/essay/TextRenderer.svelte";
     import MainIllustration from "$lib/essay/MainIllustration.svelte";
     import rawIntroText from "@/content/main-essay.md?raw";
 
@@ -12,7 +12,7 @@
             </div>
             <div class="md:w-3/9">
                 <div>
-                   <IntroductionText rawIntroText={rawIntroText}/>
+                   <TextRenderer rawtext={rawIntroText}/>
                 </div>
             </div>
         </div>

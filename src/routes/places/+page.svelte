@@ -2,8 +2,9 @@
     import type { PageProps } from './$types';
     import scrollama from "scrollama";
 
-    import rawIntroText from "@/content/places-essay.md?raw";
-    import IntroductionText from '$lib/essay/IntroductionText.svelte';
+    import rawIntroText from "@/content/places/places-intro.md?raw";
+    import rawOutroText from "@/content/places/places-outro.md?raw";
+    import TextRenderer from '$lib/essay/TextRenderer.svelte';
     import TotalCoverageBar from "$lib/places/totalCoverageBars.svelte";
     import TotalCovLegend from '$lib/places/totalCovLegend.svelte';
     import VoronoiTreemap from '$lib/places/voronoiTreemap.svelte';
@@ -32,7 +33,9 @@
 <div class="base w-11/12 m-auto">
     <div id="places-essay">
         <section id="intro" class="mt-12 mb-30">
-            <div class="w-full md:w-3/7 m-auto"><IntroductionText rawIntroText={rawIntroText}/></div>
+            <div class="w-full md:w-3/7 m-auto">
+                <TextRenderer rawtext={rawIntroText}/>
+            </div>
         </section>
         <section id="scrolly-1" class=" md:flex">
             <figure class="sticky w-full h-dvh top-50 md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
@@ -111,17 +114,23 @@
                 <div data-step="7" class="step p-6 table" style="height:900px">
                     <div class="align-middle table-cell">
                         Maybe one of the most important aspects is the lack of reciprocal attention. 
-                        Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central, as the newspaper produces more content on historical partners like the United Kingdom.    
+                        Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central, 
+                        as the newspaper produces more content on historical partners like the United Kingdom.    
                     </div>
                 </div>
                 <div data-step="8" class="step p-6 table" style="height:900px">
                     <div class="align-middle table-cell">
-                    The NYT also provides tags about geographical entities that are not directly associated with countries, like natural landmarks or geographically distinct areas encompassing several countries (seas, deserts, etc.).
+                    The NYT also provides tags about geographical entities that are not directly associated with countries, like natural landmarks or geographically 
+                    distinct areas encompassing several countries (seas, deserts, etc.).
                     This shows a different strategy in producing and tagging content.
                     </div>
                 </div>
             </article>
         </section>
-        <section id="outro" style="height:500px"></section>
+        <section id="outro" style="height:500px">
+            <div class="w-full md:w-3/7 m-auto">
+                <TextRenderer rawtext={rawOutroText}/>
+            </div>
+        </section>
     </div>
 </div>
