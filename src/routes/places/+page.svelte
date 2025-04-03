@@ -4,7 +4,8 @@
 
     import rawIntroText from "@/content/places-essay.md?raw";
     import IntroductionText from '$lib/essay/IntroductionText.svelte';
-    import TotalCoverageBar from "$lib/places/totalCoverageBar.svelte";
+    import TotalCoverageBar from "$lib/places/totalCoverageBars.svelte";
+    import TotalCovLegend from '$lib/places/totalCovLegend.svelte';
     import VoronoiTreemap from '$lib/places/voronoiTreemap.svelte';
 
     let { data }: PageProps = $props();
@@ -33,8 +34,8 @@
         <section id="intro" class="mt-12 mb-30">
             <div class="w-full md:w-3/7 m-auto"><IntroductionText rawIntroText={rawIntroText}/></div>
         </section>
-        <section id="scrolly-1" class="md:flex">
-            <figure class="sticky w-full h-dvh top-50 md:basis-2/3 md:top-0 p-4">
+        <section id="scrolly-1" class=" md:flex">
+            <figure class="sticky w-full h-dvh top-50 md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
                 <TotalCoverageBar countryData={data} step={step}/>
             </figure>
             <article class="w-full z-10 mx-4 relative md:basis-1/3">
@@ -44,7 +45,8 @@
                         <p class="mb-4">
                             Let us consider all geographical entities used as meta-keywords. These words have different granularities. 
                             At a low level we have names of cities, like Berlin or New York, sometimes even names of neighborhoods, like Manhattan (NY). 
-                            At a higher level, we have names of states (Baden-Wuttemberg, Ohio), countries (Bolivia, Italien, Greenland), and supra-national geo-political or geographical entities (Red Sea, Atlantic Ocean).
+                            At a higher level, we have names of states (Baden-Wuttemberg, Ohio), countries (Bolivia, Italien, Greenland), 
+                            and supra-national geo-political or geographical entities (Red Sea, Atlantic Ocean).
                         </p>
                         <p>
                             For both outlets, between 40 to 50% of news content tagged with  geo-related keywords refer to the newspaper's own country. 
@@ -58,7 +60,8 @@
                     <div class="align-top table-cell">
                         <p>
                             For instance, global conflicts receive the lion share of mentions, in both newspapers. 
-                            The meta-keywords for Israel, Palestine (Gaza), Russia, China, Ukraine, United Kingdom, France, Iran, Lebanon and Europe are in the top 10 of the New York Times.
+                            The meta-keywords for Israel, Palestine (Gaza), Russia, China, Ukraine, United Kingdom, 
+                            France, Iran, Lebanon and Europe are in the top 10 of the New York Times.
                         </p>
                     </div>
                 </div>
@@ -74,8 +77,10 @@
                     From the Zeit perspective, relevant keywords relate to countries mostly part of the EU or with a direct shared border with Germany. 
                     Exceptions are Turkey (close to Germany for political and social reasons) and Middle Eastern countries close to the Israel-Palestine or Russia-Ukraine conflicts.
                 </div>
-                <div class="px-4 h-dvh bg-red-100">
-                    The end of it
+                <div class="p-2 xl:py-8 h-dvh">
+                    <div>
+                        <TotalCovLegend />
+                    </div>
                 </div>
             </article>
         </section>
