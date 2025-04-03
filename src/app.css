@@ -32,7 +32,7 @@
     --color-ivory-default: #fcf4e9;
     --color-ivory-dark: #fcf4e9;
     --color-zeit-peach-default: #FB9193;
-    --color-zeit-peach-dark: #c65b5d;
+    --color-zeit-peach-dark: #DF080C;
     --color-nyt-violet-default: #444bd0;
     --color-nyt-violet-dark: #1b207b;
 }
@@ -127,11 +127,11 @@
 
         .visualization {
             text.NYT {
-                filter: drop-shadow( 0px 0px 2px var(--color-nyt-violet-dark));
+                filter: drop-shadow( 0px 0px 10px var(--color-nyt-violet-dark));
             }
 
             text.Zeit {
-                filter: drop-shadow( 0px 0px 2px var(--color-zeit-peach-dark));
+                filter: drop-shadow( 0px 0px 10px var(--color-zeit-peach-dark));
             }
         }
     }
