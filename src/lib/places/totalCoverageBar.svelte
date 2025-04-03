@@ -13,7 +13,7 @@
     let fullHeight = $state(0);
     let sum = 0;
 
-    let currentPrimaryOutlet = $derived(step === 1 ? "NYT" : "Zeit");
+    let currentPrimaryOutlet = $derived(step === 10 ? "NYT" : "Zeit");
     let showHomeCountry = false;
     
     let dataWithoutPrimaryCountry = $derived(
@@ -82,7 +82,7 @@
 </script>
 <div class="h-full">
     <div>
-        <div class=border-b><h4>Most common country keywords in comparison</h4></div>
+        <div class=border-b><h4>What countries and geographic entities are mentioned the most?</h4></div>
         <div><p><span class="text-zeit-peach-default">Zeit</span> vs. <span class="text-nyt-violet-default">NYT</span></p></div>
     </div>
     <div class="h-9/10">
