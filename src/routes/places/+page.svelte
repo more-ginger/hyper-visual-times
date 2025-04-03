@@ -38,7 +38,7 @@
             <figure class="sticky w-full h-dvh top-50 md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
                 <TotalCoverageBar countryData={data} step={step}/>
             </figure>
-            <article class="w-full z-10 mx-4 relative md:basis-1/3">
+            <article class="w-full z-10 ml-4 relative md:basis-1/3">
                 <div data-step="0" class="step p-6 table" style="min-height:600px">
                     <div class="align-middle table-cell">
                         <h2 class="mb-4">What countries and geographic entities are mentioned the most?</h2>
@@ -89,11 +89,37 @@
                 <VoronoiTreemap regionData={data.coverageByRegion}/>
             </figure>
             <article class="w-full relative md:basis-1/3">
-                <div data-step="4" class="step" style="height:900px">Starting from these differences it is worthwhile to question to which extent the two newspapers focus on specific areas, rather than others. </div>
-                <div data-step="5" class="step" style="height:900px">For the New York Times, half of the coverage is tagged with geo-political keywords about the two regions of Asia and Middle East. This delineates a largely conflict-first approach. </div>
-                <div data-step="6" class="step" style="height:900px">For Zeit, Europe is the main region of interest. The coverage of the Russia-Ukraine conflict is much higher than the one focusing on the Israel–Palestine situation. Generally, the coverage of European countries is more nuanced and based on individual countries – whereas a good portion of the NYT coverage refers generally to “Europe”.</div>
-                <div data-step="7" class="step" style="height:900px">Maybe one of the most important aspects is the lack of reciprocal attention. Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central, as the newspaper produces more content on historical partners like the United Kingdom.</div>
-                <div data-step="8" class="step" style="height:900px">The NYT also provides tags about geographical entities that are not directly associated with countries, like natural landmarks or geographically distinct areas encompassing several countries (seas, deserts, etc.). This shows a different strategy in producing and tagging content.  </div>
+                <div data-step="4" class="step p-6 table" style="height:900px">
+                    <div class="align-middle table-cell">
+                        <h2 class="mb-4">Are there geographical spheres of interest?</h2>
+                        <p>
+                            Starting from these differences it is worthwhile to question to which extent the two newspapers focus on specific areas, rather than others. 
+                        </p>
+                    </div>
+                </div>
+                <div data-step="5" class="step p-6 table" style="height:900px">
+                    <div class="align-middle table-cell">
+                        For the New York Times, half of the coverage is tagged with geo-political keywords about the two regions of Asia and Middle East. This delineates a largely conflict-first approach. 
+                    </div>
+                </div>
+                <div data-step="6" class="step p-6 table" style="height:900px">
+                    <div class="align-middle table-cell">
+                        For Zeit, Europe is the main region of interest. The coverage of the Russia-Ukraine conflict is much higher than the one focusing on the Israel–Palestine situation. 
+                        Generally, the coverage of European countries is more nuanced and based on individual countries – whereas a good portion of the NYT coverage refers generally to “Europe”.    
+                    </div>
+                </div>
+                <div data-step="7" class="step p-6 table" style="height:900px">
+                    <div class="align-middle table-cell">
+                        Maybe one of the most important aspects is the lack of reciprocal attention. 
+                        Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central, as the newspaper produces more content on historical partners like the United Kingdom.    
+                    </div>
+                </div>
+                <div data-step="8" class="step p-6 table" style="height:900px">
+                    <div class="align-middle table-cell">
+                    The NYT also provides tags about geographical entities that are not directly associated with countries, like natural landmarks or geographically distinct areas encompassing several countries (seas, deserts, etc.).
+                    This shows a different strategy in producing and tagging content.
+                    </div>
+                </div>
             </article>
         </section>
         <section id="outro" style="height:500px"></section>

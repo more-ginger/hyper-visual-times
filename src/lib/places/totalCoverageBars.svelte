@@ -86,7 +86,9 @@
 <div class="h-full">
     <div>
         <div class=border-b><h4>What countries and geographic entities are mentioned the most?</h4></div>
-        <div><p>Comparing <span class="text-zeit-peach-default">Die Zeit</span> with <span class="text-nyt-violet-default">The New York Times</span></p></div>
+        <div>
+            <p>The chart compares the use of geo-related keywords in <span class="text-zeit-peach-default">Die Zeit</span> with <span class="text-nyt-violet-default">The New York Times</span>.</p>
+        </div>
     </div>
     <div class="h-9/10">
         <svg 
@@ -120,7 +122,7 @@
                                         <line 
                                             class="stroke-yellow-600"
                                             x1={0} 
-                                            x2={100} 
+                                            x2={fullWidth / 5 - 10} 
                                             y1="0" 
                                             y2="0" 
                                             stroke-dasharray="4 2"
