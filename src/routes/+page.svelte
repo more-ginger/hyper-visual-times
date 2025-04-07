@@ -3,6 +3,8 @@
     import MainIllustration from "$lib/essay/MainIllustration.svelte";
     import rawIntroText from "@/content/main-essay.md?raw";
 
+    let { data } = $props();
+
 </script>
 <main>
     <div class="w-11/12 m-auto">
