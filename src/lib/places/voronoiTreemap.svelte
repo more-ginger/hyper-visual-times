@@ -72,14 +72,21 @@
         descendants = rootNode.descendants()
     })
 
-    // Groups data for easier rendering and styling
-   const groupedLeaves: { [key: string]: any[] } = $derived(
-       Object.entries(Object.groupBy(descendants, ({ height }) => height))
-           .reduce((acc, [key, value]) => {
-               if (value) acc[key.toString()] = value;
-               return acc;
-           }, {} as { [key: string]: any[] })
-   );
+    const groupedLeaves =  $derived(
+        descendants.reduce((acc, item) => {
+            const key = item.height;
+            (acc[key] = acc[key] || []).push(item);
+            return acc;
+        }, {})
+    )
+
+//     // Groups data for easier rendering and styling
+//    const groupedLeaves: { [key: string]: any[] } = $derived(
+//         grouped.reduce((acc, [key, value]) => {
+//                if (value) acc[key.toString()] = value;
+//                return acc;
+//         }, {} as { [key: string]: any[] })
+//    );
 
    const keysOfLeaves = $derived(Object.keys(groupedLeaves))
 

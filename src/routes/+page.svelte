@@ -5,7 +5,7 @@
 
 </script>
 <main>
-    <div class="base w-11/12 m-auto">
+    <div class="w-11/12 m-auto">
         <div id="essay-container" class="w-full flex my-4">
             <div class="md:w-6/9 sticky h-dvh top-50 md:top-0">
                 <MainIllustration/>
