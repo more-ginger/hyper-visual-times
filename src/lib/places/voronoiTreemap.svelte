@@ -7,23 +7,17 @@
     import seedrandom  from "seedrandom";
     import VoronoiSegment from "./voronoiSegment.svelte";
 
-    var rng = seedrandom('World');
-    
+    const rng = seedrandom('World');
     let { regionData } = $props();
     let fullWidth = $state(100); 
     let fullHeight = $state(100);
+    let segmentForRadius = $derived(Math.min(fullWidth, fullHeight))
+    let radius = $derived(segmentForRadius / 2.2)
     let descendants = $state<Array<{ height: number; [key: string]: any }>>([]);
-   
-
-    let smallestSide = $derived(Math.min(fullWidth, fullHeight))
 
     const _voronoiTreemap = voronoiTreemap()
-    
-    // Add prng function with constant value
-    function prng() {
-        return Math.random();
-    }
 
+    // Areas and geometry
     function computeCirclingPolygon(radius:number) {
         var points = 60,
             increment = 2*Math.PI/points,
@@ -40,15 +34,32 @@
         return circlingPolygon
     }
 
+    function polygonArea(element: { polygon: { site: { x: number; y: number }; [key: string]: any }[] }) {
+        const xPoints = element.polygon.map(el => el[0])
+        const yPoints = element.polygon.map(el => el[1])
+        const numPoints = xPoints.length
+        
+        let area = 0;
+        let j = numPoints - 1;
+
+        for (let i = 0; i < numPoints; i++) {
+            area = area + (xPoints[j]+xPoints[i]) * (yPoints[j]-yPoints[i])
+            j = i
+        }
+        
+        return area / 2
+   }
+
+   // Voronoi set-up
     function weightAccessor(d:any) {
         return d.count;
-    }
+    } // sets the accessor to the amount of articles
 
     let circlingLayout = $derived(
-        computeCirclingPolygon(smallestSide / 2.2)
-    )
+        computeCirclingPolygon(radius)
+    ) // computes the circular layout
 
-    var rootNode = $derived(
+    let rootNode = $derived(
         hierarchy(regionData).sum(weightAccessor)
     ); // creates hierarchy of voronoi map
 
@@ -61,16 +72,25 @@
         descendants = rootNode.descendants()
     })
 
-   const groupedLeaves: { [key: string]: any[] } = $derived(
-       Object.entries(Object.groupBy(descendants, ({ height }) => height))
-           .reduce((acc, [key, value]) => {
-               if (value) acc[key.toString()] = value;
-               return acc;
-           }, {} as { [key: string]: any[] })
-   );
+    const groupedLeaves =  $derived(
+        descendants.reduce((acc, item) => {
+            const key = item.height;
+            (acc[key] = acc[key] || []).push(item);
+            return acc;
+        }, {})
+    )
 
+//     // Groups data for easier rendering and styling
+//    const groupedLeaves: { [key: string]: any[] } = $derived(
+//         grouped.reduce((acc, [key, value]) => {
+//                if (value) acc[key.toString()] = value;
+//                return acc;
+//         }, {} as { [key: string]: any[] })
+//    );
 
    const keysOfLeaves = $derived(Object.keys(groupedLeaves))
+
+
 </script>
 <div class="h-full">
     <div>
@@ -85,7 +105,7 @@
             bind:clientWidth={fullWidth} 
             bind:clientHeight={fullHeight}    
         >   
-           <g transform={`translate(${1/8*fullWidth}, ${1/24*fullWidth})`}>
+           <g transform={`translate(${(fullWidth - radius) / 12}, ${(fullHeight - radius) / 12})`}>
                 {#if keysOfLeaves}
                     <g>
                     {#each keysOfLeaves as key}
@@ -99,10 +119,11 @@
                         {#if key === "1"}
                             {#each groupedLeaves[key] as label}
                                 <text 
-                                    class={"fill-ivory-default text-xs" + " " + label.parent.data.outlet}
+                                    class={"fill-ivory-default" + " " + label.parent.data.outlet}
                                     x={label.polygon.site.x} 
                                     y={label.polygon.site.y}
                                     text-anchor="middle"
+                                    font-size={polygonArea(label) <= 2500 ? 8 : 12}
                                 >
                                         {label.data.Region}
                                 </text>
