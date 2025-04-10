@@ -1,4 +1,3 @@
-import Papa from "papaparse";
 import { supabase } from "$lib/supabaseClient";
 import type { PageServerLoad } from './$types';
 import type { countryDataType } from '../../types';
@@ -18,6 +17,9 @@ export const load: PageServerLoad = async () => {
                 iso: d.iso_alpha3,
             }
         }) : [],
-        coverageByRegion: coverageByRegion && coverageByRegion[0] ? JSON.parse(coverageByRegion[0].data) : null
+        coverageByRegion: coverageByRegion 
+            && coverageByRegion[0] 
+            ? JSON.parse(coverageByRegion[0].data) 
+            : null
     }
 }
