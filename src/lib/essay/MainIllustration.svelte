@@ -7,7 +7,6 @@
     let shuffledNYTArticles = $derived(data.nyt_all.sort(() => 0.5 - Math.random()))
     let randomNYTSelection = $derived(shuffledNYTArticles.slice(0, 4));
 
-    $inspect(randomZeitSelection, randomNYTSelection)
     
 </script>
 <div class="w-full h-full">
