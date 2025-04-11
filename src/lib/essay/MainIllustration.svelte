@@ -3,12 +3,12 @@
     let { data } = $props();
     
     let shuffledZeitArticles = $derived(data.zeit_all.sort(() => 0.5 - Math.random()))
-    let randomZeitSelection = $derived(shuffledZeitArticles.slice(0, 5));
+    let randomZeitSelection = $derived(shuffledZeitArticles.slice(0, 4));
     
     let shuffledNYTArticles = $derived(data.nyt_all.sort(() => 0.5 - Math.random()))
-    let randomNYTSelection = $derived(shuffledNYTArticles.slice(0, 5));
+    let randomNYTSelection = $derived(shuffledNYTArticles.slice(0, 4));
 
-    let dataSampleForRow = $derived(randomNYTSelection.map((article, a) => {
+    let dataSampleForRow = $derived(randomNYTSelection.map((article: { /* define the article type here */ }, a: number) => {
         return {
             nyt: article,
             zeit: randomZeitSelection[a]

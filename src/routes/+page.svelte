@@ -7,8 +7,8 @@
 
 </script>
 <main>
-    <div class="w-11/12 m-auto">
-        <div id="essay-container" class="w-full flex my-4">
+    <div class="w-11/12 m-auto z-0">
+        <div id="essay-container" class="w-full flex">
             <div class="md:w-6/9 sticky h-dvh top-50 md:top-0">
                 <MainIllustration data={data}/>
             </div>

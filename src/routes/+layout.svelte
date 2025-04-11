@@ -19,7 +19,7 @@
 </script>
 
 <div class="w-full max-w-7xl border-x m-auto">
-<nav class="w-full  px-4 pb-2 border-b ">
+<nav class="w-full px-4 pb-2 border-b z-40">
 	<div class="m-auto pt-2 flex justify-between">
 		<div class="w-1/2">
 			<a href="/">
