@@ -54,6 +54,31 @@
     --color-zeit-peach-dark: #DF080C;
     --color-nyt-violet-default: #767BDE;
     --color-nyt-violet-dark: #1b207b;
+
+    --animate-bounce: bounce 14s ease-in-out infinite;
+    --animate-bounce-two: bouncetwo 12s ease-in-out infinite;
+
+    @keyframes bounce {
+        0%, 100% {
+          transform: translateY(15%);
+          animation-timing-function: ease-in-out;
+        }
+        50% {
+          transform: none;
+          animation-timing-function: ease-in-out;
+        }
+    }
+
+    @keyframes bouncetwo {
+        0%, 100% {
+          transform: translateY(10%);
+          animation-timing-function: ease-in-out;
+        }
+        50% {
+          transform: none;
+          animation-timing-function: ease-in-out;
+        }
+    }
 }
 
 @layer components {
