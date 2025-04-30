@@ -1,5 +1,6 @@
 <script lang=ts>
     let {availableFilter, selected = $bindable()} = $props();
+
 </script>
 
 <select bind:value={selected.key} class="inline-block border-b border-b-2 border-black px-2">

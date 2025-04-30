@@ -8,6 +8,7 @@
     import TotalCoverageBar from "$lib/places/totalCoverageBars.svelte";
     import TotalCovLegend from '$lib/places/totalCovLegend.svelte';
     import VoronoiTreemap from '$lib/places/voronoiTreemap.svelte';
+    import VennDiagram from '$lib/places/VennDiagram.svelte';
 
     let { data }: PageProps = $props();
     const scroller = scrollama();
@@ -126,6 +127,12 @@
                     </div>
                 </div>
             </article>
+        </section>
+        <section id="scrolly-3" class="w-full bg-red-100">
+            <figure class="w-full">
+                <VennDiagram data={data.data}/>
+            </figure>
+            <article></article>
         </section>
         <section id="outro" style="height:500px">
             <div class="w-full md:w-3/7 m-auto">
