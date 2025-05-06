@@ -15,6 +15,8 @@
     }).sort((a: { count: number }, b: { count: number }) => (b.count - a.count)))
 
     let primaryCountry = $state(dropdownData[0])
+    let nytComparisonCountry: { key: string; count: number } | null = $state(null)
+    let comparisonCountry: { key: string; count: number } | null = $state(null)
 
     let countriesOverlap = $derived.by(
         () => {
@@ -141,7 +143,7 @@
         }
     )
 
-    const secondaryDropdownData = $derived(
+    const nytDropdownData = $derived(
         countriesOverlap
             .sort((a, b) => (b.NYTShare - a.NYTShare))
             .map((d) => { 
@@ -152,23 +154,39 @@
         })
     )
 
+    const zeitDropdownData = $derived(
+        countriesOverlap
+            .sort((a, b) => (b.ZeitShare - a.ZeitShare))
+            .map((d) => { 
+            return {
+                key:d.country,
+                count: d.ZeitShare  
+            }
+        })
+    )
 
-    let secondaryCountry: { key: string; count: number } | null = $state(null)
-    // let secondaryCountryData: { key: any; shared: any; setsNYT?: any[]; setsZeit?: any[] } | null = $state(null)
     
     $effect(() => {
-        secondaryCountry = secondaryDropdownData[1];
+        if (nytComparisonCountry == null) {
+            nytComparisonCountry = nytDropdownData[0];
+        }
     })
 
-    $inspect("data", data)
-    let secondaryCountryData = $derived(countriesOverlap.find((d: {country:string}) => (secondaryCountry ? d.country == secondaryCountry.key : null)))
-    const diagramArticlesNYT = $derived(secondaryCountryData ? layout(secondaryCountryData.articleSetsNYT) : null) 
-    const diagramNYT = $derived(secondaryCountryData ? layout(secondaryCountryData.setsNYT) : null) 
-    const diagramArticlesZeit = $derived(secondaryCountryData ? layout(secondaryCountryData.articleSetsZeit) : null) 
-    const diagramZeit = $derived(secondaryCountryData ? layout(secondaryCountryData.setsZeit) : null) 
+    $effect(() => {
+        comparisonCountry = zeitDropdownData
+            .find((el) => nytComparisonCountry ? el.key == nytComparisonCountry.key : null) || null;
+    })
 
+    // needed for NYT venns
+    let nytCountryData = $derived(
+        countriesOverlap
+            .find((d: {country:string}) => (
+                nytComparisonCountry 
+                ? d.country == nytComparisonCountry.key 
+                : null)
+            )
+        )
 
-    $inspect(secondaryCountryData)
 </script>
 <div>
     <div>
@@ -178,71 +196,25 @@
           bind:selected={primaryCountry}
       />
   </div>
-  {#if secondaryCountry}
+  <div class="flex">
+    {#if comparisonCountry}
         <div>
-            Second country: 
+            NYT country: 
             <Dropdown 
-            availableFilter={secondaryDropdownData} 
-            bind:selected={secondaryCountry}
+            availableFilter={nytDropdownData} 
+            bind:selected={comparisonCountry}
         />
-    </div>
-  {/if}
-  <div class="w-full flex">
-        <div class="w-1/2">
-            NYT Articles overlap:
-            <svg class="bg-yellow-100" width="100%"  height="400px">
-                {#if diagramArticlesNYT}
-                    {#each diagramArticlesNYT as item}
-                        <path d={item.path} fill="none" stroke="black" stroke-width="2" />
-                        {#if item.data.sets.length <= 1}
-                            {#each item.data.sets as country}
-                                <text x={item.text.x} y={item.text.y} text-anchor="middle">{country}</text>
-                            {/each}
-                        {/if}
-                    {/each}
-                {/if}
-            </svg>
-            NYT Categories overlap:
-            <svg class="bg-green-100" width="100%" height="400px">
-                {#if diagramNYT}
-                    {#each diagramNYT as item}
-                        <path d={item.path} fill="none" stroke="black" stroke-width="2" />
-                        {#if item.data.sets.length <= 1}
-                            {#each item.data.sets as country}
-                                <text x={item.text.x} y={item.text.y} text-anchor="middle">{country}</text>
-                            {/each}
-                        {/if}
-                    {/each}
-                {/if}
-            </svg>
         </div>
-        <div class="w-1/2">
-            Zeit Articles overlap:
-            <svg class="bg-violet-100" width="100%"  height="400px">
-                {#if diagramArticlesZeit}
-                    {#each diagramArticlesZeit as item}
-                        <path d={item.path} fill="none" stroke="black" stroke-width="2" />
-                        {#if item.data.sets.length <= 1}
-                            {#each item.data.sets as country}
-                                <text x={item.text.x} y={item.text.y} text-anchor="middle">{country}</text>
-                            {/each}
-                        {/if}
-                    {/each}
-                {/if}
-            </svg>
-            Zeit Categories overlap:
-            <svg class="bg-blue-100" width="100%" height="400px">
-                {#if diagramZeit}
-                    {#each diagramZeit as item}
-                        <path d={item.path} fill="none" stroke="black" stroke-width="2" />
-                        {#if item.data.sets.length <= 1}
-                            {#each item.data.sets as country}
-                                <text x={item.text.x} y={item.text.y} text-anchor="middle">{country}</text>
-                            {/each}
-                        {/if}
-                    {/each}
-                {/if}
-            </svg>
+    {/if}
+    {#if comparisonCountry}
+        <div>
+            Zeit country: 
+            <Dropdown 
+            availableFilter={zeitDropdownData} 
+            bind:selected={comparisonCountry}
+        />
         </div>
+    {/if}
   </div>
+
 </div>
