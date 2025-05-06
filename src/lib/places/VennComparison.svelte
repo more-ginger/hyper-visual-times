@@ -13,7 +13,9 @@
     }).sort((a: { count: number }, b: { count: number }) => (b.count - a.count)))
 
     let primaryCountry = $state(dropdownData[0])
-    let comparisonCountry: { key: string; count: number } | null = $state(null)
+    let comparisonCountry: { key: string; count: number } | null = $state(dropdownData[0])
+
+    let secondaryDropDownData = $derived(dropdownData.filter((d) => primaryCountry && d.key !== primaryCountry.key))
 
     let countriesOverlap = $derived.by(
         () => {
@@ -166,7 +168,7 @@
     // This could be switch around if we wanted the Zeit to be primary, 
     // which is likely a UX question
     $effect(() => {
-        comparisonCountry = nytDropdownData[0];
+        comparisonCountry = secondaryDropDownData[0];
     })
 
 </script>
@@ -179,6 +181,11 @@
                     availableFilter={dropdownData} 
                     bind:selected={primaryCountry}
                     />
+                    overlaps with:
+                    <Dropdown 
+                        availableFilter={secondaryDropDownData} 
+                        bind:selected={comparisonCountry}
+                    />
                 </div>
         </div>
     </div>
@@ -189,10 +196,6 @@
                         <div class="mx-2">
                             <div>
                                 <p class="text-center">The New York Times</p>
-                                <Dropdown 
-                                availableFilter={nytDropdownData} 
-                                bind:selected={comparisonCountry}
-                                />
                             </div>
                             <div>
                                 <VennDiagram />
@@ -201,10 +204,6 @@
                         <div class="mx-2">
                             <div>
                                 <p class="text-center">Die Zeit</p>
-                                <Dropdown 
-                                availableFilter={zeitDropdownData} 
-                                bind:selected={comparisonCountry}
-                                />
                             </div>
                             <div>
                                 <VennDiagram />
