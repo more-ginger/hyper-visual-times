@@ -13,3 +13,9 @@ export interface countryDataType {
     perc_of_coverage_nyt: number,
     perc_of_coverage_zeit: number
 }
+
+export interface countryDataForComparison {
+    country: string,
+    count_zeit: number,
+    count_nyt: number
+}
