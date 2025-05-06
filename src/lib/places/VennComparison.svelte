@@ -1,11 +1,9 @@
 <script lang="ts">
     import Dropdown from "$lib/common/Dropdown.svelte";
     import type { countryDataForComparison } from '../../types';
-    import { layout } from "@upsetjs/venn.js";
-    import { setContext } from 'svelte';
+	import VennDiagram from "./VennDiagram.svelte";
 
     let {data} = $props()
-    let currentOutlet = "nyt"
     // The first dropdown lets the user select the primary country for analysis
     let dropdownData = $state(data.map((el:countryDataForComparison) => {
         return {
@@ -15,7 +13,6 @@
     }).sort((a: { count: number }, b: { count: number }) => (b.count - a.count)))
 
     let primaryCountry = $state(dropdownData[0])
-    let initComparisonCountry: { key: string; count: number } | null = $state(null)
     let comparisonCountry: { key: string; count: number } | null = $state(null)
 
     let countriesOverlap = $derived.by(
@@ -158,54 +155,64 @@
         countriesOverlap
             .sort((a, b) => (b.ZeitShare - a.ZeitShare))
             .map((d) => { 
-            return {
-                key:d.country,
-                count: d.ZeitShare  
-            }
-        })
+                return {
+                    key:d.country,
+                    count: d.ZeitShare  
+                }
+            })
     )
 
-    
+    // Set the  value for comparison to the first NYT data value
+    // This could be switch around if we wanted the Zeit to be primary, 
+    // which is likely a UX question
     $effect(() => {
-        if (initComparisonCountry == null) {
-            initComparisonCountry = nytDropdownData[0];
-        }
-    })
-
-    $effect(() => {
-        comparisonCountry = zeitDropdownData
-            .find((el) => (
-                initComparisonCountry 
-                ? el.key == initComparisonCountry.key 
-                : null)
-            ) || null;
+        comparisonCountry = nytDropdownData[0];
     })
 
 </script>
-<div>
-    <div>
-        First country: 
-        <Dropdown 
-          availableFilter={dropdownData} 
-          bind:selected={primaryCountry}
-      />
-  </div>
-  {#if comparisonCountry}
-    <div class="flex">
-            <div>
-                NYT country: 
-                <Dropdown 
-                availableFilter={nytDropdownData} 
-                bind:selected={comparisonCountry}
-            />
-            </div>
-            <div>
-                Zeit country: 
-                <Dropdown 
-                availableFilter={zeitDropdownData} 
-                bind:selected={comparisonCountry}
-            />
-            </div>
+<div class="w-full">
+    <div class="w-full mb-2">
+        <div class="grid grid-flow-col justify-items-center">
+                <div class="flex">
+                    <p>First country:</p>
+                    <Dropdown 
+                    availableFilter={dropdownData} 
+                    bind:selected={primaryCountry}
+                    />
+                </div>
+        </div>
     </div>
-  {/if}
+    <div class="w-full flex bg-green-100">
+        <div class="w-5/7">
+            {#if comparisonCountry}
+                <div class="flex">
+                        <div class="mx-2">
+                            <div>
+                                <p class="text-center">The New York Times</p>
+                                <Dropdown 
+                                availableFilter={nytDropdownData} 
+                                bind:selected={comparisonCountry}
+                                />
+                            </div>
+                            <div>
+                                <VennDiagram />
+                            </div>
+                        </div>
+                        <div class="mx-2">
+                            <div>
+                                <p class="text-center">Die Zeit</p>
+                                <Dropdown 
+                                availableFilter={zeitDropdownData} 
+                                bind:selected={comparisonCountry}
+                                />
+                            </div>
+                            <div>
+                                <VennDiagram />
+                            </div>
+                        </div>
+                </div>
+            {/if}
+        </div>
+        <div class="w-2/7">Headlines</div>
+    </div>
 </div>
