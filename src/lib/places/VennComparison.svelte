@@ -99,8 +99,10 @@
                     overlaps.push({
                         country: b.country,
                         totalOverlapCount,
-                        ZeitShare: sharedZeit.length,
-                        NYTShare: sharedNYT.length,
+                        ZeitKwsShare: sharedZeit.length,
+                        NYTKwsShare: sharedNYT.length,
+                        ZeitArticlesShare: articlesZeit.length,
+                        NYTArticlesShare: articlesNYT.length,
                         setsZeit: [
                             aSetZeit,
                             bSetZeit,
@@ -148,7 +150,7 @@
     // The secondary dropdown data are calculated based on the overlaps
     // to avoid listing empty comparisons
     let secondaryDropDownData = $derived(
-        countriesOverlap.map((d:countryDataForComparison) => {
+        countriesOverlap.map((d:{country: string, ZeitShare:number, NYTShare:number}) => {
             return {
                 key: d.country,
                 count: d.ZeitShare + d.NYTShare
@@ -170,7 +172,9 @@
         return {
             country:d.country,
             categoriesSet: d.setsNYT,
-            articlesSet: d.articleSetsNYT
+            keywordsOverlapSize: d.NYTKwsShare,
+            articlesSet: d.articleSetsNYT,
+            articlesOverlapSize: d.NYTArticlesShare
         }
     }))
 
@@ -178,7 +182,9 @@
         return {
             country:d.country,
             categoriesSet: d.setsZeit,
-            articlesSet: d.articleSetsZeit
+            keywordsOverlapSize: d.ZeitKwsShare,
+            articlesSet: d.articleSetsZeit,
+            articlesOverlapSize: d.ZeitArticlesShare
         }
     }))
 

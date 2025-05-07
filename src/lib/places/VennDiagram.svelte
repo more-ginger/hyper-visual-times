@@ -22,7 +22,7 @@
 
     // creates a raw layout for the two types of Venns: one based on articles the other based on categoroes
     const rawVennArticles = $derived(currentDataSelection.length > 0 ? venn(currentDataSelection[0].articlesSet) : {})
-    const rawVennCats = $derived(currentDataSelection.length > 0 ? venn(currentDataSelection[0].categoriesSet) : {})
+    const rawVennKws = $derived(currentDataSelection.length > 0 ? venn(currentDataSelection[0].categoriesSet) : {})
 
     // given width, height and padding 
     // scales the diagrams to fit the svg size
@@ -36,9 +36,9 @@
             )
         );
 
-    const scaledLayoutCat = $derived(
+    const scaledLayoutKws = $derived(
         scaleSolution(
-            rawVennCats, 
+            rawVennKws, 
             svgWidth, 
             svgHeight, 
             padding, 
@@ -58,10 +58,13 @@
         }
         return false;
     }
+
+    $inspect(currentDataSelection[0])
 </script>
 {#if currentDataSelection.length > 0}
 <div> 
     {#if scaledLayoutArticles && checkForOverlaps(rawVennArticles)}
+    <div>overlaps: {currentDataSelection[0].articlesOverlapSize} articles</div>
     <svg width={svgWidth} height={svgHeight} class="bg-yellow-100">   
         <g>
             {#each Object.keys(scaledLayoutArticles) as key}
@@ -80,16 +83,17 @@
     {/if}
 </div>
 <div>
-    {#if scaledLayoutCat && checkForOverlaps(rawVennCats)}
+    {#if scaledLayoutKws && checkForOverlaps(rawVennKws)}
+    <div>overlaps: {currentDataSelection[0].keywordsOverlapSize} keywords</div>
     <svg width="100%" height={svgHeight} class="bg-yellow-100" bind:clientWidth={svgWidth}>    
         <g>
-            {#each Object.keys(scaledLayoutCat) as key}
+            {#each Object.keys(scaledLayoutKws) as key}
                 <circle 
                     stroke="black" 
                     fill="none" 
-                    cx={scaledLayoutCat[key].x} 
-                    cy={scaledLayoutCat[key].y} 
-                    r={scaledLayoutCat[key].radius}
+                    cx={scaledLayoutKws[key].x} 
+                    cy={scaledLayoutKws[key].y} 
+                    r={scaledLayoutKws[key].radius}
                 />
             {/each}
         </g>
