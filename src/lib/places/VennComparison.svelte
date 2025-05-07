@@ -4,18 +4,21 @@
 	import VennDiagram from "./VennDiagram.svelte";
 
     let {data} = $props()
-    // The first dropdown lets the user select the primary country for analysis
-    let dropdownData = $state(data.map((el:countryDataForComparison) => {
-        return {
-            key: el.country,
-            count: el.count_zeit + el.count_nyt
-        }
-    }).sort((a: { count: number }, b: { count: number }) => (b.count - a.count)))
+    
+    // The first dropdown lets the user 
+    // select the primary country for analysis
+    let dropdownData = $state(
+        data.map((d:countryDataForComparison) => {
+            return {
+                key: d.country,
+                count: d.count_zeit + d.count_nyt
+            }
+        }).sort((a: { count: number }, b: { count: number }) => (b.count - a.count)))
 
+    // Set the primary country to calc overlaps
     let primaryCountry = $state(dropdownData[0])
+    // Init the comparison country to avoid issues
     let comparisonCountry: { key: string; count: number } | null = $state(dropdownData[0])
-
-    let secondaryDropDownData = $derived(dropdownData.filter((d) => primaryCountry && d.key !== primaryCountry.key))
 
     let countriesOverlap = $derived.by(
         () => {
@@ -142,31 +145,23 @@
         }
     )
 
-    const nytDropdownData = $derived(
-        countriesOverlap
-            .sort((a, b) => (b.NYTShare - a.NYTShare))
-            .map((d) => { 
+    // The secondary dropdown data are calculated based on the overlaps
+    // to avoid listing empty comparisons
+    let secondaryDropDownData = $derived(
+        countriesOverlap.map((d:countryDataForComparison) => {
             return {
-                key:d.country,
-                count: d.NYTShare  
+                key: d.country,
+                count: d.count_zeit + d.count_nyt
             }
-        })
+        }).filter((d:{key:string}) => 
+            primaryCountry 
+            && d.key 
+            !== primaryCountry.key
+        )
     )
 
-    const zeitDropdownData = $derived(
-        countriesOverlap
-            .sort((a, b) => (b.ZeitShare - a.ZeitShare))
-            .map((d) => { 
-                return {
-                    key:d.country,
-                    count: d.ZeitShare  
-                }
-            })
-    )
-
-    // Set the  value for comparison to the first NYT data value
-    // This could be switch around if we wanted the Zeit to be primary, 
-    // which is likely a UX question
+    // Set the  value for comparison to the first data value
+    // in the array of secondary data for dropdown number two.
     $effect(() => {
         comparisonCountry = secondaryDropDownData[0];
     })
