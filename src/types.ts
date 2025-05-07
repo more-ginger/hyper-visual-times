@@ -19,3 +19,11 @@ export interface countryDataForComparison {
     count_zeit: number,
     count_nyt: number
 }
+
+export interface solution {
+    [setid: string]: {
+        x: number, 
+        y: number, 
+        radius: number
+    }
+}

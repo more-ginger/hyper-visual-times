@@ -6,7 +6,6 @@ export const load: PageServerLoad = async () => {
 
     const { data } = await supabase.from("coverage_by_country").select();
     const { data:coverageByRegion } = await supabase.from("regions").select();
-    console.log(data)
     return {
         data: data ? data.map((d:countryDataType) => {
 

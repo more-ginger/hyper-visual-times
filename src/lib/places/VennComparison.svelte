@@ -18,7 +18,7 @@
     // Set the primary country to calc overlaps
     let primaryCountry = $state(dropdownData[0])
     // Init the comparison country to avoid issues
-    let comparisonCountry: { key: string; count: number } | null = $state(dropdownData[0])
+    let comparisonCountry: { key: string; count: number } | null = $state(null)
 
     let countriesOverlap = $derived.by(
         () => {
@@ -151,7 +151,7 @@
         countriesOverlap.map((d:countryDataForComparison) => {
             return {
                 key: d.country,
-                count: d.count_zeit + d.count_nyt
+                count: d.ZeitShare + d.NYTShare
             }
         }).filter((d:{key:string}) => 
             primaryCountry 
@@ -166,6 +166,22 @@
         comparisonCountry = secondaryDropDownData[0];
     })
 
+    let overlapsNYT = $derived(countriesOverlap.map((d) => {
+        return {
+            country:d.country,
+            categoriesSet: d.setsNYT,
+            articlesSet: d.articleSetsNYT
+        }
+    }))
+
+    let overlapsZeit = $derived(countriesOverlap.map((d) => {
+        return {
+            country:d.country,
+            categoriesSet: d.setsZeit,
+            articlesSet: d.articleSetsZeit
+        }
+    }))
+
 </script>
 <div class="w-full">
     <div class="w-full mb-2">
@@ -176,37 +192,45 @@
                     availableFilter={dropdownData} 
                     bind:selected={primaryCountry}
                     />
+                    {#if comparisonCountry}
                     overlaps with:
                     <Dropdown 
                         availableFilter={secondaryDropDownData} 
                         bind:selected={comparisonCountry}
                     />
+                    {/if}
                 </div>
         </div>
     </div>
     <div class="w-full flex bg-green-100">
         <div class="w-5/7">
             {#if comparisonCountry}
-                <div class="flex">
-                        <div class="mx-2">
+                <div class="flex w-full">
+                        <div class="mx-2 w-1/2">
                             <div>
                                 <p class="text-center">The New York Times</p>
                             </div>
                             <div>
-                                <VennDiagram />
+                                <VennDiagram 
+                                    data={overlapsNYT} 
+                                    comparisonCountry={comparisonCountry}
+                                />
                             </div>
                         </div>
-                        <div class="mx-2">
+                        <div class="mx-2 w-1/2 border-l">
                             <div>
                                 <p class="text-center">Die Zeit</p>
                             </div>
                             <div>
-                                <VennDiagram />
+                                <VennDiagram 
+                                    data={overlapsZeit} 
+                                    comparisonCountry={comparisonCountry}
+                                />
                             </div>
                         </div>
                 </div>
             {/if}
         </div>
-        <div class="w-2/7">Headlines</div>
+        <div class="w-2/7 border-l">Headlines</div>
     </div>
 </div>
