@@ -215,7 +215,7 @@
                 <div class="flex w-full">
                         <div class="mx-2 w-1/2">
                             <div>
-                                <p class="text-center">The New York Times</p>
+                                <p class="text-sm text-center">In <span class="text-nyt-violet-dark">The New York Times</span></p>
                             </div>
                             <div>
                                 <VennDiagram 
@@ -227,7 +227,7 @@
                         </div>
                         <div class="mx-2 w-1/2">
                             <div>
-                                <p class="text-center">Die Zeit</p>
+                                <p class="text-sm text-center">In <span class="text-zeit-peach-dark">Zeit Online</span></p>
                             </div>
                             <div>
                                 <VennDiagram 
@@ -240,8 +240,8 @@
                 </div>
             {/if}
         </div>
-        <div class="w-2/7 border-l text-center px-10">
-            <VennLists />
+        <div class="w-2/7 text-center px-10">
+            <VennOverlapItems />
         </div>
     </div>
 </div>

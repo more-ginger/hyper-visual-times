@@ -68,10 +68,11 @@
 {#if currentDataSelection.length > 0}
 <div> 
     {#if scaledLayoutArticles && checkForOverlaps(rawVennArticles)}
+    <div class="text-sm text-center">by {currentDataSelection[0].articlesOverlapSize} articles</div>
     <svg 
         width={svgWidth} 
         height={svgHeight} 
-        class={`visualization venn ${outlet}`} 
+        class={`visualization venn ${outlet} mb-2`} 
         bind:clientWidth={svgWidth}
     >   
         <g>
@@ -93,13 +94,15 @@
             {/each}
         </g>
     </svg>
-    <div class="text-center">overlaps: {currentDataSelection[0].articlesOverlapSize} articles</div>
     {:else}
         <div>No data</div>
     {/if}
 </div>
 <div>
     {#if scaledLayoutKws && checkForOverlaps(rawVennKws)}
+    <div class="text-sm text-center mt-8">
+        by {currentDataSelection[0].keywordsOverlapSize} keywords
+    </div>
     <svg 
         width="100%" 
         height={svgHeight} 
@@ -125,7 +128,6 @@
             {/each}
         </g>
     </svg>
-    <div class="text-center">overlaps: {currentDataSelection[0].keywordsOverlapSize} keywords</div>
 
     {:else}
          <div>No data</div>
