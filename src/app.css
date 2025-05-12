@@ -189,5 +189,36 @@
         text.Zeit {
             filter: drop-shadow( 0px 0px 10px var(--color-zeit-peach-dark));
         }
+
+        &.venn {
+            text {
+                text-anchor: middle;
+                font-size: 10px;
+            }
+
+            &.NYT {
+                circle {
+                    stroke: black;
+                    fill: var(--color-nyt-violet-default);
+                    mix-blend-mode: multiply;
+                }
+
+                text {
+                    fill: var(--color-ivory-default);
+                }
+            }
+
+            &.Zeit {
+                circle {
+                    stroke: black;
+                    fill: var(--color-zeit-peach-default);
+                    mix-blend-mode: multiply;
+                }
+
+                text {
+                    fill: var(--color-ivory-default);
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,8 @@
 <script lang="ts">
     import { scaleSolution, venn } from "@upsetjs/venn.js";
+    import { countryToAlpha3 } from "country-to-iso";
     import type { solution } from '../../types';
-    let {data, comparisonCountry} = $props()
+    let {data, comparisonCountry, outlet} = $props()
 
     // variables to scale the circles
     let svgWidth = $state(400);
@@ -59,45 +60,73 @@
         return false;
     }
 
-    $inspect(currentDataSelection[0])
+    function findISOCode(countryName:string) {
+        return countryToAlpha3(countryName) ? countryToAlpha3(countryName) : countryName
+    }
+
 </script>
 {#if currentDataSelection.length > 0}
 <div> 
     {#if scaledLayoutArticles && checkForOverlaps(rawVennArticles)}
-    <div>overlaps: {currentDataSelection[0].articlesOverlapSize} articles</div>
-    <svg width={svgWidth} height={svgHeight} class="bg-yellow-100">   
+    <svg 
+        width={svgWidth} 
+        height={svgHeight} 
+        class={`visualization venn ${outlet}`} 
+        bind:clientWidth={svgWidth}
+    >   
         <g>
-            {#each Object.keys(scaledLayoutArticles) as key}
-                <circle 
-                    stroke="black" 
-                    fill="none" 
-                    cx={scaledLayoutArticles[key].x} 
-                    cy={scaledLayoutArticles[key].y} 
-                    r={scaledLayoutArticles[key].radius}
-                />
+            {#each Object.keys(scaledLayoutArticles) as key, k}
+                {#if scaledLayoutArticles[key].radius > 0}
+                    <circle 
+                        cx={scaledLayoutArticles[key].x} 
+                        cy={scaledLayoutArticles[key].y} 
+                        r={scaledLayoutArticles[key].radius}
+                    />
+                    <text 
+                        class={`${outlet}`} 
+                        x={scaledLayoutArticles[key].x} 
+                        y={scaledLayoutArticles[key].y  + 3} 
+                    >
+                        {findISOCode(key)}
+                    </text>
+                {/if}
             {/each}
         </g>
     </svg>
+    <div class="text-center">overlaps: {currentDataSelection[0].articlesOverlapSize} articles</div>
     {:else}
         <div>No data</div>
     {/if}
 </div>
 <div>
     {#if scaledLayoutKws && checkForOverlaps(rawVennKws)}
-    <div>overlaps: {currentDataSelection[0].keywordsOverlapSize} keywords</div>
-    <svg width="100%" height={svgHeight} class="bg-yellow-100" bind:clientWidth={svgWidth}>    
+    <svg 
+        width="100%" 
+        height={svgHeight} 
+        class={`visualization venn ${outlet}`}
+        bind:clientWidth={svgWidth}
+    >    
         <g>
-            {#each Object.keys(scaledLayoutKws) as key}
-                <circle 
-                    stroke="black" 
-                    fill="none" 
-                    cx={scaledLayoutKws[key].x} 
-                    cy={scaledLayoutKws[key].y} 
-                    r={scaledLayoutKws[key].radius}
-                />
+            {#each Object.keys(scaledLayoutKws) as key, k}
+                {#if scaledLayoutKws[key].radius > 0}
+                    <circle 
+                        cx={scaledLayoutKws[key].x} 
+                        cy={scaledLayoutKws[key].y} 
+                        r={scaledLayoutKws[key].radius}
+                    />
+                    <text 
+                        class={`${outlet}`}
+                        x={scaledLayoutArticles[key].x} 
+                        y={scaledLayoutArticles[key].y + 3} 
+                    >
+                        {findISOCode(key)}
+                    </text>
+                {/if}
             {/each}
         </g>
     </svg>
+    <div class="text-center">overlaps: {currentDataSelection[0].keywordsOverlapSize} keywords</div>
+
     {:else}
          <div>No data</div>
     {/if}

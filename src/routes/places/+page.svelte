@@ -128,7 +128,7 @@
                 </div>
             </article>
         </section>
-        <section id="scrolly-3" class="w-full bg-red-100">
+        <section id="scrolly-3" class="w-full mb-100">
             <figure class="w-full">
                 <VennComparison data={data.data}/>
             </figure>

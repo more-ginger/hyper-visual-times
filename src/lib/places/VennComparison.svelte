@@ -2,6 +2,7 @@
     import Dropdown from "$lib/common/Dropdown.svelte";
     import type { countryDataForComparison } from '../../types';
 	import VennDiagram from "./VennDiagram.svelte";
+    import VennOverlapItems from "./VennOverlapItems.svelte";
 
     let {data} = $props()
     
@@ -190,16 +191,16 @@
 
 </script>
 <div class="w-full">
-    <div class="w-full mb-2">
+    <div class="w-full mb-10">
         <div class="grid grid-flow-col justify-items-center">
                 <div class="flex">
-                    <p>First country:</p>
+                    <p class="mx-2">Coverage about:</p>
                     <Dropdown 
                     availableFilter={dropdownData} 
                     bind:selected={primaryCountry}
                     />
                     {#if comparisonCountry}
-                    overlaps with:
+                    <p class="mx-2">overlaps with:</p>
                     <Dropdown 
                         availableFilter={secondaryDropDownData} 
                         bind:selected={comparisonCountry}
@@ -208,7 +209,7 @@
                 </div>
         </div>
     </div>
-    <div class="w-full flex bg-green-100">
+    <div class="w-full flex">
         <div class="w-5/7">
             {#if comparisonCountry}
                 <div class="flex w-full">
@@ -220,10 +221,11 @@
                                 <VennDiagram 
                                     data={overlapsNYT} 
                                     comparisonCountry={comparisonCountry}
+                                    outlet={"NYT"}
                                 />
                             </div>
                         </div>
-                        <div class="mx-2 w-1/2 border-l">
+                        <div class="mx-2 w-1/2">
                             <div>
                                 <p class="text-center">Die Zeit</p>
                             </div>
@@ -231,12 +233,15 @@
                                 <VennDiagram 
                                     data={overlapsZeit} 
                                     comparisonCountry={comparisonCountry}
+                                    outlet={"Zeit"}
                                 />
                             </div>
                         </div>
                 </div>
             {/if}
         </div>
-        <div class="w-2/7 border-l">Headlines</div>
+        <div class="w-2/7 border-l text-center px-10">
+            <VennLists />
+        </div>
     </div>
 </div>
