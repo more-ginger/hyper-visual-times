@@ -4,6 +4,10 @@
     let isArticles = $state(true)
     let nytArticles = $state<any[]>([])
     let zeitArticles = $state<any[]>([])
+
+    function changeOverlapVariable() {
+        isArticles = !isArticles
+    }
     
     const currentDataSelection = $derived(
         comparisonCountry ? 
@@ -96,7 +100,13 @@
 </script>
 
 <div class="h-full">
-    <div class="m-2">Show shared keywords instead of articles</div>
+    <button class="m-2 cursor-pointer" onclick={changeOverlapVariable}>
+        {#if isArticles}
+            <p>Show shared keywords instead of articles</p>
+        {:else}
+            <p>Show shared articles instead of keywords</p>
+        {/if}
+    </button>
     <div class="bg-nyt-violet-light h-full max-h-80 overflow-auto px-2 m-2 rounded-sm border border-nyt-violet-dark">
         {#await nytArticles}
             <p>Loading NYT Articles...</p>
