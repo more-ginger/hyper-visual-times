@@ -192,20 +192,27 @@
 </script>
 <div class="w-full">
     <div class="w-full mb-10">
-        <div class="grid grid-flow-col justify-items-center">
+        <div class="">
                 <div class="flex">
-                    <p class="mx-2">Coverage about:</p>
-                    <Dropdown 
-                    availableFilter={dropdownData} 
-                    bind:selected={primaryCountry}
-                    />
-                    {#if comparisonCountry}
-                    <p class="mx-2">overlaps with:</p>
-                    <Dropdown 
-                        availableFilter={secondaryDropDownData} 
-                        bind:selected={comparisonCountry}
-                    />
+                    <h4 class="mx-2">
+                        How much does the coverage about:
+                        <span>
+                        <Dropdown 
+                        availableFilter={dropdownData} 
+                        bind:selected={primaryCountry}
+                        />
+                        </span>
+                        {#if comparisonCountry}
+                        <span>
+                        overlaps with the one about:
+                        <Dropdown 
+                            availableFilter={secondaryDropDownData} 
+                            bind:selected={comparisonCountry}
+                        />
+                    </span>
+                    ?
                     {/if}
+                </h4>
                 </div>
         </div>
     </div>
@@ -241,7 +248,7 @@
             {/if}
         </div>
         <div class="w-2/7 text-center px-10">
-            <VennOverlapItems />
+            <VennOverlapItems data={countriesOverlap} comparisonCountry={comparisonCountry}/>
         </div>
     </div>
 </div>

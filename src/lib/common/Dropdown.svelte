@@ -4,9 +4,7 @@
     let selectEl: HTMLSelectElement | null = $state(null);
 
     function resizeSelect() {
-        console.log("resizeSelect", selected?.key)
         if (mirrorEl !== null && selectEl !== null && selected?.key) {
-            console.log("inside if statement")
             mirrorEl.textContent = selected.key;
             selectEl.style.width = mirrorEl.offsetWidth + 20 + "px";
         }
@@ -21,12 +19,21 @@
 </script>
 
 <div class="select-wrapper">
-    <select bind:value={selected.key} bind:this={selectEl} class="inline-block border-b border-b-2 border-black px-2">
+    <select 
+        bind:value={selected.key} 
+        bind:this={selectEl} 
+        class="inline-block border-b border-b-2 border-black px-2"
+    >
         {#each availableFilter as filter, i}
-            <option value={filter.key}>{filter.key}</option>
+            <option value={filter.key}>
+                {filter.key}
+            </option>
         {/each}
     </select>
-    <span class="select-mirror" bind:this={mirrorEl}></span>
+    <span 
+        class="select-mirror" 
+        bind:this={mirrorEl}
+    ></span>
 </div>
 
 <style>
