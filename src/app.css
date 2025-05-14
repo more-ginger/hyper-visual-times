@@ -50,8 +50,10 @@
     /* Colors */
     --color-ivory-default: #fcf4e9;
     --color-ivory-dark: #fcf4e9;
+    --color-zeit-peach-light: #ffe2e3;
     --color-zeit-peach-default: #FB9193;
     --color-zeit-peach-dark: #DF080C;
+    --color-nyt-violet-light: #e2e3ff;
     --color-nyt-violet-default: #767BDE;
     --color-nyt-violet-dark: #1b207b;
 
@@ -188,6 +190,37 @@
 
         text.Zeit {
             filter: drop-shadow( 0px 0px 10px var(--color-zeit-peach-dark));
+        }
+
+        &.venn {
+            text {
+                text-anchor: middle;
+                font-size: 10px;
+            }
+
+            &.NYT {
+                circle {
+                    stroke: black;
+                    fill: var(--color-nyt-violet-default);
+                    mix-blend-mode: multiply;
+                }
+
+                text {
+                    fill: var(--color-ivory-default);
+                }
+            }
+
+            &.Zeit {
+                circle {
+                    stroke: black;
+                    fill: var(--color-zeit-peach-default);
+                    mix-blend-mode: multiply;
+                }
+
+                text {
+                    fill: var(--color-ivory-default);
+                }
+            }
         }
     }
 }

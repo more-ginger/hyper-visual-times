@@ -4,12 +4,26 @@ export interface countryDataType {
     count_of_articles_nyt: number, 
     count_of_articles_zeit: number,
     country: string,
-    ids_of_articles_nyt: string[],
-    ids_of_articles_zeit: string[],
+    ids_of_articles_nyt: string,
+    ids_of_articles_zeit: string,
     iso_alpha3: string,
-    keywords_nyt: { [index: string]: number },
-    keywords_zeit: { [index: string]: number },
+    keywords_nyt: string,
+    keywords_zeit: string,
     middle_point: number,
     perc_of_coverage_nyt: number,
     perc_of_coverage_zeit: number
+}
+
+export interface countryDataForComparison {
+    country: string,
+    count_zeit: number,
+    count_nyt: number
+}
+
+export interface solution {
+    [setid: string]: {
+        x: number, 
+        y: number, 
+        radius: number
+    }
 }
