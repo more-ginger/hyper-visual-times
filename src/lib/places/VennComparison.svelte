@@ -216,7 +216,7 @@
                 </div>
         </div>
         <div class="w-2/7">
-            <h4 class="mx-2">Common articles' headlines</h4>
+            <h4 class="mx-2">Headlines from shared articles</h4>
          </div>
     </div>
 
