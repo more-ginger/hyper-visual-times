@@ -1,37 +1,92 @@
 <script lang="ts">
     let {data, comparisonCountry} = $props()
-    let source = "nyt"
-    const currentDataSelection = $derived(comparisonCountry? data.filter((d:{country:string}) => {return d.country == comparisonCountry.key}) : null)
-    const currentVennSelection = $derived(currentDataSelection ? currentDataSelection[0].articleSetsNYT : null)
-    let articles = $state<any[]>([])
+    let sources = ["nyt", "zeit"]
+    let nytArticles = $state<any[]>([])
+    let zeitArticles = $state<any[]>([])
+    
+    const currentDataSelection = $derived(
+        comparisonCountry ? 
+        data.filter((d:{country:string}) => {return d.country == comparisonCountry.key}) 
+        : null
+    )
 
-   
+    const currentVennSelection = $derived.by<null | any[]>(() => {
+            console.log(currentDataSelection)
+            let currentNYTSelection = currentDataSelection && currentDataSelection.length > 0 
+                ? currentDataSelection[0].articleSetsNYT 
+                : null
+            
+            let currentZeitSelection = currentDataSelection && currentDataSelection.length > 0 
+                ? currentDataSelection[0].articleSetsZeit 
+                : null
+
+            let vennSelection = currentNYTSelection || currentZeitSelection 
+                ? currentNYTSelection.concat(currentZeitSelection) 
+                : null
+            
+                return vennSelection;
+        }
+    )
+
     $effect(() => {
-        articles = []
+        nytArticles = []
+        zeitArticles = []
         if (currentVennSelection)
         currentVennSelection.forEach((set: {sets: [], shared:[]}) => {
             if (set.sets.length > 1) {
-                set.shared.forEach((id) => {
+                set.shared.forEach((id:string) => {
+                    let source = id.includes("nyt") ? sources[0]: sources[1]
                     fetch(`/api/articles?source=${source}&id=${encodeURIComponent(id)}`)
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data)
-                        articles.push(data)
+                        if (data.source == "ZEIT ONLINE") {
+                            zeitArticles.push(data)
+                        } else {
+                            nytArticles.push(data)
+                        }
                     })
+
                 })
             }
         })
     })
 
- $inspect(articles.length)
-
 </script>
-{#await articles}
-    <p>Loading...</p>
-{:catch error}
-    <p>{error.message}</p>
-{:then articles} 
-    {#each articles as article}
-        <p class="border mt-2">{article.headline}</p>
-    {/each}
-{/await}
+<div class="h-full mt-10">
+    <div class="bg-nyt-violet-light h-full max-h-80 overflow-auto px-2 m-2 rounded-sm border border-nyt-violet-dark">
+        {#await nytArticles}
+            <p>Loading NYT Articles...</p>
+        {:catch error}
+            <p>{error.message}</p>
+        {:then nytArticles} 
+            <div>
+                <p class="sticky top-2 bg-nyt-violet-light nyt-violet-dark border border-nyt-violet-dark my-2 px-2 rounded-sm size-fit bg-nyt-violet-light">The New York Times</p>
+                <div class="mt-4">
+                    {#each nytArticles as article}
+                        <p class="text-xs mt-2 border-b border-dotted border-nyt-violet-dark">
+                            {article.headline}
+                        </p>
+                    {/each}
+                </div>
+            </div>
+        {/await}
+    </div>
+    <div class="bg-zeit-peach-light h-full max-h-80 overflow-auto px-2 m-2 rounded-sm border border-zeit-peach-dark">
+        {#await zeitArticles}
+            <p>Loading Zeit Articles...</p>
+        {:catch error}
+            <p>{error.message}</p>
+        {:then zeitArticles} 
+            <div>
+                <p class="sticky top-2 bg-zeit-peach-light border border-zeit-peach-dark my-2 px-2 rounded-sm size-fit">Zeit Online</p>
+                <div class="mt-4">
+                    {#each zeitArticles as article}
+                        <p class="text-xs mt-2 border-b border-dotted border-zeit-peach-dark">
+                            {article.headline}
+                        </p>
+                    {/each}
+                </div>
+            </div>
+        {/await}
+    </div>
+</div>

@@ -190,9 +190,9 @@
     }))
 
 </script>
-<div class="w-full">
-    <div class="w-full mb-10">
-        <div class="">
+<div class="w-full max-h-1/2">
+    <div class="w-full flex">
+        <div class="w-5/7">
                 <div class="flex">
                     <h4 class="mx-2">
                         How much does the coverage about:
@@ -215,11 +215,15 @@
                 </h4>
                 </div>
         </div>
+        <div class="w-2/7">
+            <h4 class="mx-2">Common articles' headlines</h4>
+         </div>
     </div>
+
     <div class="w-full flex">
         <div class="w-5/7">
             {#if comparisonCountry}
-                <div class="flex w-full">
+                <div class="flex w-full mt-10">
                         <div class="mx-2 w-1/2">
                             <div>
                                 <p class="text-sm text-center">In <span class="text-nyt-violet-dark">The New York Times</span></p>
@@ -247,7 +251,7 @@
                 </div>
             {/if}
         </div>
-        <div class="w-2/7 text-center px-10">
+        <div class="w-2/7">
             <VennOverlapItems data={countriesOverlap} comparisonCountry={comparisonCountry}/>
         </div>
     </div>
