@@ -1,8 +1,11 @@
 <script lang="ts">
     import { scaleSolution, venn } from "@upsetjs/venn.js";
-    import { countryToAlpha3 } from "country-to-iso";
+    import countries from "i18n-iso-countries";
+    import enLocale from 'i18n-iso-countries/langs/en.json';
     import type { solution } from '../../types';
     let {data, comparisonCountry, outlet} = $props()
+
+    countries.registerLocale(enLocale);
 
     // variables to scale the circles
     let svgWidth = $state(400);
@@ -61,7 +64,7 @@
     }
 
     function findISOCode(countryName:string) {
-        return countryToAlpha3(countryName) ? countryToAlpha3(countryName) : countryName
+        return countries.getAlpha3Code(countryName, "en") ? countries.getAlpha3Code(countryName, "en") : countryName
     }
 
 </script>
