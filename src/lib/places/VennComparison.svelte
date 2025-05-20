@@ -1,11 +1,16 @@
 <script lang="ts">
     import Dropdown from "$lib/common/Dropdown.svelte";
     import type { countryDataForComparison } from '../../types';
-	import VennDiagram from "./VennDiagram.svelte";
-    import VennOverlapItems from "./VennOverlapItems.svelte";
+    import VennContainer from "./VennContainer.svelte";
+
 
     let {data} = $props()
-    
+    let isArticles = $state(true)
+
+    function changeComparisonVariable () {
+        isArticles = !isArticles
+    }
+     
     // The first dropdown lets the user 
     // select the primary country for analysis
     let dropdownData = $state(
@@ -24,122 +29,76 @@
     let countriesOverlap = $derived.by(
         () => {
             const overlaps: any[] = []
+            let variableForComparison = isArticles ? "ids_of_articles" : "keywords"
             const a = data.find((d: {country:string}) => (d.country == primaryCountry.key))
             const aSetNyt = {
-                sets: [a.country], 
-                size: Object.keys(a.keywords_nyt).length, 
-                shared: a.keywords_nyt,
+                sets: [a.country + "_nyt"],
+                label: [a.country], 
+                size: a[`${variableForComparison}_nyt`].length, 
+                shared: a[`${variableForComparison}_nyt`],
             }
             
             const aSetZeit = {
-                sets: [a.country], 
-                size: Object.keys(a.keywords_zeit).length, 
-                shared: a.keywords_zeit
-            }
-
-            const aSetArticlesNyt = {
-                sets: [a.country], 
-                size: a.ids_of_articles_nyt.length, 
-                shared: a.ids_of_articles_nyt,
-            }
-            
-            const aSetArticlesZeit = {
-                sets: [a.country], 
-                size: a.ids_of_articles_zeit.length, 
-                shared: a.ids_of_articles_zeit
+                sets: [a.country + "_zeit"],
+                label: [a.country], 
+                size: a[`${variableForComparison}_zeit`].length, 
+                shared: a[`${variableForComparison}_zeit`]
             }
             
             
             for (let i = 0; i < data.length; i++) {
                 const b = data[i];
                 const bSetNyt = {
-                    sets: [b.country], 
+                    sets: [b.country + "_nyt"], 
+                    label: [b.country],
                     size: Object.keys(b.keywords_nyt).length, 
-                    shared: b.keywords_nyt
-                }
-                
-                const bSetZeit = {
-                    sets: [b.country], 
-                    size: Object.keys(b.keywords_zeit).length, 
-                    shared: b.keywords_zeit
+                    shared: b[`${variableForComparison}_nyt`]
                 }
 
-                const bSetArticlesNyt = {
-                    sets: [b.country], 
-                    size: b.ids_of_articles_nyt.length, 
-                    shared: b.ids_of_articles_nyt
-                }
                 
-                const bSetArticlesZeit = {
-                    sets: [b.country], 
-                    size: b.ids_of_articles_zeit.length, 
-                    shared: b.ids_of_articles_zeit
+                const bSetZeit = {
+                    sets: [b.country + "_zeit"],
+                    label: [b.country],
+                    size: Object.keys(b.keywords_zeit).length, 
+                    shared: b[`${variableForComparison}_zeit`]
                 }
 
                 if (a.country == b.country) continue
             
-                const aKeywordsNYT = new Set(Object.keys(a.keywords_nyt))
-                const bKeywordsNYT = new Set(Object.keys(b.keywords_nyt))
-                const sharedNYT = [...aKeywordsNYT].filter(k => bKeywordsNYT.has(k))
+                const aOverlappingNYT = new Set(a[`${variableForComparison}_nyt`])
+                const bOverlappingsNYT = new Set(b[`${variableForComparison}_nyt`])
+                const sharedNYT = [...aOverlappingNYT].filter(k => bOverlappingsNYT.has(k))
 
-                const aArticlesNYT = new Set(a.ids_of_articles_nyt)
-                const bArticlesNYT = new Set(b.ids_of_articles_nyt)
-                const articlesNYT = [...aArticlesNYT].filter(k => bArticlesNYT.has(k))
+                const aOverlappingZeit = new Set(a[`${variableForComparison}_zeit`])
+                const bOverlappingZeit = new Set(b[`${variableForComparison}_zeit`])
+                const sharedZeit = [...aOverlappingZeit].filter(k => bOverlappingZeit.has(k))
 
-                const aKeywordsZeit = new Set(Object.keys(a.keywords_zeit))
-                const bKeywordsZeit = new Set(Object.keys(b.keywords_zeit))
-                const sharedZeit = [...aKeywordsZeit].filter(k => bKeywordsZeit.has(k))
-
-                const aArticlesZeit = new Set(a.ids_of_articles_zeit)
-                const bArticlesZeit = new Set(b.ids_of_articles_zeit)
-                const articlesZeit = [...aArticlesZeit].filter(k => bArticlesZeit.has(k))
-
-                const totalOverlapCount = (bKeywordsNYT.size + bKeywordsZeit.size) - (sharedNYT.length + sharedZeit.length)
+                const totalOverlapCount = (bOverlappingsNYT.size + bOverlappingZeit.size) - (sharedNYT.length + sharedZeit.length)
                 
-                if (articlesNYT.length > 0 || articlesZeit.length > 0) {
+                if (sharedZeit.length > 0 || sharedNYT.length > 0) {
                     overlaps.push({
                         country: b.country,
                         totalOverlapCount,
-                        ZeitKwsShare: sharedZeit.length,
-                        NYTKwsShare: sharedNYT.length,
-                        ZeitArticlesShare: articlesZeit.length,
-                        NYTArticlesShare: articlesNYT.length,
+                        setsSizeZeit: sharedZeit.length,
+                        setsSizeNYT: sharedNYT.length,
                         setsZeit: [
                             aSetZeit,
                             bSetZeit,
                             {
-                                sets: [a.country, b.country],
+                                sets: [a.country + "_zeit", b.country + "_zeit"],
                                 size: sharedZeit.length,
                                 shared: sharedZeit
                             }
-                        ],
-                        articleSetsZeit: [
-                            aSetArticlesZeit,
-                            bSetArticlesZeit,
-                            {
-                                sets: [a.country, b.country],
-                                size: articlesZeit.length,
-                                shared: articlesZeit
-                            } 
                         ],
                         setsNYT: [
                             aSetNyt,
                             bSetNyt,
                             {
-                            sets: [a.country, b.country],
+                            sets: [a.country + "_nyt", b.country +  "_nyt"],
                             size: sharedNYT.length,
                             shared: sharedNYT
                             }
-                        ],
-                        articleSetsNYT: [
-                            aSetArticlesNyt,
-                            bSetArticlesNyt,
-                            {
-                                sets: [a.country, b.country],
-                                size: articlesNYT.length,
-                                shared: articlesNYT
-                            } 
-                        ],
+                        ]
                     })
                 }
             }
@@ -147,6 +106,8 @@
             return overlaps
         }
     )
+
+    $inspect(countriesOverlap)
 
     // The secondary dropdown data are calculated based on the overlaps
     // to avoid listing empty comparisons
@@ -168,27 +129,6 @@
     $effect(() => {
         comparisonCountry = secondaryDropDownData[0];
     })
-
-    let overlapsNYT = $derived(countriesOverlap.map((d) => {
-        return {
-            country:d.country,
-            categoriesSet: d.setsNYT,
-            keywordsOverlapSize: d.NYTKwsShare,
-            articlesSet: d.articleSetsNYT,
-            articlesOverlapSize: d.NYTArticlesShare
-        }
-    }))
-
-    let overlapsZeit = $derived(countriesOverlap.map((d) => {
-        return {
-            country:d.country,
-            categoriesSet: d.setsZeit,
-            keywordsOverlapSize: d.ZeitKwsShare,
-            articlesSet: d.articleSetsZeit,
-            articlesOverlapSize: d.ZeitArticlesShare
-        }
-    }))
-
 </script>
 <div class="w-full max-h-1/2">
     <div class="w-full flex">
@@ -216,43 +156,19 @@
                 </div>
         </div>
         <div class="w-2/7">
-            <h4 class="mx-2">Headlines from shared articles</h4>
+            <h4 class="mx-2">Is articles? 
+                <button class="cursor-pointer" onclick={changeComparisonVariable}>
+                    {isArticles}
+                </button>
+            </h4>
          </div>
     </div>
-
-    <div class="w-full flex">
-        <div class="w-5/7">
-            {#if comparisonCountry}
-                <div class="flex w-full mt-10">
-                        <div class="mx-2 w-1/2">
-                            <div>
-                                <p class="text-sm text-center">In <span class="text-nyt-violet-dark">The New York Times</span></p>
-                            </div>
-                            <div>
-                                <VennDiagram 
-                                    data={overlapsNYT} 
-                                    comparisonCountry={comparisonCountry}
-                                    outlet={"NYT"}
-                                />
-                            </div>
-                        </div>
-                        <div class="mx-2 w-1/2">
-                            <div>
-                                <p class="text-sm text-center">In <span class="text-zeit-peach-dark">Zeit Online</span></p>
-                            </div>
-                            <div>
-                                <VennDiagram 
-                                    data={overlapsZeit} 
-                                    comparisonCountry={comparisonCountry}
-                                    outlet={"Zeit"}
-                                />
-                            </div>
-                        </div>
-                </div>
-            {/if}
-        </div>
-        <div class="w-2/7">
-            <VennOverlapItems data={countriesOverlap} comparisonCountry={comparisonCountry}/>
-        </div>
+    <div>
+        {#if comparisonCountry}
+            <VennContainer 
+                data={countriesOverlap} 
+                comparisonCountry={comparisonCountry}
+            />
+        {/if}
     </div>
 </div>
