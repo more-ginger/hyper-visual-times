@@ -1,8 +1,3 @@
-<script lang=ts>
-	import MainIllustration from "$lib/essay/MainIllustration.svelte";
-
-    
-</script>
 <div>
     <div class="border-b mt-2"><h4>How to read the chart:</div>
     <div class="my-4 xl:grid xl:my-10 xl:grid-cols-3 xl:content-evenly">

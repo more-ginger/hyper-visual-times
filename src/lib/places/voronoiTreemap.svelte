@@ -7,13 +7,19 @@
     import seedrandom  from "seedrandom";
     import VoronoiSegment from "./voronoiSegment.svelte";
 
-    const rng = seedrandom('World');
-    let { regionData } = $props();
+    let { regionData, step } = $props();
     let fullWidth = $state(100); 
     let fullHeight = $state(100);
+
+    const rng = seedrandom('World');
+
+    
     let segmentForRadius = $derived(Math.min(fullWidth, fullHeight))
     let radius = $derived(segmentForRadius / 2.2)
-    let descendants = $state<Array<{ height: number; [key: string]: any }>>([]);
+    let descendants = $state<Array<{ 
+        height: number; 
+        polygon: { site: { x: number; y: number }; [key: string]: any }[]; [key: string]: any 
+    }>>([]);
 
     const _voronoiTreemap = voronoiTreemap()
 
@@ -73,29 +79,27 @@
     })
 
     const groupedLeaves =  $derived(
-        descendants.reduce((acc, item) => {
+        descendants.reduce((acc: { [key: number]: typeof descendants }, item) => {
             const key = item.height;
             (acc[key] = acc[key] || []).push(item);
             return acc;
-        }, {})
+        }, {} as { [key: number]: typeof descendants })
     )
 
-//     // Groups data for easier rendering and styling
-//    const groupedLeaves: { [key: string]: any[] } = $derived(
-//         grouped.reduce((acc, [key, value]) => {
-//                if (value) acc[key.toString()] = value;
-//                return acc;
-//         }, {} as { [key: string]: any[] })
-//    );
-
    const keysOfLeaves = $derived(Object.keys(groupedLeaves))
-
-
 </script>
 <div class="h-full">
     <div>
-        <div class=border-b><h4>Areas of interests</h4></div>
-        <div><p>Subtitle</p></div>
+        <div class=border-b><h4>Are there geographical spheres of coverage?</h4></div>
+        <div>
+            <p>
+                This chart shows whether certain geopolitical regions 
+                are referenced more often by either 
+                <span class="text-zeit-peach-dark">Zeit Online (55%)</span> 
+                or 
+                <span class="text-nyt-violet-dark">The New York Times (45%)</span>.
+            </p>
+        </div>
     </div>
     <div class="h-9/10">
         <svg 
@@ -110,14 +114,14 @@
                     <g>
                     {#each keysOfLeaves as key}
                         <g class={"treemap-" + key}>
-                            {#each groupedLeaves[key] as segment} 
-                                <VoronoiSegment segment={segment}/>
+                            {#each groupedLeaves[Number(key)] as segment} 
+                                <VoronoiSegment segment={segment} step={step}/>
                             {/each}
                         </g>
                     {/each}
                     {#each keysOfLeaves as key}
                         {#if key === "1"}
-                            {#each groupedLeaves[key] as label}
+                            {#each groupedLeaves[Number(key)] as label}
                                 <text 
                                     class={"fill-ivory-default" + " " + label.parent.data.outlet}
                                     x={label.polygon.site.x} 

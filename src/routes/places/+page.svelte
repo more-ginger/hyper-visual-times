@@ -10,6 +10,7 @@
     import TotalCoverageBar from "$lib/places/totalCoverageBars.svelte";
     import TotalCovLegend from '$lib/places/totalCovLegend.svelte';
     import VoronoiTreemap from '$lib/places/voronoiTreemap.svelte';
+    import VoronoiLegend from '$lib/places/voronoiLegend.svelte';
     import VennComparison from '$lib/places/VennComparison.svelte';
 
     let { data }: PageProps = $props();
@@ -42,13 +43,13 @@
         </section>
         <section id="scrolly-2" class="md:flex md:flex-row-reverse">
             <figure class="sticky w-full h-dvh top-0 md:basis-2/3 p-4">
-                <VoronoiTreemap regionData={data.coverageByRegion}/>
+                <VoronoiTreemap regionData={data.coverageByRegion} step={step}/>
             </figure>
             <article class="w-full relative md:basis-1/3">
                 <div data-step="0" class="step p-6 table" style="height:900px">
                     <div class="align-middle table-cell">
                         <h2 class="mb-4">Are there geographical spheres of interest?</h2>
-                        <p>
+                        <p class="mb-2">
                              Let us consider all geographical entities used as meta-keywords. 
                              For both outlets, between 40 to 50% of news content tagged with  geo-related keywords refer to the newspaper's own country. 
                              The rest of this coverage is split across other countries, as shown on the left. 
@@ -87,6 +88,11 @@
                     However, whereas for Zeit the coverage of European countries is more nuanced and based on individual countries – a good portion of the NYT coverage refers generally to “Europe”. 
                     In this sense, one of the most important aspects that emerge is the lack of reciprocal attention. 
                     Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central.
+                    </div>
+                </div>
+                <div class="p-2 xl:py-8 h-dvh">
+                    <div>
+                        <VoronoiLegend />
                     </div>
                 </div>
             </article>
@@ -129,7 +135,6 @@
         </section>
         <section id="scrolly-3" class="w-full">
             <article class="w-full md:w-3/7 m-auto">
-            
              <TextRenderer rawtext={rawChapter3Text}/>
             </article>
             <figure class="w-full">

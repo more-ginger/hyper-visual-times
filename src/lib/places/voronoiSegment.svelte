@@ -1,5 +1,5 @@
 <script lang=ts>
-    let { segment } = $props();
+    let { segment, step } = $props();
 
     interface segmentInterface {
         height: number,
