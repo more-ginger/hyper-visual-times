@@ -17,8 +17,8 @@
     let countriesPerRow = 5;
     let currentOutlet = $state("Zeit")
 
-    let currentPrimaryOutlet = $derived(step === 6 ? currentOutlet : "Zeit");
-    let showFirstTenOnly = $derived(step === 6 ? true : false); 
+    let showFirstTenOnly = $derived(step === 6 || step === 7 ? true : false); 
+    let showLastTenOnly = $derived(step === 8 || step === 9 ? true : false);
 
     function switchPrimaryCountry () {
         if (currentOutlet === "NYT") {
@@ -27,6 +27,14 @@
             currentOutlet = "NYT";
         }
     }
+
+    $effect(() => {
+        if (step === 6) {
+            currentOutlet = "Zeit"
+        } else if (step === 7) {
+            currentOutlet = "NYT"
+        }
+    })
     
     let dataWithoutPrimaryCountry = $derived(
         countryData.data.map((d:parsedCountryData) => { 
@@ -141,8 +149,17 @@
                 {/each}
             </g>
             {#each visualizationData as country, i}
-                <g transform={`translate(${country.rowNumber * fullWidth / countriesPerRow}, ${fullHeight / countriesPerRow + country.columnNumber * fullHeight / countriesPerRow + 50})`}>
-                    <g class={showFirstTenOnly && i > 9 ? "hidden" : ""}>
+                <g transform={
+                    `translate(
+                        ${country.rowNumber * fullWidth / countriesPerRow}, 
+                        ${fullHeight / countriesPerRow + country.columnNumber * fullHeight / countriesPerRow + 50}
+                    )`}>
+                    <g class={
+                        showFirstTenOnly && i > 9 || 
+                        showLastTenOnly && i < 10 ? 
+                        "hidden" : 
+                        ""
+                    }>
                         <g>
                             {#each yAxis as tick}
                                 {#if tick != 0}
@@ -175,17 +192,21 @@
                     <g transform="translate(10, 0)">
                         <TotalCovSvgBar 
                             i={i} 
-                            showFirstTenOnly={showFirstTenOnly} 
+                            showFirstTenOnly={showFirstTenOnly}
+                            showLastTenOnly={showLastTenOnly}
                             path={polygonVertexYScale(country.count_zeit)} 
                             transformFactor={"translate(0, 0)"} 
-                            outlet="zeit"
+                            outlet="Zeit"
+                            currentOutlet={currentOutlet}
                         />
                         <TotalCovSvgBar  
                             i={i}
                             showFirstTenOnly={showFirstTenOnly}
+                            showLastTenOnly={showLastTenOnly}
                             path={polygonVertexYScale(country.count_nyt)}  
                             transformFactor={"translate(40, 0)"} 
-                            outlet="nyt"
+                            outlet="NYT"
+                            currentOutlet={currentOutlet}
                         />
                     </g>
                 </g>
