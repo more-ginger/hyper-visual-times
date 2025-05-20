@@ -1,4 +1,6 @@
 <script lang=ts>
+	import MainIllustration from "$lib/essay/MainIllustration.svelte";
+
     
 </script>
 <div>
@@ -32,6 +34,10 @@
         </div>
     </div>
     <div>
-        <p></p>
+        <h4>Notes:</h4>
+        <ul class="text-xs">
+            <li class="mb-2">1. The count of keywords related to the newspapers’ respective countries is excluded.</li>
+            <li class="mb-2">2. The maximum point on the scale is calculated across the two news outlet to allows easier comparison.</li>
+        </ul>
     </div>
 </div>

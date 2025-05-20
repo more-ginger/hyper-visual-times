@@ -142,7 +142,7 @@
         bind:clientWidth={fullWidth} 
         bind:clientHeight={fullHeight}
     >
-        <g class="translate-y-16">
+        <g class="translate-y-12">
             <g class="axis">
                 {#each {length: top20Countries.length/countriesPerRow}, pos}
                     <g>
