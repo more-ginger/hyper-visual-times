@@ -110,6 +110,17 @@
         line-height: 1.5rem;
     }
 
+    button {
+        border: 1px solid black;
+        padding: 0rem 0.5rem 0rem 0.5rem;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: var(--color-ivory-default);
+    }
+
     .essay {
         h2, h3, h4, p {
             margin: 2rem auto;
