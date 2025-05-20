@@ -31,7 +31,6 @@
             <p class="text-center text-xs mx-4 my-2 xl:mx-0">The groups are in descending order depending on the selected outlet</p>            
         </div>
     </div>
-    <div class="border-b mt-2"><h4>Change the order:</div>
     <div>
         <p></p>
     </div>

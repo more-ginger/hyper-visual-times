@@ -1,12 +1,12 @@
 <script lang=ts>
     let {
-        showFirstTenOnly, 
-        showLastTenOnly, 
-        i, 
-        path, 
-        transformFactor, 
-        outlet, 
-        currentOutlet
+        showFirstTenOnly, // Controls color if only first ten are visible
+        showLastTenOnly, // Controls color if only last ten are visible
+        i, // index of bars
+        path, // ∆
+        transformFactor, // Horizontal positioning for bar
+        outlet, // Outlet, controls primary color
+        currentOutlet // controls secondary color
     } = $props();
     
     let primaryColor = outlet == "NYT" ? 

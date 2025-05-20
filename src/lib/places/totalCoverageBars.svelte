@@ -16,26 +16,10 @@
     let showHomeCountry = false;
     let countriesPerRow = 5;
     let currentOutlet = $state("Zeit")
-
     let showFirstTenOnly = $derived(step === 6 || step === 7  ? true : false); 
-    let showLastTenOnly = $derived(step === 8 || step === 9 ? true : false);
-
-    function switchPrimaryCountry () {
-        if (currentOutlet === "NYT") {
-            currentOutlet = "Zeit";
-        } else {
-            currentOutlet = "NYT";
-        }
-    }
-
-    $effect(() => {
-        if (step === 6 || step === 8) {
-            currentOutlet = "NYT"
-        } else if (step === 7 || step === 9) {
-            currentOutlet = "Zeit"
-        }
-    })
+    let showLastTenOnly = $derived(step === 8 || step === 9 ? true : false);  
     
+    // Filter the data to remove Germany and the US from respective countries, avoids re-scaling  
     let dataWithoutPrimaryCountry = $derived(
         countryData.data.map((d:parsedCountryData) => { 
             return {
@@ -45,6 +29,7 @@
             }
     }))
     
+    // Sorts based on currentOutlet and slices to retain first 20 results
     let top20Countries = $derived(
         dataWithoutPrimaryCountry
             .sort((a:parsedCountryData, b:parsedCountryData) => {
@@ -55,13 +40,13 @@
             .slice(0, 20)
     )
 
+    //// Vis ////
     const domainValues = $derived(
         dataWithoutPrimaryCountry
             .map((d:parsedCountryData) => d.count_zeit)
             .concat(dataWithoutPrimaryCountry.map((d:parsedCountryData) => d.count_nyt))
             .sort((a:number,b:number) => { return b - a})
     )
-
 
     let visualizationData = $derived(
         top20Countries.map((d: parsedCountryData, i: number) => {
@@ -89,8 +74,6 @@
         })
     )
 
-
-
     const polygonVertexYScale = $derived(
         d3.scaleLinear()
             .domain(d3.extent(domainValues))
@@ -98,11 +81,35 @@
     )
 
     const yAxis = $derived(polygonVertexYScale.ticks(5).slice(0, 3))
+    ////
+    
+    // Interactivity
+    // controls how the data should be sorted on direct selection
+    function switchPrimaryCountry () {
+        if (currentOutlet === "NYT") {
+            currentOutlet = "Zeit";
+        } else {
+            currentOutlet = "NYT";
+        }
+    }
+
+    // controls data sorting on step
+    $effect(() => {
+        if (step === 6 || step === 8) {
+            currentOutlet = "NYT"
+        } else if (step === 7 || step === 9) {
+            currentOutlet = "Zeit"
+        }
+    })
 
 </script>
 <div class="h-full">
     <div>
-        <div class=border-b><h4>What countries and geographic entities are mentioned the most?</h4></div>
+        <div class=border-b>
+            <h4>
+                What countries and geographic entities are mentioned the most?
+            </h4>
+        </div>
         <div>
             <p>
                 The chart compares the use of geo-related keywords in 
@@ -116,12 +123,12 @@
             {#if currentOutlet == "Zeit"}
                 <button onclick={switchPrimaryCountry}>
                     <span class="text-zeit-peach-dark">Zeit Online</span>
-                    <img class="inline" src="icons/ui-switch.svg"/>
+                    <img class="inline" src="icons/ui-switch.svg" alt="Switch with The New York Times"/>
                 </button>
             {:else}
                 <button onclick={switchPrimaryCountry}>
                     <span class="text-nyt-violet-dark">The New York Times</span>
-                    <img class="inline" src="icons/ui-switch.svg"/>
+                    <img class="inline" src="icons/ui-switch.svg" alt="Switch with Zeit"/>
                 </button>
             {/if}
             top 20 keywords.
