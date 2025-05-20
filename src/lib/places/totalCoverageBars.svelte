@@ -17,7 +17,7 @@
     let countriesPerRow = 5;
     let currentOutlet = $state("Zeit")
 
-    let showFirstTenOnly = $derived(step === 6 || step === 7 ? true : false); 
+    let showFirstTenOnly = $derived(step === 6 || step === 7  ? true : false); 
     let showLastTenOnly = $derived(step === 8 || step === 9 ? true : false);
 
     function switchPrimaryCountry () {
@@ -29,10 +29,10 @@
     }
 
     $effect(() => {
-        if (step === 6) {
-            currentOutlet = "Zeit"
-        } else if (step === 7) {
+        if (step === 6 || step === 8) {
             currentOutlet = "NYT"
+        } else if (step === 7 || step === 9) {
+            currentOutlet = "Zeit"
         }
     })
     
@@ -106,21 +106,21 @@
         <div>
             <p>
                 The chart compares the use of geo-related keywords in 
-                <span class="text-zeit-peach-default">Die Zeit</span> 
+                <span class="text-zeit-peach-dark">Zeit Online</span> 
                 with 
-                <span class="text-nyt-violet-default">The New York Times</span>.
+                <span class="text-nyt-violet-dark">The New York Times</span>.
             </p>
         </div>
         <div>
             Countries are sorted based on
             {#if currentOutlet == "Zeit"}
                 <button onclick={switchPrimaryCountry}>
-                    <span class="text-zeit-peach-default">Zeit Online</span>
+                    <span class="text-zeit-peach-dark">Zeit Online</span>
                     <img class="inline" src="icons/ui-switch.svg"/>
                 </button>
             {:else}
                 <button onclick={switchPrimaryCountry}>
-                    <span class="text-nyt-violet-default">The New York Times</span>
+                    <span class="text-nyt-violet-dark">The New York Times</span>
                     <img class="inline" src="icons/ui-switch.svg"/>
                 </button>
             {/if}
