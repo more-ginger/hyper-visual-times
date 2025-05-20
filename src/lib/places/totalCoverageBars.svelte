@@ -56,9 +56,9 @@
     )
 
     const domainValues = $derived(
-        top20Countries
+        dataWithoutPrimaryCountry
             .map((d:parsedCountryData) => d.count_zeit)
-            .concat(top20Countries.map((d:parsedCountryData) => d.count_nyt))
+            .concat(dataWithoutPrimaryCountry.map((d:parsedCountryData) => d.count_nyt))
             .sort((a:number,b:number) => { return b - a})
     )
 
