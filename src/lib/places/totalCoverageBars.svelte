@@ -2,6 +2,7 @@
     // @ts-expect-error
      import * as d3 from "d3";
      import TotalCovSvgBar from "./totalCovSvgBar.svelte";
+     import TotalCovSvgLabels from "./totalCovSvgLabels.svelte";
 
     interface parsedCountryData {
         country: string,
@@ -216,6 +217,11 @@
                             currentOutlet={currentOutlet}
                         />
                     </g>
+                    <TotalCovSvgLabels 
+                        country={country} 
+                        step={step} 
+                        scale={polygonVertexYScale}
+                    />
                 </g>
             {/each}
         </g>
