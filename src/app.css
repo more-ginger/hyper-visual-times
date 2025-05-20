@@ -50,12 +50,12 @@
     /* Colors */
     --color-ivory-default: #fcf4e9;
     --color-ivory-dark: #fcf4e9;
-    --color-zeit-peach-light: #ffe2e3;
-    --color-zeit-peach-default: #FB9193;
-    --color-zeit-peach-dark: #DF080C;
-    --color-nyt-violet-light: #e2e3ff;
-    --color-nyt-violet-default: #767BDE;
-    --color-nyt-violet-dark: #1b207b;
+    --color-zeit-peach-light: #7EA7FF;
+    --color-zeit-peach-default: #4580FF;
+    --color-zeit-peach-dark: #0036AC;
+    --color-nyt-violet-light: #FFDB93;
+    --color-nyt-violet-default: #FFBC36;
+    --color-nyt-violet-dark: #CE8900;
 
     --animate-bounce: bounce 14s ease-in-out infinite;
     --animate-bounce-two: bouncetwo 12s ease-in-out infinite;

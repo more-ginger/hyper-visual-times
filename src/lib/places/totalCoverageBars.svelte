@@ -15,9 +15,18 @@
     let sum = 0;
     let showHomeCountry = false;
     let countriesPerRow = 5;
+    let currentOutlet = $state("Zeit")
 
-    let currentPrimaryOutlet = $derived(step === 1 || step === 3  ? "NYT" : "Zeit"); 
-    let showFirstTenOnly = $derived(step === 1 || step === 2 ? true : false); 
+    let currentPrimaryOutlet = $derived(step === 6 ? currentOutlet : "Zeit");
+    let showFirstTenOnly = $derived(step === 6 ? true : false); 
+
+    function switchPrimaryCountry () {
+        if (currentOutlet === "NYT") {
+            currentOutlet = "Zeit";
+        } else {
+            currentOutlet = "NYT";
+        }
+    }
     
     let dataWithoutPrimaryCountry = $derived(
         countryData.data.map((d:parsedCountryData) => { 
@@ -31,7 +40,7 @@
     let top20Countries = $derived(
         dataWithoutPrimaryCountry
             .sort((a:parsedCountryData, b:parsedCountryData) => {
-                return currentPrimaryOutlet == "Zeit" 
+                return currentOutlet == "Zeit" 
                 ? b.count_zeit - a.count_zeit
                 : b.count_nyt - a.count_nyt
             })
@@ -87,7 +96,27 @@
     <div>
         <div class=border-b><h4>What countries and geographic entities are mentioned the most?</h4></div>
         <div>
-            <p>The chart compares the use of geo-related keywords in <span class="text-zeit-peach-default">Die Zeit</span> with <span class="text-nyt-violet-default">The New York Times</span>.</p>
+            <p>
+                The chart compares the use of geo-related keywords in 
+                <span class="text-zeit-peach-default">Die Zeit</span> 
+                with 
+                <span class="text-nyt-violet-default">The New York Times</span>.
+            </p>
+        </div>
+        <div>
+            Countries are sorted based on
+            {#if currentOutlet == "Zeit"}
+                <button onclick={switchPrimaryCountry}>
+                    <span class="text-zeit-peach-default">Zeit Online</span>
+                    <img class="inline" src="icons/ui-switch.svg"/>
+                </button>
+            {:else}
+                <button onclick={switchPrimaryCountry}>
+                    <span class="text-nyt-violet-default">The New York Times</span>
+                    <img class="inline" src="icons/ui-switch.svg"/>
+                </button>
+            {/if}
+            top 20 keywords.
         </div>
     </div>
     <div class="h-9/10">
@@ -140,7 +169,7 @@
                             {/each}
                         </g>
                         <text x="0" y="15" font-size="14">
-                            {country.country}
+                            {i + 1}. {country.country}
                         </text>
                     </g>
                     <g transform="translate(10, 0)">
@@ -159,44 +188,6 @@
                             outlet="nyt"
                         />
                     </g>
-                    <!-- {#if country.max_zeit}
-                        <g transform="translate(50, 0)">
-                            <text 
-                            class="fill-zeit-peach-dark"
-                            x="0"
-                            y={polygonVertexYScale(country.count_zeit) - 30} 
-                            font-size="10" 
-                            text-anchor="middle">
-                                Most covered by Zeit
-                            </text>
-                            <text
-                            class="fill-zeit-peach-dark"
-                            x="0" 
-                            y={polygonVertexYScale(country.count_zeit) - 10} 
-                            text-anchor="middle">
-                                {country.count_zeit}
-                            </text>
-                        </g>
-                    {/if}
-                    {#if country.max_nyt}
-                        <g transform="translate(100, 0)">
-                            <text 
-                            class="fill-nyt-violet-dark"
-                            x="0"
-                            y={polygonVertexYScale(country.count_nyt) - 30} 
-                            font-size="10" 
-                            text-anchor="middle">
-                                Most covered by NYT
-                            </text>
-                            <text
-                            class="fill-nyt-violet-dark"
-                            x="0" 
-                            y={polygonVertexYScale(country.count_nyt) - 10} 
-                            text-anchor="middle">
-                                {country.count_nyt}
-                            </text>
-                        </g>
-                    {/if} -->
                 </g>
             {/each}
         </g>
