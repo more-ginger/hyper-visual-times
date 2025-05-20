@@ -37,6 +37,13 @@
                 size: a[`${variableForComparison}_nyt`].length, 
                 shared: a[`${variableForComparison}_nyt`],
             }
+
+            const overlapBetweenOutlets = {
+                sets: [a.country + "_nyt", a.country + "_zeit"],
+                label: [a.country], 
+                size: 0, 
+                shared: []
+            }
             
             const aSetZeit = {
                 sets: [a.country + "_zeit"],
@@ -55,6 +62,13 @@
                     shared: b[`${variableForComparison}_nyt`]
                 }
 
+
+                const overlapBetweenBOutlets = {
+                    sets: [b.country + "_nyt", b.country + "_zeit"],
+                    label: [b.country], 
+                    size: 0, 
+                    shared: []
+                }
                 
                 const bSetZeit = {
                     sets: [b.country + "_zeit"],
@@ -84,6 +98,8 @@
                         setsZeit: [
                             aSetZeit,
                             bSetZeit,
+                            overlapBetweenOutlets,
+                            overlapBetweenBOutlets,
                             {
                                 sets: [a.country + "_zeit", b.country + "_zeit"],
                                 size: sharedZeit.length,
@@ -93,6 +109,8 @@
                         setsNYT: [
                             aSetNyt,
                             bSetNyt,
+                            overlapBetweenOutlets,
+                            overlapBetweenBOutlets,
                             {
                             sets: [a.country + "_nyt", b.country +  "_nyt"],
                             size: sharedNYT.length,
@@ -171,4 +189,40 @@
             />
         {/if}
     </div>
+<!-- 
+    <div class="w-full flex">
+        <div class="w-5/7">
+            {#if comparisonCountry}
+                <div class="flex w-full mt-10">
+                        <div class="mx-2 w-1/2">
+                            <div>
+                                <p class="text-sm text-center">In <span class="text-nyt-violet-dark">The New York Times</span></p>
+                            </div>
+                            <div>
+                                <VennDiagram 
+                                    data={overlapsNYT} 
+                                    comparisonCountry={comparisonCountry}
+                                    outlet={"NYT"}
+                                />
+                            </div>
+                        </div>
+                        <div class="mx-2 w-1/2">
+                            <div>
+                                <p class="text-sm text-center">In <span class="text-zeit-peach-dark">Zeit Online</span></p>
+                            </div>
+                            <div>
+                                <VennDiagram 
+                                    data={overlapsZeit} 
+                                    comparisonCountry={comparisonCountry}
+                                    outlet={"Zeit"}
+                                />
+                            </div>
+                        </div>
+                </div>
+            {/if}
+        </div>
+        <div class="w-2/7">
+            <VennOverlapItems data={countriesOverlap} comparisonCountry={comparisonCountry}/>
+        </div>
+    </div> -->
 </div>

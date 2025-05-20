@@ -5,7 +5,7 @@
     let {data, comparisonCountry} = $props()
     let svgWidth = $state(400);
     const svgHeight = 500;
-    const padding = 50; // optional
+    const padding = 20; // optional
     const scaleToFit = false;
 
     const currentDataSelection = $derived(data.filter((d:{country:string}) => {return d.country == comparisonCountry.key}))
