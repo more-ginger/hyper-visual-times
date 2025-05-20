@@ -49,7 +49,7 @@
     
     /* Colors */
     --color-ivory-default: #fcf4e9;
-    --color-ivory-dark: #fcf4e9;
+    --color-ivory-dark: #82561b;
     --color-zeit-peach-light: #7EA7FF;
     --color-zeit-peach-default: #4580FF;
     --color-zeit-peach-dark: #0036AC;
@@ -151,12 +151,14 @@
         }
 
         .footnotes {
-            color: var(--color-yellow-600);
+            color: var(--color-ivory-dark);
 
             li {
-                max-width: 200px;
+                max-width: 220px;
                 font-size: 12px;
-                border-bottom: 1px solid var(--color-yellow-600);
+                border: 1px solid var(--color-ivory-dark);
+                border-radius: 10px;
+                background-color: var(--color-ivory-default);
                 overflow: hidden;
                 position: absolute;
                 left: 70%;

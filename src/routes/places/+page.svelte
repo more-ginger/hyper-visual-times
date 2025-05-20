@@ -42,7 +42,7 @@
             </div>
         </section>
         <section id="scrolly-2" class="md:flex md:flex-row-reverse">
-            <figure class="sticky w-full h-dvh top-0 md:basis-2/3 p-4">
+            <figure class="sticky w-full h-dvh top-0 md:basis-2/3 p-4 xl:py-10 xl:p-4">
                 <VoronoiTreemap regionData={data.coverageByRegion} step={step}/>
             </figure>
             <article class="w-full relative md:basis-1/3">
@@ -90,7 +90,7 @@
                     Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central.
                     </div>
                 </div>
-                <div class="p-2 xl:py-8 h-dvh">
+                <div class="p-2 xl:py-10 h-dvh">
                     <div>
                         <VoronoiLegend />
                     </div>
@@ -114,19 +114,19 @@
                         </p>
                     </div>
                 </div>
-                <div data-step="7" class="step px-4" style="height:600px">
+                <div data-step="7" class="step px-4 p-6" style="height:600px">
                     For Zeit, the outlook is similar, with important differences. First, the US is the most referenced country. 
                     Then, Palestine is seldom referenced – outside of the top 20. China is also less referenced than in NYT coverage.
                 </div>
-                <div data-step="8" class="step px-4" style="height:600px">
+                <div data-step="8" class="step px-4 p-6" style="height:600px">
                     For both outlets, the remaining 10 countries express more closely the interest in countries that are either geographically or economically close. 
                     For the NYT these are Canada, Georgia, Germany, Mexico, Japan, Syria, India, Italy, South Korea, and Brazil.
                 </div>
-                <div data-step="9" class="step px-4" style="height:600px">
+                <div data-step="9" class="step px-4 p-6" style="height:600px">
                     From the Zeit perspective, relevant keywords relate to countries mostly part of the EU or with a direct shared border with Germany. 
                     Exceptions are Turkey (close to Germany for political and social reasons) and Middle Eastern countries close to the Israel-Palestine or Russia-Ukraine conflicts.
                 </div>
-                <div data-step="10" class="step p-2 xl:py-8 h-dvh">
+                <div data-step="10" class="step p-2 xl:py-10 h-dvh">
                     <div>
                         <TotalCovLegend />
                     </div>
@@ -137,7 +137,7 @@
             <article class="w-full md:w-3/7 m-auto">
              <TextRenderer rawtext={rawChapter3Text}/>
             </article>
-            <figure class="w-full">
+            <figure class="w-full h-dvh top-50 md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
                 <VennComparison data={data.data}/>
             </figure>
         </section>
