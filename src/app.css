@@ -175,6 +175,10 @@
         min-height: 100px;
     }
 
+    .last-step {
+        min-height: 2000px;
+    }
+
     #tooltip {
         max-width: 200px;
         display: flex;
