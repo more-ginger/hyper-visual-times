@@ -15,8 +15,22 @@
         }
     }))
 </script>
-<div class="w-full h-full flex">
-    {#each dataSampleForRow as articlesPair, a}
-        <ArticlesColumn data={articlesPair} index={a + 1}/>
-    {/each}
-</div>
+<figure class="w-full">
+    <div class="w-full h-dvh flex">
+        {#each dataSampleForRow as articlesPair, a}
+            <ArticlesColumn data={articlesPair} index={a + 1}/>
+        {/each}
+    </div>
+    <div>
+        <img src="img/pn-news-illustration.svg"/>
+    </div>
+    <div>
+        <img src="img/pn-news-illustration_step2.svg"/>
+    </div>
+        <div>
+        <img src="img/pn-news-illustration_step3.svg"/>
+    </div>
+        <div>
+        <img src="img/pn-news-illustration_step4.svg"/>
+    </div>
+</figure>
