@@ -21,8 +21,7 @@
         scroller
         .setup({
             step: ".step",
-            debug: false,
-            offset: 0.7
+            debug: false
         })
         .onStepEnter((response) => {
             step = response.index
@@ -48,7 +47,7 @@
                 <VoronoiTreemap regionData={data.coverageByRegion} step={step}/>
             </figure>
             <article class="w-full relative md:basis-1/3">
-                <div data-step="0" class="step p-6 table" style="height:900px">
+                <div data-step="0" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                         <h2 class="mb-4">Are there geographical spheres of interest?</h2>
                         <p class="mb-2">
@@ -66,26 +65,26 @@
                         </p>
                     </div>
                 </div>
-                <div data-step="1" class="step p-6 table" style="height:900px">
+                <div data-step="1" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                         Grassland (2023) has already observed how Western European newspapers tend to cover macro-regions of interests: areas that have geographical and political significance for the host country of the newspaper. 
                         Looking at the visualization on the right, this observation seems to be confirmed: for Zeit, Central and Western Europe are the main regions of interest. 
                         Even in relation to conflict and against the cultural background that ties Germany and Israel, the use of Russia-Ukraine keywords is much higher than Israel–Palestine ones. 
                     </div>
                 </div>
-                <div data-step="2" class="step p-6 table" style="height:900px">
+                <div data-step="2" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                         For the New York Times, half of the coverage is tagged with geo-political keywords about the two regions of Asia and Middle East. 
                         At first, this delineates a largely conflict-first approach, with the Israel-Palestine conflict as central. 
                         However, it also brings forward a much broader concern of the newspaper for foreign affairs, especially if compared with Zeit.                    </div>
                 </div>
-                <div data-step="3" class="step p-6 table" style="height:900px">
+                <div data-step="3" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                         The NYT also provides tags about geographical entities that are not directly associated with countries, like natural landmarks or geographically distinct areas encompassing several countries (seas, deserts, etc.). 
                         This shows a different, possibly more granular, strategy in producing and tagging content.    
                     </div>
                 </div>
-                <div data-step="4" class="step p-6 table" style="height:900px">
+                <div data-step="4" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                     However, whereas for Zeit the coverage of European countries is more nuanced and based on individual countries – a good portion of the NYT coverage refers generally to “Europe”. 
                     In this sense, one of the most important aspects that emerge is the lack of reciprocal attention. 

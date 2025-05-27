@@ -163,7 +163,7 @@
                 or 
                 <span class="text-nyt-dark">
                     The New York Times (45%)
-                </span>.
+                </span>. Interact with individual tiles or keep scrolling for details.
             </p>
         </div>
     </div>
@@ -185,7 +185,7 @@
                 role="button"
                 tabindex="0"
             />
-           <g transform={`translate(${(fullWidth - radius) / 7}, ${(fullHeight - radius) / 12})`}>
+           <g transform={`translate(${(fullWidth - radius) / 7}, ${(fullHeight - radius) / 20})`}>
                 {#if keysOfLeaves}
                     <g>
                     {#each keysOfLeaves as key}
