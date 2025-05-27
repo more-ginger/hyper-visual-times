@@ -2,6 +2,7 @@
     // @ts-expect-error
      import * as d3 from "d3";
      import TotalCovSvgBar from "./totalCovSvgBar.svelte";
+     import TotalCovSvgLabels from "./totalCovSvgLabels.svelte";
 
     interface parsedCountryData {
         country: string,
@@ -15,10 +16,11 @@
     let sum = 0;
     let showHomeCountry = false;
     let countriesPerRow = 5;
-
-    let currentPrimaryOutlet = $derived(step === 1 || step === 3  ? "NYT" : "Zeit"); 
-    let showFirstTenOnly = $derived(step === 1 || step === 2 ? true : false); 
+    let currentOutlet = $state("Zeit")
+    let showFirstTenOnly = $derived(step === 6 || step === 7  ? true : false); 
+    let showLastTenOnly = $derived(step === 8 || step === 9 ? true : false);  
     
+    // Filter the data to remove Germany and the US from respective countries, avoids re-scaling  
     let dataWithoutPrimaryCountry = $derived(
         countryData.data.map((d:parsedCountryData) => { 
             return {
@@ -28,23 +30,24 @@
             }
     }))
     
+    // Sorts based on currentOutlet and slices to retain first 20 results
     let top20Countries = $derived(
         dataWithoutPrimaryCountry
             .sort((a:parsedCountryData, b:parsedCountryData) => {
-                return currentPrimaryOutlet == "Zeit" 
+                return currentOutlet == "Zeit" 
                 ? b.count_zeit - a.count_zeit
                 : b.count_nyt - a.count_nyt
             })
             .slice(0, 20)
     )
 
+    //// Vis ////
     const domainValues = $derived(
-        top20Countries
+        dataWithoutPrimaryCountry
             .map((d:parsedCountryData) => d.count_zeit)
-            .concat(top20Countries.map((d:parsedCountryData) => d.count_nyt))
+            .concat(dataWithoutPrimaryCountry.map((d:parsedCountryData) => d.count_nyt))
             .sort((a:number,b:number) => { return b - a})
     )
-
 
     let visualizationData = $derived(
         top20Countries.map((d: parsedCountryData, i: number) => {
@@ -72,8 +75,6 @@
         })
     )
 
-
-
     const polygonVertexYScale = $derived(
         d3.scaleLinear()
             .domain(d3.extent(domainValues))
@@ -81,13 +82,57 @@
     )
 
     const yAxis = $derived(polygonVertexYScale.ticks(5).slice(0, 3))
+    ////
+    
+    // Interactivity
+    // controls how the data should be sorted on direct selection
+    function switchPrimaryCountry () {
+        if (currentOutlet === "NYT") {
+            currentOutlet = "Zeit";
+        } else {
+            currentOutlet = "NYT";
+        }
+    }
+
+    // controls data sorting on step
+    $effect(() => {
+        if (step === 6 || step === 8) {
+            currentOutlet = "NYT"
+        } else if (step === 7 || step === 9) {
+            currentOutlet = "Zeit"
+        }
+    })
 
 </script>
 <div class="h-full">
     <div>
-        <div class=border-b><h4>What countries and geographic entities are mentioned the most?</h4></div>
+        <div class="border-b mt-4">
+            <h4>
+                What countries and geographic entities are mentioned the most?
+            </h4>
+        </div>
         <div>
-            <p>The chart compares the use of geo-related keywords in <span class="text-zeit-peach-default">Die Zeit</span> with <span class="text-nyt-violet-default">The New York Times</span>.</p>
+            <p>
+                The chart compares the use of geo-related keywords in 
+                <span class="text-zeit-peach-dark">Zeit Online</span> 
+                with 
+                <span class="text-nyt-violet-dark">The New York Times</span>.
+            </p>
+        </div>
+        <div>
+            Countries are sorted based on
+            {#if currentOutlet == "Zeit"}
+                <button onclick={switchPrimaryCountry}>
+                    <span class="text-zeit-peach-dark">Zeit Online</span>
+                    <img class="inline" src="icons/ui-switch.svg" alt="Switch with The New York Times"/>
+                </button>
+            {:else}
+                <button onclick={switchPrimaryCountry}>
+                    <span class="text-nyt-violet-dark">The New York Times</span>
+                    <img class="inline" src="icons/ui-switch.svg" alt="Switch with Zeit"/>
+                </button>
+            {/if}
+            top 20 keywords.
         </div>
     </div>
     <div class="h-9/10">
@@ -97,7 +142,7 @@
         bind:clientWidth={fullWidth} 
         bind:clientHeight={fullHeight}
     >
-        <g class="translate-y-16">
+        <g class="translate-y-12">
             <g class="axis">
                 {#each {length: top20Countries.length/countriesPerRow}, pos}
                     <g>
@@ -112,8 +157,17 @@
                 {/each}
             </g>
             {#each visualizationData as country, i}
-                <g transform={`translate(${country.rowNumber * fullWidth / countriesPerRow}, ${fullHeight / countriesPerRow + country.columnNumber * fullHeight / countriesPerRow + 50})`}>
-                    <g class={showFirstTenOnly && i > 9 ? "hidden" : ""}>
+                <g transform={
+                    `translate(
+                        ${country.rowNumber * fullWidth / countriesPerRow}, 
+                        ${fullHeight / countriesPerRow + country.columnNumber * fullHeight / countriesPerRow + 50}
+                    )`}>
+                    <g class={
+                        showFirstTenOnly && i > 9 || 
+                        showLastTenOnly && i < 10 ? 
+                        "hidden" : 
+                        ""
+                    }>
                         <g>
                             {#each yAxis as tick}
                                 {#if tick != 0}
@@ -140,63 +194,34 @@
                             {/each}
                         </g>
                         <text x="0" y="15" font-size="14">
-                            {country.country}
+                            {i + 1}. {country.country}
                         </text>
                     </g>
                     <g transform="translate(10, 0)">
                         <TotalCovSvgBar 
                             i={i} 
-                            showFirstTenOnly={showFirstTenOnly} 
+                            showFirstTenOnly={showFirstTenOnly}
+                            showLastTenOnly={showLastTenOnly}
                             path={polygonVertexYScale(country.count_zeit)} 
                             transformFactor={"translate(0, 0)"} 
-                            outlet="zeit"
+                            outlet="Zeit"
+                            currentOutlet={currentOutlet}
                         />
                         <TotalCovSvgBar  
                             i={i}
                             showFirstTenOnly={showFirstTenOnly}
+                            showLastTenOnly={showLastTenOnly}
                             path={polygonVertexYScale(country.count_nyt)}  
                             transformFactor={"translate(40, 0)"} 
-                            outlet="nyt"
+                            outlet="NYT"
+                            currentOutlet={currentOutlet}
                         />
                     </g>
-                    <!-- {#if country.max_zeit}
-                        <g transform="translate(50, 0)">
-                            <text 
-                            class="fill-zeit-peach-dark"
-                            x="0"
-                            y={polygonVertexYScale(country.count_zeit) - 30} 
-                            font-size="10" 
-                            text-anchor="middle">
-                                Most covered by Zeit
-                            </text>
-                            <text
-                            class="fill-zeit-peach-dark"
-                            x="0" 
-                            y={polygonVertexYScale(country.count_zeit) - 10} 
-                            text-anchor="middle">
-                                {country.count_zeit}
-                            </text>
-                        </g>
-                    {/if}
-                    {#if country.max_nyt}
-                        <g transform="translate(100, 0)">
-                            <text 
-                            class="fill-nyt-violet-dark"
-                            x="0"
-                            y={polygonVertexYScale(country.count_nyt) - 30} 
-                            font-size="10" 
-                            text-anchor="middle">
-                                Most covered by NYT
-                            </text>
-                            <text
-                            class="fill-nyt-violet-dark"
-                            x="0" 
-                            y={polygonVertexYScale(country.count_nyt) - 10} 
-                            text-anchor="middle">
-                                {country.count_nyt}
-                            </text>
-                        </g>
-                    {/if} -->
+                    <TotalCovSvgLabels 
+                        country={country} 
+                        step={step} 
+                        scale={polygonVertexYScale}
+                    />
                 </g>
             {/each}
         </g>
