@@ -157,11 +157,11 @@
             <p>
                 This chart shows whether certain geopolitical regions 
                 are referenced more often by either 
-                <span class="text-zeit-peach-dark">
+                <span class="text-zeit-dark">
                     Zeit Online (55%)
                 </span> 
                 or 
-                <span class="text-nyt-violet-dark">
+                <span class="text-nyt-dark">
                     The New York Times (45%)
                 </span>.
             </p>

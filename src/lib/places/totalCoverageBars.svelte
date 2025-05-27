@@ -114,21 +114,21 @@
         <div>
             <p>
                 The chart compares the use of geo-related keywords in 
-                <span class="text-zeit-peach-dark">Zeit Online</span> 
+                <span class="text-zeit-dark">Zeit Online</span> 
                 with 
-                <span class="text-nyt-violet-dark">The New York Times</span>.
+                <span class="text-nyt-dark">The New York Times</span>.
             </p>
         </div>
         <div>
             Countries are sorted based on
             {#if currentOutlet == "Zeit"}
                 <button onclick={switchPrimaryCountry}>
-                    <span class="text-zeit-peach-dark">Zeit Online</span>
+                    <span class="text-zeit-dark">Zeit Online</span>
                     <img class="inline" src="icons/ui-switch.svg" alt="Switch with The New York Times"/>
                 </button>
             {:else}
                 <button onclick={switchPrimaryCountry}>
-                    <span class="text-nyt-violet-dark">The New York Times</span>
+                    <span class="text-nyt-dark">The New York Times</span>
                     <img class="inline" src="icons/ui-switch.svg" alt="Switch with Zeit"/>
                 </button>
             {/if}

@@ -50,12 +50,12 @@
     /* Colors */
     --color-ivory-default: #fcf4e9;
     --color-ivory-dark: #82561b;
-    --color-zeit-peach-light: #7EA7FF;
-    --color-zeit-peach-default: #4580FF;
-    --color-zeit-peach-dark: #0036AC;
-    --color-nyt-violet-light: #FFDB93;
-    --color-nyt-violet-default: #FFBC36;
-    --color-nyt-violet-dark: #CE8900;
+    --color-zeit-light: #7EA7FF;
+    --color-zeit-default: #4580FF;
+    --color-zeit-dark: #0036AC;
+    --color-nyt-light: #FFDB93;
+    --color-nyt-default: #FFBC36;
+    --color-nyt-dark: #CE8900;
 
     --animate-bounce: bounce 14s ease-in-out infinite;
     --animate-bounce-two: bouncetwo 12s ease-in-out infinite;
@@ -143,11 +143,11 @@
         }
 
         .nyt {
-            color: var(--color-nyt-violet-default);
+            color: var(--color-nyt-default);
         }
 
         .zeit {
-            color: var(--color-zeit-peach-default);
+            color: var(--color-zeit-default);
         }
 
         .footnotes {
@@ -202,11 +202,11 @@
 
     .visualization {
         text.NYT {
-            filter: drop-shadow( 0px 0px 10px var(--color-nyt-violet-dark));
+            filter: drop-shadow( 0px 0px 10px var(--color-nyt-dark));
         }
 
         text.Zeit {
-            filter: drop-shadow( 0px 0px 10px var(--color-zeit-peach-dark));
+            filter: drop-shadow( 0px 0px 10px var(--color-zeit-dark));
         }
 
         &.venn {
@@ -218,7 +218,7 @@
             &.NYT {
                 circle {
                     stroke: black;
-                    fill: var(--color-nyt-violet-default);
+                    fill: var(--color-nyt-default);
                     mix-blend-mode: multiply;
                 }
 
@@ -230,7 +230,7 @@
             &.Zeit {
                 circle {
                     stroke: black;
-                    fill: var(--color-zeit-peach-default);
+                    fill: var(--color-zeit-default);
                     mix-blend-mode: multiply;
                 }
 

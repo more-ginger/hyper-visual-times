@@ -10,12 +10,12 @@
     } = $props();
     
     let primaryColor = outlet == "NYT" ? 
-        "fill-nyt-violet-default" : 
-        "fill-zeit-peach-default"
+        "fill-nyt-default" : 
+        "fill-zeit-default"
     
     let secondaryColor = currentOutlet === outlet ?
-        "fill-nyt-violet-light" : 
-        "fill-zeit-peach-light"
+        "fill-nyt-light" : 
+        "fill-zeit-light"
 </script>
 
 <polygon 
