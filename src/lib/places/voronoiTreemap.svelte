@@ -18,8 +18,8 @@
     let voronoiIsActive = $state(false)
     const firstSelectionOfCountries = ["Frances", "Russia", "United States"]
     const secondSelectionOfCountries = ["China", "Israel", "Palestine"]
-    const thirdSelectionOfCountries = ["Atlantic Ocean"]
-    const fourthSelectionOfCountries = ["Germany", "United States"]
+    const thirdSelectionOfCountries = ["Atlantic Ocean", "Mediterranean Sea", "Baltic Sea", "Gulf of Maine", "Gulf of Thailand"]
+    const fourthSelectionOfCountries = ["Germany", "United States", "Europe"]
     const arrayOfPossibleCountriesSelections = [
         firstSelectionOfCountries, 
         secondSelectionOfCountries, 
