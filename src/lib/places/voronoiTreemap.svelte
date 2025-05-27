@@ -3,9 +3,11 @@
     import { voronoiTreemap } from "d3-voronoi-treemap";
     // @ts-expect-error
     import { hierarchy } from "d3-hierarchy";
+    import { sum } from "d3-array";
     // @ts-expect-error
     import seedrandom  from "seedrandom";
     import VoronoiSegment from "./voronoiSegment.svelte";
+    import VoronoiLabels from "./voronoiLabels.svelte";
 
     let { regionData, step } = $props();
     let fullWidth = $state(100); 
@@ -13,7 +15,6 @@
 
     const rng = seedrandom('World');
 
-    
     let segmentForRadius = $derived(Math.min(fullWidth, fullHeight))
     let radius = $derived(segmentForRadius / 2.2)
     let descendants = $state<Array<{ 
@@ -87,6 +88,9 @@
     )
 
    const keysOfLeaves = $derived(Object.keys(groupedLeaves))
+   const regionsLeaves  = $derived(groupedLeaves ? groupedLeaves[1] : 0)   
+   const regionsLeavesSum = $derived(regionsLeaves ? sum(regionsLeaves.map((leaf) => leaf.value)) : 0)
+
 </script>
 <div class="h-full">
     <div>
@@ -122,15 +126,11 @@
                     {#each keysOfLeaves as key}
                         {#if key === "1"}
                             {#each groupedLeaves[Number(key)] as label}
-                                <text 
-                                    class={"fill-ivory-default" + " " + label.parent.data.outlet}
-                                    x={label.polygon.site.x} 
-                                    y={label.polygon.site.y}
-                                    text-anchor="middle"
-                                    font-size={polygonArea(label) <= 2500 ? 8 : 12}
-                                >
-                                        {label.data.Region}
-                                </text>
+                                <VoronoiLabels 
+                                    label={label} 
+                                    polygonArea={polygonArea} 
+                                    maxRegionCoverage={regionsLeavesSum}
+                                />
                             {/each}
                         {/if}
                     {/each}
