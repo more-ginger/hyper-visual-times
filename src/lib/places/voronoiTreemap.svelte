@@ -18,8 +18,15 @@
     const firstSelectionOfCountries = ["Frances", "Russia", "United States"]
     const secondSelectionOfCountries = ["China", "Israel", "Palestine"]
     const thirdSelectionOfCountries = ["Atlantic Ocean"]
-    const fourthSelectionOfCountries = ["Germany", "United Sates"]
-    let labels = $state([])
+    const fourthSelectionOfCountries = ["Germany", "United States"]
+    const arrayOfPossibleCountriesSelections = [
+        firstSelectionOfCountries, 
+        secondSelectionOfCountries, 
+        thirdSelectionOfCountries, 
+        fourthSelectionOfCountries, 
+        fourthSelectionOfCountries
+    ]
+    let labels = $state<Array<{}>>([])
 
     const rng = seedrandom('World');
 
@@ -101,11 +108,8 @@
     const regionsLeavesSum = $derived(regionsLeaves ? sum(regionsLeaves.map((leaf) => leaf.value)) : 0)
 
     const countriesLeaves = $derived(groupedLeaves ? groupedLeaves[0] : null)
-    const countriesLeavesSelection = $derived(countriesLeaves ? )
-    $inspect(countriesLeaves)
 
     // Interactivity
-
     function selectVoronoiSegment(segment: {}) {
         if(labels.length > 0) {
             labels = []
@@ -120,6 +124,23 @@
             voronoiIsActive = false
         }
     }
+
+    $effect(() => {
+        if (step >= 1 && step <=5) {
+
+            if (!voronoiIsActive) {
+                voronoiIsActive = true
+            }
+
+            const selectionOfCountries = arrayOfPossibleCountriesSelections[step - 1]
+            const currentSelection = countriesLeaves?.filter(leaf => selectionOfCountries.includes(leaf.data.country))
+            labels = currentSelection ?? []
+        } else {
+            if (voronoiIsActive) {
+                voronoiIsActive = false
+            }
+        }
+    })
 
 </script>
 <div class="h-full">
@@ -158,6 +179,8 @@
                 height={fullHeight} 
                 onmouseenter={() => resetVoronoiSegment()}
                 fill="transparent"
+                role="button"
+                tabindex="0"
             />
            <g transform={`translate(${(fullWidth - radius) / 12}, ${(fullHeight - radius) / 12})`}>
                 {#if keysOfLeaves}
@@ -168,7 +191,8 @@
                                 <g 
                                     class={key !== "0" ? "pointer-events-none" : "cursor-pointer"} 
                                     onmouseenter={() => selectVoronoiSegment(segment)}
-                                    type="button" 
+                                    role="button"
+                                    tabindex="0"
                                 > 
                                 <VoronoiSegment
                                     segment={segment} 
@@ -182,8 +206,7 @@
                         {#if key === "1" && !voronoiIsActive}
                             {#each groupedLeaves[Number(key)] as label}
                                 <VoronoiRegionLabels 
-                                    label={label} 
-                                    polygonArea={polygonArea} 
+                                    label={label}
                                     maxRegionCoverage={regionsLeavesSum}
                                 />
                             {/each}

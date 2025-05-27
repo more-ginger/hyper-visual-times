@@ -1,7 +1,6 @@
 
 <script lang="ts">
     const {labels} = $props()
-    $inspect(labels)
 </script>
 {#each labels as label}
     <g id="country-name">
