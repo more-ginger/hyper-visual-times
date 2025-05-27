@@ -106,7 +106,7 @@
 </script>
 <div class="h-full">
     <div>
-        <div class=border-b>
+        <div class="border-b mt-4">
             <h4>
                 What countries and geographic entities are mentioned the most?
             </h4>

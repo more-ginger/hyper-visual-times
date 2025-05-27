@@ -90,7 +90,7 @@
 </script>
 <div class="h-full">
     <div>
-        <div class=border-b><h4>Are there geographical spheres of coverage?</h4></div>
+        <div class="border-b mt-4"><h4>Are there geographical spheres of coverage?</h4></div>
         <div>
             <p>
                 This chart shows whether certain geopolitical regions 
