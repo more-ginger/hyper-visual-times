@@ -121,6 +121,7 @@
     }
 
     function resetVoronoiSegment() {
+        labels = []
         if (voronoiIsActive) {
             voronoiIsActive = false
         }
@@ -128,8 +129,7 @@
 
     // The labels are activated also on step count
     $effect(() => {
-        if (step >= 1 && step <=5) {
-
+        if (step >= 1 && step <5) {
             if (!voronoiIsActive) {
                 voronoiIsActive = true
             }
@@ -137,6 +137,11 @@
             const selectionOfCountries = arrayOfPossibleCountriesSelections[step - 1]
             const currentSelection = countriesLeaves?.filter(leaf => selectionOfCountries.includes(leaf.data.country))
             labels = currentSelection ?? []
+        }
+
+        if (step == 0) {
+            voronoiIsActive = false
+            labels = []
         }
     })
 
@@ -180,7 +185,7 @@
                 role="button"
                 tabindex="0"
             />
-           <g transform={`translate(${(fullWidth - radius) / 12}, ${(fullHeight - radius) / 12})`}>
+           <g transform={`translate(${(fullWidth - radius) / 7}, ${(fullHeight - radius) / 12})`}>
                 {#if keysOfLeaves}
                     <g>
                     {#each keysOfLeaves as key}
@@ -194,7 +199,7 @@
                                 > 
                                 <VoronoiSegment
                                     segment={segment} 
-                                    step={step}
+                                    activeLabels={labels}
                                 />
                                 </g>
                             {/each}

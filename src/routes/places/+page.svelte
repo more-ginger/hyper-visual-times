@@ -26,9 +26,11 @@
         })
         .onStepEnter((response) => {
             step = response.index
+            console.log(step)
             // { element, index, direction }
         })
         .onStepExit((response) => {
+            step = response.index
             // { element, index, direction }
         });
     })
@@ -90,7 +92,7 @@
                     Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central.
                     </div>
                 </div>
-                <div class="p-2 xl:py-10 h-dvh">
+                <div data-step="5" class="step p-2 xl:py-10 h-dvh">
                     <div>
                         <VoronoiLegend />
                     </div>
@@ -102,10 +104,10 @@
                 <TotalCoverageBar countryData={data} step={step}/>
             </figure>
             <article class="w-full z-10 ml-4 relative md:basis-1/3">
-                <div data-step="5" class="step p-6 table" style="min-height:100px">
+                <div data-step="6" class="step p-6 table" style="min-height:100px">
                     <h2 class="mb-4">What countries and geographic entities are mentioned the most?</h2>
                 </div>
-                <div data-step="6" class="step px-4 table" style="height:600px">
+                <div data-step="7" class="step px-4 table" style="height:600px">
                     <div class="align-top table-cell">
                         <p>
                             For instance, global conflicts receive the lion share of mentions, in both newspapers. 
@@ -114,19 +116,19 @@
                         </p>
                     </div>
                 </div>
-                <div data-step="7" class="step px-4 p-6" style="height:600px">
+                <div data-step="8" class="step px-4 p-6" style="height:600px">
                     For Zeit, the outlook is similar, with important differences. First, the US is the most referenced country. 
                     Then, Palestine is seldom referenced – outside of the top 20. China is also less referenced than in NYT coverage.
                 </div>
-                <div data-step="8" class="step px-4 p-6" style="height:600px">
+                <div data-step="9" class="step px-4 p-6" style="height:600px">
                     For both outlets, the remaining 10 countries express more closely the interest in countries that are either geographically or economically close. 
                     For the NYT these are Canada, Georgia, Germany, Mexico, Japan, Syria, India, Italy, South Korea, and Brazil.
                 </div>
-                <div data-step="9" class="step px-4 p-6" style="height:600px">
+                <div data-step="10" class="step px-4 p-6" style="height:600px">
                     From the Zeit perspective, relevant keywords relate to countries mostly part of the EU or with a direct shared border with Germany. 
                     Exceptions are Turkey (close to Germany for political and social reasons) and Middle Eastern countries close to the Israel-Palestine or Russia-Ukraine conflicts.
                 </div>
-                <div data-step="10" class="step p-2 xl:py-10 h-dvh">
+                <div data-step="11" class="step p-2 xl:py-10 h-dvh">
                     <div>
                         <TotalCovLegend />
                     </div>

@@ -17,8 +17,8 @@
     let showHomeCountry = false;
     let countriesPerRow = 5;
     let currentOutlet = $state("Zeit")
-    let showFirstTenOnly = $derived(step === 6 || step === 7  ? true : false); 
-    let showLastTenOnly = $derived(step === 8 || step === 9 ? true : false);  
+    let showFirstTenOnly = $derived(step === 7 || step === 8  ? true : false); 
+    let showLastTenOnly = $derived(step === 9 || step === 10 ? true : false);  
     
     // Filter the data to remove Germany and the US from respective countries, avoids re-scaling  
     let dataWithoutPrimaryCountry = $derived(
@@ -96,9 +96,9 @@
 
     // controls data sorting on step
     $effect(() => {
-        if (step === 6 || step === 8) {
+        if (step === 7 || step === 9) {
             currentOutlet = "NYT"
-        } else if (step === 7 || step === 9) {
+        } else if (step === 8 || step === 10) {
             currentOutlet = "Zeit"
         }
     })

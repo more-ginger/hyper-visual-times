@@ -1,7 +1,7 @@
 <script lang="ts">
     let {country, step, scale} = $props();
 </script>
-{#if step > 9} 
+{#if step > 10} 
     <g>
         <text 
             x="75" 
