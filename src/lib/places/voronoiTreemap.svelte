@@ -163,7 +163,10 @@
                 or 
                 <span class="text-nyt-dark">
                     The New York Times (45%)
-                </span>. Interact with individual tiles or keep scrolling for details.
+                </span>. 
+                Interact 
+                <span><img class="inline" src="icons/ui-interact.svg" alt="Hover or click on visualization for details"/></span> 
+                with the visualization or keep scrolling <span><img class="inline" src="icons/ui-scroll.svg" alt="Hover or click on visualization for details"/></span>  for details.
             </p>
         </div>
     </div>
