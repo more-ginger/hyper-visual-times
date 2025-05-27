@@ -1,9 +1,8 @@
 <script lang="ts">
-    let {label, polygonArea, maxRegionCoverage} = $props()
+    let {label, maxRegionCoverage} = $props()
 
     const percCoverageByRegion = $derived(Math.round((100 * label.value) / maxRegionCoverage))
     const thresholdForLabelsSize = $derived(percCoverageByRegion < 4)
-    $inspect(label.parent.data.outlet, label.data.Region, percCoverageByRegion)
 </script>
 <g id="region-name">
     <text 

@@ -3,15 +3,23 @@
     import { voronoiTreemap } from "d3-voronoi-treemap";
     // @ts-expect-error
     import { hierarchy } from "d3-hierarchy";
+    // @ts-expect-error
     import { sum } from "d3-array";
     // @ts-expect-error
     import seedrandom  from "seedrandom";
     import VoronoiSegment from "./voronoiSegment.svelte";
-    import VoronoiLabels from "./voronoiLabels.svelte";
+    import VoronoiRegionLabels from "./voronoiRegionLabels.svelte";
+    import VoronoiCountriesLabels from "./voronoiCountriesLabels.svelte";
 
     let { regionData, step } = $props();
     let fullWidth = $state(100); 
     let fullHeight = $state(100);
+    let voronoiIsActive = $state(false)
+    const firstSelectionOfCountries = ["Frances", "Russia", "United States"]
+    const secondSelectionOfCountries = ["China", "Israel", "Palestine"]
+    const thirdSelectionOfCountries = ["Atlantic Ocean"]
+    const fourthSelectionOfCountries = ["Germany", "United Sates"]
+    let labels = $state([])
 
     const rng = seedrandom('World');
 
@@ -87,21 +95,51 @@
         }, {} as { [key: number]: typeof descendants })
     )
 
-   const keysOfLeaves = $derived(Object.keys(groupedLeaves))
-   const regionsLeaves  = $derived(groupedLeaves ? groupedLeaves[1] : 0)   
-   const regionsLeavesSum = $derived(regionsLeaves ? sum(regionsLeaves.map((leaf) => leaf.value)) : 0)
+    // Labels
+    const keysOfLeaves = $derived(Object.keys(groupedLeaves))
+    const regionsLeaves  = $derived(groupedLeaves ? groupedLeaves[1] : null)   
+    const regionsLeavesSum = $derived(regionsLeaves ? sum(regionsLeaves.map((leaf) => leaf.value)) : 0)
+
+    const countriesLeaves = $derived(groupedLeaves ? groupedLeaves[0] : null)
+    const countriesLeavesSelection = $derived(countriesLeaves ? )
+    $inspect(countriesLeaves)
+
+    // Interactivity
+
+    function selectVoronoiSegment(segment: {}) {
+        if(labels.length > 0) {
+            labels = []
+        }
+
+        voronoiIsActive = true
+        labels.push(segment)
+    }
+
+    function resetVoronoiSegment() {
+        if (voronoiIsActive) {
+            voronoiIsActive = false
+        }
+    }
 
 </script>
 <div class="h-full">
     <div>
-        <div class="border-b mt-4"><h4>Are there geographical spheres of coverage?</h4></div>
+        <div class="border-b mt-4">
+            <h4>
+                Are there geographical spheres of coverage?
+            </h4>
+        </div>
         <div>
             <p>
                 This chart shows whether certain geopolitical regions 
                 are referenced more often by either 
-                <span class="text-zeit-peach-dark">Zeit Online (55%)</span> 
+                <span class="text-zeit-peach-dark">
+                    Zeit Online (55%)
+                </span> 
                 or 
-                <span class="text-nyt-violet-dark">The New York Times (45%)</span>.
+                <span class="text-nyt-violet-dark">
+                    The New York Times (45%)
+                </span>.
             </p>
         </div>
     </div>
@@ -113,25 +151,45 @@
             bind:clientWidth={fullWidth} 
             bind:clientHeight={fullHeight}    
         >   
+            <rect 
+                x="0" 
+                y="0" 
+                width={fullWidth} 
+                height={fullHeight} 
+                onmouseenter={() => resetVoronoiSegment()}
+                fill="transparent"
+            />
            <g transform={`translate(${(fullWidth - radius) / 12}, ${(fullHeight - radius) / 12})`}>
                 {#if keysOfLeaves}
                     <g>
                     {#each keysOfLeaves as key}
                         <g class={"treemap-" + key}>
-                            {#each groupedLeaves[Number(key)] as segment} 
-                                <VoronoiSegment segment={segment} step={step}/>
+                            {#each groupedLeaves[Number(key)] as segment}
+                                <g 
+                                    class={key !== "0" ? "pointer-events-none" : "cursor-pointer"} 
+                                    onmouseenter={() => selectVoronoiSegment(segment)}
+                                    type="button" 
+                                > 
+                                <VoronoiSegment
+                                    segment={segment} 
+                                    step={step}
+                                />
+                                </g>
                             {/each}
                         </g>
-                    {/each}
+                    {/each} 
                     {#each keysOfLeaves as key}
-                        {#if key === "1"}
+                        {#if key === "1" && !voronoiIsActive}
                             {#each groupedLeaves[Number(key)] as label}
-                                <VoronoiLabels 
+                                <VoronoiRegionLabels 
                                     label={label} 
                                     polygonArea={polygonArea} 
                                     maxRegionCoverage={regionsLeavesSum}
                                 />
                             {/each}
+                        {/if}
+                        {#if key === "0" && voronoiIsActive}
+                            <VoronoiCountriesLabels labels={labels}/>
                         {/if}
                     {/each}
                     </g>
