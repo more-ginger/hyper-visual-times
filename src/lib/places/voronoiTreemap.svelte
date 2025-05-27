@@ -137,10 +137,6 @@
             const selectionOfCountries = arrayOfPossibleCountriesSelections[step - 1]
             const currentSelection = countriesLeaves?.filter(leaf => selectionOfCountries.includes(leaf.data.country))
             labels = currentSelection ?? []
-        } else {
-            if (voronoiIsActive) {
-                voronoiIsActive = false
-            }
         }
     })
 
