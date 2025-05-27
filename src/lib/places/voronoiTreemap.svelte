@@ -11,6 +11,7 @@
     import VoronoiRegionLabels from "./voronoiRegionLabels.svelte";
     import VoronoiCountriesLabels from "./voronoiCountriesLabels.svelte";
 
+    // set up
     let { regionData, step } = $props();
     let fullWidth = $state(100); 
     let fullHeight = $state(100);
@@ -28,8 +29,8 @@
     ]
     let labels = $state<Array<{}>>([])
 
+    // Voronoi set up
     const rng = seedrandom('World');
-
     let segmentForRadius = $derived(Math.min(fullWidth, fullHeight))
     let radius = $derived(segmentForRadius / 2.2)
     let descendants = $state<Array<{ 
@@ -72,7 +73,7 @@
         return area / 2
    }
 
-   // Voronoi set-up
+   // Voronoi init
     function weightAccessor(d:any) {
         return d.count;
     } // sets the accessor to the amount of articles
@@ -109,7 +110,7 @@
 
     const countriesLeaves = $derived(groupedLeaves ? groupedLeaves[0] : null)
 
-    // Interactivity
+    // Interactivity, country labels are activated on click
     function selectVoronoiSegment(segment: {}) {
         if(labels.length > 0) {
             labels = []
@@ -125,6 +126,7 @@
         }
     }
 
+    // The labels are activated also on step count
     $effect(() => {
         if (step >= 1 && step <=5) {
 
