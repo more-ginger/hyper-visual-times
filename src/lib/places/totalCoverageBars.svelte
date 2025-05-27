@@ -78,7 +78,7 @@
     const polygonVertexYScale = $derived(
         d3.scaleLinear()
             .domain(d3.extent(domainValues))
-            .range([0, -190])
+            .range([0, -180])
     )
 
     const yAxis = $derived(polygonVertexYScale.ticks(5).slice(0, 3))
@@ -142,7 +142,7 @@
         bind:clientWidth={fullWidth} 
         bind:clientHeight={fullHeight}
     >
-        <g class="translate-y-12">
+        <g class="xl:translate-y-12">
             <g class="axis">
                 {#each {length: top20Countries.length/countriesPerRow}, pos}
                     <g>

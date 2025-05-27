@@ -6,6 +6,7 @@
 </script>
 <g id="region-name">
     <text 
+        class={`${label.parent.data.outlet}`}
         x={label.polygon.site.x} 
         y={label.polygon.site.y}
         text-anchor="middle"
@@ -17,7 +18,7 @@
             {label.data.Region}
     </text>
     <text 
-        class={"fill-ivory-default" + " " + label.parent.data.outlet}
+        class={`fill-white ${label.parent.data.outlet}`}
         x={label.polygon.site.x} 
         y={label.polygon.site.y}
         text-anchor="middle"
@@ -43,7 +44,7 @@
         x={label.polygon.site.x} 
         y={label.polygon.site.y + 15}
         text-anchor="middle"
-        class={"fill-ivory-default" + " " + label.parent.data.outlet}
+        class={`fill-white ${label.parent.data.outlet}`}
         font-size={thresholdForLabelsSize ? 10 : 12}
     >
             {percCoverageByRegion} %
