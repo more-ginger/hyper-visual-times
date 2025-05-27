@@ -57,6 +57,6 @@
 	{@render children()}
 
 	<footer class="sticky bottom-0 bg-white w-full px-4 pb-2 border-t z-40 mt-10">
-		Footer
+		<button class="mt-2"><span>Scroll back to top</span><img class="rotate-180 inline ml-2" src="icons/ui-scroll.svg"/></button>
 	</footer>
 </div>

@@ -139,7 +139,8 @@
             labels = currentSelection ?? []
         }
 
-        if (step == 0) {
+        if (step == 0 || step == 5) {
+            console.log(step)
             voronoiIsActive = false
             labels = []
         }
@@ -166,7 +167,8 @@
                 </span>. 
                 Interact 
                 <span><img class="inline" src="icons/ui-interact.svg" alt="Hover or click on visualization for details"/></span> 
-                with the visualization or keep scrolling <span><img class="inline" src="icons/ui-scroll.svg" alt="Hover or click on visualization for details"/></span>  for details.
+                with the visualization or keep scrolling 
+                <span><img class="inline" src="icons/ui-scroll.svg" alt="Hover or click on visualization for details"/></span>  for details.
             </p>
         </div>
     </div>
