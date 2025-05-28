@@ -25,11 +25,12 @@
         })
         .onStepEnter((response) => {
             step = response.index
-            console.log(step)
+            // console.log("entering block", step)
             // { element, index, direction }
         })
         .onStepExit((response) => {
             step = response.index
+            // console.log("exiting block", step)
             // { element, index, direction }
         });
     })

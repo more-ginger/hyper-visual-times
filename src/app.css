@@ -6,6 +6,12 @@
 :root {
     /* font-synthesis: none !important; */
     /* background-color: var(--color-ivory-default); */
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
 }
 
 @font-face {

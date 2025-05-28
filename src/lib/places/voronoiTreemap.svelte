@@ -140,7 +140,6 @@
         }
 
         if (step == 0 || step == 5) {
-            console.log(step)
             voronoiIsActive = false
             labels = []
         }
