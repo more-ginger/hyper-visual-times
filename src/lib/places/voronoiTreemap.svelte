@@ -16,10 +16,10 @@
     let fullWidth = $state(100); 
     let fullHeight = $state(100);
     let voronoiIsActive = $state(false)
-    const firstSelectionOfCountries = ["Frances", "Russia", "United States"]
-    const secondSelectionOfCountries = ["China", "Israel", "Palestine"]
+    const firstSelectionOfCountries = ["Russia", "Ukraine"]
+    const secondSelectionOfCountries = ["Israel", "Palestine"]
     const thirdSelectionOfCountries = ["Atlantic Ocean", "Mediterranean Sea", "Baltic Sea", "Gulf of Maine", "Gulf of Thailand"]
-    const fourthSelectionOfCountries = ["Germany", "United States", "Europe"]
+    const fourthSelectionOfCountries = ["Germany", "United States"]
     const arrayOfPossibleCountriesSelections = [
         firstSelectionOfCountries, 
         secondSelectionOfCountries, 

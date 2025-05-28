@@ -47,7 +47,7 @@
                 <VoronoiTreemap regionData={data.coverageByRegion} step={step}/>
             </figure>
             <article class="w-full relative md:basis-1/3">
-                <div data-step="0" class="step p-6" style="height:900px">
+                <div data-step="0" class="step p-6">
                     <div class="align-middle table-cell">
                         <h2 class="mb-4">Are there geographical spheres of interest?</h2>
                         <p class="mb-2">
@@ -59,6 +59,7 @@
                              At a low level we have names of cities, like Berlin or New York, sometimes even names of neighborhoods, like Manhattan (NY). 
                              At a higher level, we have names of states (Baden-Wuttemberg, Ohio), countries (Bolivia, Italien, Greenland), and supra-national geo-political or geographical entities (Red Sea, Atlantic Ocean). 
                              If we reduce the granularity by aggregating all localities with their country and assign each region and country to macro-regions, we can observe how newspapers have different areas of interest.  
+                             <img src="img/localities-keywords.svg" alt="Diagram of the process of keywords abstraction, from top to down: localities, provinces and states, countries, and regions. The top layers are shown to flow into the bottom ones with arrows pointing down."/>
                         </p>
                         <p>
                             The resulting abstraction is shown in the visualization on the right, with the world “split” into areas of interest based on how much either Die Zeit or The New York Times cover a specific country. 
