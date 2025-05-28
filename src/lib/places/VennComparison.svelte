@@ -226,7 +226,7 @@
                 <div class="flex w-full mt-10">
                         <div class="mx-2 w-1/2">
                             <div>
-                                <p class="text-sm text-center">In <span class="text-nyt-violet-dark">The New York Times</span></p>
+                                <p class="text-sm text-center">In <span class="text-nyt-dark">The New York Times</span></p>
                             </div>
                             <div>
                                 <VennDiagram 
@@ -238,7 +238,7 @@
                         </div>
                         <div class="mx-2 w-1/2">
                             <div>
-                                <p class="text-sm text-center">In <span class="text-zeit-peach-dark">Zeit Online</span></p>
+                                <p class="text-sm text-center">In <span class="text-zeit-dark">Zeit Online</span></p>
                             </div>
                             <div>
                                 <VennDiagram 

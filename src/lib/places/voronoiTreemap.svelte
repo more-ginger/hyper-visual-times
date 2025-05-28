@@ -16,9 +16,9 @@
     let fullWidth = $state(100); 
     let fullHeight = $state(100);
     let voronoiIsActive = $state(false)
-    const firstSelectionOfCountries = ["Frances", "Russia", "United States"]
-    const secondSelectionOfCountries = ["China", "Israel", "Palestine"]
-    const thirdSelectionOfCountries = ["Atlantic Ocean"]
+    const firstSelectionOfCountries = ["Russia", "Ukraine"]
+    const secondSelectionOfCountries = ["Israel", "Palestine"]
+    const thirdSelectionOfCountries = ["Atlantic Ocean", "Mediterranean Sea", "Baltic Sea", "Gulf of Maine", "Gulf of Thailand"]
     const fourthSelectionOfCountries = ["Germany", "United States"]
     const arrayOfPossibleCountriesSelections = [
         firstSelectionOfCountries, 
@@ -121,6 +121,7 @@
     }
 
     function resetVoronoiSegment() {
+        labels = []
         if (voronoiIsActive) {
             voronoiIsActive = false
         }
@@ -128,8 +129,7 @@
 
     // The labels are activated also on step count
     $effect(() => {
-        if (step >= 1 && step <=5) {
-
+        if (step >= 1 && step <5) {
             if (!voronoiIsActive) {
                 voronoiIsActive = true
             }
@@ -137,6 +137,11 @@
             const selectionOfCountries = arrayOfPossibleCountriesSelections[step - 1]
             const currentSelection = countriesLeaves?.filter(leaf => selectionOfCountries.includes(leaf.data.country))
             labels = currentSelection ?? []
+        }
+
+        if (step == 0 || step == 5) {
+            voronoiIsActive = false
+            labels = []
         }
     })
 
@@ -152,13 +157,17 @@
             <p>
                 This chart shows whether certain geopolitical regions 
                 are referenced more often by either 
-                <span class="text-zeit-peach-dark">
+                <span class="text-zeit-dark">
                     Zeit Online (55%)
                 </span> 
                 or 
-                <span class="text-nyt-violet-dark">
+                <span class="text-nyt-dark">
                     The New York Times (45%)
-                </span>.
+                </span>. 
+                Interact 
+                <span><img class="inline" src="icons/ui-interact.svg" alt="Hover or click on visualization for details"/></span> 
+                with the visualization or keep scrolling 
+                <span><img class="inline" src="icons/ui-scroll.svg" alt="Hover or click on visualization for details"/></span>  for details.
             </p>
         </div>
     </div>
@@ -180,7 +189,7 @@
                 role="button"
                 tabindex="0"
             />
-           <g transform={`translate(${(fullWidth - radius) / 12}, ${(fullHeight - radius) / 12})`}>
+           <g transform={`translate(${(fullWidth - radius) / 7}, ${(fullHeight - radius) / 20})`}>
                 {#if keysOfLeaves}
                     <g>
                     {#each keysOfLeaves as key}
@@ -194,7 +203,7 @@
                                 > 
                                 <VoronoiSegment
                                     segment={segment} 
-                                    step={step}
+                                    activeLabels={labels}
                                 />
                                 </g>
                             {/each}

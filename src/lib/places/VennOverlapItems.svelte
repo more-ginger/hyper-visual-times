@@ -107,18 +107,18 @@
             <p>Show shared articles instead of keywords</p>
         {/if}
     </button>
-    <div class="bg-nyt-violet-light h-full max-h-80 overflow-auto px-2 m-2 rounded-sm border border-nyt-violet-dark">
+    <div class="bg-nyt-light h-full max-h-80 overflow-auto px-2 m-2 rounded-sm border border-nyt-dark">
         {#await nytArticles}
             <p>Loading NYT Articles...</p>
         {:catch error}
             <p>{error.message}</p>
         {:then nytArticles} 
             <div>
-                <p class="sticky top-2 bg-nyt-violet-light nyt-violet-dark border border-nyt-violet-dark my-2 px-2 rounded-sm size-fit bg-nyt-violet-light">The New York Times</p>
+                <p class="sticky top-2 bg-nyt-light nyt-dark border border-nyt-dark my-2 px-2 rounded-sm size-fit bg-nyt-light">The New York Times</p>
                 <div class="mt-4">
                     {#if isArticles}
                     {#each nytArticles as article}
-                        <p class="text-xs mt-2 border-b border-dotted border-nyt-violet-dark">
+                        <p class="text-xs mt-2 border-b border-dotted border-nyt-dark">
                             {article.headline}
                         </p>
                     {/each}
@@ -133,18 +133,18 @@
             </div>
         {/await}
     </div>
-    <div class="bg-zeit-peach-light h-full max-h-80 overflow-auto px-2 m-2 rounded-sm border border-zeit-peach-dark">
+    <div class="bg-zeit-light h-full max-h-80 overflow-auto px-2 m-2 rounded-sm border border-zeit-dark">
         {#await zeitArticles}
             <p>Loading Zeit Articles...</p>
         {:catch error}
             <p>{error.message}</p>
         {:then zeitArticles}
                 <div>
-                    <p class="sticky top-2 bg-zeit-peach-light border border-zeit-peach-dark my-2 px-2 rounded-sm size-fit">Zeit Online</p>
+                    <p class="sticky top-2 bg-zeit-light border border-zeit-dark my-2 px-2 rounded-sm size-fit">Zeit Online</p>
                     <div class="mt-4">
                         {#if isArticles} 
                             {#each zeitArticles as article}
-                                <p class="text-xs mt-2 border-b border-dotted border-zeit-peach-dark">
+                                <p class="text-xs mt-2 border-b border-dotted border-zeit-dark">
                                     {article.headline}
                                 </p>
                             {/each}

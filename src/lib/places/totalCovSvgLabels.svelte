@@ -1,7 +1,7 @@
 <script lang="ts">
     let {country, step, scale} = $props();
 </script>
-{#if step > 9} 
+{#if step > 10} 
     <g>
         <text 
             x="75" 
@@ -18,7 +18,7 @@
             y={scale(country.count_nyt) - 5} 
             text-anchor="middle"
             font-size="12"
-            class="fill-nyt-violet-dark"
+            class="fill-nyt-dark"
         >
             {country.count_nyt}
         </text>
@@ -39,7 +39,7 @@
             y={scale(country.count_zeit) - 5} 
             text-anchor="middle"
             font-size="12"
-            class="fill-zeit-peach-dark"
+            class="fill-zeit-dark"
         >
             {country.count_zeit}
         </text>

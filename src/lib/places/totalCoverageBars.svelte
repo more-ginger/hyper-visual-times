@@ -17,8 +17,8 @@
     let showHomeCountry = false;
     let countriesPerRow = 5;
     let currentOutlet = $state("Zeit")
-    let showFirstTenOnly = $derived(step === 6 || step === 7  ? true : false); 
-    let showLastTenOnly = $derived(step === 8 || step === 9 ? true : false);  
+    let showFirstTenOnly = $derived(step === 7 || step === 8  ? true : false); 
+    let showLastTenOnly = $derived(step === 9 || step === 10 ? true : false);  
     
     // Filter the data to remove Germany and the US from respective countries, avoids re-scaling  
     let dataWithoutPrimaryCountry = $derived(
@@ -78,7 +78,7 @@
     const polygonVertexYScale = $derived(
         d3.scaleLinear()
             .domain(d3.extent(domainValues))
-            .range([0, -190])
+            .range([0, -180])
     )
 
     const yAxis = $derived(polygonVertexYScale.ticks(5).slice(0, 3))
@@ -96,9 +96,9 @@
 
     // controls data sorting on step
     $effect(() => {
-        if (step === 6 || step === 8) {
+        if (step === 7 || step === 9) {
             currentOutlet = "NYT"
-        } else if (step === 7 || step === 9) {
+        } else if (step === 8 || step === 10) {
             currentOutlet = "Zeit"
         }
     })
@@ -114,21 +114,21 @@
         <div>
             <p>
                 The chart compares the use of geo-related keywords in 
-                <span class="text-zeit-peach-dark">Zeit Online</span> 
+                <span class="text-zeit-dark">Zeit Online</span> 
                 with 
-                <span class="text-nyt-violet-dark">The New York Times</span>.
+                <span class="text-nyt-dark">The New York Times</span>.
             </p>
         </div>
         <div>
             Countries are sorted based on
             {#if currentOutlet == "Zeit"}
                 <button onclick={switchPrimaryCountry}>
-                    <span class="text-zeit-peach-dark">Zeit Online</span>
+                    <span class="text-zeit-dark">Zeit Online</span>
                     <img class="inline" src="icons/ui-switch.svg" alt="Switch with The New York Times"/>
                 </button>
             {:else}
                 <button onclick={switchPrimaryCountry}>
-                    <span class="text-nyt-violet-dark">The New York Times</span>
+                    <span class="text-nyt-dark">The New York Times</span>
                     <img class="inline" src="icons/ui-switch.svg" alt="Switch with Zeit"/>
                 </button>
             {/if}
@@ -142,7 +142,7 @@
         bind:clientWidth={fullWidth} 
         bind:clientHeight={fullHeight}
     >
-        <g class="translate-y-12">
+        <g class="xl:translate-y-12">
             <g class="axis">
                 {#each {length: top20Countries.length/countriesPerRow}, pos}
                     <g>

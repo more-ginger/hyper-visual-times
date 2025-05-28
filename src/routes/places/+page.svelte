@@ -21,14 +21,16 @@
         scroller
         .setup({
             step: ".step",
-            debug: false,
-            offset: 0.7
+            debug: false
         })
         .onStepEnter((response) => {
             step = response.index
+            // console.log("entering block", step)
             // { element, index, direction }
         })
         .onStepExit((response) => {
+            step = response.index
+            // console.log("exiting block", step)
             // { element, index, direction }
         });
     })
@@ -46,7 +48,7 @@
                 <VoronoiTreemap regionData={data.coverageByRegion} step={step}/>
             </figure>
             <article class="w-full relative md:basis-1/3">
-                <div data-step="0" class="step p-6 table" style="height:900px">
+                <div data-step="0" class="step p-6">
                     <div class="align-middle table-cell">
                         <h2 class="mb-4">Are there geographical spheres of interest?</h2>
                         <p class="mb-2">
@@ -58,39 +60,40 @@
                              At a low level we have names of cities, like Berlin or New York, sometimes even names of neighborhoods, like Manhattan (NY). 
                              At a higher level, we have names of states (Baden-Wuttemberg, Ohio), countries (Bolivia, Italien, Greenland), and supra-national geo-political or geographical entities (Red Sea, Atlantic Ocean). 
                              If we reduce the granularity by aggregating all localities with their country and assign each region and country to macro-regions, we can observe how newspapers have different areas of interest.  
+                             <img src="img/localities-keywords.svg" alt="Diagram of the process of keywords abstraction, from top to down: localities, provinces and states, countries, and regions. The top layers are shown to flow into the bottom ones with arrows pointing down."/>
                         </p>
                         <p>
                             The resulting abstraction is shown in the visualization on the right, with the world “split” into areas of interest based on how much either Die Zeit or The New York Times cover a specific country. 
                         </p>
                     </div>
                 </div>
-                <div data-step="1" class="step p-6 table" style="height:900px">
+                <div data-step="1" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                         Grassland (2023) has already observed how Western European newspapers tend to cover macro-regions of interests: areas that have geographical and political significance for the host country of the newspaper. 
                         Looking at the visualization on the right, this observation seems to be confirmed: for Zeit, Central and Western Europe are the main regions of interest. 
                         Even in relation to conflict and against the cultural background that ties Germany and Israel, the use of Russia-Ukraine keywords is much higher than Israel–Palestine ones. 
                     </div>
                 </div>
-                <div data-step="2" class="step p-6 table" style="height:900px">
+                <div data-step="2" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                         For the New York Times, half of the coverage is tagged with geo-political keywords about the two regions of Asia and Middle East. 
                         At first, this delineates a largely conflict-first approach, with the Israel-Palestine conflict as central. 
                         However, it also brings forward a much broader concern of the newspaper for foreign affairs, especially if compared with Zeit.                    </div>
                 </div>
-                <div data-step="3" class="step p-6 table" style="height:900px">
+                <div data-step="3" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                         The NYT also provides tags about geographical entities that are not directly associated with countries, like natural landmarks or geographically distinct areas encompassing several countries (seas, deserts, etc.). 
                         This shows a different, possibly more granular, strategy in producing and tagging content.    
                     </div>
                 </div>
-                <div data-step="4" class="step p-6 table" style="height:900px">
+                <div data-step="4" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">
                     However, whereas for Zeit the coverage of European countries is more nuanced and based on individual countries – a good portion of the NYT coverage refers generally to “Europe”. 
                     In this sense, one of the most important aspects that emerge is the lack of reciprocal attention. 
                     Content tagged with keywords related to the United States takes up almost 20% of Zeit news, whereas for the NYT the direct reference to Germany is much less central.
                     </div>
                 </div>
-                <div class="p-2 xl:py-10 h-dvh">
+                <div data-step="5" class="step p-2 xl:py-10 h-dvh">
                     <div>
                         <VoronoiLegend />
                     </div>
@@ -102,10 +105,10 @@
                 <TotalCoverageBar countryData={data} step={step}/>
             </figure>
             <article class="w-full z-10 ml-4 relative md:basis-1/3">
-                <div data-step="5" class="step p-6 table" style="min-height:100px">
+                <div data-step="6" class="step p-6 table" style="min-height:100px">
                     <h2 class="mb-4">What countries and geographic entities are mentioned the most?</h2>
                 </div>
-                <div data-step="6" class="step px-4 table" style="height:600px">
+                <div data-step="7" class="step px-4 table" style="height:600px">
                     <div class="align-top table-cell">
                         <p>
                             For instance, global conflicts receive the lion share of mentions, in both newspapers. 
@@ -114,19 +117,19 @@
                         </p>
                     </div>
                 </div>
-                <div data-step="7" class="step px-4 p-6" style="height:600px">
+                <div data-step="8" class="step px-4 p-6" style="height:600px">
                     For Zeit, the outlook is similar, with important differences. First, the US is the most referenced country. 
                     Then, Palestine is seldom referenced – outside of the top 20. China is also less referenced than in NYT coverage.
                 </div>
-                <div data-step="8" class="step px-4 p-6" style="height:600px">
+                <div data-step="9" class="step px-4 p-6" style="height:600px">
                     For both outlets, the remaining 10 countries express more closely the interest in countries that are either geographically or economically close. 
                     For the NYT these are Canada, Georgia, Germany, Mexico, Japan, Syria, India, Italy, South Korea, and Brazil.
                 </div>
-                <div data-step="9" class="step px-4 p-6" style="height:600px">
+                <div data-step="10" class="step px-4 p-6" style="height:600px">
                     From the Zeit perspective, relevant keywords relate to countries mostly part of the EU or with a direct shared border with Germany. 
                     Exceptions are Turkey (close to Germany for political and social reasons) and Middle Eastern countries close to the Israel-Palestine or Russia-Ukraine conflicts.
                 </div>
-                <div data-step="10" class="step p-2 xl:py-10 h-dvh">
+                <div data-step="11" class="step p-2 xl:py-10 h-dvh">
                     <div>
                         <TotalCovLegend />
                     </div>
