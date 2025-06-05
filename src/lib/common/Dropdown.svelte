@@ -2,17 +2,16 @@
     let {availableFilter, selected = $bindable()} = $props();
     let mirrorEl: HTMLElement | null = $state(null);
     let selectEl: HTMLSelectElement | null = $state(null);
-
     function resizeSelect() {
-        if (mirrorEl !== null && selectEl !== null && selected?.key) {
-            mirrorEl.textContent = selected.key;
+        if (mirrorEl !== null && selectEl !== null && selected) {
+            mirrorEl.textContent = selected;
             selectEl.style.width = mirrorEl.offsetWidth + 20 + "px";
         }
     }
 
     $effect(() => {
         resizeSelect()
-        selected?.key;
+        selected;
     })
 
     
@@ -20,7 +19,7 @@
 
 <div class="select-wrapper">
     <select 
-        bind:value={selected.key} 
+        bind:value={selected} 
         bind:this={selectEl} 
         class="inline-block border-b border-b-2 border-black px-2"
     >
