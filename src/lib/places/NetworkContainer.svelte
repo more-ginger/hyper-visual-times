@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { countryDataForComparison } from '../../types';
     import Dropdown from "$lib/common/Dropdown.svelte";
+	import Network from './Network.svelte';
     let { data } = $props()
 
     // The first dropdown lets the user 
@@ -85,9 +86,14 @@
         return links
     })
 </script>
-<span>
-    <Dropdown 
-    availableFilter={dropdownData} 
-    bind:selected={primaryCountry}
-    />
-</span>
+<div>
+    <span>
+        <Dropdown 
+        availableFilter={dropdownData} 
+        bind:selected={primaryCountry}
+        />
+    </span>
+</div>
+<div class="h-full">
+    <Network {nodes} {links}/>
+</div>
