@@ -2,11 +2,13 @@
     import type { countryDataForComparison } from '../../types';
     import Dropdown from "$lib/common/Dropdown.svelte";
 	import Network from './Network.svelte';
+    import { extent } from "d3-array";
     let { data } = $props()
+    const outlets = ["zeit", "nyt"]
 
     // The first dropdown lets the user 
     // select the primary country for analysis
-    let dropdownData = $state(
+    const dropdownData = $state(
         data.map((d:countryDataForComparison) => {
             return {
                 key: d.country,
@@ -17,29 +19,33 @@
     // Set the primary country to calc overlaps
     let primaryCountry = $state(dropdownData[0].key)
 
+    const dataDomain = $derived(extent(data.map((d) => [d.count_nyt, d.count_zeit]).flat()))
+
     let nodes = $derived.by(() => {
-
         const a = data.find((d: {country:string}) => (d.country == primaryCountry))
-        const overlaps: countryDataForComparison[] = [a]
+        let overlaps: Record<string, countryDataForComparison[]> = {}
+        
+        outlets.forEach((outlet:string) => {
+            const outletArray:countryDataForComparison[] = [a]
+            for (let index = 0; index < data.length; index++) {
+                const b = data[index];
+                if (a.country == b.country) continue
 
-        for (let index = 0; index < data.length; index++) {
-            const b = data[index];
-            if (a.country == b.country) continue
+                const aArticles = new Set(a[`ids_of_articles_${outlet}`])
+                const bArticles = new Set(b[`ids_of_articles_${outlet}`])
+                const articles = [...aArticles].filter(k => bArticles.has(k))
 
-            const aArticlesNYT = new Set(a.ids_of_articles_nyt)
-            const bArticlesNYT = new Set(b.ids_of_articles_nyt)
-            const articlesNYT = [...aArticlesNYT].filter(k => bArticlesNYT.has(k))
-
-            if(articlesNYT.length > 0) {
-                overlaps.push(b)
+                if(articles.length > 0) {
+                    outletArray.push(b)
+                }
             }
-        }
-
+            overlaps[outlet] = outletArray
+        })
+        
         return overlaps
     })
-
     let links = $derived.by(() => {
-        const links = []
+        const links:Record<string, {source:string, target:string, weight:number}[]> = {}
         const seenPairs = new Set();
 
         const haveOverlap = (setA:Set<string>, setB:Set<string>) => {
@@ -59,32 +65,39 @@
             return counter
         }
 
-        for (let i = 0; i < nodes.length; i++) {
-            for (let j = 0; j < nodes.length; j++) {
-                if (i === j) continue;
-                const idsA = new Set(nodes[i]["ids_of_articles_nyt"]);
-                const idsB = new Set(nodes[j]["ids_of_articles_nyt"]);
+        Object.keys(nodes).forEach((outlet) => {
+            const linksArray = []
+            const nodesOutlet = nodes[outlet] as countryDataForComparison[]
+            for (let i = 0; i < nodesOutlet.length; i++) {
+                for (let j = 0; j < nodesOutlet.length; j++) {
+                    if (i === j) continue;
+                    const idsA = new Set<string>(nodesOutlet[i][`ids_of_articles_${outlet}`]);
+                    const idsB = new Set<string>(nodesOutlet[j][`ids_of_articles_${outlet}`]);
 
-                if (haveOverlap(idsA, idsB)) {
-                    const countryA = nodes[i].country;
-                    const countryB = nodes[j].country;
-                    const pairKey = [countryA, countryB].sort().join("::");
+                    if (haveOverlap(idsA, idsB)) {
+                        const countryA = nodesOutlet[i].country;
+                        const countryB = nodesOutlet[j].country;
+                        const pairKey = [countryA, countryB].sort().join("::");
 
-                    if (!seenPairs.has(pairKey)) {
-                        seenPairs.add(pairKey)
-                        links.push({
-                            source:nodes[i].country, 
-                            target: nodes[j].country,
-                            weight: countOverlap(idsA, idsB)
-                        })
+                        if (!seenPairs.has(pairKey)) {
+                            seenPairs.add(pairKey)
+                            linksArray.push({
+                                source:nodesOutlet[i].country, 
+                                target: nodesOutlet[j].country,
+                                weight: countOverlap(idsA, idsB)
+                            })
+                        }
                     }
                 }
             }
-            
-        }
+
+            links[outlet] = linksArray
+        })
 
         return links
     })
+
+    $inspect(links)
 </script>
 <div>
     <span>
@@ -94,6 +107,10 @@
         />
     </span>
 </div>
-<div class="h-full">
-    <Network {nodes} {links}/>
+<div class="flex">
+    {#each outlets as outlet}
+        <div class="w-1/2 h-full">
+            <Network nodes={nodes[outlet]} links={links[outlet]} {outlet} {dataDomain}/>
+        </div>
+    {/each}
 </div>

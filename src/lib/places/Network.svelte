@@ -1,9 +1,8 @@
 <script lang="ts">
     // @ts-expect-error
     import * as d3 from "d3";
-    import { onMount } from "svelte";
 
-    let {nodes, links} = $props()
+    let {nodes, links, outlet, dataDomain} = $props()
     let canvas:HTMLCanvasElement | null = $state(null);
     let context: CanvasRenderingContext2D;
     let simulation;
@@ -13,7 +12,7 @@
     const NodesForVis = $derived(nodes.map((d) => ({...d})))
     const LinksForVis = $derived(links.map((d) => ({...d})))
 
-    const radiuScale = $derived(d3.scaleLinear().domain([0, 13634]).range([2, 50]))
+    const radiuScale = $derived(d3.scaleLinear().domain(dataDomain).range([2, 50]))
     const distanceScale = $derived(d3.scaleLinear().domain(d3.extent(LinksForVis.map((d) => d.weight))).range([300, 0]))
     const strengthScale = $derived(d3.scaleLinear().domain(d3.extent(LinksForVis.map((d) => d.weight))).range([0, 100]))
 
@@ -27,6 +26,7 @@
 
         if (canvas) {
             dpi = window.devicePixelRatio || 1;
+            $inspect(dpi)
             // Make it visually fill the positioned parent
             canvas.style.width = "100%";
             canvas.style.height = "100%";
@@ -36,18 +36,12 @@
             width = canvas.offsetWidth * dpi;
             height = canvas.offsetHeight * dpi;
             context.scale(dpi, dpi);
-
+            const positioningFactor =  dpi > 1 ? 4 : 2
             simulation = d3
             .forceSimulation(NodesForVis)
-            // .force("collide", d3.forceCollide((d) => radiuScale(d.ids_of_articles_nyt.length) + 5))
-            // .force("charge", d3.forceManyBody().strength(-500))
-            // .force("x", d3.forceX(width / 4))
-            // .force("y", d3.forceY(height / 4))
-            .force('center', 
-                    d3.forceCenter(width / 4, height / 4)
-                )
-            .force("collide", d3.forceCollide((d) => radiuScale(d.ids_of_articles_nyt.length) + 1))
+            .force("collide", d3.forceCollide((d) => radiuScale(d[`ids_of_articles_${outlet}`].length) + 1))
             .force("link", d3.forceLink(LinksForVis).id((d) => d.country).distance((d) => distanceScale(d.weight)))
+            .force('center', d3.forceCenter(width / positioningFactor, height / positioningFactor))
             .on("tick", simulationUpdate)
         }
     })
@@ -60,7 +54,7 @@
             context.moveTo(d.source.x, d.source.y);
             context.lineTo(d.target.x, d.target.y);
             context.globalAlpha = 0.3;
-            context.strokeStyle = "black";
+            context.strokeStyle = outlet == "nyt" ? "#FFDB93" : "#7EA7FF";
             context.lineWidth = Math.sqrt(strengthScale(d.weight))
             context.stroke()
             context.globalAlpha = 1;
@@ -68,12 +62,14 @@
         
         NodesForVis.forEach((d) => {
             context.beginPath();
-            context.arc(d.x, d.y, radiuScale(d.ids_of_articles_nyt.length), 0, 2 * Math.PI);
+            context.arc(d.x, d.y, radiuScale(d[`ids_of_articles_${outlet}`].length), 0, 2 * Math.PI);
             context.strokeStyle = "black";
             context.lineWidth = 1.5;
             context.stroke();
-            context.fillStyle = "white";
+            context.fillStyle = outlet == "nyt" ? "#FFBC36" : "#4580FF";
             context.fill();
+            context.fillStyle = "black";
+            context.fillText(d.country, d.x, d.y)
         })
 
         context.restore();
@@ -83,11 +79,10 @@
 
 </script>
 
-<div bind:clientWidth={width} bind:clientHeight={height} class="h-full">
+<div bind:clientWidth={width} bind:clientHeight={height} class="h-200 border">
     {#await nodes && links}
         <div>Loading</div>
     {:then nodes} 
         <canvas bind:this={canvas} width={width} height={height}></canvas>
     {/await}
-
 </div>

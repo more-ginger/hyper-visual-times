@@ -18,7 +18,8 @@ export interface countryDataForComparison {
     country: string,
     count_zeit: number,
     count_nyt: number,
-    ids_of_articles_nyt: string[]
+    ids_of_articles_nyt: string[],
+    ids_of_articles_zeit: string[]
 }
 
 export interface solution {
