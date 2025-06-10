@@ -18,13 +18,15 @@
         }).sort((a: { key: string }, b: { key: string }) => a.key.localeCompare(b.key)))
 
     // Set the primary country to calc overlaps
-    let primaryCountry = $state(dropdownData[0].key)
+    let primaryCountry = dropdownData.find((d:{key:string}) => d.key == "Germany")
+    let primaryCountryKey = $state(primaryCountry.key)
 
     const dataDomain = $derived(extent(data.map((d:countryDataForComparison) => [d.count_nyt, d.count_zeit]).flat()))
 
     let nodes = $derived.by(() => {
-        const a = data.find((d: {country:string}) => (d.country == primaryCountry))
         let overlaps: Record<string, countryDataForComparison[]> = {}
+        if(primaryCountry) {
+        const a = data.find((d: {country:string}) => (d.country == primaryCountryKey))
         a.priority = 1
         outlets.forEach((outlet:string) => {
             const outletArray:countryDataForComparison[] = [a]
@@ -43,7 +45,7 @@
             }
             overlaps[outlet] = outletArray
         })
-        
+        }
         return overlaps
     })
     let links = $derived.by(() => {
@@ -80,16 +82,14 @@
                         const countryA = nodesOutlet[i].country;
                         const countryB = nodesOutlet[j].country;
                         const pairKey = [countryA, countryB].sort().join("::");
-                        console.log(outlet, pairKey)
 
                         if (!seenPairs.has(pairKey)) {
                             seenPairs.add(pairKey)
-                            console.log(nodesOutlet[i].country, nodesOutlet[j].country)
                             linksArray.push({
                                 source: nodesOutlet[i].country, 
                                 target: nodesOutlet[j].country,
                                 weight: countOverlap(idsA, idsB),
-                                priority: nodesOutlet[i].country === primaryCountry ? 1 : 0
+                                priority: nodesOutlet[i].country === primaryCountryKey ? 1 : 0
                             })
                         }
                     }
@@ -102,17 +102,18 @@
         return links
     })
 
-    $inspect("links", links)
-    $inspect("nodes", nodes)
 </script>
 <div>
-    <span>
+    <h3>What other countries share coverage with     
+        <span>
         <Dropdown 
         availableFilter={dropdownData} 
-        bind:selected={primaryCountry}
+        bind:selected={primaryCountryKey}
         />
-    </span>
+        </span>
+    ?</h3>
 </div>
+{#if primaryCountryKey}
 <div class="flex">
     {#each outlets as outlet}
         <div class="w-1/2 h-svh">
@@ -120,3 +121,4 @@
         </div>
     {/each}
 </div>
+{/if}

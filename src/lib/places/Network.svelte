@@ -19,6 +19,10 @@
     const distanceScale = $derived(d3.scaleLinear().domain(d3.extent(LinksForVis.map((d:link) => d.weight))).range([300, 0]))
     const strengthScale = $derived(d3.scaleLinear().domain(d3.extent(LinksForVis.map((d:link) => d.weight))).range([1, 100]))
 
+    function distance(x1, y1, x2, y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
+    }
+
     $effect(() => {
         const ctx = canvas?.getContext("2d");
         if (ctx) {
@@ -38,6 +42,7 @@
             width = canvas.offsetWidth * dpi;
             height = canvas.offsetHeight * dpi;
             context.scale(dpi, dpi);
+            // change factor to position the network at the center of the scaled canvas
             const positioningFactor =  dpi > 1 ? 4 : 2
             
             simulation = d3
@@ -50,8 +55,19 @@
                 .distance((d:link) => distanceScale(d.weight))
             )
             .force('center', 
-                d3.forceCenter(width / positioningFactor, height / positioningFactor)
-            )
+                d3.forceCenter(width / positioningFactor, height / positioningFactor - 100)
+             )
+             .force("bounding", () => {
+                NodesForVis.forEach((node:node) => {
+                    const xCenter = width / 2
+                    const yCenter = height / 2
+                    if (distance(node.x, node.y, xCenter, yCenter) > 280) {
+                        const theta = Math.atan((node.y - (height / 2)) / (node.x - (width / 2)))
+                        node.x = (width / 2) + 280 * Math.cos(theta) * (node.x < (width / 2) ? -1 : 1);
+                        node.y = (height / 2) + 280 * Math.sin(theta) * (node.x < (width / 2) ? -1 : 1);
+                    }
+                })
+            })
             .on("tick", simulationUpdate)
         }
     })
@@ -86,12 +102,9 @@
             context.fillStyle = "black";
             context.fillText( d.priority > 0 ? d.country : d.iso, d.x + 5, d.y + 5)
         })
-
+               
         context.restore();
     }
-
-
-
 </script>
 
 <div bind:clientWidth={width} bind:clientHeight={height} class="h-4/5">
