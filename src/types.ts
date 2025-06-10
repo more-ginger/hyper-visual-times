@@ -29,3 +29,29 @@ export interface solution {
         radius: number
     }
 }
+
+export interface link {
+    source: {
+        x:number,
+        y:number
+    },
+    target: {
+        x:number,
+        y:number
+    },
+    priority: number
+    weight: number
+}
+
+type Outlet = "nyt" | "zeit"
+type ArticleIds = {
+    [Property in `ids_of_articles_${Outlet}`]: string[]
+}
+
+export interface node extends ArticleIds {
+    x: number,
+    y: number,
+    priority: number,
+    country: string,
+    iso: string
+}

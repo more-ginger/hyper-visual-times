@@ -140,7 +140,7 @@
             <article class="w-full md:w-3/7 m-auto">
              <TextRenderer rawtext={rawChapter3Text}/>
             </article>
-            <figure class="w-full h-dvh top-50 md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
+            <figure class="w-full h-full md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
                 <NetworkContainer data={data.data}/>
             </figure>
         </section>
