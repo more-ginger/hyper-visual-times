@@ -18,7 +18,7 @@
         }).sort((a: { key: string }, b: { key: string }) => a.key.localeCompare(b.key)))
 
     // Set the primary country to calc overlaps
-    let primaryCountry = dropdownData.find((d:{key:string}) => d.key == "Germany")
+    let primaryCountry = dropdownData.find((d:{key:string}) => d.key == "Ghana")
     let primaryCountryKey = $state(primaryCountry.key)
 
     const dataDomain = $derived(extent(data.map((d:countryDataForComparison) => [d.count_nyt, d.count_zeit]).flat()))
@@ -27,20 +27,20 @@
         let overlaps: Record<string, countryDataForComparison[]> = {}
         if(primaryCountry) {
         const a = data.find((d: {country:string}) => (d.country == primaryCountryKey))
+        a.shared_articles = []
         a.priority = 1
         outlets.forEach((outlet:string) => {
             const outletArray:countryDataForComparison[] = [a]
             for (let index = 0; index < data.length; index++) {
                 const b = data[index];
                 if (a.country == b.country) continue
-
                 const aArticles = new Set(a[`ids_of_articles_${outlet}`])
                 const bArticles = new Set(b[`ids_of_articles_${outlet}`])
-                const articles = [...aArticles].filter(k => bArticles.has(k))
-
-                if(articles.length > 0) {
+                const shared_articles = [...aArticles].filter(k => bArticles.has(k))
+           
+                if(shared_articles.length > 0) {
                     b.priority = 0
-                    outletArray.push(b)
+                    outletArray.push({...b, shared_articles})
                 }
             }
             overlaps[outlet] = outletArray
@@ -48,6 +48,7 @@
         }
         return overlaps
     })
+
     let links = $derived.by(() => {
         const links:Record<string, {source:string, target:string, weight:number}[]> = {}
 
@@ -103,21 +104,33 @@
     })
 
 </script>
-<div>
-    <h3>What other countries share coverage with     
-        <span>
-        <Dropdown 
-        availableFilter={dropdownData} 
-        bind:selected={primaryCountryKey}
-        />
-        </span>
-    ?</h3>
+<div class="w-full flex">
+    <div class="w-1/2">
+        <h3>What other countries share coverage with     
+            <span>
+            <Dropdown 
+            availableFilter={dropdownData} 
+            bind:selected={primaryCountryKey}
+            />
+            </span>
+            ?
+        </h3>
+    </div>
+    <div class="w-1/2">
+        <h4>How to read the chart:</h4>
+    </div>
 </div>
 {#if primaryCountryKey}
 <div class="flex">
     {#each outlets as outlet}
-        <div class="w-1/2 h-svh">
-            <Network nodes={nodes[outlet]} links={links[outlet]} {outlet} {dataDomain}/>
+        <div class="w-1/2">
+            <Network 
+                nodes={nodes[outlet]} 
+                links={links[outlet]} 
+                {outlet} 
+                {dataDomain} 
+                {primaryCountryKey}
+            />
         </div>
     {/each}
 </div>

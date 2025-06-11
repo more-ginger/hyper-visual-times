@@ -3,7 +3,9 @@
     // @ts-expect-error
     import * as d3 from "d3";
 
-    let {nodes, links, outlet, dataDomain} = $props()
+    import NetworkCard from "./NetworkCard.svelte";
+
+    let {nodes, links, outlet, dataDomain, primaryCountryKey} = $props()
     
     const NodesForVis = $derived(nodes.map((d:node) => ({...d})))
     const LinksForVis = $derived(links.map((d:link) => ({...d})))
@@ -116,11 +118,27 @@
     }
 </script>
 
-<div bind:clientWidth={width} bind:clientHeight={height} class="h-150">
+<div>
     {#await nodes && links}
         <div>Loading</div>
-    {:then} 
-        <div>{outlet}</div>
+    {:then}
+        <div>
+            <div>
+                {#if outlet === "nyt"}
+                    <p class="text-nyt-default">The New York Times</p>
+                {:else}
+                    <p class="text-zeit-default">Zeit Online</p>
+                {/if}
+            </div>
+            <div class={`w-1/3 text-${outlet}-dark`}>
+                <span>{primaryCountryKey}</span> shares coverage with X other countries
+            </div>
+        </div>
+        <div bind:clientWidth={width} bind:clientHeight={height} class="h-150">
         <canvas bind:this={canvas} width={width} height={height}></canvas>
+        </div>
+        <div>
+            <NetworkCard {outlet} {nodes} {primaryCountryKey}/>
+        </div>
     {/await}
 </div>
