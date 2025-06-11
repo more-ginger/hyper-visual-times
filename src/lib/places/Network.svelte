@@ -14,12 +14,13 @@
     let dpi = 1;
     let width = $state(0);
     let height = $state(0);
+    const networkRadius = 260;
     
     const radiuScale = $derived(d3.scaleLinear().domain(dataDomain).range([2, 50]))
     const distanceScale = $derived(d3.scaleLinear().domain(d3.extent(LinksForVis.map((d:link) => d.weight))).range([300, 0]))
-    const strengthScale = $derived(d3.scaleLinear().domain(d3.extent(LinksForVis.map((d:link) => d.weight))).range([1, 100]))
+    const strengthScale = $derived(d3.scaleLinear().domain(d3.extent(LinksForVis.map((d:link) => d.weight))).range([1, 20]))
 
-    function distance(x1, y1, x2, y2) {
+    function distance(x1:number, y1:number, x2:number, y2:number) {
         return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
     }
 
@@ -48,27 +49,28 @@
             simulation = d3
             .forceSimulation(NodesForVis)
             .force("collide", 
-                d3.forceCollide((d:node & { [key: string]: any }) => radiuScale((d[`ids_of_articles_${outlet}`] as any[]).length) + 1)
+                d3.forceCollide((d:node & { [key: string]: any }) => radiuScale((d[`ids_of_articles_${outlet}`] as any[]).length) + 5)
             )
             .force("link", 
                 d3.forceLink(LinksForVis).id((d:node) => d.country)
                 .distance((d:link) => distanceScale(d.weight))
             )
             .force('center', 
-                d3.forceCenter(width / positioningFactor, height / positioningFactor - 100)
+                d3.forceCenter(width / positioningFactor, height / positioningFactor)
              )
              .force("bounding", () => {
                 NodesForVis.forEach((node:node) => {
-                    const xCenter = width / 2
-                    const yCenter = height / 2
-                    if (distance(node.x, node.y, xCenter, yCenter) > 280) {
-                        const theta = Math.atan((node.y - (height / 2)) / (node.x - (width / 2)))
-                        node.x = (width / 2) + 280 * Math.cos(theta) * (node.x < (width / 2) ? -1 : 1);
-                        node.y = (height / 2) + 280 * Math.sin(theta) * (node.x < (width / 2) ? -1 : 1);
+                    const xCenter = width / positioningFactor
+                    const yCenter = height / positioningFactor
+                    if (distance(node.x, node.y, xCenter, yCenter) > networkRadius) {
+                        const theta = Math.atan((node.y - yCenter) / (node.x - xCenter))
+                        node.x = xCenter + networkRadius * Math.cos(theta) * (node.x < xCenter ? -1 : 1);
+                        node.y = yCenter + networkRadius * Math.sin(theta) * (node.x < xCenter ? -1 : 1);
                     }
                 })
             })
             .on("tick", simulationUpdate)
+            .tick(2)
         }
     })
 
@@ -81,16 +83,20 @@
             context.lineTo(d.target.x, d.target.y);
             context.globalAlpha = d.priority > 0 ? 1 : 0.1;
             context.strokeStyle = outlet == "nyt" ? "#FFDB93" : "#7EA7FF";
-            context.lineWidth = Math.sqrt(strengthScale(d.weight))
+            context.lineWidth = strengthScale(d.weight)
+            context.lineCap = "round";
             context.stroke()
             context.globalAlpha = 1;
 
-            if (d.priority <= 0) {
-                context.setLineDash([4, 2]);
-            }
+
+            // if (d.priority <= 0) {
+            //     context.setLineDash([2, 1]);
+            // }
         })
         
         NodesForVis.forEach((d: node & { [key: string]: any }) => {
+            
+            const nameLabel =  d.iso == "No code" ? d.country : d.iso
             context.beginPath();
             context.setLineDash([0, 0]);
             context.arc(d.x, d.y, radiuScale((d[`ids_of_articles_${outlet}`] as any[]).length), 0, 2 * Math.PI);
@@ -99,18 +105,22 @@
             context.stroke();
             context.fillStyle = outlet == "nyt" ? "#FFDB93" : "#7EA7FF";
             context.fill();
-            context.fillStyle = "black";
-            context.fillText( d.priority > 0 ? d.country : d.iso, d.x + 5, d.y + 5)
+            context.textAlign = "center";
+            context.fillStyle = outlet == "nyt" ? "#6a4907" : "#0036AC";
+            context.strokeStyle = "white";
+            context.strokeText(d.priority > 0 ? d.country : nameLabel, d.x, d.y - radiuScale((d[`ids_of_articles_${outlet}`] as any[]).length) - 5);
+            context.fillText(d.priority > 0 ? d.country : nameLabel, d.x, d.y - radiuScale((d[`ids_of_articles_${outlet}`] as any[]).length) - 5)
         })
                
         context.restore();
     }
 </script>
 
-<div bind:clientWidth={width} bind:clientHeight={height} class="h-4/5">
+<div bind:clientWidth={width} bind:clientHeight={height} class="h-150">
     {#await nodes && links}
         <div>Loading</div>
     {:then} 
+        <div>{outlet}</div>
         <canvas bind:this={canvas} width={width} height={height}></canvas>
     {/await}
 </div>
