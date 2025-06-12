@@ -131,7 +131,7 @@
                 {/if}
             </div>
             <div class={`w-1/3 text-${outlet}-dark`}>
-                <span>{primaryCountryKey}</span> shares coverage with X other countries
+                <span>{primaryCountryKey}</span> shares coverage with {nodes.length} other countries
             </div>
         </div>
         <div bind:clientWidth={width} bind:clientHeight={height} class="h-150">
