@@ -11,7 +11,7 @@
     import TotalCovLegend from '$lib/places/totalCovLegend.svelte';
     import VoronoiTreemap from '$lib/places/voronoiTreemap.svelte';
     import VoronoiLegend from '$lib/places/voronoiLegend.svelte';
-    import VennComparison from '$lib/places/VennComparison.svelte';
+    import NetworkContainer from '$lib/places/NetworkContainer.svelte';
 
     let { data }: PageProps = $props();
     const scroller = scrollama();
@@ -140,8 +140,8 @@
             <article class="w-full md:w-3/7 m-auto">
              <TextRenderer rawtext={rawChapter3Text}/>
             </article>
-            <figure class="w-full h-dvh top-50 md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
-                <VennComparison data={data.data}/>
+            <figure class="w-full md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
+                <NetworkContainer data={data.data}/>
             </figure>
         </section>
         <section id="outro">

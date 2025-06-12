@@ -4,13 +4,13 @@ import type { RequestHandler } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({url}) => {
     const source = url.searchParams.get("source");
-    const id = url.searchParams.get("id");
+    const ids = url.searchParams.getAll("id");
 
     if (!source || (source !== "nyt" && source !== "zeit")) {
         return new Response("Invalid source", { status: 400 });
     }
 
-    let query = supabase.from(`${source}_articles`).select("*").eq("_id", id).single();
+    let query = supabase.from(`${source}_articles`).select("headline").in("_id", ids);
     const { data, error} = await query;
 
     if (error) {

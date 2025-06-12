@@ -17,7 +17,9 @@ export interface countryDataType {
 export interface countryDataForComparison {
     country: string,
     count_zeit: number,
-    count_nyt: number
+    count_nyt: number,
+    ids_of_articles_nyt: string[],
+    ids_of_articles_zeit: string[]
 }
 
 export interface solution {
@@ -26,4 +28,30 @@ export interface solution {
         y: number, 
         radius: number
     }
+}
+
+export interface link {
+    source: {
+        x:number,
+        y:number
+    },
+    target: {
+        x:number,
+        y:number
+    },
+    priority: number
+    weight: number
+}
+
+type Outlet = "nyt" | "zeit"
+type ArticleIds = {
+    [Property in `ids_of_articles_${Outlet}`]: string[]
+}
+
+export interface node extends ArticleIds {
+    x: number,
+    y: number,
+    priority: number,
+    country: string,
+    iso: string
 }
