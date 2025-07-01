@@ -33,11 +33,15 @@ export interface solution {
 export interface link {
     source: {
         x:number,
-        y:number
+        y:number,
+        country: string,
+        iso: string
     },
     target: {
         x:number,
-        y:number
+        y:number,
+        country: string,
+        iso: string
     },
     priority: number
     weight: number
