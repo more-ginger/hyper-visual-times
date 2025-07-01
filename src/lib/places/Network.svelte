@@ -216,6 +216,7 @@
     function selectNode (e: MouseEvent) {
         const rect = canvas?.getBoundingClientRect();
         if (!rect) return;
+        console.log(e)
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
@@ -231,6 +232,10 @@
         redrawCanvasElement(canvasLinks)
         redrawCanvasElement(circles)
 
+    }
+
+    function resetNode () {
+        selectedNode = primaryCountryKey;
     }
 </script>
 
@@ -251,7 +256,7 @@
             </div>
         </div>
         <div bind:clientWidth={width} bind:clientHeight={height} class="h-150">
-        <canvas bind:this={canvas} width={width} height={height} onclick={selectNode}></canvas>
+        <canvas bind:this={canvas} width={width} height={height} onmousemove={selectNode} onmouseleave={resetNode}></canvas>
         </div>
         <div>
             <NetworkCard {outlet} {nodes} {primaryCountryKey}/>
