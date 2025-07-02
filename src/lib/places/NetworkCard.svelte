@@ -36,10 +36,11 @@
         fetchAllArticles();
     })
 </script>
-<div class={`h-100 border rounded-md overflow-auto mx-2 my-8 border-${outlet}-dark`}>
+<div>
     {#await nodes && articles}
         <div>Loading</div>
     {:then articles}
+        <div class={`h-100 border rounded-md overflow-auto mx-2 my-2 border-${outlet}-dark`}>
         {#each articles as country, c}
         {#if country.headlines.length > 0}
             <div class={`w-full flex ${c !== 0 && "border-t"} border-${outlet}-dark border-b p-2 text-${outlet}-dark`}>
@@ -63,5 +64,6 @@
             </div>
         {/if}
         {/each}
+        </div>
     {/await}
 </div>

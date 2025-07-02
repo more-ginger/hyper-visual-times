@@ -123,7 +123,7 @@
             context.closePath();
 
             context.textAlign = "center";
-            context.fillStyle = this.fillColor;
+            context.fillStyle = this.strokeColor;
             context.strokeStyle = "white";
             context.strokeText(this.nameLabel, this.xpoint, this.ypoint - this.radius - 5);
             context.fillText(this.nameLabel, this.xpoint, this.ypoint - this.radius - 5)
@@ -145,7 +145,17 @@
         lineWidth: number;
         strokeColor!: string;
         
-        constructor( countrySource: string, countryTarget: string, sourceX: number, sourceY: number, targetX: number, targetY: number, priority: number, lineWidth: number, strokeColor: string) {
+        constructor( 
+            countrySource: string, 
+            countryTarget: string, 
+            sourceX: number, 
+            sourceY: number, 
+            targetX: number, 
+            targetY: number, 
+            priority: number, 
+            lineWidth: number, 
+            strokeColor: string
+        ) {
             this.countrySource = countrySource;
             this.countryTarget = countryTarget;
             this.sourceX = sourceX;
@@ -174,8 +184,13 @@
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         
         canvasLinks = LinksForVis.map((d:link) => {
-            const sourceCountry =  d.source.iso == "No code" || d.source.country === primaryCountryKey ? d.source.country : d.source.iso
-            const targetCountry =  d.target.iso == "No code" || d.target.country === primaryCountryKey ? d.target.country : d.target.iso
+            const sourceCountry =  d.source.iso == "No code"
+            || d.source.country === primaryCountryKey 
+            ? d.source.country : d.source.iso
+
+            const targetCountry =  d.target.iso == "No code" 
+            || d.target.country === primaryCountryKey 
+            ? d.target.country : d.target.iso
 
             let link = new Link(
                 sourceCountry,
@@ -200,7 +215,7 @@
                 d.x, 
                 d.y, 
                 radiuScale((d[`ids_of_articles_${outlet}`] as any[]).length), 
-                outlet == "nyt" ? "#FFDB93" : "#7EA7FF",
+                outlet == "nyt" ? "#FFDB93" : "#0036AC",
                 outlet == "nyt" ? "#6a4907" : "#0036AC",
                 nameLabel,
                 d.priority
@@ -216,16 +231,13 @@
     function selectNode (e: MouseEvent) {
         const rect = canvas?.getBoundingClientRect();
         if (!rect) return;
-        console.log(e)
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
         circles.forEach((circle) => {
             if (circle.isPointInside(x, y)) {
-                console.log("Circle clicked:", circle.nameLabel);
+                // console.log("Circle clicked:", circle.nameLabel);
                 selectedNode = circle.nameLabel;
-                console.log(circle.nameLabel)
-                // Handle the click event for the circle here
             }
         });
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -235,7 +247,10 @@
     }
 
     function resetNode () {
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
         selectedNode = primaryCountryKey;
+        redrawCanvasElement(canvasLinks)
+        redrawCanvasElement(circles)
     }
 </script>
 
@@ -243,23 +258,45 @@
     {#await nodes && links}
         <div>Loading</div>
     {:then}
-        <div>
+        <div class={`m-2`}>
+            <div 
+                bind:clientWidth={width} 
+                bind:clientHeight={height} 
+                class={`h-150 p-2 rounded-md border border-gray-200`}
+            >
             <div>
-                {#if outlet === "nyt"}
-                    <p class="text-nyt-default">The New York Times</p>
-                {:else}
-                    <p class="text-zeit-default">Zeit Online</p>
-                {/if}
+                <div>
+                    <div>
+                    {#if outlet === "nyt"}
+                        <p class="text-nyt-dark">The New York Times</p>
+                    {:else}
+                        <p class="text-zeit-dark">Zeit Online</p>
+                    {/if}
+                    </div>
+                    <div class={`text-${outlet}-default text-xs`}>
+                    {#if nodes.length <= 1}
+                        <span>{primaryCountryKey}</span> shares no coverage with other countries.
+                    {:else}
+                        <span>{primaryCountryKey}</span> shares coverage with {nodes.length} other countries.
+                    {/if}
+                    </div>
+                </div>
             </div>
-            <div class={`w-1/3 text-${outlet}-dark`}>
-                <span>{primaryCountryKey}</span> shares coverage with {nodes.length} other countries
+            <canvas 
+                bind:this={canvas} 
+                width={width} 
+                height={height} 
+                onmousemove={selectNode} 
+                onmouseleave={resetNode}
+            ></canvas>
             </div>
-        </div>
-        <div bind:clientWidth={width} bind:clientHeight={height} class="h-150">
-        <canvas bind:this={canvas} width={width} height={height} onmousemove={selectNode} onmouseleave={resetNode}></canvas>
         </div>
         <div>
-            <NetworkCard {outlet} {nodes} {primaryCountryKey}/>
+            <NetworkCard 
+                {outlet} 
+                {nodes} 
+                {primaryCountryKey}
+            />
         </div>
     {/await}
 </div>
