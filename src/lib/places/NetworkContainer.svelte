@@ -105,19 +105,23 @@
 
 </script>
 <div class="w-full flex">
-    <div class="w-1/2">
-        <h3>What other countries share coverage with     
-            <span>
-            <Dropdown 
-            availableFilter={dropdownData} 
-            bind:selected={primaryCountryKey}
-            />
-            </span>
-            ?
-        </h3>
-    </div>
-    <div class="w-1/2">
-        <h4>How to read the chart:</h4>
+    <div class="mr-10">
+        <div class="border-b mt-4">
+            <h4>What other countries share coverage with     
+                <span>
+                <Dropdown 
+                availableFilter={dropdownData} 
+                bind:selected={primaryCountryKey}
+                />
+                </span>
+                ?
+            </h4>
+        </div>
+        <div>
+            <p>
+                The two networks visualizations show the coverage directly shared between {primaryCountryKey} and other countries. 
+                Interact with the nodes to see how coutries are connected with each other in relation to {primaryCountryKey}. Use the dropdown menu above to switch primary country.</p>
+        </div>
     </div>
 </div>
 {#if primaryCountryKey}
