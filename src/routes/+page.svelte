@@ -1,10 +1,11 @@
 <script lang="ts">
     import IntroductionTile from "$lib/essay/IntroductionTile.svelte";
-    import MainIllustration from "$lib/essay/MainIllustration.svelte";
     import rawIntroText from "@/content/main-intro.md?raw";
     import rawEssayText from "@/content/main-essay.md?raw";
     import scrollama from "scrollama";
 	import BlocksRenderer from "$lib/essay/BlocksRenderer.svelte";
+
+    let { data } = $props()
 
     const scroller = scrollama();
     let step = $state(0);
@@ -39,8 +40,8 @@
 
 <main>
     <div class="w-11/12 m-auto z-0">
-        <div class="w-full">
-            <IntroductionTile/>
+        <div class="w-full h-dvh">
+            <IntroductionTile {data}/>
         </div>
         <div>
             <BlocksRenderer rawtext={rawIntroText}/>
