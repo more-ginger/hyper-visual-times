@@ -10,6 +10,8 @@
 
     const scroller = scrollama();
     let step = $state(0);
+    let progress = $state(0);
+    let direction = $state("");
     let essayIsRendered = $state(false);
     let essayHasSteps = $state(false);
     
@@ -25,12 +27,16 @@
             .setup({
                 step: ".step",
                 debug: false,
-                offset: 0.7
+                offset: 0.7,
+                progress: true
             })
             .onStepEnter((response) => {
                 step = response.index
-                console.log("step", step)
+                direction = response.direction
                 // { element, index, direction }
+            })
+            .onStepProgress((response)=> {
+                progress = response.progress
             })
             .onStepExit((response) => {
                 //
@@ -71,10 +77,10 @@
                 </div>
             </div>
         </div>
-        <div class="w-11/12 m-auto z-0">
+        <div class="w-full m-auto z-0">
             <section>
-                <figure class="top-10 py-10 sticky w-full h-[90vh]">
-                    <Illustration/>
+                <figure class="top-10 py-5 sticky w-full h-[91vh]">
+                    <Illustration {step} {progress} {direction}/>
                 </figure>
                 <article class="w-full relative">
                     <BlocksRenderer 

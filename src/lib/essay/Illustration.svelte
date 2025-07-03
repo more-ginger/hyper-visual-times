@@ -1,5 +1,58 @@
-<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 2383.94 2944.08">
-  <!-- Generator: Adobe Illustrator 29.6.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 207)  -->
+<script lang="ts">
+	import { onMount } from "svelte";
+
+let { step, progress, direction } = $props() 
+let svg: SVGSVGElement | null = $state(null)
+let matrix: SVGSVGElement | null = $state(null)
+const transformMatrix = [1, 0, 0, 1, 0, 0]
+
+const viewbox = $derived(svg?.getAttributeNS(null, "viewBox").split(" "))
+const centerX = $derived(viewbox ? parseFloat(viewbox[2]) / 2 : 0)
+const centerY = $derived(viewbox ? parseFloat(viewbox[3]) / 2 : 0)
+
+
+function zoom(scale:number) {
+  for (let index = 0; index < 4; index++) {
+    transformMatrix[index] *= scale;
+  }
+
+  transformMatrix[4] += (1 - scale) * centerX;
+  transformMatrix[5] += (1 - scale);
+
+  const newMatrix = "matrix(" + transformMatrix.join(' ') + ")";
+  matrix?.setAttributeNS(null, "transform", newMatrix)
+}
+
+function move (x, y) {
+  transformMatrix[4] += x;
+  transformMatrix[5] += y;
+
+  const newMatrix = "matrix(" + transformMatrix.join(' ') + ")";
+  matrix?.setAttributeNS(null, "transform", newMatrix)
+}
+
+onMount(() => {
+  move(500, 0)
+  zoom(1.04)
+})
+
+$effect(() => {
+  if(step === 1) {
+    if (direction === "down") {
+      move(-500, 0)
+      zoom(2)
+      console.log("direction down")
+    } else {
+      move(1000, 0)
+      zoom(0.5)
+    }
+  }
+
+})
+</script>
+
+<svg bind:this={svg} width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 2400 3000">
+  <g bind:this={matrix} class="transition-all" transform="matrix(1 0 0 1 0 0)">
   <defs>
     <style>
       .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7, .st8, .st9, .st10 {
@@ -2224,5 +2277,6 @@
         </g>
       </g>
     </g>
+  </g>
   </g>
 </svg>
