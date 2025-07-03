@@ -129,7 +129,7 @@
 
     .essay {
         h2, h3, h4, p {
-            margin: 2rem auto;
+            margin: 0rem auto;
         }
 
         h4 > span {

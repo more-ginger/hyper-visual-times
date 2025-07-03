@@ -19,8 +19,8 @@
 </script>
 
 <div class="w-full max-w-7xl border-x m-auto">
-	<div class="sticky top-0">
-		<nav class="bg-white w-full px-4 pb-2 border-b z-40 absolute">
+	<div class="sticky top-0 z-50">
+		<nav class="bg-white w-full px-4 pb-2 border-b  absolute">
 			<div class="m-auto pt-2 flex justify-between">
 				<div class="w-1/2">
 					<a href="/">
@@ -55,7 +55,7 @@
 			</div>
 		</nav>
 	</div>
-	<div>
+	<div class="-z-10">
 	{@render children()}
 	</div>
 	<footer class="sticky bottom-0 bg-white w-full px-4 pb-2 border-t z-40 mt-10">

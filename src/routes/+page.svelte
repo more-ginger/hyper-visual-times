@@ -40,25 +40,42 @@
 
 <main>
     <div class="w-11/12 m-auto z-0">
-        <div class="w-full h-dvh">
-            <IntroductionTile {data}/>
-        </div>
         <div>
-            <BlocksRenderer rawtext={rawIntroText}/>
-        </div>
-        <div>
-            <BlocksRenderer rawtext={rawEssayText} {onEssayRender}/>
-        </div>
-        <!-- <div id="essay-container" class="w-full">
-            <div class="w-full h-dvh top-0 md:top-0">
-                <MainIllustration data={data} step={step}/>
+            <div class="w-full h-dvh top-20">
+                <IntroductionTile {data}/>
             </div>
-            <div class="md:w-3/9">
-                <div>
-                    <BlocksRenderer rawtext={rawIntroText} {onEssayRender}/>
+            <div class="flex w-10/12 m-auto">
+                <div class="w-3/10">
+                    <div class="my-5">
+                        <p class="italic border-b">
+                            This website contains a series of reflections on the circulation and consumption patterns of news in the digital environment. 
+                            Using metadata from several newsrooms’ archives, each experiment deals with a feature of digital news: keywords, text, and images. 
+                            Using a combination of computational methods, three individual chapters pivot around a series of design and data visualization 
+                            experiments with news data.
+                        </p>
+                        <div>
+                            <h5>Browse chapters:</h5>
+                            <div>
+                                <li>
+                                    <ul>The Geo-politics of news</ul>
+                                    <ul>The Geo-politics of news</ul>
+                                    <ul>The Geo-politics of news</ul>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-7/10">
+                    <BlocksRenderer rawtext={rawIntroText}/>
                 </div>
             </div>
-        </div> -->
+        </div>
+        <div class="w-8/12 m-auto z-0">
+            
+            <div>
+                <BlocksRenderer rawtext={rawEssayText} {onEssayRender}/>
+            </div>
+        </div>
     </div>
 </main>
 
