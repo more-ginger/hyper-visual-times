@@ -15,7 +15,9 @@
                 <div></div>
             {:then randomNYTSelection}
                 {#each randomNYTSelection as article, a}
-                    <div class={`${a % 2 !== 0 ? "-z-10" : ""} col-start-${a * 2 + 2} col-span-2 xl:col-start-${a * 2 + 3}`}><ArticlesRow {article} {a}/></div>
+                    <div class={`${a % 2 !== 0 ? "-z-10" : ""} col-start-${a * 2 + 2} col-span-2 xl:col-start-${a * 2 + 3}`}>
+                        <ArticlesRow {article} {a}/>
+                    </div>
                 {/each}
             {/await}
         </div>
@@ -26,7 +28,9 @@
                 <div></div>
             {:then randomZeitSelection}
                 {#each randomZeitSelection as article, a}
-                    <div class={`${a % 2 === 0 ? "-z-10" : ""} col-start-${a * 2 + 2} col-span-2 xl:col-start-${a * 2 + 3}`}><ArticlesRow {article} {a}/></div>
+                    <div class={`${a % 2 === 0 ? "-z-10" : ""} col-start-${a * 2 + 2} col-span-2 xl:col-start-${a * 2 + 3}`}>
+                        <ArticlesRow {article} {a}/>
+                    </div>
                 {/each}
             {/await}
         </div>

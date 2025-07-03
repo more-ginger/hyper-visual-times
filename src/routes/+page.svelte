@@ -4,6 +4,7 @@
     import rawEssayText from "@/content/main-essay.md?raw";
     import scrollama from "scrollama";
 	import BlocksRenderer from "$lib/essay/BlocksRenderer.svelte";
+	import Illustration from "$lib/essay/Illustration.svelte";
 
     let { data } = $props()
 
@@ -70,11 +71,18 @@
                 </div>
             </div>
         </div>
-        <div class="w-8/12 m-auto z-0">
-            
-            <div>
-                <BlocksRenderer rawtext={rawEssayText} {onEssayRender}/>
-            </div>
+        <div class="w-11/12 m-auto z-0">
+            <section>
+                <figure class="top-10 py-10 sticky w-full h-[90vh]">
+                    <Illustration/>
+                </figure>
+                <article class="w-full relative">
+                    <BlocksRenderer 
+                        rawtext={rawEssayText} 
+                        {onEssayRender}
+                    />
+                </article>
+            </section>
         </div>
     </div>
 </main>
