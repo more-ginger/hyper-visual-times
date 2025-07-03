@@ -1,3 +1,4 @@
+<div id="has-steps">
 <h2>The layered infrastructures of journalism</h2>
 <div data-step="0" class="step">Journalistic convergence is the integration of news in a digital infrastructure (Pavlik, 2004). This process of assimilation does not influence only the format of news, but also the relationships between journalists and audiences on different levels. It is de facto a remediation (Bolter & Grusin, 1999), where digital media mirrors traditional ones. For journalism, remediation happens as the newspaper moves online to become a digital product. This transformation affects journalism as a system by triggering changes at structural levels. This map attempts to chart the impact of digitalization on the overall system of journalism by systematizing three fundamental infrastructural layers: the individual layer, the material layer, and the societal layer. These three levels should be understood as different spaces at which journalism happens, with different types of actors and interdependencies creating the complex ramifications that uphold the cultural and social role of journalism. 
 </div>
@@ -36,6 +37,7 @@ What is the proportion of populist party representatives? (Does it really corres
 How does it compare to comparably sized parties? To what extent is the party's over all media presence distributed internally?
 What is the balance of power in this “second reality” shaped by images? Are these worlds becoming increasingly divergent?
 
+</div>
 </div>
 
 ### References:

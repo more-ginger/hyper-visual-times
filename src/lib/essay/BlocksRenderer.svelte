@@ -10,8 +10,10 @@
     const essayContent = marked.parse(rawtext)
 
     function evaluateRenderEssay(node: HTMLElement) {
-         console.log(node)
-         onEssayRender?.({ isEssayRendered:true });
+        onEssayRender?.({ 
+            isEssayRendered:true,
+            hasSteps: node.querySelector("#has-steps")? true : false
+        });
          return {};
     }
 

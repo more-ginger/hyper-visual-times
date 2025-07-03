@@ -9,14 +9,16 @@
     const scroller = scrollama();
     let step = $state(0);
     let essayIsRendered = $state(false);
+    let essayHasSteps = $state(false);
     
-    function onEssayRender(data:{isEssayRendered:boolean}) {
-        console.log(data)
+    function onEssayRender(data:{isEssayRendered:boolean, hasSteps:boolean}) {
         essayIsRendered = data.isEssayRendered
+        essayHasSteps = data.hasSteps
     }
 
     $effect(() => {
-        if (essayIsRendered) {
+        if (essayIsRendered && essayHasSteps) {
+            console.log("init step!")
             scroller
             .setup({
                 step: ".step",
@@ -41,7 +43,7 @@
             <IntroductionTile/>
         </div>
         <div>
-            <BlocksRenderer rawtext={rawIntroText} {onEssayRender}/>
+            <BlocksRenderer rawtext={rawIntroText}/>
         </div>
         <div>
             <BlocksRenderer rawtext={rawEssayText} {onEssayRender}/>
