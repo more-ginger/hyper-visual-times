@@ -3,14 +3,16 @@
     import { marked } from "marked";
     import { setFootnotes } from "$lib/utils/actions.svelte";
 
-    let { rawtext, onEssayRender } = $props();
+    let { rawtext, onEssayRender=undefined } = $props();
     let shown = $state(true);
 
     marked.use({async: true, breaks:true}, markedFootnote())
     const essayContent = marked.parse(rawtext)
 
-    function evaluateRenderEssay(el) {
+    function evaluateRenderEssay(node: HTMLElement) {
+         console.log(node)
          onEssayRender?.({ isEssayRendered:true });
+         return {};
     }
 
 </script>

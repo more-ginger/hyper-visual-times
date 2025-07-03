@@ -1,17 +1,17 @@
 <script lang="ts">
-    import TextRenderer from "$lib/essay/TextRenderer.svelte";
+    import IntroductionTile from "$lib/essay/IntroductionTile.svelte";
     import MainIllustration from "$lib/essay/MainIllustration.svelte";
-    import rawIntroText from "@/content/main-essay.md?raw";
+    import rawIntroText from "@/content/main-intro.md?raw";
+    import rawEssayText from "@/content/main-essay.md?raw";
     import scrollama from "scrollama";
 	import BlocksRenderer from "$lib/essay/BlocksRenderer.svelte";
-
-    let { data } = $props();
 
     const scroller = scrollama();
     let step = $state(0);
     let essayIsRendered = $state(false);
     
     function onEssayRender(data:{isEssayRendered:boolean}) {
+        console.log(data)
         essayIsRendered = data.isEssayRendered
     }
 
@@ -37,16 +37,25 @@
 
 <main>
     <div class="w-11/12 m-auto z-0">
-        <div id="essay-container" class="w-full flex">
-            <div class="md:w-6/9 sticky h-dvh top-0 md:top-0">
+        <div class="w-full">
+            <IntroductionTile/>
+        </div>
+        <div>
+            <BlocksRenderer rawtext={rawIntroText} {onEssayRender}/>
+        </div>
+        <div>
+            <BlocksRenderer rawtext={rawEssayText} {onEssayRender}/>
+        </div>
+        <!-- <div id="essay-container" class="w-full">
+            <div class="w-full h-dvh top-0 md:top-0">
                 <MainIllustration data={data} step={step}/>
             </div>
-            <div class="md:w-3/9 relative">
+            <div class="md:w-3/9">
                 <div>
                     <BlocksRenderer rawtext={rawIntroText} {onEssayRender}/>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </main>
 

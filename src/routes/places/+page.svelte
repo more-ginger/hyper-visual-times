@@ -5,7 +5,7 @@
     import rawIntroText from "@/content/places/places-intro.md?raw";
     import rawOutroText from "@/content/places/places-outro.md?raw";
     import rawChapter3Text from "@/content/places/places-chapter-3.md?raw";
-    import TextRenderer from '$lib/essay/TextRenderer.svelte';
+    import BlocksRenderer from '$lib/essay/BlocksRenderer.svelte';
     
     import TotalCoverageBar from "$lib/places/totalCoverageBars.svelte";
     import TotalCovLegend from '$lib/places/totalCovLegend.svelte';
@@ -40,7 +40,7 @@
     <div id="places-essay">
         <section id="intro" class="mt-12 mb-30">
             <div class="w-full md:w-3/7 m-auto">
-                <TextRenderer rawtext={rawIntroText}/>
+                <BlocksRenderer rawtext={rawIntroText}/>
             </div>
         </section>
         <section id="scrolly-2" class="md:flex md:flex-row-reverse">
@@ -138,7 +138,7 @@
         </section>
         <section id="scrolly-3" class="w-full">
             <article class="w-full md:w-3/7 m-auto">
-             <TextRenderer rawtext={rawChapter3Text}/>
+             <BlocksRenderer rawtext={rawChapter3Text}/>
             </article>
             <figure class="w-full md:py-4 md:basis-2/3 md:top-0 xl:py-10 xl:p-4">
                 <NetworkContainer data={data.data}/>
@@ -146,7 +146,7 @@
         </section>
         <section id="outro">
             <div class="w-full md:w-3/7 m-auto">
-                <TextRenderer rawtext={rawOutroText}/>
+                <BlocksRenderer rawtext={rawOutroText}/>
             </div>
         </section>
     </div>
