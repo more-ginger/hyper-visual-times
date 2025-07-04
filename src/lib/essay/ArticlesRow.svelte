@@ -25,6 +25,6 @@
                 onerror={handleImgError}
             />
         </div>
-        <h4 class="mb-2">{article.headline}</h4>
+        <h4 class="pb-0">{article.headline}</h4>
 </div>
 
