@@ -107,12 +107,12 @@
 <div class="h-full">
     <div>
         <div class="border-b mt-4">
-            <h4>
+            <h5>
                 What countries and geographic entities are mentioned the most?
-            </h4>
+            </h5>
         </div>
         <div>
-            <p>
+            <p class="pb-0">
                 The chart compares the use of geo-related keywords in 
                 <span class="text-zeit-dark">Zeit Online</span> 
                 with 
@@ -142,7 +142,7 @@
         bind:clientWidth={fullWidth} 
         bind:clientHeight={fullHeight}
     >
-        <g class="xl:translate-y-12">
+        <g class="xl:translate-y-8">
             <g class="axis">
                 {#each {length: top20Countries.length/countriesPerRow}, pos}
                     <g>

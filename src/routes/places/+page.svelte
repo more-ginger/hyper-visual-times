@@ -36,9 +36,9 @@
     })
 
 </script>
-<div class="base w-11/12 m-auto">
+<div class="base w-11/12 m-auto pt-20">
     <div id="places-essay">
-        <section id="intro" class="mt-12 mb-30">
+        <section id="intro" class="mb-30">
             <div class="w-full md:w-3/7 m-auto">
                 <BlocksRenderer rawtext={rawIntroText}/>
             </div>
@@ -78,7 +78,8 @@
                     <div class="align-middle table-cell">
                         For the New York Times, half of the coverage is tagged with geo-political keywords about the two regions of Asia and Middle East. 
                         At first, this delineates a largely conflict-first approach, with the Israel-Palestine conflict as central. 
-                        However, it also brings forward a much broader concern of the newspaper for foreign affairs, especially if compared with Zeit.                    </div>
+                        However, it also brings forward a much broader concern of the newspaper for foreign affairs, especially if compared with Zeit.
+                    </div>
                 </div>
                 <div data-step="3" class="step p-6" style="height:900px">
                     <div class="align-middle table-cell">

@@ -47,7 +47,7 @@
 <main>
     <div class="w-11/12 m-auto z-0">
         <div>
-            <div class="w-full h-dvh top-20 2xl:max-h-[80vh]">
+            <div class="w-full h-dvh 2xl:max-h-[80vh]">
                 <IntroductionTile {data}/>
             </div>
             <div class="w-11/12 m-auto h-2 grid grid-cols-11">

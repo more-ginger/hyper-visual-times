@@ -26,7 +26,7 @@
 					<a href="/">
 						<div class="flex w-full">
 							<img class="w-1/12 max-h-full object-fit" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
-							<p class="w-11/12 ml-2 self-center">Panopticum News</p>
+							<span class="w-11/12 ml-2 self-center">Panopticum News</span>
 						</div>
 					</a>
 				</div>
@@ -34,7 +34,7 @@
 					<div onfocusout={handleDropdownFocusLoss} class="relative inline-block text-left">
 						<div>
 						<button onclick={handleDropdownClick} type="button" class="inline-flex w-full justify-center border-none gap-x-1.5 px-3 text-sm cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
-							<p>Chapters</p>
+							<span>Chapters</span>
 							<svg width="46" height="21" viewBox="0 0 46 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-slot="icon">
 								<circle cx="35" cy="10.5" r="10" fill="black" stroke="#fcf4e9" stroke-width="2"/>
 								<circle cx="23" cy="10.5" r="10" fill="black" stroke="#fcf4e9"/>
