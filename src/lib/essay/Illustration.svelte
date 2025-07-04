@@ -1,13 +1,89 @@
 <script lang="ts">
-let {data, progress, step} = $props()
-let zoomLevel = 1;
-let viewBox = $state({x: 0, y:0, width: 2400, height:3000})
+let {data, progress, step, direction} = $props()
 
+let viewBox = $state({x: 0, y: 0, width: 2400, height: 3000})
+let currentStep = $state(-1); // Track the current step to avoid unnecessary updates
+
+// SVG dimensions
+const svgWidth = 2400;
+const svgHeight = 3000;
+
+// Animation state
+let isAnimating = $state(false);
+let animationFrame: number;
+
+// Define zoom positions for each step
+const zoomPositions = [
+    // Step 0: Default view (no zoom)
+    { x: 0, y: 0, width: svgWidth, height: svgHeight, zoom: 1 },
+    // Step 1: Zoom to top-right corner
+    { x: svgWidth * 0.5, y: 0, width: svgWidth * 0.5, height: svgHeight * 0.5, zoom: 2 },
+    // Step 2: Zoom to top-left corner
+    { x: 0, y: 0, width: svgWidth * 0.5, height: svgHeight * 0.5, zoom: 2 },
+    // Step 3: Zoom to bottom-left corner
+    { x: 0, y: svgHeight * 0.5, width: svgWidth * 0.5, height: svgHeight * 0.5, zoom: 2 },
+    // Step 4: Zoom to bottom-right corner
+    { x: svgWidth * 0.5, y: svgHeight * 0.5, width: svgWidth * 0.5, height: svgHeight * 0.5, zoom: 2 },
+    // Step 5: Center zoom (higher zoom level)
+    { x: svgWidth * 0.25, y: svgHeight * 0.25, width: svgWidth * 0.5, height: svgHeight * 0.5, zoom: 2 },
+    // Step 6: Maximum zoom to center
+    { x: svgWidth * 0.375, y: svgHeight * 0.375, width: svgWidth * 0.25, height: svgHeight * 0.25, zoom: 4 }
+];
+
+// Easing function for smooth animations
+function easeInOutCubic(t: number): number {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+// Animate viewBox transition
+function animateToPosition(startViewBox: typeof viewBox, targetPosition: typeof zoomPositions[0], duration: number = 800) {
+    if (isAnimating && animationFrame) {
+        cancelAnimationFrame(animationFrame);
+    }
+    
+    isAnimating = true;
+    const startTime = performance.now();
+    
+    function animate(currentTime: number) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeInOutCubic(progress);
+        
+        // Interpolate between start and target positions
+        viewBox = {
+            x: startViewBox.x + (targetPosition.x - startViewBox.x) * easedProgress,
+            y: startViewBox.y + (targetPosition.y - startViewBox.y) * easedProgress,
+            width: startViewBox.width + (targetPosition.width - startViewBox.width) * easedProgress,
+            height: startViewBox.height + (targetPosition.height - startViewBox.height) * easedProgress
+        };
+        
+        if (progress < 1) {
+            animationFrame = requestAnimationFrame(animate);
+        } else {
+            isAnimating = false;
+        }
+    }
+    
+    animationFrame = requestAnimationFrame(animate);
+}
+
+// Update viewBox based on current step with smooth transitions
+$effect(() => {
+    // Only update if step actually changed
+    if (step !== currentStep) {
+        currentStep = step;
+        const targetPosition = zoomPositions[step] || zoomPositions[0];
+        const currentViewBox = { ...viewBox };
+        
+        // Animate to new position
+        animateToPosition(currentViewBox, targetPosition);
+    }
+});
+
+// Keep the existing panAndZoomSvg function for manual zoom controls if needed
 const panAndZoomSvg = (x:number, y:number, newZoomLevel:number) => {
-  zoomLevel = newZoomLevel;
-
-  const viewBoxWidth = viewBox.width / zoomLevel;
-  const viewBoxHeight = viewBox.height / zoomLevel;
+  const viewBoxWidth = svgWidth / newZoomLevel;
+  const viewBoxHeight = svgHeight / newZoomLevel;
 
   const centerX = x - viewBoxWidth / 2;
   const centerY = y - viewBoxHeight / 2;

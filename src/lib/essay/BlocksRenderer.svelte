@@ -10,10 +10,13 @@
     const essayContent = marked.parse(rawtext)
 
     function evaluateRenderEssay(node: HTMLElement) {
-        onEssayRender?.({ 
-            isEssayRendered:true,
-            hasSteps: node.querySelector("#has-steps")? true : false
-        });
+        // Use setTimeout to ensure DOM is fully updated
+        setTimeout(() => {
+            onEssayRender?.({ 
+                isEssayRendered:true,
+                hasSteps: node.querySelector("#has-steps")? true : false
+            });
+        }, 100);
          return {};
     }
 

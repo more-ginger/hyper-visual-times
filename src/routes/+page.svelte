@@ -22,24 +22,26 @@
 
     $effect(() => {
         if (essayIsRendered && essayHasSteps) {
-            scroller
-            .setup({
-                step: ".step",
-                debug: false,
-                offset: 0.7,
-                progress: true
-            })
-            .onStepEnter((response) => {
-                step = response.index
-                direction = response.direction
-                // { element, index, direction }
-            })
-            .onStepProgress((response)=> {
-                progress = response.progress
-            })
-            .onStepExit((response) => {
-                //
-            }) 
+            // Wait a bit more to ensure DOM is ready
+            setTimeout(() => {
+                scroller
+                .setup({
+                    step: ".step",
+                    debug: false,
+                    offset: 0.7,
+                    progress: true
+                })
+                .onStepEnter((response) => {
+                    step = response.index
+                    direction = response.direction
+                })
+                .onStepProgress((response)=> {
+                    progress = response.progress
+                })
+                .onStepExit((response) => {
+                    //
+                })
+            }, 200);
         }
     })
 </script>
@@ -52,7 +54,7 @@
             </div>
             <div class="w-11/12 m-auto h-2 grid grid-cols-11">
                     <div class="border-b col-span-5"></div>
-                    <div class="col-span-1 w-1/2 m-auto"><img src="img/pn-logo.png"/></div>
+                    <div class="col-span-1 w-1/2 m-auto"><img src="img/pn-logo.png" alt="Publication logo"/></div>
                     <div class="border-b col-span-5"></div>
             </div>
             <div class="flex w-10/12 my-10 m-auto">
@@ -87,7 +89,7 @@
         <div class="w-full m-auto z-0">
             <section>
                 <figure class="top-10 py-5 sticky w-full h-[91vh]">
-                    <Illustration {step} {progress} {direction}/>
+                    <Illustration {data} {step} {progress} {direction}/>
                 </figure>
                 <article class="w-full relative">
                     <BlocksRenderer 
