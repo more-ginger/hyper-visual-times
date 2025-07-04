@@ -1,5 +1,5 @@
 <div class="w-full ">
-    <div class="border-b"><h4>How to read the chart:</div>
+    <div class="border-b"><h5>How to read the chart:</h5></div>
     <div class="flex my-4">
     <div class="w-1/2">
         <div>

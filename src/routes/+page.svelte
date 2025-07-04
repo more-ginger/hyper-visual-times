@@ -49,7 +49,7 @@
 <main>
     <div class="w-11/12 m-auto z-0">
         <div>
-            <div class="w-full h-dvh top-20 2xl:max-h-[80vh]">
+            <div class="w-full h-dvh 2xl:max-h-[80vh]">
                 <IntroductionTile {data}/>
             </div>
             <div class="w-11/12 m-auto h-2 grid grid-cols-11">
@@ -67,16 +67,17 @@
                             experiments with news data.
                         </p>
                         <div>
-                            <h5>Browse by chapter:</h5>
+                            <h4 class="pb-2">Browse by chapter:</h4>
                             <div>
                                 <ul>
-                                    <li>The Geo-politics of news</li>
-                                    <li>Discoursive interrelations</li>
-                                    <li>The language of images</li>
+                                    <li class="pb-2"><button><a href="/places">The Geo-politics of news</a></button></li>
+                                    <li class="pb-2"><button><a href="/texts">Discoursive interrelations</a></button></li>
+                                    <li class="pb-2"><button><a href="/images">The language of images</a></button></li>
                                 </ul>
                             </div>
-                            <div>
-                                <h5>Scroll down for introductory essay</h5>
+                            <div class="pt-10">
+                                <img class="inline" src="icons/ui-scroll.svg" alt="Arrow pointing downwards"/>
+                                <span>Keep scrolling for introductory essay</span>
                             </div>
                         </div>
                     </div>

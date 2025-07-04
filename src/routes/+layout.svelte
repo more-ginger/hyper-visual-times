@@ -20,13 +20,13 @@
 
 <div class="w-full max-w-7xl border-x m-auto">
 	<div class="sticky top-0 z-50">
-		<nav class="bg-ivory-default w-full px-4 pb-2 border-b  absolute">
+		<nav class="bg-ivory-default w-full px-4 pb-2 border-b 2xl:border-l absolute">
 			<div class="m-auto pt-2 flex justify-between">
 				<div class="w-1/2">
 					<a href="/">
 						<div class="flex w-full">
 							<img class="w-1/12 max-h-full object-fit" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
-							<p class="w-11/12 ml-2 self-center">Panopticum News</p>
+							<span class="w-11/12 ml-2 self-center">Panopticum News</span>
 						</div>
 					</a>
 				</div>
@@ -34,7 +34,7 @@
 					<div onfocusout={handleDropdownFocusLoss} class="relative inline-block text-left">
 						<div>
 						<button onclick={handleDropdownClick} type="button" class="inline-flex w-full justify-center border-none gap-x-1.5 px-3 text-sm cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
-							<p>Chapters</p>
+							<span>Chapters</span>
 							<svg width="46" height="21" viewBox="0 0 46 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-slot="icon">
 								<circle cx="35" cy="10.5" r="10" fill="black" stroke="#fcf4e9" stroke-width="2"/>
 								<circle cx="23" cy="10.5" r="10" fill="black" stroke="#fcf4e9"/>
@@ -58,7 +58,7 @@
 	<div class="-z-10">
 	{@render children()}
 	</div>
-	<footer class="sticky bottom-0 bg-ivory-default w-full px-4 pb-2 border-t z-40 mt-10">
+	<footer class="sticky bottom-0 bg-ivory-default w-full px-4 pb-2 border-t 2xl:border-l z-40 mt-10">
 		<button class="mt-2">
 			<span>Scroll back to top</span>
 			<img class="rotate-180 inline ml-2" src="icons/ui-scroll.svg" alt="Arrow pointing upwards"/>

@@ -107,7 +107,7 @@
 <div class="w-full flex">
     <div class="mr-10">
         <div class="border-b mt-4">
-            <h4>What other countries share coverage with     
+            <h5>What other countries share coverage with     
                 <span>
                 <Dropdown 
                 availableFilter={dropdownData} 
@@ -115,7 +115,7 @@
                 />
                 </span>
                 ?
-            </h4>
+            </h5>
         </div>
         <div>
             <p>
