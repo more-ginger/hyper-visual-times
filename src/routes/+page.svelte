@@ -47,8 +47,8 @@
 </script>
 
 <main>
-    <div class="w-11/12 m-auto z-0">
-        <div>
+    <div class="m-auto z-0">
+        <div class="w-11/12  m-auto">
             <div class="w-full h-dvh 2xl:max-h-[80vh]">
                 <IntroductionTile {data}/>
             </div>
@@ -60,19 +60,19 @@
             <div class="flex w-10/12 my-10 m-auto">
                 <div class="w-3/10">
                     <div class="my-5">
-                        <p class="italic border-b pb-2 mb-2">
+                        <p class="italic border-b pb-4">
                             This website contains a series of reflections on the circulation and consumption patterns of news in the digital environment. 
                             Using metadata from several newsrooms’ archives, each experiment deals with a feature of digital news: keywords, text, and images. 
                             Using a combination of computational methods, three individual chapters pivot around a series of design and data visualization 
                             experiments with news data.
                         </p>
                         <div>
-                            <h4 class="pb-2">Browse by chapter:</h4>
+                            <h4 class="pt-4 pb-2">Browse by chapter:</h4>
                             <div>
                                 <ul>
-                                    <li class="pb-2"><button><a href="/places">The Geo-politics of news</a></button></li>
-                                    <li class="pb-2"><button><a href="/texts">Discoursive interrelations</a></button></li>
-                                    <li class="pb-2"><button><a href="/images">The language of images</a></button></li>
+                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center"><div class="w-[20px] mr-[5px] bg-green-500 h-[20px] rounded-xl"></div><a href="/places">The Geo-politics of news</a></button></li>
+                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center"><div class="w-[20px] mr-[5px] bg-red-500 h-[20px] rounded-xl"></div><a href="/texts">Discoursive interrelations</a></button></li>
+                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center"><div class="w-[20px] mr-[5px] bg-red-500 h-[20px] rounded-xl"></div><a href="/images">The language of images</a></button></li>
                                 </ul>
                             </div>
                             <div class="pt-10">
@@ -89,8 +89,11 @@
         </div>
         <div class="w-full m-auto z-0">
             <section>
-                <figure class="top-10 py-5 sticky w-full h-[91vh]">
-                    <Illustration {data} {step} {progress} {direction}/>
+                <div>
+                    <h2 class="text-center mb-2">The layered infrastructures of journalism</h2>
+                </div>
+                <figure class="top-10 sticky w-full h-[91vh]">
+                    <Illustration {step}/>
                 </figure>
                 <article class="w-full relative">
                     <BlocksRenderer 
