@@ -20,7 +20,7 @@
 
 <div class="w-full max-w-7xl border-x m-auto">
 	<div class="sticky top-0 z-50">
-		<nav class="bg-ivory-default w-full px-4 pb-2 border-b  absolute">
+		<nav class="bg-ivory-default w-full px-4 pb-2 border-b 2xl:border-l absolute">
 			<div class="m-auto pt-2 flex justify-between">
 				<div class="w-1/2">
 					<a href="/">
@@ -58,7 +58,7 @@
 	<div class="-z-10">
 	{@render children()}
 	</div>
-	<footer class="sticky bottom-0 bg-ivory-default w-full px-4 pb-2 border-t z-40 mt-10">
+	<footer class="sticky bottom-0 bg-ivory-default w-full px-4 pb-2 border-t 2xl:border-l z-40 mt-10">
 		<button class="mt-2">
 			<span>Scroll back to top</span>
 			<img class="rotate-180 inline ml-2" src="icons/ui-scroll.svg" alt="Arrow pointing upwards"/>

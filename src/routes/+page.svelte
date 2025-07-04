@@ -65,16 +65,17 @@
                             experiments with news data.
                         </p>
                         <div>
-                            <h5>Browse by chapter:</h5>
+                            <h4 class="pb-2">Browse by chapter:</h4>
                             <div>
                                 <ul>
-                                    <li>The Geo-politics of news</li>
-                                    <li>Discoursive interrelations</li>
-                                    <li>The language of images</li>
+                                    <li class="pb-2"><button><a href="/places">The Geo-politics of news</a></button></li>
+                                    <li class="pb-2"><button><a href="/texts">Discoursive interrelations</a></button></li>
+                                    <li class="pb-2"><button><a href="/images">The language of images</a></button></li>
                                 </ul>
                             </div>
-                            <div>
-                                <h5>Scroll down for introductory essay</h5>
+                            <div class="pt-10">
+                                <img class="inline" src="icons/ui-scroll.svg" alt="Arrow pointing downwards"/>
+                                <span>Keep scrolling for introductory essay</span>
                             </div>
                         </div>
                     </div>
