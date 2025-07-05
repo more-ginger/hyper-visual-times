@@ -2,6 +2,7 @@
     import IntroductionTile from "$lib/essay/IntroductionTile.svelte";
     import rawIntroText from "@/content/main-intro.md?raw";
     import rawEssayText from "@/content/main-essay.md?raw";
+    import rawOutroText from "@/content/main-outro.md?raw";
     import scrollama from "scrollama";
 	import BlocksRenderer from "$lib/essay/BlocksRenderer.svelte";
 	import Illustration from "$lib/essay/Illustration.svelte";
@@ -101,6 +102,9 @@
                         {onEssayRender}
                     />
                 </article>
+            </section>
+            <section class="w-11/12 m-auto">
+                <BlocksRenderer rawtext={rawOutroText} />
             </section>
         </div>
     </div>

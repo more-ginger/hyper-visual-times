@@ -132,6 +132,16 @@
         background-color: var(--color-ivory-default);
     }
 
+    .underline--custom {
+        background-repeat: repeat-x;
+    }
+
+    .underline--disrupt {
+        background-image: url("icons/underline.svg");
+        background-position: 0 1.06em;
+        background-size: 28px 9px;
+    }
+
     .essay {
         h2, h3, h4, p {
             margin: 0rem auto;
