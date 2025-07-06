@@ -71,8 +71,8 @@
              )
              .force("bounding", () => {
                 NodesForVis.forEach((node:node) => {
-                    const xCenter = width / positioningFactor
-                    const yCenter = height / positioningFactor
+                    const xCenter = width / positioningFactor - 30
+                    const yCenter = height / positioningFactor - 30
                     if (distance(node.x, node.y, xCenter, yCenter) > networkRadius) {
                         const theta = Math.atan((node.y - yCenter) / (node.x - xCenter))
                         node.x = xCenter + networkRadius * Math.cos(theta) * (node.x < xCenter ? -1 : 1);
@@ -268,9 +268,9 @@
                 <div>
                     <div>
                     {#if outlet === "nyt"}
-                        <p class="text-nyt-dark">The New York Times</p>
+                        <p class="pb-0 text-nyt-dark">The New York Times</p>
                     {:else}
-                        <p class="text-zeit-dark">Zeit Online</p>
+                        <p class="pb-0 text-zeit-dark">Zeit Online</p>
                     {/if}
                     </div>
                     <div class={`text-${outlet}-default text-xs`}>
