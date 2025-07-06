@@ -71,9 +71,9 @@
                             <h4 class="pt-4 pb-2">Browse by chapter:</h4>
                             <div>
                                 <ul>
-                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center"><div class="w-[20px] mr-[5px] bg-green-500 h-[20px] rounded-xl"></div><a href="/places">The Geo-politics of news</a></button></li>
-                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center"><div class="w-[20px] mr-[5px] bg-red-500 h-[20px] rounded-xl"></div><a href="/texts">Discoursive interrelations</a></button></li>
-                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center"><div class="w-[20px] mr-[5px] bg-red-500 h-[20px] rounded-xl"></div><a href="/images">The language of images</a></button></li>
+                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center"><div class="w-[15px] mr-[5px] bg-green-500 h-[15px] rounded-xl animate-pulse"></div><a href="/places">The Geo-politics of news</a></button></li>
+                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center pointer-events-none"><div class="w-[15px] mr-[5px] bg-red-500 h-[15px] rounded-xl"></div><a href="/texts">Discoursive interrelations</a></button></li>
+                                    <li class="pb-4"><button class="px-2 py-[2px] flex items-center pointer-events-none"><div class="w-[15px] mr-[5px] bg-red-500 h-[15px] rounded-xl"></div><a href="/images">The language of images</a></button></li>
                                 </ul>
                             </div>
                             <div class="pt-10">
@@ -103,7 +103,7 @@
                     />
                 </article>
             </section>
-            <section class="w-11/12 m-auto">
+            <section class="w-11/12 m-auto my-20">
                 <BlocksRenderer rawtext={rawOutroText} />
             </section>
         </div>

@@ -129,7 +129,7 @@
     }
 
     button:hover {
-        background-color: var(--color-ivory-default);
+        background-color: white;
     }
 
     .underline--custom {
