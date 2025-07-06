@@ -1,5 +1,5 @@
 <div>
-    <div class="border-b mt-2"><h4>How to read the chart:</h4></div>
+    <div class="border-b mt-2"><h5>How to read the chart:</h5></div>
     <div class="my-4 xl:grid xl:my-10 xl:grid-cols-3 xl:content-evenly">
         <div class="w-full px-2">
             <svg class="mx-auto" width="100%" height="138" viewBox="0 0 134 138" fill="none" xmlns="http://www.w3.org/2000/svg">

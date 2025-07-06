@@ -11,6 +11,7 @@
         height: 100%;
         width: 100%;
         overflow: auto;
+        background-color: #fcf4e9;
     }
 }
 
@@ -68,7 +69,7 @@
 
     @keyframes bounce {
         0%, 100% {
-          transform: translateY(15%);
+          transform: translateY(50%);
           animation-timing-function: ease-in-out;
         }
         50% {
@@ -79,7 +80,7 @@
 
     @keyframes bouncetwo {
         0%, 100% {
-          transform: translateY(10%);
+          transform: translateY(20%);
           animation-timing-function: ease-in-out;
         }
         50% {
@@ -109,7 +110,11 @@
         
     }
 
-    h4 {
+    h1, h2, h3, h4, p {
+        padding-bottom: 2rem;
+    }
+
+    h4, h5 {
         font-family: var(--font-serif-italic);
         font-size: var(--text-md);
         font-style: italic;
@@ -124,12 +129,22 @@
     }
 
     button:hover {
-        background-color: var(--color-ivory-default);
+        background-color: white;
+    }
+
+    .underline--custom {
+        background-repeat: repeat-x;
+    }
+
+    .underline--disrupt {
+        background-image: url("icons/underline.svg");
+        background-position: 0 1.06em;
+        background-size: 28px 9px;
     }
 
     .essay {
         h2, h3, h4, p {
-            margin: 2rem auto;
+            margin: 0rem auto;
         }
 
         h4 > span {

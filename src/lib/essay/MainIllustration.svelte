@@ -1,12 +1,13 @@
 <script lang="ts">
     import ArticlesColumn from "./ArticlesColumn.svelte";
+    import Illustration from "./Illustration.svelte"
     let { data, step } = $props();
     
     let shuffledZeitArticles = $derived(data.zeit_all.sort(() => 0.5 - Math.random()))
-    let randomZeitSelection = $derived(shuffledZeitArticles.slice(0, 4));
+    let randomZeitSelection = $derived(shuffledZeitArticles.slice(0, 6));
     
     let shuffledNYTArticles = $derived(data.nyt_all.sort(() => 0.5 - Math.random()))
-    let randomNYTSelection = $derived(shuffledNYTArticles.slice(0, 4));
+    let randomNYTSelection = $derived(shuffledNYTArticles.slice(0, 6));
 
     let dataSampleForRow = $derived(
         randomNYTSelection.map((article: { /* define the article type here */ }, a: number) => {
@@ -17,32 +18,20 @@
     }))
 </script>
 
-<figure class="w-full">
+<figure class="">
     {#if step === 0}
-    <div class="w-full h-dvh flex">
-        {#each dataSampleForRow as articlesPair, a}
-            <ArticlesColumn data={articlesPair} index={a + 1}/>
-        {/each}
+    <div class="h-dvh">
+        <div class="relative bg-red-100 z-10 w-1/2 top-100">text</div>
+        <div class="relative h-dvh flex z-40">
+            {#each dataSampleForRow as articlesPair, a}
+                <ArticlesColumn data={articlesPair} index={a + 1}/>
+            {/each}
+        </div>
     </div>
     {/if}
     {#if step === 1}
-    <div>
-        <img src="img/pn-news-illustration.svg" class="my-10"/>
-    </div>
-    {/if}
-    {#if step === 2}
-    <div>
-        <img src="img/pn-news-illustration_step2.svg" class="my-10"/>
-    </div>
-    {/if}
-    {#if step === 3}
-    <div>
-        <img src="img/pn-news-illustration_step3.svg" class="my-10"/>
-    </div>
-    {/if}
-    {#if step === 4}
-    <div>
-        <img src="img/pn-news-illustration_step4.svg" class="my-10"/>
-    </div>
+        <div>
+            <Illustration/>
+        </div>
     {/if}
 </figure>
