@@ -148,13 +148,13 @@
 </script>
 <div class="h-full">
     <div>
-        <div class="border-b mt-4">
+        <div class="border-b mt-8 xl:mt-2">
             <h5>
                 Are there geographical spheres of coverage?
             </h5>
         </div>
         <div>
-            <p>
+            <p class="pb-0">
                 This chart shows whether certain geopolitical regions 
                 are referenced more often by either 
                 <span class="text-zeit-dark">
@@ -189,7 +189,7 @@
                 role="button"
                 tabindex="0"
             />
-           <g transform={`translate(${(fullWidth - radius) / 7}, ${(fullHeight - radius) / 20})`}>
+           <g transform={`translate(${(fullWidth - radius) / 7}, 5)`}>
                 {#if keysOfLeaves}
                     <g>
                     {#each keysOfLeaves as key}

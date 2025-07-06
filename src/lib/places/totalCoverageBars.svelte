@@ -106,7 +106,7 @@
 </script>
 <div class="h-full">
     <div>
-        <div class="border-b mt-4">
+        <div class="border-b mt-8 xl:mt-4">
             <h5>
                 What countries and geographic entities are mentioned the most?
             </h5>
@@ -163,7 +163,7 @@
                         ${fullHeight / countriesPerRow + country.columnNumber * fullHeight / countriesPerRow + 50}
                     )`}>
                     <g class={
-                        showFirstTenOnly && i > 9 || 
+                        showFirstTenOnly && i >= 9 || 
                         showLastTenOnly && i < 10 ? 
                         "hidden" : 
                         ""

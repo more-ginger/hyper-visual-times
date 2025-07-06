@@ -18,7 +18,7 @@
         }).sort((a: { key: string }, b: { key: string }) => a.key.localeCompare(b.key)))
 
     // Set the primary country to calc overlaps
-    let primaryCountry = dropdownData.find((d:{key:string}) => d.key == "Ghana")
+    let primaryCountry = dropdownData.find((d:{key:string}) => d.key == "United Kingdom")
     let primaryCountryKey = $state(primaryCountry.key)
 
     const dataDomain = $derived(extent(data.map((d:countryDataForComparison) => [d.count_nyt, d.count_zeit]).flat()))
