@@ -9,7 +9,7 @@
             return {countryName: country.country, headlines: [], count: country.shared_articles.length}
         }
 
-        const sliced = country.shared_articles.slice(0, 2);
+        const sliced = country.shared_articles.slice(0, 3);
         const ids = sliced.map(id =>  encodeURIComponent(id)).join("&id=");
 
         try {
@@ -54,7 +54,7 @@
                     <h4 class="pb-0">{country.countryName}</h4>
                 </div>
                 <div>
-                    {country.count} articles
+                    preview 3 of {country.count} articles
                 </div>
             </div>
             <div class="my-2">
