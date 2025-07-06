@@ -32,7 +32,15 @@ const zoomPositions = [
     // Step 7: Zoom to center, material layer
     { x: 0, y: svgHeight * 0.5, width: svgWidth, height: svgHeight * 0.2, zoom: 2, class: ""  },
     // Step 8: Zoom into article structure
-    { x: svgWidth * 0.3, y: svgHeight * 0.5, width: svgWidth * 0.8, height: svgHeight * 0.25,  zoom: 3, class: ""  }
+    { x: svgWidth * 0.3, y: svgHeight * 0.5, width: svgWidth * 0.8, height: svgHeight * 0.25,  zoom: 3, class: ""  },
+    // Step 9: Zoom into rules label
+    { x: svgWidth * 0.2, y: svgHeight * 0.4, width: svgWidth * 0.5, height: svgHeight * 0.1,  zoom: 3, class: ""  },
+    // Step 10: Zoom into SEO labels
+    { x: svgWidth * 0.2, y: svgHeight * 0.52, width: svgWidth * 0.3, height: svgHeight * 0.1,  zoom: 3, class: ""  },
+    // Step 11: Zoom into article structure
+    { x: svgWidth * 0.35, y: svgHeight * 0.5, width: svgWidth * 0.5, height: svgHeight * 0.1,  zoom: 3, class: ""  },
+    // Step 12: Zoom out
+    { x: 0, y: 10, width: svgWidth, height: svgHeight, class: "" }
 ];
 
 // Easing function for smooth animations

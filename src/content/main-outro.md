@@ -1,6 +1,7 @@
 <h1>The Hyper-visual Times</h1>
-
+<div class="mb-20">
 After building a partial blueprint of the material layer of news, the chapters included in this interactive essay will dive into one particular dimension of digital news-making. The goal is to reverse the transient and ephemeral nature of digital news through the creation of distinct pictures and snapshots of news coverage. These snapshots compose a wider horizon for digital news consumption with editorial and platform-related strategies coming to the foreground in showing and comparing the rhetorical and contextual rules of selected news outlets.
+</div>
 
 <div>
 <div class="grid grid-cols-3">
