@@ -17,15 +17,22 @@
 	isDropdownOpen = false
   }
 </script>
-
-<div class="w-full max-w-7xl border-x m-auto">
+<div class="block md:hidden">
+	<div class="m-auto w-8/12 h-dvh flex items-center">
+		<div>
+			<img class="w-1/12 max-h-full min-w-[50px] object-fit m-auto mb-6" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
+			<p class="text-center">This website is not ready (yet) for small viewport devices, please switch to a desktop computer or a tablet</p>
+		</div>
+	</div>
+</div>
+<div class="w-full max-w-7xl border-x m-auto hidden md:block">
 	<div class="sticky top-0 z-50">
 		<nav class="bg-ivory-default w-full px-4 pb-2 border-b 2xl:border-l absolute">
 			<div class="m-auto pt-2 flex justify-between">
 				<div class="w-1/2">
 					<a href="/">
 						<div class="flex w-full">
-							<img class="w-1/12 max-h-full object-fit" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
+							<img class="w-1/12 max-h-full min-w-[50px] object-fit" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
 							<span class="w-11/12 ml-2 self-center focus:italic">Panopticum News</span>
 						</div>
 					</a>
