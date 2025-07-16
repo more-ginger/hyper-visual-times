@@ -17,6 +17,12 @@
 	let essayIsRendered = $state(false);
 	let essayHasSteps = $state(false);
 
+	let body: HTMLElement | null = null;
+
+	function handleInitScroll() {
+		scrollTo({ top: 600, behavior: 'smooth' });
+	}
+
 	function onEssayRender(data: { isEssayRendered: boolean; hasSteps: boolean }) {
 		essayIsRendered = data.isEssayRendered;
 		essayHasSteps = data.hasSteps;
@@ -48,11 +54,21 @@
 	});
 </script>
 
-<main>
+<main bind:this={body}>
 	<div class="z-0 m-auto">
 		<div class="m-auto w-full md:w-11/12">
 			<div class="h-dvh w-full 2xl:max-h-[80vh]">
 				<IntroductionTile {data} />
+			</div>
+			<div class="absolute bottom-10 left-0 w-full">
+				<div class="grid justify-items-center">
+					<button class="bg-ivory-default" onclick={handleInitScroll}>
+						<span>Scroll down to read</span>
+						<span
+							><img class="inline" src="icons/ui-scroll.svg" alt="Arrow pointing downwards" /></span
+						>
+					</button>
+				</div>
 			</div>
 			<div class="m-auto grid h-2 w-11/12 grid-cols-11">
 				<div class="col-span-5 border-b"></div>
