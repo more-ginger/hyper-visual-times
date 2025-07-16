@@ -17,40 +17,42 @@
 	isDropdownOpen = false
   }
 </script>
-<div class="block md:hidden">
+<!-- <div class="block md:hidden">
 	<div class="m-auto w-8/12 h-dvh flex items-center">
 		<div>
 			<img class="w-1/12 max-h-full min-w-[50px] object-fit m-auto mb-6" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
 			<p class="text-center">This website is not ready (yet) for small viewport devices, please switch to a desktop computer or a tablet</p>
 		</div>
 	</div>
-</div>
-<div class="w-full max-w-7xl border-x m-auto hidden md:block">
+</div> -->
+<div class="w-full max-w-7xl border-x m-auto">
 	<div class="sticky top-0 z-50">
-		<nav class="bg-ivory-default w-full px-4 pb-2 border-b 2xl:border-l absolute">
-			<div class="m-auto pt-2 flex justify-between">
-				<div class="w-1/2">
+		<nav class="bg-ivory-default w-full p-4 border-b 2xl:border-l absolute">
+			<div class="m-auto flex items-center justify-between">
+				<div class="w-2/3">
 					<a href="/">
 						<div class="flex w-full">
-							<img class="w-1/12 max-h-full min-w-[50px] object-fit" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
-							<span class="w-11/12 ml-2 self-center focus:italic">Panopticum News</span>
+							<img class="w-1/12 max-h-full min-w-[50px] object-scale-down" src="img/pn-logo.png" alt="Panopticum News half circle logo"/>
+							<span class="w-11/12 ml-2 self-center focus:italic text-lg">Panopticum News</span>
 						</div>
 					</a>
 				</div>
-				<div>
+				<div class="w-1/3 flex items-center justify-end">
 					<div onfocusout={handleDropdownFocusLoss} class="relative inline-block text-left">
 						<div>
-						<button onclick={handleDropdownClick} type="button" class="inline-flex w-full justify-center border-none gap-x-1.5 px-3 text-sm cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
-							<span>Chapters</span>
-							<svg width="46" height="21" viewBox="0 0 46 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-slot="icon">
-								<circle cx="35" cy="10.5" r="10" fill="black" stroke="#fcf4e9" stroke-width="2"/>
-								<text x="32" y="14" fill="#fcf4e9" font-size="10">3</text>
-								<circle cx="23" cy="10.5" r="10" fill="black" stroke="#fcf4e9"/>
-								<text x="20" y="14" fill="#fcf4e9" font-size="10">2</text>
-								<circle cx="11" cy="10.5" r="10" fill="black" stroke="#fcf4e9"/>
-								<text x="9" y="14" fill="#fcf4e9" font-size="10">1</text>
-							</svg>					
-						</button>
+							<button onclick={handleDropdownClick} type="button" class="w-full flex items-center justify-center border-none gap-x-1.5 px-3 text-sm cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
+								<span class="hidden md:block text-lg">Chapters</span>
+								<span class="max-w-16">
+									<svg width="100%" height="30px" viewBox="0 0 46 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-slot="icon">
+										<circle cx="35" cy="10.5" r="10" fill="black" stroke="#fcf4e9" stroke-width="2"/>
+										<text x="32" y="14" fill="#fcf4e9" font-size="10">3</text>
+										<circle cx="23" cy="10.5" r="10" fill="black" stroke="#fcf4e9"/>
+										<text x="20" y="14" fill="#fcf4e9" font-size="10">2</text>
+										<circle cx="11" cy="10.5" r="10" fill="black" stroke="#fcf4e9"/>
+										<text x="9" y="14" fill="#fcf4e9" font-size="10">1</text>
+									</svg>
+								</span>					
+							</button>
 						</div>
 						<div style:visibility={isDropdownOpen ? 'visible' : 'hidden'} class="absolute top-10 right-0 mt-2 z-10 mt-2 w-80  border bg-ivory-default rounded-md ring-1 ring-black/5 focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
 						<div class="py-1" role="none">

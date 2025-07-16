@@ -31,7 +31,7 @@
     {/if}
     {#if step === 1}
         <div>
-            <Illustration/>
+            <Illustration {step}/>
         </div>
     {/if}
 </figure>
