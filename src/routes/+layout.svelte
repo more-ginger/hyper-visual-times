@@ -56,7 +56,7 @@
 						<div class="py-1" role="none">
 							<!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
 							<a href="/places" class="block px-4 py-2 focus:italic hover:underline" role="menuitem" tabindex="-1" id="menu-item-0">Chapter 1: The Geo-politics of news</a>
-							<a href="/" class="block px-4 py-2 pointer-events-none cursor-not-allowed" role="menuitem" tabindex="-1" id="menu-item-1">Chapter 2: Discoursive interrelations</a>
+							<a href="/text" class="block px-4 py-2 focus:italic hover:underline" role="menuitem" tabindex="-1" id="menu-item-1">Chapter 2: Discoursive interrelations</a>
 							<a href="/" class="block px-4 py-2 pointer-events-none cursor-not-allowed" role="menuitem" tabindex="-1" id="menu-item-2">Chapter 3: The language of images</a>
 						</div>
 						</div>
