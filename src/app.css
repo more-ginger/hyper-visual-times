@@ -9,8 +9,9 @@
     html,
     body {
         height: 100%;
-        width: 100%;
+        width: 100vw;
         overflow: auto;
+        overflow-x: hidden;
         background-color: #fcf4e9;
     }
 }
@@ -91,35 +92,6 @@
 }
 
 @layer components {
-    h1 {
-        font-family: var(--font-serif);
-        font-size: var(--text-5xl);     
-        color: var(--color-gray-950);
-        line-height: 3rem;
-    }
-
-    h2 {
-        font-size: var(--text-3xl);
-        line-height: 2.5rem;
-    }
-
-    h3 {
-        font-family: var(--font-serif-italic);
-        font-size: var(--text-xl);
-        font-style: italic;
-        
-    }
-
-    h1, h2, h3, h4, p {
-        padding-bottom: 2rem;
-    }
-
-    h4, h5 {
-        font-family: var(--font-serif-italic);
-        font-size: var(--text-md);
-        font-style: italic;
-        line-height: 1.5rem;
-    }
 
     button {
         border: 1px solid black;
@@ -132,19 +104,20 @@
         background-color: white;
     }
 
-    .underline--custom {
-        background-repeat: repeat-x;
-    }
-
-    .underline--disrupt {
-        background-image: url("icons/underline.svg");
-        background-position: 0 1.06em;
-        background-size: 28px 9px;
-    }
-
     .essay {
-        h2, h3, h4, p {
-            margin: 0rem auto;
+
+        h3, h4, p {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-family: var(--font-serif);
+            font-size: var(--font-xl);
+        }
+        
+        h3 {
+            font-style: italic;
+            margin-bottom: 2rem;
         }
 
         h4 > span {
@@ -208,7 +181,6 @@
         border: 1px solid black;
         
     }
-
 
     .optional-hidden {
         .optional {
