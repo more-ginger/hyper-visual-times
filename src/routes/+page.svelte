@@ -49,7 +49,7 @@
 
 <main>
     <div class="m-auto z-0">
-        <div class="w-11/12  m-auto">
+        <div class="w-full md:w-11/12 m-auto">
             <div class="w-full h-dvh 2xl:max-h-[80vh]">
                 <IntroductionTile {data}/>
             </div>
@@ -58,9 +58,9 @@
                     <div class="col-span-1 w-1/2 m-auto"><img src="img/pn-logo.png" alt="Publication logo"/></div>
                     <div class="border-b col-span-5"></div>
             </div>
-            <div class="flex w-10/12 my-10 m-auto">
-                <div class="w-3/10">
-                    <div class="my-5">
+            <div class="md:flex w-10/12 my-10 m-auto">
+                <div class="w-full md:w-3/10">
+                    <div class="my-10 md:my-5">
                         <p class="italic border-b pb-4">
                             This website contains a series of reflections on the circulation and consumption patterns of news in the digital environment. 
                             Using metadata from several newsrooms’ archives, each experiment deals with a feature of digital news: keywords, text, and images. 
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="w-7/10 pl-2">
+                <div class="w-full md:w-7/10 pl-2">
                     <BlocksRenderer rawtext={rawIntroText}/>
                 </div>
             </div>

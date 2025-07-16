@@ -17,7 +17,7 @@
     <div class="z-20 h-full flex items-center">
         <img class="w-full m-2 sticky top-20 " src="img/hvtms-main.svg" alt="The Hyper-Visual Times logo"/>
     </div>
-    <div class="absolute top-15 md:left-0 md:w-full w-11/12 h-full m-auto">
+    <div class="absolute top-15 md:left-0 md:w-full w-full md:w-11/12 h-full m-auto">
         <div class="relative w-full h-full -z-10 2xl:max-h-[76.6vh]">
              <div class="h-full grid grid-cols-4 md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18">
                 {#each NYTSelectionBasedOnW as article, a}
@@ -25,8 +25,8 @@
                 {/each}
              </div>
         </div>
-        <div class="absolute w-fit top-10 md:top-25 left-0">
-            <div class="grid grid-cols-4 md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18">
+        <div class="absolute w-fit top-10 md:top-25 md:left-0">
+            <div class="w-11/12 m-auto grid grid-cols-4 md:w-full md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18">
                 {#await NYTSelectionBasedOnW}
                     <div></div>
                 {:then NYTSelectionBasedOnW}
@@ -38,8 +38,8 @@
                 {/await}
             </div>
         </div>
-        <div class="absolute w-fit top-65 md:top-120 left-0">
-            <div class="grid grid-cols-4 md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18">
+        <div class="absolute w-fit top-65 md:top-120 md:left-0">
+            <div class="w-11/12 m-auto grid grid-cols-4 md:w-full md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18">
                 {#await ZeitSelectionBasedOnW}
                     <div></div>
                 {:then ZeitSelectionBasedOnW}

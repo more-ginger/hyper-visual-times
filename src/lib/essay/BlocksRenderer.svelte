@@ -27,7 +27,7 @@
     <div>Loading essay content</div>
     {:then essayContent} 
     <div use:setFootnotes>
-        <div class="mx-5 my-5 essay" use:evaluateRenderEssay class:optional-hidden={!shown}>
+        <div class="md:mx-5 my-5 essay" use:evaluateRenderEssay class:optional-hidden={!shown}>
             {@html essayContent}
         </div>
         </div>

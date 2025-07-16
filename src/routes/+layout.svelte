@@ -40,7 +40,7 @@
 				<div class="w-1/3 flex items-center justify-end">
 					<div onfocusout={handleDropdownFocusLoss} class="relative inline-block text-left">
 						<div>
-							<button onclick={handleDropdownClick} type="button" class="w-full flex items-center justify-center border-none gap-x-1.5 px-3 text-sm cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
+							<button onclick={handleDropdownClick} type="button" class="w-full flex items-center justify-center border-none gap-x-1.5 pl-3 pr-0 text-sm cursor-pointer" id="menu-button" aria-expanded="true" aria-haspopup="true">
 								<span class="hidden md:block text-lg">Chapters</span>
 								<span class="max-w-16">
 									<svg width="100%" height="30px" viewBox="0 0 46 21" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-slot="icon">
