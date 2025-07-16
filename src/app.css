@@ -69,7 +69,7 @@
 
     @keyframes bounce {
         0%, 100% {
-          transform: translateY(50%);
+          transform: translateY(20%);
           animation-timing-function: ease-in-out;
         }
         50% {
@@ -80,7 +80,7 @@
 
     @keyframes bouncetwo {
         0%, 100% {
-          transform: translateY(20%);
+          transform: translateY(40%);
           animation-timing-function: ease-in-out;
         }
         50% {
