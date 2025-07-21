@@ -1,4 +1,4 @@
-<div class="w-full md:h-dvh">
+<div class="w-full md:my-20">
 	<div class="md:w-3/7">
 		<h1 class="my-2 font-serif text-4xl md:text-2xl">The Hyper-visual Times</h1>
 		<p class="text-sm">
