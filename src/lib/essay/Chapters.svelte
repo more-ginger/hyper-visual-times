@@ -16,6 +16,7 @@
 			href="/places"
 			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:col-start-2 lg:m-0 lg:mt-4 lg:self-start"
 		>
+			<span>1.</span>
 			<div class="bg-ivory-default rounded-xl border shadow-lg">
 				<div class="p-5">
 					<div class="flex justify-between">
@@ -44,6 +45,7 @@
 			</div>
 		</a>
 		<a href="/" class="m-4 cursor-not-allowed lg:col-span-2 lg:m-0 lg:mt-20 lg:self-start">
+			<span>2.</span>
 			<div class="bg-ivory-default rounded-xl border">
 				<div class="p-5">
 					<div class="flex justify-between">
@@ -71,6 +73,7 @@
 			</div>
 		</a>
 		<a href="/" class="m-4 cursor-not-allowed lg:col-span-2 lg:m-0 lg:self-start">
+			<span>3.</span>
 			<div class="bg-ivory-default rounded-xl border">
 				<div class="p-5">
 					<div class="flex justify-between">

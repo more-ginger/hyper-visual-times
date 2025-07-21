@@ -78,7 +78,7 @@
 						</div>
 						<div
 							style:visibility={isDropdownOpen ? 'visible' : 'hidden'}
-							class="bg-ivory-default absolute top-10 right-0 z-10 mt-2 mt-2 w-80 rounded-md border ring-1 ring-black/5 focus:outline-hidden"
+							class="bg-ivory-default absolute top-8 right-0 z-10 mt-2 mt-2 w-80 rounded-md border shadow-lg ring-1 ring-black/5 focus:outline-hidden"
 							role="menu"
 							aria-orientation="vertical"
 							aria-labelledby="menu-button"
@@ -88,21 +88,21 @@
 								<!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
 								<a
 									href="/places"
-									class="block px-4 py-2 hover:underline focus:italic"
+									class="block border-b p-4 hover:underline focus:italic"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-0">Chapter 1: The Geo-politics of news</a
 								>
 								<a
 									href="/"
-									class="pointer-events-none block cursor-not-allowed px-4 py-2"
+									class="pointer-events-none block cursor-not-allowed border-b p-4"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-1">Chapter 2: Discoursive interrelations</a
 								>
 								<a
 									href="/"
-									class="pointer-events-none block cursor-not-allowed px-4 py-2"
+									class="cursor-not-allowedborder-b pointer-events-none block p-4"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-2">Chapter 3: The language of images</a
