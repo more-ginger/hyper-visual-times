@@ -16,9 +16,7 @@
 	let direction = $state('');
 	let essayIsRendered = $state(false);
 	let essayHasSteps = $state(false);
-
 	let bodyWidth: number = $state(0);
-	$inspect(bodyWidth);
 
 	function handleInitScroll() {
 		scrollTo({ top: 600, behavior: 'smooth' });
