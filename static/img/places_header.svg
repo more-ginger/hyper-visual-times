@@ -1,10 +1,11 @@
-<svg width="447" height="149" viewBox="0 0 447 149" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M34.8342 74.5L1.00049 148.136H68.6678L34.8342 74.5Z" fill="white" stroke="black"/>
-<path d="M88.9679 65.4734L55.1343 148.136H122.802L88.9679 65.4734Z" fill="white" stroke="black"/>
-<path d="M144.875 33.1013L111.041 148.136H178.708L144.875 33.1013Z" fill="white" stroke="black"/>
-<path d="M199.009 101.581L165.175 148.136H232.843L199.009 101.581Z" fill="white" stroke="black"/>
-<path d="M251.629 36.2953L217.795 148.136H285.462L251.629 36.2953Z" fill="white" stroke="black"/>
-<path d="M305.762 81.7542L271.929 148.136H339.596L305.762 81.7542Z" fill="white" stroke="black"/>
-<path d="M358.383 47.0139L324.549 148.136H392.217L358.383 47.0139Z" fill="white" stroke="black"/>
-<path d="M412.517 1L378.683 148.136H446.35L412.517 1Z" fill="white" stroke="black"/>
+<svg width="203" height="45" viewBox="0 0 203 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.6528 17.0622L2 44.1738H33.3058L17.6528 17.0622Z" fill="#FFBC36" stroke="black" stroke-width="1.18776"/>
+<path d="M38.7402 29.1118L23.0874 44.1738H54.3932L38.7402 29.1118Z" fill="#4580FF" stroke="black" stroke-width="1.18776"/>
+<path d="M59.8272 5.01233L44.1743 44.1736H75.4801L59.8272 5.01233Z" fill="#FFBC36" stroke="black" stroke-width="1.18776"/>
+<path d="M80.9136 11.0373L65.2607 44.174H96.5665L80.9136 11.0373Z" fill="#4580FF" stroke="black" stroke-width="1.18776"/>
+<path d="M102 35.6386L86.3477 44.1737H117.653L102 35.6386Z" fill="#FFBC36" stroke="black" stroke-width="1.18776"/>
+<path d="M123.088 2L107.435 44.174H138.741L123.088 2Z" fill="#4580FF" stroke="black" stroke-width="1.18776"/>
+<path d="M144.174 24.5932L128.521 44.1738H159.827L144.174 24.5932Z" fill="#FFBC36" stroke="black" stroke-width="1.18776"/>
+<path d="M165.262 8.02484L149.609 44.1737H180.915L165.262 8.02484Z" fill="#4580FF" stroke="black" stroke-width="1.18776"/>
+<path d="M186.348 36.6429L170.695 44.1739H202.001L186.348 36.6429Z" fill="#FFBC36" stroke="black" stroke-width="1.18776"/>
 </svg>
