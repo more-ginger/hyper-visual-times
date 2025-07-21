@@ -21,7 +21,7 @@
 	};
 </script>
 
-<div class="m-auto w-full max-w-7xl md:border-x">
+<div class="m-auto w-full max-w-7xl lg:border-x">
 	<div class="sticky top-0 z-50 mx-2">
 		<nav class="bg-ivory-default absolute w-full border-b p-4">
 			<div class="m-auto flex items-center justify-between">

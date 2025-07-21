@@ -7,6 +7,7 @@
 	import BlocksRenderer from '$lib/essay/BlocksRenderer.svelte';
 	import Illustration from '$lib/essay/Illustration.svelte';
 	import Chapters from '$lib/essay/Chapters.svelte';
+	import IllustrationMobile from '$lib/essay/IllustrationMobile.svelte';
 
 	let { data } = $props();
 
@@ -17,7 +18,8 @@
 	let essayIsRendered = $state(false);
 	let essayHasSteps = $state(false);
 
-	let body: HTMLElement | null = null;
+	let bodyWidth: number = $state(0);
+	$inspect(bodyWidth);
 
 	function handleInitScroll() {
 		scrollTo({ top: 600, behavior: 'smooth' });
@@ -54,7 +56,7 @@
 	});
 </script>
 
-<main bind:this={body}>
+<main bind:clientWidth={bodyWidth}>
 	<div class="z-0 m-auto">
 		<div class="m-auto w-full md:w-11/12">
 			<div class="h-dvh w-full 2xl:max-h-[80vh]">
@@ -124,7 +126,7 @@
 		<div class="z-0 m-auto w-full">
 			<section>
 				<figure class="sticky top-10 h-[80vh] h-dvh w-full">
-					<Illustration {step} />
+					<Illustration {step} {bodyWidth} />
 				</figure>
 				<article class="relative w-full">
 					<BlocksRenderer rawtext={rawEssayText} {onEssayRender} />
