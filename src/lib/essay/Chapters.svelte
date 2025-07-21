@@ -1,5 +1,5 @@
 <div class="w-full md:my-20">
-	<div class="mx-2 md:w-3/7">
+	<div class="mx-2 lg:w-3/7">
 		<h1 class="my-2 font-serif text-2xl md:text-2xl">The Hyper-visual Times</h1>
 		<p class="text-sm">
 			After building a partial blueprint of the material layer of news, the chapters included in
@@ -11,10 +11,10 @@
 			outlets.
 		</p>
 	</div>
-	<div class="w-full md:grid md:h-2/3 md:grid-cols-3 md:grid-cols-7 md:gap-2 md:self-center">
+	<div class="w-full lg:grid lg:h-2/3 lg:grid-cols-3 lg:grid-cols-7 lg:gap-2 lg:self-center">
 		<a
 			href="/places"
-			class="m-4 transition-all hover:-translate-y-[2px] md:col-span-2 md:col-start-2 md:m-0 md:mt-4 md:self-start"
+			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:col-start-2 lg:m-0 lg:mt-4 lg:self-start"
 		>
 			<div class="bg-ivory-default rounded-xl border shadow-lg">
 				<div class="p-5">
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 		</a>
-		<a href="/" class="m-4 cursor-not-allowed md:col-span-2 md:m-0 md:mt-20 md:self-start">
+		<a href="/" class="m-4 cursor-not-allowed lg:col-span-2 lg:m-0 lg:mt-20 lg:self-start">
 			<div class="bg-ivory-default rounded-xl border">
 				<div class="p-5">
 					<div class="flex justify-between">
@@ -70,7 +70,7 @@
 				</div>
 			</div>
 		</a>
-		<a href="/" class="m-4 cursor-not-allowed md:col-span-2 md:m-0 md:self-start">
+		<a href="/" class="m-4 cursor-not-allowed lg:col-span-2 lg:m-0 lg:self-start">
 			<div class="bg-ivory-default rounded-xl border">
 				<div class="p-5">
 					<div class="flex justify-between">

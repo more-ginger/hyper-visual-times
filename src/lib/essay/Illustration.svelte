@@ -15,7 +15,7 @@
 	let animationFrame: number;
 
 	// Define zoom positions for each step
-	const zoomPositions = [
+	const zoomPositions = $derived([
 		// Step 0: Default view (no zoom)
 		{ x: 0, y: 10, width: svgWidth, height: svgHeight },
 		// Step 1: Zoom to top-center, individual layer
@@ -94,7 +94,7 @@
 		},
 		// Step 12: Zoom out
 		{ x: 0, y: 10, width: svgWidth, height: svgHeight }
-	];
+	]);
 	// Easing function for smooth animations
 	function easeInOutCubic(t: number): number {
 		return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
