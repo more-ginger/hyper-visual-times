@@ -7,7 +7,6 @@
 	import BlocksRenderer from '$lib/essay/BlocksRenderer.svelte';
 	import Illustration from '$lib/essay/Illustration.svelte';
 	import Chapters from '$lib/essay/Chapters.svelte';
-	import IllustrationMobile from '$lib/essay/IllustrationMobile.svelte';
 
 	let { data } = $props();
 
