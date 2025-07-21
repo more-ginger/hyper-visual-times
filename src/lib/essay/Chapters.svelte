@@ -1,6 +1,6 @@
 <div class="w-full md:my-20">
-	<div class="md:w-3/7">
-		<h1 class="my-2 font-serif text-4xl md:text-2xl">The Hyper-visual Times</h1>
+	<div class="mx-2 md:w-3/7">
+		<h1 class="my-2 font-serif text-2xl md:text-2xl">The Hyper-visual Times</h1>
 		<p class="text-sm">
 			After building a partial blueprint of the material layer of news, the chapters included in
 			this interactive essay will dive into one particular dimension of digital news-making. The
