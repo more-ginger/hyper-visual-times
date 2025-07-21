@@ -113,10 +113,6 @@
 									</li>
 								</ul>
 							</div>
-							<div class="pt-10">
-								<img class="inline" src="icons/ui-scroll.svg" alt="Arrow pointing downwards" />
-								<span>Keep scrolling for introductory essay</span>
-							</div>
 						</div>
 					</div>
 				</div>
