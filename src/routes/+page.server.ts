@@ -16,7 +16,7 @@ export async function load() {
     let randomZeitSelection = shuffledZeitArticles.slice(0, 4);
     
   return {
-    randomNYTSelection,
-    randomZeitSelection
+    randomNYTSelection: await randomNYTSelection,
+    randomZeitSelection: await randomZeitSelection
   };
 }

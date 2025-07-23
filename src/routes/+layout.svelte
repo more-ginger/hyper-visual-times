@@ -26,7 +26,7 @@
 		<nav class="bg-ivory-default absolute w-full border-b p-4">
 			<div class="m-auto flex items-center justify-between">
 				<div class="w-2/3">
-					<a href="/">
+					<a href="/" data-sveltekit-preload-data>
 						<div class="flex w-full">
 							<img
 								class="max-h-full w-1/12 min-w-[50px] object-scale-down"
@@ -88,6 +88,7 @@
 								<!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
 								<a
 									href="/places"
+									data-sveltekit-preload-data
 									class="block border-b p-4 hover:underline focus:italic"
 									role="menuitem"
 									tabindex="-1"
