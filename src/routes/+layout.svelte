@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '../app.css';
+	import { navigating } from '$app/state';
+	import Load from '$lib/common/Load.svelte';
 	let { children } = $props();
 	let isDropdownOpen = $state(false);
 
@@ -116,7 +118,11 @@
 			</div>
 		</nav>
 	</div>
-	<div class="-z-10">
+	{#if navigating.to}
+		<Load />
+	{/if}
+
+	<div class="-z-10" use:handlePageLoad>
 		{@render children()}
 	</div>
 </div>

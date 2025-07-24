@@ -1,6 +1,7 @@
 import { supabase } from "$lib/supabaseClient";
 import type { PageServerLoad } from './$types';
 import type { countryDataType } from '../../types';
+export const prerender = 'auto';
 
 export const load: PageServerLoad = async () => {
 

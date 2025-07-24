@@ -67,6 +67,9 @@
 
     --animate-bounce: bounce 14s ease-in-out infinite;
     --animate-bounce-two: bouncetwo 12s ease-in-out infinite;
+    --animate-bounce-icon-1: bounceicon 4s ease-in-out infinite;
+    --animate-bounce-icon-2: bounceicon 8s ease-in-out infinite;
+    --animate-bounce-icon-3: bounceicon 6s ease-in-out infinite;
 
     @keyframes bounce {
         0%, 100% {
@@ -82,6 +85,37 @@
     @keyframes bouncetwo {
         0%, 100% {
           transform: translateY(40%);
+          animation-timing-function: ease-in-out;
+        }
+        50% {
+          transform: none;
+          animation-timing-function: ease-in-out;
+        }
+    }
+
+    @keyframes bounceicon {
+        0%, 100% {
+          transform: translateY(10%);
+          animation-timing-function: ease-in-out;
+        }
+        50% {
+          transform: none;
+          animation-timing-function: ease-in-out;
+        }
+    }
+     @keyframes bounceicon2 {
+        0%, 100% {
+          transform: translateY(10%);
+          animation-timing-function: ease-in-out;
+        }
+        50% {
+          transform: none;
+          animation-timing-function: ease-in-out;
+        }
+    }
+     @keyframes bounceicon3 {
+        0%, 100% {
+          transform: translateY(10%);
           animation-timing-function: ease-in-out;
         }
         50% {
