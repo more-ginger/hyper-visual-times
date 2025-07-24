@@ -4,7 +4,7 @@
 	import rawEssayText from '@/content/main-essay.md?raw';
 	import rawOutroText from '@/content/main-outro.md?raw';
 	import scrollama from 'scrollama';
-	import BlocksRenderer from '$lib/main/BlocksRenderer.svelte';
+	import BlocksRenderer from '$lib/common/BlocksRenderer.svelte';
 	import Illustration from '$lib/main/Illustration.svelte';
 	import Chapters from '$lib/main/Chapters.svelte';
 	import Load from '$lib/common/Load.svelte';

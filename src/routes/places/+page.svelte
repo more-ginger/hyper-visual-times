@@ -5,7 +5,7 @@
 	import rawIntroText from '@/content/places/places-intro.md?raw';
 	import rawOutroText from '@/content/places/places-outro.md?raw';
 	import rawChapter3Text from '@/content/places/places-chapter-3.md?raw';
-	import BlocksRenderer from '$lib/main/BlocksRenderer.svelte';
+	import BlocksRenderer from '$lib/common/BlocksRenderer.svelte';
 
 	import TotalCoverageBar from '$lib/places/totalCoverageBars.svelte';
 	import TotalCovLegend from '$lib/places/totalCovLegend.svelte';

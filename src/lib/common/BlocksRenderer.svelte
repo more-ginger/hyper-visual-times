@@ -3,12 +3,16 @@
 	import { marked } from 'marked';
 	import { setFootnotes } from '$lib/utils/actions.svelte';
 
+	// onEssayRender is optional, we pass it only if we have scrolly blocks
 	let { rawtext, onEssayRender = undefined } = $props();
 	let shown = $state(true);
 
+	// marked.js is used to render markdown into html
 	marked.use({ async: true, breaks: true }, markedFootnote());
 	const essayContent = marked.parse(rawtext);
 
+	// we evaluate what to send back to the parent.
+	// If steps are present the scroller will be attached after some delay
 	function evaluateRenderEssay(node: HTMLElement) {
 		// Use setTimeout to ensure DOM is fully updated
 		setTimeout(() => {
