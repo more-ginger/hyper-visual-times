@@ -3,21 +3,21 @@
 	import IllustrationMobile from './IllustrationMobile.svelte';
 	let { step, bodyWidth } = $props();
 
-	let viewBox = $state({ x: 0, y: 0, width: 2400, height: 3000 });
 	let currentStep = $state(-1); // Track the current step to avoid unnecessary updates
 
 	// SVG dimensions
-	const svgWidth = $derived(bodyWidth > 820 ? 4051.08 : 2383.94);
-	const svgHeight = $derived(bodyWidth > 820 ? 3036.82 : 2944.08);
-
+	let svgWidth = $state(2383.94);
+	let svgHeight = $state(2944.08);
+	let viewBox = $state({ x: 0, y: 0, width: 2383.94, height: 2944.08 });
+	$inspect(bodyWidth, svgWidth);
 	// Animation state
 	let isAnimating = $state(false);
 	let animationFrame: number;
 
 	// Define zoom positions for each step
 	const zoomPositions = $derived([
-		// Step 0: Default view (no zoom)
-		{ x: 0, y: 10, width: svgWidth, height: svgHeight },
+		// Step 0: Default view (no zoom)0.2
+		{ x: 0, y: 0, width: svgWidth, height: svgHeight },
 		// Step 1: Zoom to top-center, individual layer
 		{ x: 0, y: svgHeight / 10, width: svgWidth, height: svgHeight * 0.2 },
 		//Step 2: Citizen journalists
@@ -138,10 +138,23 @@
 
 	// Update viewBox based on current step with smooth transitions
 	$effect(() => {
+		// Run only if viewport is large, svgWidth is default, and we are not scrollying yet.
+		if (bodyWidth > 820 && svgWidth !== 4051.08 && currentStep <= 0) {
+			svgWidth = 4051.08;
+			svgHeight = 3036.82;
+
+			// makes sure that the illustration will be at the correct spot initially
+			animateToPosition(
+				{ x: viewBox.x, y: viewBox.y, width: svgWidth, height: svgHeight },
+				zoomPositions[0]
+			);
+		}
+
+		let targetPosition = zoomPositions[0];
 		// Only update if step actually changed
 		if (step !== currentStep) {
 			currentStep = step;
-			let targetPosition = zoomPositions[step] || zoomPositions[0];
+			targetPosition = zoomPositions[step] || zoomPositions[0];
 			const currentViewBox = { ...viewBox };
 
 			// Animate to new position

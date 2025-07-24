@@ -103,26 +103,6 @@
           animation-timing-function: ease-in-out;
         }
     }
-     @keyframes bounceicon2 {
-        0%, 100% {
-          transform: translateY(10%);
-          animation-timing-function: ease-in-out;
-        }
-        50% {
-          transform: none;
-          animation-timing-function: ease-in-out;
-        }
-    }
-     @keyframes bounceicon3 {
-        0%, 100% {
-          transform: translateY(10%);
-          animation-timing-function: ease-in-out;
-        }
-        50% {
-          transform: none;
-          animation-timing-function: ease-in-out;
-        }
-    }
 }
 
 @layer components {
@@ -182,18 +162,7 @@
             color: var(--color-ivory-dark);
 
             li {
-                max-width: 220px;
-                font-size: 12px;
-                border: 1px solid var(--color-ivory-dark);
-                border-radius: 10px;
-                background-color: var(--color-ivory-default);
-                overflow: hidden;
-                position: absolute;
-                left: 70%;
-
-                p {
-                    margin: 0.5rem;
-                }
+                font-size: 10px;
             }
         }
     }

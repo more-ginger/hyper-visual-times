@@ -6,12 +6,13 @@
 	let isDropdownOpen = $state(false);
 
 	const handleDropdownClick = () => {
-		isDropdownOpen = !isDropdownOpen; // togle state on click
+		isDropdownOpen = !isDropdownOpen; // toggle state on click
 	};
 
 	const handleDropdownFocusLoss = (event: FocusEvent) => {
 		const { relatedTarget, currentTarget } = event;
-		// use "focusout" event to ensure that we can close the dropdown when clicking outside or when we leave the dropdown with the "Tab" button
+		// use "focusout" event to ensure that we can close the dropdown when clicking
+		// outside or when we leave the dropdown with the "Tab" button
 		if (
 			relatedTarget instanceof HTMLElement &&
 			currentTarget instanceof HTMLElement &&
@@ -87,7 +88,6 @@
 							tabindex="-1"
 						>
 							<div class="py-1" role="none">
-								<!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
 								<a
 									href="/places"
 									data-sveltekit-preload-code="eager"
@@ -99,14 +99,14 @@
 								>
 								<a
 									href="/"
-									class="pointer-events-none block cursor-not-allowed border-b p-4"
+									class="pointer-events-none block cursor-not-allowed border-b p-4 text-gray-500"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-1">Chapter 2: Discoursive interrelations</a
 								>
 								<a
 									href="/"
-									class="cursor-not-allowedborder-b pointer-events-none block p-4"
+									class="cursor-not-allowedborder-b pointer-events-none block p-4 text-gray-500"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-2">Chapter 3: The language of images</a
@@ -122,7 +122,7 @@
 		<Load />
 	{/if}
 
-	<div class="-z-10" use:handlePageLoad>
+	<div class="-z-10">
 		{@render children()}
 	</div>
 </div>

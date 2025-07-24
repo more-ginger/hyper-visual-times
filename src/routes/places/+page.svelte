@@ -5,7 +5,7 @@
 	import rawIntroText from '@/content/places/places-intro.md?raw';
 	import rawOutroText from '@/content/places/places-outro.md?raw';
 	import rawChapter3Text from '@/content/places/places-chapter-3.md?raw';
-	import BlocksRenderer from '$lib/essay/BlocksRenderer.svelte';
+	import BlocksRenderer from '$lib/common/BlocksRenderer.svelte';
 
 	import TotalCoverageBar from '$lib/places/totalCoverageBars.svelte';
 	import TotalCovLegend from '$lib/places/totalCovLegend.svelte';
@@ -80,7 +80,9 @@
 								how newspapers have different areas of interest.
 								<img
 									src="img/localities-keywords.svg"
-									alt="Diagram of the process of keywords abstraction, from top to down: localities, provinces and states, countries, and regions. The top layers are shown to flow into the bottom ones with arrows pointing down."
+									alt="Diagram of the process of keywords abstraction, 
+									from top to down: localities, provinces and states, countries, and regions. 
+									The top layers are shown to flow into the bottom ones with arrows pointing down."
 								/>
 							</p>
 							<p>

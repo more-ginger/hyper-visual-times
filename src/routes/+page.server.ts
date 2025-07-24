@@ -5,6 +5,8 @@ function shuffleArray(array:any[]) {
 }
 
 export async function load() {
+  // The only data we need on the main page is a random selection of articles
+  // to create the floating tiles, here we select some articles from Supabase, slice the array and shuffle it. 
   const { data:nyt_all } = await supabase.from("nyt_articles").select();
   const { data:zeit_all } = await supabase.from("zeit_articles").select();
 
