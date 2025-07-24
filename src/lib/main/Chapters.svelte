@@ -14,7 +14,6 @@
 	<div class="w-full lg:grid lg:h-2/3 lg:grid-cols-3 lg:grid-cols-7 lg:gap-2 lg:self-center">
 		<a
 			href="/places"
-			alt="Go to chapter one"
 			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:col-start-2 lg:m-0 lg:mt-4 lg:self-start"
 		>
 			<span>1.</span>
