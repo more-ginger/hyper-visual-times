@@ -103,26 +103,6 @@
           animation-timing-function: ease-in-out;
         }
     }
-     @keyframes bounceicon2 {
-        0%, 100% {
-          transform: translateY(10%);
-          animation-timing-function: ease-in-out;
-        }
-        50% {
-          transform: none;
-          animation-timing-function: ease-in-out;
-        }
-    }
-     @keyframes bounceicon3 {
-        0%, 100% {
-          transform: translateY(10%);
-          animation-timing-function: ease-in-out;
-        }
-        50% {
-          transform: none;
-          animation-timing-function: ease-in-out;
-        }
-    }
 }
 
 @layer components {

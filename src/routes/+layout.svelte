@@ -6,12 +6,13 @@
 	let isDropdownOpen = $state(false);
 
 	const handleDropdownClick = () => {
-		isDropdownOpen = !isDropdownOpen; // togle state on click
+		isDropdownOpen = !isDropdownOpen; // toggle state on click
 	};
 
 	const handleDropdownFocusLoss = (event: FocusEvent) => {
 		const { relatedTarget, currentTarget } = event;
-		// use "focusout" event to ensure that we can close the dropdown when clicking outside or when we leave the dropdown with the "Tab" button
+		// use "focusout" event to ensure that we can close the dropdown when clicking
+		// outside or when we leave the dropdown with the "Tab" button
 		if (
 			relatedTarget instanceof HTMLElement &&
 			currentTarget instanceof HTMLElement &&
@@ -122,7 +123,7 @@
 		<Load />
 	{/if}
 
-	<div class="-z-10" use:handlePageLoad>
+	<div class="-z-10">
 		{@render children()}
 	</div>
 </div>

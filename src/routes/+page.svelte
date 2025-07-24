@@ -1,28 +1,31 @@
 <script lang="ts">
-	import IntroductionTile from '$lib/essay/IntroductionTile.svelte';
+	import IntroductionTile from '$lib/main/IntroductionTile.svelte';
 	import rawIntroText from '@/content/main-intro.md?raw';
 	import rawEssayText from '@/content/main-essay.md?raw';
 	import rawOutroText from '@/content/main-outro.md?raw';
 	import scrollama from 'scrollama';
-	import BlocksRenderer from '$lib/essay/BlocksRenderer.svelte';
-	import Illustration from '$lib/essay/Illustration.svelte';
-	import Chapters from '$lib/essay/Chapters.svelte';
+	import BlocksRenderer from '$lib/main/BlocksRenderer.svelte';
+	import Illustration from '$lib/main/Illustration.svelte';
+	import Chapters from '$lib/main/Chapters.svelte';
 	import Load from '$lib/common/Load.svelte';
 
 	let { data } = $props();
-
+	// init scroller for scrollytelling
 	const scroller = scrollama();
 	let step = $state(0);
-	let progress = $state(0);
-	let direction = $state('');
+	// checks if essay is rendered
 	let essayIsRendered = $state(false);
+	// checks if essay has step to attach scroller
 	let essayHasSteps = $state(false);
+	// get body width to decide which graphic to load
 	let bodyWidth: number = $state(0);
 
+	// trigger initial scroll on button click
 	function handleInitScroll() {
 		scrollTo({ top: 600, behavior: 'smooth' });
 	}
 
+	// the event is dispatched from BlockRenderer component if scrolly
 	function onEssayRender(data: { isEssayRendered: boolean; hasSteps: boolean }) {
 		essayIsRendered = data.isEssayRendered;
 		essayHasSteps = data.hasSteps;
@@ -41,14 +44,9 @@
 					})
 					.onStepEnter((response) => {
 						step = response.index;
-						direction = response.direction;
 					})
-					.onStepProgress((response) => {
-						progress = response.progress;
-					})
-					.onStepExit((response) => {
-						//
-					});
+					.onStepProgress((response) => {})
+					.onStepExit((response) => {});
 			}, 200);
 		}
 	});
