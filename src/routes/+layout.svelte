@@ -88,7 +88,6 @@
 							tabindex="-1"
 						>
 							<div class="py-1" role="none">
-								<!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
 								<a
 									href="/places"
 									data-sveltekit-preload-code="eager"
@@ -100,14 +99,14 @@
 								>
 								<a
 									href="/"
-									class="pointer-events-none block cursor-not-allowed border-b p-4"
+									class="pointer-events-none block cursor-not-allowed border-b p-4 text-gray-500"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-1">Chapter 2: Discoursive interrelations</a
 								>
 								<a
 									href="/"
-									class="cursor-not-allowedborder-b pointer-events-none block p-4"
+									class="cursor-not-allowedborder-b pointer-events-none block p-4 text-gray-500"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-2">Chapter 3: The language of images</a
