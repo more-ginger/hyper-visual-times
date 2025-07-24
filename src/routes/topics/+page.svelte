@@ -1,0 +1,12 @@
+<div class="base m-auto flex bg-red-100 pt-20 md:w-full">
+	<div class="flex px-2 md:w-full">
+		<div class="w-4/12 bg-yellow-100">
+			<div>
+				<h1>Some title</h1>
+			</div>
+		</div>
+		<div class="w-8/12 bg-green-100">
+			<div>Visualization here</div>
+		</div>
+	</div>
+</div>
