@@ -7,6 +7,7 @@
 	import BlocksRenderer from '$lib/essay/BlocksRenderer.svelte';
 	import Illustration from '$lib/essay/Illustration.svelte';
 	import Chapters from '$lib/essay/Chapters.svelte';
+	import Load from '$lib/common/Load.svelte';
 
 	let { data } = $props();
 
@@ -53,7 +54,11 @@
 	});
 </script>
 
-<main bind:clientWidth={bodyWidth}>
+<main
+	bind:clientWidth={bodyWidth}
+	class:opacity-0={!essayIsRendered}
+	class:opacity-100={essayIsRendered}
+>
 	<div class="z-0 m-auto">
 		<div class="m-auto w-full md:w-11/12">
 			<div class="h-dvh w-full 2xl:max-h-[80vh]">
@@ -138,3 +143,8 @@
 		</div>
 	</div>
 </main>
+
+<!-- Loading state -->
+{#if !essayIsRendered}
+	<Load />
+{/if}

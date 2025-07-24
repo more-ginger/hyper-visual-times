@@ -1,14 +1,14 @@
 import { supabase } from "$lib/supabaseClient";
 import type { PageServerLoad } from './$types';
 import type { countryDataType } from '../../types';
+export const prerender = 'auto';
 
 export const load: PageServerLoad = async () => {
 
     const { data } = await supabase.from("coverage_by_country").select();
     const { data:coverageByRegion } = await supabase.from("regions").select();
     return {
-        data: data ? data.map((d:countryDataType) => {
-
+        data: data ? await data.map((d:countryDataType) => {
             return {
                 country: d.country,
                 coords: [+d.Latitude, +d.Longitude],
@@ -23,7 +23,7 @@ export const load: PageServerLoad = async () => {
         }) : [],
         coverageByRegion: coverageByRegion 
             && coverageByRegion[0] 
-            ? JSON.parse(coverageByRegion[0].data) 
+            ? await JSON.parse(coverageByRegion[0].data) 
             : null
     }
 }
