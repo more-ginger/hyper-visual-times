@@ -138,9 +138,16 @@
 
 	// Update viewBox based on current step with smooth transitions
 	$effect(() => {
-		if (bodyWidth > 820) {
+		// Run only if viewport is large, svgWidth is default, and we are not scrollying yet.
+		if (bodyWidth > 820 && svgWidth !== 4051.08 && currentStep <= 0) {
 			svgWidth = 4051.08;
 			svgHeight = 3036.82;
+
+			// makes sure that the illustration will be at the correct spot initially
+			animateToPosition(
+				{ x: viewBox.x, y: viewBox.y, width: svgWidth, height: svgHeight },
+				zoomPositions[0]
+			);
 		}
 
 		let targetPosition = zoomPositions[0];
