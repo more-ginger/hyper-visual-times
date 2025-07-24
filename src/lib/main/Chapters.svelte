@@ -14,6 +14,7 @@
 	<div class="w-full lg:grid lg:h-2/3 lg:grid-cols-3 lg:grid-cols-7 lg:gap-2 lg:self-center">
 		<a
 			href="/places"
+			alt="Go to chapter one"
 			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:col-start-2 lg:m-0 lg:mt-4 lg:self-start"
 		>
 			<span>1.</span>
@@ -21,14 +22,17 @@
 				<div class="p-5">
 					<div class="flex justify-between">
 						<div>
-							<img src="img/places_header.svg" />
+							<img
+								src="img/places_header.svg"
+								alt="Preview of the visualizations: yellow and blue triangles horizontally aligned"
+							/>
 						</div>
 						<div class="ml-2 flex items-center">
 							<div class="">
 								<div class="mr-[5px] h-[25px] w-[25px] animate-pulse rounded-xl bg-green-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
-								<img src="icons/ui-forward.svg" />
+								<img src="icons/ui-forward.svg" alt="right arrow" />
 							</div>
 						</div>
 					</div>
@@ -50,14 +54,17 @@
 				<div class="p-5">
 					<div class="flex justify-between">
 						<div>
-							<img src="img/texts_header.svg" />
+							<img
+								src="img/texts_header.svg"
+								alt="Preview of the visualizations: 11 yellow and orange circles of different sizes"
+							/>
 						</div>
 						<div class="ml-2 flex items-center">
 							<div class="">
 								<div class="mr-[5px] h-[25px] w-[25px] rounded-xl bg-red-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
-								<img src="icons/ui-unavailable.svg" />
+								<img src="icons/ui-unavailable.svg" alt="unavailable" />
 							</div>
 						</div>
 					</div>
@@ -78,14 +85,19 @@
 				<div class="p-5">
 					<div class="flex justify-between">
 						<div>
-							<img src="img/images_header.svg" />
+							<img
+								src="img/images_header.svg"
+								alt="Preview of the visualizations: 
+								5 silhouttes of faces colored in light blue, 
+								pink, orange, yellow and light blue"
+							/>
 						</div>
 						<div class="ml-2 flex items-center">
 							<div class="">
 								<div class="mr-[5px] h-[25px] w-[25px] rounded-xl bg-red-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
-								<img src="icons/ui-unavailable.svg" />
+								<img src="icons/ui-unavailable.svg" alt="unavailable" />
 							</div>
 						</div>
 					</div>
