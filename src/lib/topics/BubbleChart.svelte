@@ -10,6 +10,13 @@
 	let simulation;
 	let finalClusters = $state([]);
 	let clusterRadius = $derived(width / 2);
+	let categories = $derived(TopicClusters.map((d) => d.group));
+	let uniqueCategories = $derived(
+		categories.filter((value, index, array) => {
+			return array.indexOf(value) === index;
+		})
+	);
+	$inspect(uniqueCategories);
 
 	function distance(x1: number, y1: number, x2: number, y2: number) {
 		return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
@@ -26,6 +33,10 @@
 				)
 			)
 			.range([12, 180])
+	);
+
+	const categoryScale = $derived(
+		d3.scaleOrdinal(uniqueCategories, ['#FF805B', '#FFBC35', '#EAFFC0', '#FFDAB9'])
 	);
 
 	$effect(() => {
@@ -61,8 +72,8 @@
 	}
 </script>
 
-<div class="h-full w-full bg-purple-100" bind:clientWidth={width} bind:clientHeight={height}>
-	<svg {width} {height} class="bg-blue-100">
+<div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
+	<svg {width} {height}>
 		<!-- <circle
 			cx={width / 2}
 			cy={height / 2}
@@ -78,7 +89,7 @@
 					cy={cluster.y}
 					r={radiusScale(cluster.count)}
 					stroke="black"
-					fill="white"
+					fill={categoryScale(cluster.group)}
 				></circle>
 				<BubbleChartLabels {cluster} {c} {radiusScale} />
 			{/each}
