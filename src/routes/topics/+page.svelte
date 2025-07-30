@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<div class="w-8/12">
-			<BubbleChart {TopicClusters} {selectNewCluster} />
+			<BubbleChart {TopicClusters} {selectNewCluster} {selectedCluster} />
 		</div>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { cluster, c, radiusScale } = $props();
+	let { cluster, c, radiusScale, selectedCluster } = $props();
 </script>
 
 <g>
@@ -40,3 +40,23 @@
 		</g>
 	{/if}
 </g>
+{#if cluster.manualLabel === selectedCluster}
+	<g>
+		<circle
+			cx={cluster.x}
+			cy={cluster.y}
+			r={radiusScale(cluster.count) + 2}
+			stroke="black"
+			fill="none"
+			stroke-width="0.5"
+		></circle>
+		<circle
+			cx={cluster.x}
+			cy={cluster.y}
+			r={radiusScale(cluster.count) + 4}
+			stroke="black"
+			fill="none"
+			stroke-width="0.25"
+		></circle>
+	</g>
+{/if}
