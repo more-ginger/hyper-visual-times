@@ -1,7 +1,10 @@
 <script lang="ts">
 	// @ts-expect-error
 	import * as d3 from 'd3';
-	import TopicClusters from '@/content/data/topics/topics.json';
+	import TopicClusters from '../../content/data/topics/topics.json';
+
+	import BubbleChartLabels from './BubbleChartLabels.svelte';
+
 	let width = $state(0);
 	let height = $state(0);
 	let simulation;
@@ -22,7 +25,7 @@
 					})
 				)
 			)
-			.range([2, 180])
+			.range([12, 180])
 	);
 
 	$effect(() => {
@@ -56,22 +59,20 @@
 	function simulationUpdate() {
 		finalClusters = TopicClusters;
 	}
-
-	$inspect(finalClusters);
 </script>
 
 <div class="h-full w-full bg-purple-100" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg {width} {height} class="bg-blue-100">
-		<circle
+		<!-- <circle
 			cx={width / 2}
 			cy={height / 2}
 			r={width / 2.5}
 			fill="none"
 			stroke="black"
 			stroke-dasharray="2 2"
-		></circle>
+		></circle> -->
 		{#await finalClusters then finalClusters}
-			{#each finalClusters as cluster}
+			{#each finalClusters as cluster, c}
 				<circle
 					cx={cluster.x}
 					cy={cluster.y}
@@ -79,6 +80,7 @@
 					stroke="black"
 					fill="white"
 				></circle>
+				<BubbleChartLabels {cluster} {c} {radiusScale} />
 			{/each}
 		{/await}
 	</svg>
