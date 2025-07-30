@@ -1,22 +1,25 @@
 <script lang="ts">
 	// @ts-expect-error
 	import * as d3 from 'd3';
-	import TopicClusters from '../../content/data/topics/topics.json';
-
 	import BubbleChartLabels from './BubbleChartLabels.svelte';
+
+	let { TopicClusters, selectNewCluster } = $props();
 
 	let width = $state(0);
 	let height = $state(0);
 	let simulation;
 	let finalClusters = $state([]);
 	let clusterRadius = $derived(width / 2);
-	let categories = $derived(TopicClusters.map((d) => d.group));
+	let categories = $derived(TopicClusters.map((d: { group: string }) => d.group));
 	let uniqueCategories = $derived(
-		categories.filter((value, index, array) => {
+		categories.filter((value: string, index: number, array: string[]) => {
 			return array.indexOf(value) === index;
 		})
 	);
-	$inspect(uniqueCategories);
+
+	function handleClusterSelection(current: string) {
+		selectNewCluster(current);
+	}
 
 	function distance(x1: number, y1: number, x2: number, y2: number) {
 		return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
@@ -47,7 +50,7 @@
 				'collide',
 				d3
 					.forceCollide()
-					.radius((d: [{ count: number }]) => radiusScale(d.count) + 5)
+					.radius((d: { count: number }) => radiusScale(d.count) + 5)
 					.strength(0.2)
 					.iterations(1)
 			)
@@ -74,14 +77,6 @@
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg {width} {height}>
-		<!-- <circle
-			cx={width / 2}
-			cy={height / 2}
-			r={width / 2.5}
-			fill="none"
-			stroke="black"
-			stroke-dasharray="2 2"
-		></circle> -->
 		{#await finalClusters then finalClusters}
 			{#each finalClusters as cluster, c}
 				<circle
@@ -92,6 +87,20 @@
 					fill={categoryScale(cluster.group)}
 				></circle>
 				<BubbleChartLabels {cluster} {c} {radiusScale} />
+				<!-- svelte-ignore a11y_unknown_aria_attribute -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<circle
+					class="cursor-pointer"
+					cx={cluster.x}
+					cy={cluster.y}
+					r={radiusScale(cluster.count)}
+					stroke="none"
+					fill="transparent"
+					onclick={() => {
+						handleClusterSelection(cluster.manualLabel);
+					}}
+				></circle>
 			{/each}
 		{/await}
 	</svg>
