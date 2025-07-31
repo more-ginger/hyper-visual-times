@@ -3,7 +3,7 @@
 	import * as d3 from 'd3';
 	import BubbleChartLabels from './BubbleChartLabels.svelte';
 
-	let { TopicClusters, selectNewCluster, selectedCluster } = $props();
+	let { TopicClusters, selectNewCluster, selectedClusterLabel } = $props();
 
 	let width = $state(0);
 	let height = $state(0);
@@ -86,7 +86,7 @@
 					stroke="black"
 					fill={categoryScale(cluster.group)}
 				></circle>
-				<BubbleChartLabels {cluster} {c} {radiusScale} {selectedCluster} />
+				<BubbleChartLabels {cluster} {c} {radiusScale} {selectedClusterLabel} />
 				<!-- svelte-ignore a11y_unknown_aria_attribute -->
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->

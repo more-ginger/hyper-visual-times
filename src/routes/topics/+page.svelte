@@ -1,19 +1,24 @@
 <script lang="ts">
 	import BubbleChart from '$lib/topics/BubbleChart.svelte';
+	import ClusterBarchart from '$lib/topics/ClusterBarchart.svelte';
 	import TopicClusters from '../../content/data/topics/topics.json';
 
 	let selectionIsActive = $state(true);
-	let selectedCluster = $state(TopicClusters[0].manualLabel);
+	let selectedClusterLabel = $state(TopicClusters[0].manualLabel);
 
 	function selectNewCluster(clusterLabel: string) {
-		selectedCluster = clusterLabel;
+		selectedClusterLabel = clusterLabel;
 	}
+
+	let selectedCluster = $derived(
+		TopicClusters.filter((cluster) => cluster.manualLabel === selectedClusterLabel)
+	);
 </script>
 
-<div class="base m-auto flex bg-red-100 pt-20 md:w-full">
+<div class="base m-auto flex pt-20 md:w-full">
 	<div class="flex h-[90vh] px-2 pb-2 md:w-full">
-		<div class="w-4/12 bg-yellow-100">
-			<div class="bg-blue-100">
+		<div class="w-4/12">
+			<div>
 				<h1 class="my-2 font-serif text-2xl md:text-2xl">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				</h1>
@@ -26,13 +31,15 @@
 					eget risus varius lectus dignissim suscipit non pellentesque sem. Aenean vitae tempus
 					turpis. Proin sagittis augue a vestibulum placerat. Nulla facilisi.
 				</p>
+			</div>
+			<div>
 				{#if selectionIsActive}
-					<p>{selectedCluster}</p>
+					<ClusterBarchart {selectedCluster} />
 				{/if}
 			</div>
 		</div>
 		<div class="w-8/12">
-			<BubbleChart {TopicClusters} {selectNewCluster} {selectedCluster} />
+			<BubbleChart {TopicClusters} {selectNewCluster} {selectedClusterLabel} />
 		</div>
 	</div>
 </div>
