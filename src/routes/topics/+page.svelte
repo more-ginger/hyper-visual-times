@@ -10,7 +10,9 @@
 		selectedClusterLabel = clusterLabel;
 	}
 
-	let;
+	let selectedCluster = $derived(
+		TopicClusters.filter((cluster) => cluster.manualLabel === selectedClusterLabel)
+	);
 </script>
 
 <div class="base m-auto flex bg-red-100 pt-20 md:w-full">
@@ -32,7 +34,7 @@
 			</div>
 			<div>
 				{#if selectionIsActive}
-					<ClusterBarchart {selectedClusterLabel} />
+					<ClusterBarchart {selectedCluster} />
 				{/if}
 			</div>
 		</div>
