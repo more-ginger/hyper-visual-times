@@ -3,10 +3,12 @@
 	import * as d3 from 'd3';
 	import NetworksData from '../../content/data/topics/networks.json';
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
+	import { distance } from '../utils/actions.svelte';
 
 	let { selectedCluster, switchView } = $props();
 	let width = $state(0);
 	let height = $state(0);
+	let clusterRadius = $derived(width / 2.5);
 	let simulation;
 	let currentNetworkData = $derived(
 		NetworksData.filter((network) => {
@@ -59,6 +61,17 @@
 					.iterations(1)
 			)
 			.force('center', d3.forceCenter(width / 2, height / 2))
+			.force('bounding', () => {
+				nodes.forEach((node: cluster) => {
+					const xCenter = width / 2;
+					const yCenter = height / 2;
+					if (distance(node.x, node.y, xCenter, yCenter) > clusterRadius) {
+						const theta = Math.atan((node.y - yCenter) / (node.x - xCenter));
+						node.x = xCenter + clusterRadius * Math.cos(theta) * (node.x < xCenter ? -1 : 1);
+						node.y = yCenter + clusterRadius * Math.sin(theta) * (node.x < xCenter ? -1 : 1);
+					}
+				});
+			})
 			.on('tick', simulationUpdate)
 			.tick(1);
 	});
@@ -90,14 +103,7 @@
 					/>
 				{/each}
 				{#each nodesForRender as node}
-					<circle
-						class="transition-all"
-						cx={node.x}
-						cy={node.y}
-						r={radiusScale(node.size)}
-						stroke="black"
-						fill="red"
-					/>
+					<circle cx={node.x} cy={node.y} r={radiusScale(node.size)} stroke="black" fill="red" />
 				{/each}
 			</g>
 		</svg>
