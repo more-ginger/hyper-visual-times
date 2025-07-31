@@ -24,10 +24,13 @@
 	let axisTicks = $derived(leftAxis.scale().ticks());
 </script>
 
-<div class="bg-green-100">
-	<h1>{selectedCluster[0].manualLabel}</h1>
+<div class="m-2">
+	<div class="mb-2 flex items-center justify-between">
+		<p class="border-b font-serif text-xs">{selectedCluster[0].manualLabel}</p>
+		<button>Go to Network</button>
+	</div>
 	<div class="h-70 w-full" bind:clientWidth={width} bind:clientHeight={height}>
-		<svg {width} {height} class="bg-purple-100">
+		<svg {width} {height}>
 			<g class="-translate-y-2">
 				{#each data as word, w}
 					<rect
@@ -61,5 +64,12 @@
 				</g>
 			</g>
 		</svg>
+		<div class="mx-2 grid grid-cols-10 pt-2 pl-2">
+			{#each data as word}
+				<div class="flex -rotate-90 items-center justify-end text-xs">
+					<p>{word.word}</p>
+				</div>
+			{/each}
+		</div>
 	</div>
 </div>

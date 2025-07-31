@@ -15,10 +15,10 @@
 	);
 </script>
 
-<div class="base m-auto flex bg-red-100 pt-20 md:w-full">
+<div class="base m-auto flex pt-20 md:w-full">
 	<div class="flex h-[90vh] px-2 pb-2 md:w-full">
-		<div class="w-4/12 bg-yellow-100">
-			<div class="bg-blue-100">
+		<div class="w-4/12">
+			<div>
 				<h1 class="my-2 font-serif text-2xl md:text-2xl">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 				</h1>
