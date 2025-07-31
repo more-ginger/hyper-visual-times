@@ -19,7 +19,7 @@
 		})
 	);
 
-	function handleClusterSelection(current: string) {
+	function handleClusterSelection(current: string, group: string) {
 		if (current === selectedClusterLabel) {
 			switchView({
 				selectionIsActive: false,
@@ -28,7 +28,8 @@
 		}
 
 		selectNewCluster({
-			cluster: current
+			cluster: current,
+			clusterColor: categoryScale(group)
 		});
 	}
 
@@ -105,7 +106,7 @@
 					stroke="none"
 					fill="transparent"
 					onclick={() => {
-						handleClusterSelection(cluster.manualLabel);
+						handleClusterSelection(cluster.manualLabel, cluster.group);
 					}}
 				></circle>
 			{/each}

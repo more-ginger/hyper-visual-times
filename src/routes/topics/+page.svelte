@@ -7,10 +7,12 @@
 	let selectionIsActive = $state(true);
 	let networkIsActive = $state(false);
 	let selectedClusterLabel = $state(TopicClusters[0].manualLabel);
+	let selectedClusterColor = $state('#000000');
 
-	function selectNewCluster(selectionRules: { cluster: string }) {
+	function selectNewCluster(selectionRules: { cluster: string; clusterColor: string }) {
 		if (selectedClusterLabel !== selectionRules.cluster) {
 			selectedClusterLabel = selectionRules.cluster;
+			selectedClusterColor = selectionRules.clusterColor;
 		}
 	}
 
@@ -51,7 +53,7 @@
 			{#if selectionIsActive && !networkIsActive}
 				<BubbleChart {TopicClusters} {selectNewCluster} {switchView} {selectedClusterLabel} />
 			{:else}
-				<ClusterNetwork {selectedCluster} {switchView} />
+				<ClusterNetwork {selectedCluster} {switchView} {selectedClusterColor} />
 			{/if}
 		</div>
 	</div>

@@ -5,7 +5,7 @@
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
 	import { distance } from '../utils/actions.svelte';
 
-	let { selectedCluster, switchView } = $props();
+	let { selectedCluster, switchView, selectedClusterColor } = $props();
 	let width = $state(0);
 	let height = $state(0);
 	let clusterRadius = $derived(width / 2.5);
@@ -91,7 +91,7 @@
 		>
 	</div>
 	{#await nodesForRender then nodesForRender}
-		<svg {width} {height} class="bg-red-100">
+		<svg {width} {height}>
 			<g>
 				{#each linksForRender as link}
 					<line
@@ -103,7 +103,13 @@
 					/>
 				{/each}
 				{#each nodesForRender as node}
-					<circle cx={node.x} cy={node.y} r={radiusScale(node.size)} stroke="black" fill="red" />
+					<circle
+						cx={node.x}
+						cy={node.y}
+						r={radiusScale(node.size)}
+						stroke="black"
+						fill={selectedClusterColor}
+					/>
 				{/each}
 			</g>
 		</svg>
