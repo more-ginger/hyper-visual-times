@@ -1,13 +1,22 @@
 <script lang="ts">
 	import BubbleChart from '$lib/topics/BubbleChart.svelte';
 	import ClusterBarchart from '$lib/topics/ClusterBarchart.svelte';
+	import ClusterNetwork from '$lib/topics/ClusterNetwork.svelte';
 	import TopicClusters from '../../content/data/topics/topics.json';
 
 	let selectionIsActive = $state(true);
+	let networkIsActive = $state(false);
 	let selectedClusterLabel = $state(TopicClusters[0].manualLabel);
 
-	function selectNewCluster(clusterLabel: string) {
-		selectedClusterLabel = clusterLabel;
+	function selectNewCluster(selectionRules: { cluster: string }) {
+		if (selectedClusterLabel !== selectionRules.cluster) {
+			selectedClusterLabel = selectionRules.cluster;
+		}
+	}
+
+	function switchView(viewRules: { selectionIsActive: boolean; networkIsActive: boolean }) {
+		selectionIsActive = viewRules.selectionIsActive;
+		networkIsActive = viewRules.networkIsActive;
 	}
 
 	let selectedCluster = $derived(
@@ -33,13 +42,17 @@
 				</p>
 			</div>
 			<div>
-				{#if selectionIsActive}
-					<ClusterBarchart {selectedCluster} />
+				{#if selectionIsActive && !networkIsActive}
+					<ClusterBarchart {selectedCluster} {switchView} />
 				{/if}
 			</div>
 		</div>
 		<div class="w-8/12">
-			<BubbleChart {TopicClusters} {selectNewCluster} {selectedClusterLabel} />
+			{#if selectionIsActive && !networkIsActive}
+				<BubbleChart {TopicClusters} {selectNewCluster} {switchView} {selectedClusterLabel} />
+			{:else}
+				<ClusterNetwork {selectedCluster} {switchView} />
+			{/if}
 		</div>
 	</div>
 </div>

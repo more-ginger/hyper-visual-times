@@ -1,7 +1,7 @@
 <script lang="ts">
 	// @ts-expect-error
 	import * as d3 from 'd3';
-	let { selectedCluster } = $props();
+	let { selectedCluster, switchView } = $props();
 	let data = $derived(selectedCluster[0].topWords);
 	let width = $state(0);
 	let height = $state(0);
@@ -22,12 +22,23 @@
 
 	let leftAxis = $derived(d3.axisLeft(yScale));
 	let axisTicks = $derived(leftAxis.scale().ticks());
+
+	function handleClusterSelection() {
+		switchView({
+			selectionIsActive: false,
+			networkIsActive: true
+		});
+	}
 </script>
 
 <div class="m-2">
 	<div class="mb-2 flex items-center justify-between">
 		<p class="border-b font-serif text-xs">{selectedCluster[0].manualLabel}</p>
-		<button>Go to Network</button>
+		<button
+			onclick={() => {
+				handleClusterSelection();
+			}}>Go to Network</button
+		>
 	</div>
 	<div class="h-70 w-full" bind:clientWidth={width} bind:clientHeight={height}>
 		<svg {width} {height}>

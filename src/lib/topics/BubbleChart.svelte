@@ -3,7 +3,7 @@
 	import * as d3 from 'd3';
 	import BubbleChartLabels from './BubbleChartLabels.svelte';
 
-	let { TopicClusters, selectNewCluster, selectedClusterLabel } = $props();
+	let { TopicClusters, selectNewCluster, selectedClusterLabel, switchView } = $props();
 
 	let width = $state(0);
 	let height = $state(0);
@@ -18,7 +18,16 @@
 	);
 
 	function handleClusterSelection(current: string) {
-		selectNewCluster(current);
+		if (current === selectedClusterLabel) {
+			switchView({
+				selectionIsActive: false,
+				networkIsActive: true
+			});
+		}
+
+		selectNewCluster({
+			cluster: current
+		});
 	}
 
 	function distance(x1: number, y1: number, x2: number, y2: number) {
