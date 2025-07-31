@@ -2,6 +2,8 @@
 	// @ts-expect-error
 	import * as d3 from 'd3';
 	import NetworksData from '../../content/data/topics/networks.json';
+	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
+
 	let { selectedCluster, switchView } = $props();
 	let width = $state(0);
 	let height = $state(0);
@@ -14,8 +16,8 @@
 	let nodes = $derived(currentNetworkData[0].nodes);
 	let links = $derived(currentNetworkData[0].links);
 
-	let nodesForRender = $state([]);
-	let linksForRender = $state([]);
+	let nodesForRender: clusterNodes[] = $state([]);
+	let linksForRender: renderedLinks[] = $state([]);
 
 	const radiusScale = $derived(
 		d3
@@ -45,14 +47,14 @@
 				'link',
 				d3
 					.forceLink(links)
-					.id((d) => d.id)
-					.distance((d) => d.value)
+					.id((d: clusterLinks) => d.id)
+					.distance((d: clusterLinks) => d.value)
 			)
 			.force(
 				'collide',
 				d3
 					.forceCollide()
-					.radius((d: { count: number }) => radiusScale(d.size) + 5)
+					.radius((d: clusterNodes) => radiusScale(d.size) + 5)
 					.strength(10)
 					.iterations(1)
 			)
@@ -88,7 +90,14 @@
 					/>
 				{/each}
 				{#each nodesForRender as node}
-					<circle cx={node.x} cy={node.y} r={radiusScale(node.size)} stroke="black" fill="red" />
+					<circle
+						class="transition-all"
+						cx={node.x}
+						cy={node.y}
+						r={radiusScale(node.size)}
+						stroke="black"
+						fill="red"
+					/>
 				{/each}
 			</g>
 		</svg>

@@ -2,13 +2,14 @@
 	// @ts-expect-error
 	import * as d3 from 'd3';
 	import BubbleChartLabels from './BubbleChartLabels.svelte';
+	import type { cluster } from '../../types';
 
 	let { TopicClusters, selectNewCluster, selectedClusterLabel, switchView } = $props();
 
 	let width = $state(0);
 	let height = $state(0);
 	let simulation;
-	let finalClusters = $state([]);
+	let finalClusters: cluster[] = $state([]);
 	let clusterRadius = $derived(width / 2);
 	let categories = $derived(TopicClusters.map((d: { group: string }) => d.group));
 	let uniqueCategories = $derived(
@@ -39,7 +40,7 @@
 			.scaleLinear()
 			.domain(
 				d3.extent(
-					TopicClusters.map((d) => {
+					TopicClusters.map((d: cluster) => {
 						return d.count;
 					})
 				)
@@ -65,7 +66,7 @@
 			)
 			.force('center', d3.forceCenter(width / 2, height / 2))
 			.force('bounding', () => {
-				TopicClusters.forEach((node: node) => {
+				TopicClusters.forEach((node: cluster) => {
 					const xCenter = width / 2;
 					const yCenter = height / 2;
 					if (distance(node.x, node.y, xCenter, yCenter) > clusterRadius) {
