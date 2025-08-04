@@ -32,8 +32,7 @@
 </script>
 
 <div class="m-2">
-	<div class="mb-2 flex items-center justify-between">
-		<p class="border-b font-serif text-xs">{selectedCluster[0].manualLabel}</p>
+	<div class="mb-2 flex items-center justify-end">
 		<button
 			onclick={() => {
 				handleClusterSelection();

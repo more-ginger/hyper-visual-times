@@ -31,7 +31,7 @@
 					})
 				)
 			)
-			.range([5, 20])
+			.range([2, 25])
 	);
 
 	function handleClusterReset() {
@@ -44,7 +44,7 @@
 	$effect(() => {
 		simulation = d3
 			.forceSimulation(nodes)
-			.force('charge', d3.forceManyBody().strength(0.1))
+			.force('charge', d3.forceManyBody().strength(-5))
 			.force(
 				'link',
 				d3
@@ -56,9 +56,8 @@
 				'collide',
 				d3
 					.forceCollide()
-					.radius((d: clusterNodes) => radiusScale(d.size) + 5)
+					.radius((d: clusterNodes) => radiusScale(d.size) + 6)
 					.strength(10)
-					.iterations(1)
 			)
 			.force('center', d3.forceCenter(width / 2, height / 2))
 			.force('bounding', () => {
@@ -73,7 +72,7 @@
 				});
 			})
 			.on('tick', simulationUpdate)
-			.tick(1);
+			.tick();
 	});
 
 	function simulationUpdate() {
@@ -99,7 +98,7 @@
 						x2={link.target.x}
 						y1={link.source.y}
 						y2={link.target.y}
-						stroke="black"
+						stroke="gray"
 					/>
 				{/each}
 				{#each nodesForRender as node}
@@ -110,6 +109,11 @@
 						stroke="black"
 						fill={selectedClusterColor}
 					/>
+					{#if radiusScale(node.size) > 5}
+						<text x={node.x + 10 + radiusScale(node.size) / 2} y={node.y + 2} font-size="10"
+							>{node.id}</text
+						>
+					{/if}
 				{/each}
 			</g>
 		</svg>

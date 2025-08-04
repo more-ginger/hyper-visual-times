@@ -30,18 +30,22 @@
 	<div class="flex h-[90vh] px-2 pb-2 md:w-full">
 		<div class="w-4/12">
 			<div>
-				<h1 class="my-2 font-serif text-2xl md:text-2xl">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				</h1>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra quam at est facilisis
-					auctor. Etiam dui diam, sollicitudin eu ante a, ornare aliquam leo. Morbi et erat eros.
-					Vivamus interdum leo a nibh sodales rutrum. Pellentesque dapibus, erat ut porta aliquet,
-					purus purus sollicitudin risus, vitae ornare augue eros a magna. Maecenas vestibulum sit
-					amet lectus ut aliquam. Curabitur pharetra ligula quis erat hendrerit accumsan. Phasellus
-					eget risus varius lectus dignissim suscipit non pellentesque sem. Aenean vitae tempus
-					turpis. Proin sagittis augue a vestibulum placerat. Nulla facilisi.
+				<p class="text-sm">
+					One bubble representr a topic, a cluster of common words extracted from The New York
+					Times' articles. The most common topics are related to foreign politics and conflict,
+					followed by internal politics and economy – here in yellow. Miscellaneous topics like
+					culture, health, society, and sports are represented in pink. Orange bubbles represent
+					topics connected to foreign politics. Climate-related topics are green.
 				</p>
+				<div class="mt-2 mb-6">
+					<p class="text-sm">Currently selected:</p>
+					<h1 class="my-2 font-serif text-xl md:text-2xl">
+						{selectedCluster[0].manualLabel}
+					</h1>
+					<p>
+						{selectedCluster[0].description}
+					</p>
+				</div>
 			</div>
 			<div>
 				{#if selectionIsActive && !networkIsActive}
