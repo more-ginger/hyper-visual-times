@@ -49,7 +49,7 @@
 				'link',
 				d3.forceLink(links).id((d: clusterLinks) => d.id)
 			)
-			.force('charge', d3.forceManyBody().strength(-300))
+			.force('charge', d3.forceManyBody().strength(-250))
 			.force(
 				'collide',
 				d3.forceCollide().radius((d: { size: number }) => radiusScale(d.size) + 5)

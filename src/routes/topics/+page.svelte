@@ -26,17 +26,19 @@
 	);
 </script>
 
-<div class="base m-auto flex pt-20 md:w-full">
-	<div class="flex h-[90vh] px-2 pb-2 md:w-full">
+<div class="base m-auto flex h-dvh pt-20 md:w-full">
+	<div class="flex h-full px-2 pb-2 md:w-full">
 		<div class="w-4/12">
-			<div>
+			<div class="">
 				<p class="text-sm">
-					One bubble representr a topic, a cluster of common words extracted from The New York
+					One bubble represents a topic, a cluster of common words extracted from The New York
 					Times' articles. The most common topics are related to foreign politics and conflict,
 					followed by internal politics and economy – here in yellow. Miscellaneous topics like
 					culture, health, society, and sports are represented in pink. Orange bubbles represent
 					topics connected to foreign politics. Climate-related topics are green.
 				</p>
+			</div>
+			<div class="2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15">
 				<div class="mt-2 mb-6">
 					<p class="text-sm">Currently selected:</p>
 					<h1 class="my-2 font-serif text-xl md:text-2xl">
@@ -46,11 +48,7 @@
 						{selectedCluster[0].description}
 					</p>
 				</div>
-			</div>
-			<div>
-				{#if selectionIsActive && !networkIsActive}
-					<ClusterBarchart {selectedCluster} {switchView} />
-				{/if}
+				<ClusterBarchart {selectedCluster} {switchView} {selectionIsActive} {networkIsActive} />
 			</div>
 		</div>
 		<div class="w-8/12">
