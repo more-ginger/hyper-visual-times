@@ -1,24 +1,32 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	// @ts-expect-error
 	import * as d3 from 'd3';
+	import { clamp } from '../utils/actions.svelte';
 	import NetworksData from '../../content/data/topics/networks.json';
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
 	import NetworkLabel from './NetworkLabel.svelte';
 
 	let { selectedCluster, switchView, selectedClusterColor } = $props();
+	let simulation: d3.Simulation<clusterNodes, undefined>;
+
+	// reactive state
 	let width = $state(0);
 	let height = $state(0);
 	let label: string | null = $state(null);
-	let simulation;
+	let nodesForRender: clusterNodes[] = $state([]);
+	let linksForRender: renderedLinks[] = $state([]);
+	let circleRefs: { [key: string]: SVGCircleElement | null } = $state({});
+	////
+	////
+	// derived variables
 	let currentNetworkData = $derived(
 		NetworksData.filter((network) => {
 			return selectedCluster[0].id === network.topic;
 		})
 	);
+
 	let nodes = $derived(currentNetworkData[0].nodes);
 	let links = $derived(currentNetworkData[0].links);
-	let circleRefs = $state({});
 
 	let nodesExtent = $derived(
 		d3.extent(
@@ -28,6 +36,8 @@
 		)
 	);
 
+	const radiusScale = $derived(d3.scaleLinear().domain(nodesExtent).range([2, 25]));
+
 	let mean = $derived(
 		d3.mean(
 			nodes.map((d) => {
@@ -35,28 +45,8 @@
 			})
 		)
 	);
-
-	function handleMouseOver(id: string) {
-		label = id;
-	}
-
-	let nodesForRender: clusterNodes[] = $state([]);
-	let linksForRender: renderedLinks[] = $state([]);
-
-	const radiusScale = $derived(d3.scaleLinear().domain(nodesExtent).range([2, 25]));
-
-	function handleClusterReset() {
-		switchView({
-			selectionIsActive: true,
-			networkIsActive: false
-		});
-	}
-
-	function simulationUpdate() {
-		nodesForRender = nodes;
-		linksForRender = links;
-	}
-
+	////
+	// Init and run simulation and network related business
 	$effect(() => {
 		simulation = d3
 			.forceSimulation(nodes)
@@ -74,7 +64,6 @@
 			.on('tick', simulationUpdate);
 
 		const drag = d3.drag<SVGCircleElement, clusterNodes>().on('start', onStart).on('drag', onDrag);
-		// .on('end', onEnd);
 
 		nodes.forEach((node) => {
 			const el = circleRefs[node.id];
@@ -85,8 +74,12 @@
 			}
 		});
 	});
-
-	onMount(() => {});
+	////
+	// Simulation update and interactivity
+	function simulationUpdate() {
+		nodesForRender = nodes;
+		linksForRender = links;
+	}
 
 	function onStart(event: any, d: clusterNodes) {
 		if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -99,15 +92,17 @@
 		d.fy = clamp(event.y, -height, height);
 		simulation.alpha(1).restart();
 	}
-
-	function onEnd(event: any, d: clusterNodes) {
-		if (!event.active) simulation.alphaTarget(0);
-		d.fx = null;
-		d.fy = null;
+	////
+	// User interactivity on nodes and UI
+	function handleMouseOver(id: string) {
+		label = id;
 	}
 
-	function clamp(x, lo, hi) {
-		return x < lo ? lo : x > hi ? hi : x;
+	function handleClusterReset() {
+		switchView({
+			selectionIsActive: true,
+			networkIsActive: false
+		});
 	}
 </script>
 
@@ -133,6 +128,11 @@
 				{/each}
 				{#each nodesForRender as node, n (node.id)}
 					<circle
+						role="button"
+						tabindex="0"
+						onfocus={() => {
+							handleMouseOver(node.id);
+						}}
 						onmouseover={() => {
 							handleMouseOver(node.id);
 						}}
