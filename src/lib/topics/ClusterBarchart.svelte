@@ -1,7 +1,7 @@
 <script lang="ts">
 	// @ts-expect-error
 	import * as d3 from 'd3';
-	let { selectedCluster, switchView, selectionIsActive, networkIsActive } = $props();
+	let { selectedCluster, switchView } = $props();
 	let data = $derived(selectedCluster[0].topWords);
 	let width = $state(0);
 	let height = $state(0);
@@ -32,15 +32,14 @@
 </script>
 
 <div class="m-2">
-	{#if selectionIsActive && !networkIsActive}
-		<div class="mb-2 flex items-center justify-end">
-			<button
-				onclick={() => {
-					handleClusterSelection();
-				}}>Go to Network</button
-			>
-		</div>
-	{/if}
+	<div class="mb-2 flex items-center justify-between">
+		<p class="border-b font-serif text-xs">{selectedCluster[0].manualLabel}</p>
+		<button
+			onclick={() => {
+				handleClusterSelection();
+			}}>Go to Network</button
+		>
+	</div>
 	<div class="h-70 w-full" bind:clientWidth={width} bind:clientHeight={height}>
 		<svg {width} {height}>
 			<g class="-translate-y-2">

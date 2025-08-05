@@ -48,7 +48,9 @@
 						{selectedCluster[0].description}
 					</p>
 				</div>
-				<ClusterBarchart {selectedCluster} {switchView} {selectionIsActive} {networkIsActive} />
+				{#if selectionIsActive && !networkIsActive}
+					<ClusterBarchart {selectedCluster} {switchView} />
+				{/if}
 			</div>
 		</div>
 		<div class="w-8/12">
