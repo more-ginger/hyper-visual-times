@@ -3,13 +3,11 @@
 	import * as d3 from 'd3';
 	import NetworksData from '../../content/data/topics/networks.json';
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
-	import { distance } from '../utils/actions.svelte';
-	import { tick } from 'svelte';
+	import NetworkLabel from './NetworkLabel.svelte';
 
 	let { selectedCluster, switchView, selectedClusterColor } = $props();
 	let width = $state(0);
 	let height = $state(0);
-	let clusterRadius = $derived(width / 2.2);
 	let simulation;
 	let currentNetworkData = $derived(
 		NetworksData.filter((network) => {
@@ -19,21 +17,26 @@
 	let nodes = $derived(currentNetworkData[0].nodes);
 	let links = $derived(currentNetworkData[0].links);
 
+	let nodesExtent = $derived(
+		d3.extent(
+			nodes.map((d) => {
+				return d.size;
+			})
+		)
+	);
+
+	let mean = $derived(
+		d3.mean(
+			nodes.map((d) => {
+				return d.size;
+			})
+		)
+	);
+
 	let nodesForRender: clusterNodes[] = $state([]);
 	let linksForRender: renderedLinks[] = $state([]);
 
-	const radiusScale = $derived(
-		d3
-			.scaleLinear()
-			.domain(
-				d3.extent(
-					nodes.map((d) => {
-						return d.size;
-					})
-				)
-			)
-			.range([2, 25])
-	);
+	const radiusScale = $derived(d3.scaleLinear().domain(nodesExtent).range([2, 25]));
 
 	function handleClusterReset() {
 		switchView({
@@ -93,11 +96,7 @@
 						stroke="black"
 						fill={selectedClusterColor}
 					/>
-					{#if radiusScale(node.size) > 5}
-						<text x={node.x + 10 + radiusScale(node.size) / 2} y={node.y + 2} font-size="10"
-							>{node.id}</text
-						>
-					{/if}
+					<NetworkLabel {node} {radiusScale} {mean} />
 				{/each}
 			</g>
 		</svg>
