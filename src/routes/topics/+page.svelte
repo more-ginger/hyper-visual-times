@@ -32,10 +32,26 @@
 			<div class="">
 				<p class="text-sm">
 					One bubble represents a topic, a cluster of common words extracted from The New York
-					Times' articles. The most common topics are related to foreign politics and conflict,
-					followed by internal politics and economy – here in yellow. Miscellaneous topics like
-					culture, health, society, and sports are represented in pink. Orange bubbles represent
-					topics connected to foreign politics. Climate-related topics are green.
+					Times' articles. The most common topics are marked in <span
+						class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
+						>orange</span
+					>
+					and are related to foreign politics and conflict. followed by internal politics and economy
+					– here in
+					<span
+						class="rounded-xl border border-[#FFBC35] px-2 before:pr-1 before:text-[#FFBC35] before:content-['•']"
+						>yellow</span
+					>
+					. Miscellaneous topics like culture, health, society, and sports are represented in
+					<span
+						class="rounded-xl border border-[#FFDAB9] px-2 before:pr-1 before:text-[#FFDAB9] before:content-['•']"
+						>pink</span
+					>. Orange bubbles represent topics connected to foreign politics. Climate-related topics
+					are
+					<span
+						class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
+						>green</span
+					>.
 				</p>
 			</div>
 			<div class="2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15">
