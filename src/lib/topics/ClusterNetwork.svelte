@@ -8,6 +8,7 @@
 	let { selectedCluster, switchView, selectedClusterColor } = $props();
 	let width = $state(0);
 	let height = $state(0);
+	let label: string | null = $state(null);
 	let simulation;
 	let currentNetworkData = $derived(
 		NetworksData.filter((network) => {
@@ -32,6 +33,10 @@
 			})
 		)
 	);
+
+	function handleMouseOver(id: string) {
+		label = id;
+	}
 
 	let nodesForRender: clusterNodes[] = $state([]);
 	let linksForRender: renderedLinks[] = $state([]);
@@ -90,13 +95,23 @@
 				{/each}
 				{#each nodesForRender as node}
 					<circle
+						onmouseover={() => {
+							handleMouseOver(node.id);
+						}}
+						cx={node.x}
+						cy={node.y}
+						r={radiusScale(node.size) + 10}
+						stroke={label === node.id ? selectedClusterColor : 'none'}
+						fill="transparent"
+					/>
+					<circle
 						cx={node.x}
 						cy={node.y}
 						r={radiusScale(node.size)}
 						stroke="black"
 						fill={selectedClusterColor}
 					/>
-					<NetworkLabel {node} {radiusScale} {mean} />
+					<NetworkLabel {node} {radiusScale} {mean} {label} />
 				{/each}
 			</g>
 		</svg>
