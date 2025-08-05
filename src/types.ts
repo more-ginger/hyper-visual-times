@@ -79,7 +79,9 @@ export interface clusterNodes {
     size: number,
     group: number
     x: number,
-    y:number
+    y:number,
+    fx: null | number,
+    fy: null | number
 }
 
 export interface clusterLinks {

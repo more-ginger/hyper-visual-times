@@ -1,47 +1,52 @@
 <script lang="ts">
 	// @ts-expect-error
 	import * as d3 from 'd3';
+	import { clamp } from '../utils/actions.svelte';
 	import NetworksData from '../../content/data/topics/networks.json';
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
-	import { distance } from '../utils/actions.svelte';
-	import { tick } from 'svelte';
+	import NetworkLabel from './NetworkLabel.svelte';
 
 	let { selectedCluster, switchView, selectedClusterColor } = $props();
+	let simulation: d3.Simulation<clusterNodes, undefined>;
+
+	// reactive state
 	let width = $state(0);
 	let height = $state(0);
-	let clusterRadius = $derived(width / 2.2);
-	let simulation;
+	let label: string | null = $state(null);
+	let nodesForRender: clusterNodes[] = $state([]);
+	let linksForRender: renderedLinks[] = $state([]);
+	let circleRefs: { [key: string]: SVGCircleElement | null } = $state({});
+	////
+	////
+	// derived variables
 	let currentNetworkData = $derived(
 		NetworksData.filter((network) => {
 			return selectedCluster[0].id === network.topic;
 		})
 	);
+
 	let nodes = $derived(currentNetworkData[0].nodes);
 	let links = $derived(currentNetworkData[0].links);
 
-	let nodesForRender: clusterNodes[] = $state([]);
-	let linksForRender: renderedLinks[] = $state([]);
-
-	const radiusScale = $derived(
-		d3
-			.scaleLinear()
-			.domain(
-				d3.extent(
-					nodes.map((d) => {
-						return d.size;
-					})
-				)
-			)
-			.range([2, 25])
+	let nodesExtent = $derived(
+		d3.extent(
+			nodes.map((d) => {
+				return d.size;
+			})
+		)
 	);
 
-	function handleClusterReset() {
-		switchView({
-			selectionIsActive: true,
-			networkIsActive: false
-		});
-	}
+	const radiusScale = $derived(d3.scaleLinear().domain(nodesExtent).range([2, 25]));
 
+	let mean = $derived(
+		d3.mean(
+			nodes.map((d) => {
+				return d.size;
+			})
+		)
+	);
+	////
+	// Init and run simulation and network related business
 	$effect(() => {
 		simulation = d3
 			.forceSimulation(nodes)
@@ -57,11 +62,47 @@
 			.force('x', d3.forceX())
 			.force('y', d3.forceY())
 			.on('tick', simulationUpdate);
-	});
 
+		const drag = d3.drag<SVGCircleElement, clusterNodes>().on('start', onStart).on('drag', onDrag);
+
+		nodes.forEach((node) => {
+			const el = circleRefs[node.id];
+			$inspect(el);
+			if (el) {
+				console.log('!');
+				d3.select(el).datum(node).call(drag);
+			}
+		});
+	});
+	////
+	// Simulation update and interactivity
 	function simulationUpdate() {
 		nodesForRender = nodes;
 		linksForRender = links;
+	}
+
+	function onStart(event: any, d: clusterNodes) {
+		if (!event.active) simulation.alphaTarget(0.3).restart();
+		d.fx = d.x;
+		d.fy = d.y;
+	}
+
+	function onDrag(event: any, d: clusterNodes) {
+		d.fx = clamp(event.x, -width, width);
+		d.fy = clamp(event.y, -height, height);
+		simulation.alpha(1).restart();
+	}
+	////
+	// User interactivity on nodes and UI
+	function handleMouseOver(id: string) {
+		label = id;
+	}
+
+	function handleClusterReset() {
+		switchView({
+			selectionIsActive: true,
+			networkIsActive: false
+		});
 	}
 </script>
 
@@ -85,19 +126,31 @@
 						stroke="gray"
 					/>
 				{/each}
-				{#each nodesForRender as node}
+				{#each nodesForRender as node, n (node.id)}
+					<circle
+						role="button"
+						tabindex="0"
+						onfocus={() => {
+							handleMouseOver(node.id);
+						}}
+						onmouseover={() => {
+							handleMouseOver(node.id);
+						}}
+						cx={node.x}
+						cy={node.y}
+						r={radiusScale(node.size) + 10}
+						stroke={label === node.id ? selectedClusterColor : 'none'}
+						fill="transparent"
+					/>
 					<circle
 						cx={node.x}
 						cy={node.y}
 						r={radiusScale(node.size)}
 						stroke="black"
 						fill={selectedClusterColor}
+						bind:this={circleRefs[node.id]}
 					/>
-					{#if radiusScale(node.size) > 5}
-						<text x={node.x + 10 + radiusScale(node.size) / 2} y={node.y + 2} font-size="10"
-							>{node.id}</text
-						>
-					{/if}
+					<NetworkLabel {node} {radiusScale} {mean} {label} />
 				{/each}
 			</g>
 		</svg>
