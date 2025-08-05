@@ -109,9 +109,17 @@
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<div class="absolute m-2">
 		<button
+			class="flex"
 			onclick={() => {
 				handleClusterReset();
-			}}>Back to clusters</button
+			}}
+			><span class="mr-2 -rotate-180"
+				><img
+					src="./icons/ui-forward.svg"
+					class="inline-block align-middle"
+					alt="arrow back"
+				/></span
+			> Back to clusters</button
 		>
 	</div>
 	{#await nodesForRender then nodesForRender}

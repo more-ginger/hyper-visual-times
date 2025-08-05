@@ -7,7 +7,7 @@
 	let selectionIsActive = $state(true);
 	let networkIsActive = $state(false);
 	let selectedClusterLabel = $state(TopicClusters[0].manualLabel);
-	let selectedClusterColor = $state('#000000');
+	let selectedClusterColor = $state('#FF805B');
 
 	function selectNewCluster(selectionRules: { cluster: string; clusterColor: string }) {
 		if (selectedClusterLabel !== selectionRules.cluster) {

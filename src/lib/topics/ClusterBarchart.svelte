@@ -37,7 +37,14 @@
 		<button
 			onclick={() => {
 				handleClusterSelection();
-			}}>Go to Network</button
+			}}
+			><span class="mr-2"
+				><img
+					src="./icons/ui-forward.svg"
+					class="inline-block align-middle"
+					alt="arrow forward"
+				/></span
+			>Go to Network</button
 		>
 	</div>
 	<div class="h-70 w-full" bind:clientWidth={width} bind:clientHeight={height}>
