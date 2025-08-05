@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	// @ts-expect-error
 	import * as d3 from 'd3';
 	import NetworksData from '../../content/data/topics/networks.json';
@@ -17,6 +18,7 @@
 	);
 	let nodes = $derived(currentNetworkData[0].nodes);
 	let links = $derived(currentNetworkData[0].links);
+	let circleRefs = $state({});
 
 	let nodesExtent = $derived(
 		d3.extent(
@@ -50,6 +52,11 @@
 		});
 	}
 
+	function simulationUpdate() {
+		nodesForRender = nodes;
+		linksForRender = links;
+	}
+
 	$effect(() => {
 		simulation = d3
 			.forceSimulation(nodes)
@@ -65,11 +72,42 @@
 			.force('x', d3.forceX())
 			.force('y', d3.forceY())
 			.on('tick', simulationUpdate);
+
+		const drag = d3.drag<SVGCircleElement, clusterNodes>().on('start', onStart).on('drag', onDrag);
+		// .on('end', onEnd);
+
+		nodes.forEach((node) => {
+			const el = circleRefs[node.id];
+			$inspect(el);
+			if (el) {
+				console.log('!');
+				d3.select(el).datum(node).call(drag);
+			}
+		});
 	});
 
-	function simulationUpdate() {
-		nodesForRender = nodes;
-		linksForRender = links;
+	onMount(() => {});
+
+	function onStart(event: any, d: clusterNodes) {
+		if (!event.active) simulation.alphaTarget(0.3).restart();
+		d.fx = d.x;
+		d.fy = d.y;
+	}
+
+	function onDrag(event: any, d: clusterNodes) {
+		d.fx = clamp(event.x, -width, width);
+		d.fy = clamp(event.y, -height, height);
+		simulation.alpha(1).restart();
+	}
+
+	function onEnd(event: any, d: clusterNodes) {
+		if (!event.active) simulation.alphaTarget(0);
+		d.fx = null;
+		d.fy = null;
+	}
+
+	function clamp(x, lo, hi) {
+		return x < lo ? lo : x > hi ? hi : x;
 	}
 </script>
 
@@ -93,7 +131,7 @@
 						stroke="gray"
 					/>
 				{/each}
-				{#each nodesForRender as node}
+				{#each nodesForRender as node, n (node.id)}
 					<circle
 						onmouseover={() => {
 							handleMouseOver(node.id);
@@ -110,6 +148,7 @@
 						r={radiusScale(node.size)}
 						stroke="black"
 						fill={selectedClusterColor}
+						bind:this={circleRefs[node.id]}
 					/>
 					<NetworkLabel {node} {radiusScale} {mean} {label} />
 				{/each}

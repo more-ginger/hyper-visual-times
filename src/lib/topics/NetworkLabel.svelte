@@ -1,6 +1,5 @@
 <script lang="ts">
 	let { radiusScale, node, mean, label } = $props();
-	$inspect(node.id);
 </script>
 
 {#if node.size > mean || node.id === label}
