@@ -4,11 +4,12 @@
 	import NetworksData from '../../content/data/topics/networks.json';
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
 	import { distance } from '../utils/actions.svelte';
+	import { tick } from 'svelte';
 
 	let { selectedCluster, switchView, selectedClusterColor } = $props();
 	let width = $state(0);
 	let height = $state(0);
-	let clusterRadius = $derived(width / 2.5);
+	let clusterRadius = $derived(width / 2.2);
 	let simulation;
 	let currentNetworkData = $derived(
 		NetworksData.filter((network) => {
@@ -44,35 +45,18 @@
 	$effect(() => {
 		simulation = d3
 			.forceSimulation(nodes)
-			.force('charge', d3.forceManyBody().strength(-5))
 			.force(
 				'link',
-				d3
-					.forceLink(links)
-					.id((d: clusterLinks) => d.id)
-					.distance((d: clusterLinks) => d.value)
+				d3.forceLink(links).id((d: clusterLinks) => d.id)
 			)
+			.force('charge', d3.forceManyBody().strength(-300))
 			.force(
 				'collide',
-				d3
-					.forceCollide()
-					.radius((d: clusterNodes) => radiusScale(d.size) + 6)
-					.strength(10)
+				d3.forceCollide().radius((d: { size: number }) => radiusScale(d.size) + 5)
 			)
-			.force('center', d3.forceCenter(width / 2, height / 2))
-			.force('bounding', () => {
-				nodes.forEach((node: cluster) => {
-					const xCenter = width / 2;
-					const yCenter = height / 2;
-					if (distance(node.x, node.y, xCenter, yCenter) > clusterRadius) {
-						const theta = Math.atan((node.y - yCenter) / (node.x - xCenter));
-						node.x = xCenter + clusterRadius * Math.cos(theta) * (node.x < xCenter ? -1 : 1);
-						node.y = yCenter + clusterRadius * Math.sin(theta) * (node.x < xCenter ? -1 : 1);
-					}
-				});
-			})
-			.on('tick', simulationUpdate)
-			.tick();
+			.force('x', d3.forceX())
+			.force('y', d3.forceY())
+			.on('tick', simulationUpdate);
 	});
 
 	function simulationUpdate() {
@@ -90,7 +74,7 @@
 		>
 	</div>
 	{#await nodesForRender then nodesForRender}
-		<svg {width} {height}>
+		<svg {width} {height} viewBox={`-${width / 2}, ${-height / 2}, ${width}, ${height}`}>
 			<g>
 				{#each linksForRender as link}
 					<line
