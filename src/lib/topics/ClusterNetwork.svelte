@@ -6,7 +6,7 @@
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
 	import NetworkLabel from './NetworkLabel.svelte';
 
-	let { selectedCluster, switchView, selectedClusterColor } = $props();
+	let { selectedCluster, switchView, selectedClusterColor, selectNewNodesPair } = $props();
 	let simulation: d3.Simulation<clusterNodes, undefined>;
 
 	// reactive state
@@ -16,6 +16,8 @@
 	let nodesForRender: clusterNodes[] = $state([]);
 	let linksForRender: renderedLinks[] = $state([]);
 	let circleRefs: { [key: string]: SVGCircleElement | null } = $state({});
+	let activeNodeIndex: number | null = $state(null);
+	let arrayOfActiveNodes: string[] = $state([]);
 	////
 	////
 	// derived variables
@@ -67,9 +69,7 @@
 
 		nodes.forEach((node) => {
 			const el = circleRefs[node.id];
-			$inspect(el);
 			if (el) {
-				console.log('!');
 				d3.select(el).datum(node).call(drag);
 			}
 		});
@@ -82,7 +82,7 @@
 	}
 
 	function onStart(event: any, d: clusterNodes) {
-		if (!event.active) simulation.alphaTarget(0.3).restart();
+		if (!event.active) simulation.alphaTarget(0).restart();
 		d.fx = d.x;
 		d.fy = d.y;
 	}
@@ -104,6 +104,26 @@
 			networkIsActive: false
 		});
 	}
+
+	function handleNodeSelection(id: string, i: number) {
+		//arrayOfActiveNodes.push(id);
+		if (i && i !== activeNodeIndex) {
+			if (arrayOfActiveNodes.length < 2) {
+				arrayOfActiveNodes.push(id);
+			} else {
+				arrayOfActiveNodes = [];
+				arrayOfActiveNodes.push(id);
+			}
+		}
+
+		selectNewNodesPair({
+			arrayOfActiveNodes
+		});
+
+		activeNodeIndex = i;
+	}
+
+	$inspect(arrayOfActiveNodes);
 </script>
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
@@ -135,29 +155,43 @@
 					/>
 				{/each}
 				{#each nodesForRender as node, n (node.id)}
-					<circle
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<g
 						role="button"
 						tabindex="0"
 						onfocus={() => {
-							handleMouseOver(node.id);
+							handleNodeSelection(node.id, n);
 						}}
-						onmouseover={() => {
-							handleMouseOver(node.id);
+						onclick={() => {
+							handleNodeSelection(node.id, n);
 						}}
-						cx={node.x}
-						cy={node.y}
-						r={radiusScale(node.size) + 10}
-						stroke={label === node.id ? selectedClusterColor : 'none'}
-						fill="transparent"
-					/>
-					<circle
-						cx={node.x}
-						cy={node.y}
-						r={radiusScale(node.size)}
-						stroke="black"
-						fill={selectedClusterColor}
-						bind:this={circleRefs[node.id]}
-					/>
+					>
+						<circle
+							role="button"
+							tabindex="0"
+							onfocus={() => {
+								handleMouseOver(node.id);
+							}}
+							onmouseover={() => {
+								handleMouseOver(node.id);
+							}}
+							cx={node.x}
+							cy={node.y}
+							r={radiusScale(node.size) + 10}
+							stroke={label === node.id ? selectedClusterColor : 'none'}
+							fill="white"
+						/>
+						<circle
+							cx={node.x}
+							cy={node.y}
+							r={radiusScale(node.size)}
+							stroke="black"
+							fill={selectedClusterColor}
+							bind:this={circleRefs[node.id]}
+						/>
+					</g>
+				{/each}
+				{#each nodesForRender as node, n (node.id)}
 					<NetworkLabel {node} {radiusScale} {mean} {label} />
 				{/each}
 			</g>
