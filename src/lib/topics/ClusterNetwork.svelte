@@ -107,7 +107,7 @@
 
 	function handleNodeSelection(id: string, i: number) {
 		//arrayOfActiveNodes.push(id);
-		if (i && i !== activeNodeIndex) {
+		if (i && !arrayOfActiveNodes.includes(id)) {
 			if (arrayOfActiveNodes.length < 2) {
 				arrayOfActiveNodes.push(id);
 			} else {
