@@ -2,6 +2,7 @@
 	import BubbleChart from '$lib/topics/BubbleChart.svelte';
 	import ClusterBarchart from '$lib/topics/ClusterBarchart.svelte';
 	import ClusterNetwork from '$lib/topics/ClusterNetwork.svelte';
+	import NetworkCard from '$lib/topics/NetworkCard.svelte';
 	import TopicClusters from '../../content/data/topics/topics.json';
 
 	let selectionIsActive = $state(true);
@@ -66,6 +67,8 @@
 				</div>
 				{#if selectionIsActive && !networkIsActive}
 					<ClusterBarchart {selectedCluster} {switchView} />
+				{:else}
+					<NetworkCard />
 				{/if}
 			</div>
 		</div>
