@@ -58,3 +58,46 @@ export interface node extends ArticleIds {
     country: string,
     iso: string
 }
+
+
+export interface cluster {
+    id: number,
+    label: string,
+    count: number,
+    topWords: [{
+        word: string,
+        value: number
+    }],
+    group: string,
+    manualLabel: string,
+    x: number,
+    y:number
+}
+
+export interface clusterNodes {
+    id: string,
+    size: number,
+    group: number
+    x: number,
+    y:number,
+    fx: null | number,
+    fy: null | number
+}
+
+export interface clusterLinks {
+    id: number,
+    source: string,
+    target: string,
+    value: number,
+}
+
+export interface renderedLinks {
+    source: {
+        x:number,
+        y:number
+    },
+    target: {
+        x:number,
+        y:number
+    }
+}

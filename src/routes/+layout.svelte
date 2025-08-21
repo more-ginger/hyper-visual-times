@@ -98,15 +98,15 @@
 									id="menu-item-0">Chapter 1: The Geo-politics of news</a
 								>
 								<a
-									href="/"
-									class="pointer-events-none block cursor-not-allowed border-b p-4 text-gray-500"
+									href="/topics"
+									class="block border-b p-4 hover:underline focus:italic"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-1">Chapter 2: Discoursive interrelations</a
 								>
 								<a
 									href="/"
-									class="cursor-not-allowedborder-b pointer-events-none block p-4 text-gray-500"
+									class="pointer-events-none block cursor-not-allowed p-4 text-gray-500"
 									role="menuitem"
 									tabindex="-1"
 									id="menu-item-2">Chapter 3: The language of images</a
