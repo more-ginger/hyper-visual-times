@@ -6,7 +6,13 @@
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
 	import NetworkLabel from './NetworkLabel.svelte';
 
-	let { selectedCluster, switchView, selectedClusterColor } = $props();
+	let {
+		selectedCluster,
+		switchView,
+		selectedClusterColor,
+		selectNewNodesPair,
+		selectOverlappingArticleIds
+	} = $props();
 	let simulation: d3.Simulation<clusterNodes, undefined>;
 
 	// reactive state
@@ -16,6 +22,8 @@
 	let nodesForRender: clusterNodes[] = $state([]);
 	let linksForRender: renderedLinks[] = $state([]);
 	let circleRefs: { [key: string]: SVGCircleElement | null } = $state({});
+	let activeNodeIndex: number | null = $state(null);
+	let arrayOfActiveNodes: string[] = $state([]);
 	////
 	////
 	// derived variables
@@ -67,9 +75,7 @@
 
 		nodes.forEach((node) => {
 			const el = circleRefs[node.id];
-			$inspect(el);
 			if (el) {
-				console.log('!');
 				d3.select(el).datum(node).call(drag);
 			}
 		});
@@ -82,7 +88,7 @@
 	}
 
 	function onStart(event: any, d: clusterNodes) {
-		if (!event.active) simulation.alphaTarget(0.3).restart();
+		if (!event.active) simulation.alphaTarget(0).restart();
 		d.fx = d.x;
 		d.fy = d.y;
 	}
@@ -103,6 +109,52 @@
 			selectionIsActive: true,
 			networkIsActive: false
 		});
+	}
+
+	function handleNodeSelection(id: string, i: number) {
+		//arrayOfActiveNodes.push(id);
+		if (i && !arrayOfActiveNodes.includes(id)) {
+			if (arrayOfActiveNodes.length < 2) {
+				arrayOfActiveNodes.push(id);
+			} else {
+				arrayOfActiveNodes = [];
+				arrayOfActiveNodes.push(id);
+			}
+		}
+
+		if (arrayOfActiveNodes.length === 2) {
+			const selectedLink = checkOverlappingArticles(arrayOfActiveNodes);
+			if (selectedLink && selectedLink.length !== 0) {
+				selectOverlappingArticleIds({
+					selectedIds: selectedLink?.shared_articles
+				});
+			} else {
+				selectOverlappingArticleIds({
+					selectedIds: []
+				});
+			}
+		}
+
+		selectNewNodesPair({
+			arrayOfActiveNodes
+		});
+
+		activeNodeIndex = i;
+	}
+
+	function checkOverlappingArticles(nodeIds: string[]) {
+		return links.find((l) => nodeIds.includes(l.source.id) && nodeIds.includes(l.target.id));
+	}
+
+	function areLinksActive(sourceId: string, targetId: string) {
+		const activeLinksIds = [sourceId, targetId];
+		if (arrayOfActiveNodes.length == 2) {
+			return activeLinksIds.every((el) => arrayOfActiveNodes.includes(el));
+		} else if (arrayOfActiveNodes.length < 2) {
+			return activeLinksIds.some((el) => arrayOfActiveNodes.includes(el));
+		} else {
+			return false;
+		}
 	}
 </script>
 
@@ -131,33 +183,50 @@
 						x2={link.target.x}
 						y1={link.source.y}
 						y2={link.target.y}
-						stroke="gray"
+						stroke={areLinksActive(link.source.id, link.target.id) ? selectedClusterColor : 'grey'}
+						stroke-width={areLinksActive(link.source.id, link.target.id) ? 2 : 0.5}
 					/>
 				{/each}
 				{#each nodesForRender as node, n (node.id)}
-					<circle
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<g
 						role="button"
 						tabindex="0"
 						onfocus={() => {
-							handleMouseOver(node.id);
+							handleNodeSelection(node.id, n);
 						}}
-						onmouseover={() => {
-							handleMouseOver(node.id);
+						onclick={() => {
+							handleNodeSelection(node.id, n);
 						}}
-						cx={node.x}
-						cy={node.y}
-						r={radiusScale(node.size) + 10}
-						stroke={label === node.id ? selectedClusterColor : 'none'}
-						fill="transparent"
-					/>
-					<circle
-						cx={node.x}
-						cy={node.y}
-						r={radiusScale(node.size)}
-						stroke="black"
-						fill={selectedClusterColor}
-						bind:this={circleRefs[node.id]}
-					/>
+					>
+						<circle
+							role="button"
+							tabindex="0"
+							onfocus={() => {
+								handleMouseOver(node.id);
+							}}
+							onmouseover={() => {
+								handleMouseOver(node.id);
+							}}
+							cx={node.x}
+							cy={node.y}
+							r={radiusScale(node.size) + 10}
+							stroke={label === node.id ? selectedClusterColor : 'none'}
+							fill="transparent"
+						/>
+						<circle
+							cx={node.x}
+							cy={node.y}
+							r={radiusScale(node.size)}
+							stroke="black"
+							fill={arrayOfActiveNodes.includes(node.id) || arrayOfActiveNodes.length === 0
+								? selectedClusterColor
+								: 'white'}
+							bind:this={circleRefs[node.id]}
+						/>
+					</g>
+				{/each}
+				{#each nodesForRender as node, n (node.id)}
 					<NetworkLabel {node} {radiusScale} {mean} {label} />
 				{/each}
 			</g>

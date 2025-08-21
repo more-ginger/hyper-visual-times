@@ -9,6 +9,8 @@
 	let networkIsActive = $state(false);
 	let selectedClusterLabel = $state(TopicClusters[0].manualLabel);
 	let selectedClusterColor = $state('#FF805B');
+	let selectedPair: string[] = $state([]);
+	let selectedIds: string[] = $state([]);
 
 	function selectNewCluster(selectionRules: { cluster: string; clusterColor: string }) {
 		if (selectedClusterLabel !== selectionRules.cluster) {
@@ -25,6 +27,14 @@
 	let selectedCluster = $derived(
 		TopicClusters.filter((cluster) => cluster.manualLabel === selectedClusterLabel)
 	);
+
+	function selectNewNodesPair(nodesPair: { arrayOfActiveNodes: string[] }) {
+		selectedPair = nodesPair.arrayOfActiveNodes;
+	}
+
+	function selectOverlappingArticleIds(ids: { selectedIds: string[] }) {
+		selectedIds = ids.selectedIds;
+	}
 </script>
 
 <div class="base m-auto flex h-dvh pt-20 md:w-full">
@@ -68,7 +78,7 @@
 				{#if selectionIsActive && !networkIsActive}
 					<ClusterBarchart {selectedCluster} {switchView} />
 				{:else}
-					<NetworkCard />
+					<NetworkCard {selectedPair} {selectedIds} />
 				{/if}
 			</div>
 		</div>
@@ -76,7 +86,13 @@
 			{#if selectionIsActive && !networkIsActive}
 				<BubbleChart {TopicClusters} {selectNewCluster} {switchView} {selectedClusterLabel} />
 			{:else}
-				<ClusterNetwork {selectedCluster} {switchView} {selectedClusterColor} />
+				<ClusterNetwork
+					{selectedCluster}
+					{switchView}
+					{selectedClusterColor}
+					{selectNewNodesPair}
+					{selectOverlappingArticleIds}
+				/>
 			{/if}
 		</div>
 	</div>
