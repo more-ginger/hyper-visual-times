@@ -1,12 +1,10 @@
 <script lang="ts">
 	let { selectedPair, selectedIds } = $props();
 	let firstFiveArticles = $derived(selectedIds.length > 5 ? selectedIds.slice(0, 6) : selectedIds);
-	let articlesHeadlines = $state([]);
-	$inspect('selectedIds', selectedIds);
-	$inspect('firstFiveArticles', firstFiveArticles);
+	let articlesHeadlines = $state<{ headline: string }[]>([]);
 
 	async function fetchArticlesForCards() {
-		const ids = firstFiveArticles.map((id) => encodeURIComponent(id)).join('&id=');
+		const ids = firstFiveArticles.map((id: string) => encodeURIComponent(id)).join('&id=');
 		try {
 			const response = await fetch(`/api/articles?source=nyt&${ids}`);
 			const data = await response.json();
