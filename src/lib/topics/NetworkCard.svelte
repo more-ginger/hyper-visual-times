@@ -25,18 +25,26 @@
 
 <div class="rounded-xl border p-2">
 	<div class="flex justify-between border-b">
-		<div>{selectedPair[0] ? selectedPair[0] : 'select first node'}</div>
-		<div>arrow</div>
-		<div>{selectedPair[1] ? selectedPair[1] : 'select another node'}</div>
+		<div class="mb-2 rounded-xl bg-white p-2">
+			{selectedPair[0] ? selectedPair[0] : 'select first node'}
+		</div>
+		<div class="mb-2 p-2">
+			<img class="inline-block" src="icons/ui-forward.svg" alt="forward" />
+		</div>
+		<div class="mb-2 rounded-xl bg-white p-2">
+			{selectedPair[1] ? selectedPair[1] : 'select another node'}
+		</div>
 	</div>
 	{#if selectedPair.length === 2}
-		<div class="p-2">
+		<div class="max-h-60 overflow-scroll p-2">
 			{#await articlesHeadlines}
 				<p>loading</p>
 			{:then}
 				{#if articlesHeadlines}
 					{#each articlesHeadlines as article}
-						<div class="border-b">{article.headline}</div>
+						<div class="my-4">
+							<a class="border-b" href={article.web_url}>{article.headline}</a>
+						</div>
 					{/each}
 				{/if}
 			{/await}
