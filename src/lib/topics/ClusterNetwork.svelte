@@ -116,11 +116,19 @@
 			}
 		}
 
+		if (arrayOfActiveNodes.length === 2) {
+			checkOverlappingArticles(arrayOfActiveNodes);
+		}
+
 		selectNewNodesPair({
 			arrayOfActiveNodes
 		});
 
 		activeNodeIndex = i;
+	}
+
+	function checkOverlappingArticles(nodes) {
+		console.log(links);
 	}
 
 	$inspect(arrayOfActiveNodes);
