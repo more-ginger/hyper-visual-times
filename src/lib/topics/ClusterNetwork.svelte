@@ -142,11 +142,20 @@
 		activeNodeIndex = i;
 	}
 
-	function checkOverlappingArticles(nodes) {
-		return links.find((l) => nodes.includes(l.source.id) && nodes.includes(l.target.id));
+	function checkOverlappingArticles(nodeIds: string[]) {
+		return links.find((l) => nodeIds.includes(l.source.id) && nodeIds.includes(l.target.id));
 	}
 
-	$inspect(arrayOfActiveNodes);
+	function areLinksActive(sourceId: string, targetId: string) {
+		const activeLinksIds = [sourceId, targetId];
+		if (arrayOfActiveNodes.length == 2) {
+			return activeLinksIds.every((el) => arrayOfActiveNodes.includes(el));
+		} else if (arrayOfActiveNodes.length < 2) {
+			return activeLinksIds.some((el) => arrayOfActiveNodes.includes(el));
+		} else {
+			return false;
+		}
+	}
 </script>
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
@@ -174,7 +183,8 @@
 						x2={link.target.x}
 						y1={link.source.y}
 						y2={link.target.y}
-						stroke="gray"
+						stroke={areLinksActive(link.source.id, link.target.id) ? selectedClusterColor : 'grey'}
+						stroke-width={areLinksActive(link.source.id, link.target.id) ? 2 : 0.5}
 					/>
 				{/each}
 				{#each nodesForRender as node, n (node.id)}
@@ -202,14 +212,16 @@
 							cy={node.y}
 							r={radiusScale(node.size) + 10}
 							stroke={label === node.id ? selectedClusterColor : 'none'}
-							fill="white"
+							fill="transparent"
 						/>
 						<circle
 							cx={node.x}
 							cy={node.y}
 							r={radiusScale(node.size)}
 							stroke="black"
-							fill={selectedClusterColor}
+							fill={arrayOfActiveNodes.includes(node.id) || arrayOfActiveNodes.length === 0
+								? selectedClusterColor
+								: 'white'}
 							bind:this={circleRefs[node.id]}
 						/>
 					</g>
