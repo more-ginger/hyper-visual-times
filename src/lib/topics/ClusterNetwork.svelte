@@ -109,6 +109,10 @@
 			selectionIsActive: true,
 			networkIsActive: false
 		});
+
+		selectOverlappingArticleIds({
+			selectedIds: []
+		});
 	}
 
 	function handleNodeSelection(id: string, i: number) {
