@@ -124,9 +124,15 @@
 
 		if (arrayOfActiveNodes.length === 2) {
 			const selectedLink = checkOverlappingArticles(arrayOfActiveNodes);
-			selectOverlappingArticleIds({
-				selectedIds: selectedLink?.shared_articles
-			});
+			if (selectedLink && selectedLink.length !== 0) {
+				selectOverlappingArticleIds({
+					selectedIds: selectedLink?.shared_articles
+				});
+			} else {
+				selectOverlappingArticleIds({
+					selectedIds: []
+				});
+			}
 		}
 
 		selectNewNodesPair({

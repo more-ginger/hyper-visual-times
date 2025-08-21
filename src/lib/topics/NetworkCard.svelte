@@ -1,5 +1,28 @@
 <script lang="ts">
 	let { selectedPair, selectedIds } = $props();
+	let firstFiveArticles = $derived(selectedIds.length > 5 ? selectedIds.slice(0, 6) : selectedIds);
+	let articlesHeadlines = $state([]);
+	$inspect('selectedIds', selectedIds);
+	$inspect('firstFiveArticles', firstFiveArticles);
+
+	async function fetchArticlesForCards() {
+		const ids = firstFiveArticles.map((id) => encodeURIComponent(id)).join('&id=');
+		try {
+			const response = await fetch(`/api/articles?source=nyt&${ids}`);
+			const data = await response.json();
+			articlesHeadlines = data;
+		} catch (error) {
+			console.log('Error in fetching articles inside fetchArticlesForCards', error);
+		}
+	}
+
+	$effect(() => {
+		if (selectedIds.length !== 0) {
+			fetchArticlesForCards();
+		} else {
+			articlesHeadlines = [];
+		}
+	});
 </script>
 
 <div class="rounded-xl border p-2">
@@ -8,9 +31,19 @@
 		<div>arrow</div>
 		<div>{selectedPair[1] ? selectedPair[1] : 'select another node'}</div>
 	</div>
-	<div class="p-10 text-center">
-		{#each selectedIds as id}
-			<div>{id}</div>
-		{/each}
-	</div>
+	{#if selectedPair.length === 2}
+		<div class="p-2">
+			{#await articlesHeadlines}
+				<p>loading</p>
+			{:then}
+				{#if articlesHeadlines}
+					{#each articlesHeadlines as article}
+						<div class="border-b">{article.headline}</div>
+					{/each}
+				{/if}
+			{/await}
+		</div>
+	{:else if selectedPair.length !== 2 || selectedIds.length === 0}
+		<div class="p-10 text-center">Select nodes</div>
+	{/if}
 </div>
