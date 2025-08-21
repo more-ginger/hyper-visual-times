@@ -6,7 +6,13 @@
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
 	import NetworkLabel from './NetworkLabel.svelte';
 
-	let { selectedCluster, switchView, selectedClusterColor, selectNewNodesPair } = $props();
+	let {
+		selectedCluster,
+		switchView,
+		selectedClusterColor,
+		selectNewNodesPair,
+		selectOverlappingArticleIds
+	} = $props();
 	let simulation: d3.Simulation<clusterNodes, undefined>;
 
 	// reactive state
@@ -117,7 +123,10 @@
 		}
 
 		if (arrayOfActiveNodes.length === 2) {
-			checkOverlappingArticles(arrayOfActiveNodes);
+			const selectedLink = checkOverlappingArticles(arrayOfActiveNodes);
+			selectOverlappingArticleIds({
+				selectedIds: selectedLink?.shared_articles
+			});
 		}
 
 		selectNewNodesPair({
@@ -128,7 +137,7 @@
 	}
 
 	function checkOverlappingArticles(nodes) {
-		console.log(links);
+		return links.find((l) => nodes.includes(l.source.id) && nodes.includes(l.target.id));
 	}
 
 	$inspect(arrayOfActiveNodes);
