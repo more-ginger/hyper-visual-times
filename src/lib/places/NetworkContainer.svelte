@@ -145,16 +145,19 @@
 {#if primaryCountryKey}
 	{#if selectedOutlet}
 		<div class="w-full">
-			<div class="flex w-full justify-end bg-yellow-100">
+			<div class="flex w-full justify-end">
 				<div class="m-2">
 					<button
+						class={selectedOutlet === outlets[0] ? `bg-zeit-light` : `bg-default`}
 						onclick={() => {
 							selectedOutlet = outlets[0];
 						}}>Zeit</button
 					>
 				</div>
+				<img class="inline" src="icons/ui-switch.svg" alt="Switch with The New York Times" />
 				<div class="m-2">
 					<button
+						class={selectedOutlet === outlets[1] ? `bg-nyt-light` : `bg-default`}
 						onclick={() => {
 							selectedOutlet = outlets[1];
 						}}>The New York Times</button

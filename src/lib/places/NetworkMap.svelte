@@ -21,11 +21,7 @@
 	let primaryCountryNode = $derived(
 		nodes.find((d: { country: string }) => d.country == primaryCountryKey)
 	);
-	$inspect(primaryCountryNode);
 
-	const colorDomain = $derived(
-		d3.extent(nodes.map((node: { shared_articles: [] }) => node['shared_articles'].length))
-	);
 	const coverageScale = $derived(
 		d3.scaleSequential().range([lightAccentHex, darkAccentHex]).domain(dataDomain)
 	);
