@@ -5,7 +5,7 @@
 
 	const { nodes, links, selectedOutlet, primaryCountryKey, dataDomain } = $props();
 	const darkIvoryHex = '#82561b';
-	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#FFBC36');
+	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
 	let canvas: HTMLCanvasElement | null = $state(null);
 	let context: CanvasRenderingContext2D | null = $state(null);
@@ -22,8 +22,11 @@
 		nodes.find((d: { country: string }) => d.country == primaryCountryKey)
 	);
 
+	$inspect(primaryCountryNode);
+
+	const coverageDomain = $derived(d3.extent(nodes.map((node) => node[`count_${selectedOutlet}`])));
 	const coverageScale = $derived(
-		d3.scaleSequential().range([lightAccentHex, darkAccentHex]).domain(dataDomain)
+		d3.scaleSequential().range([lightAccentHex, darkAccentHex]).domain(coverageDomain)
 	);
 
 	const sourceTargetCoordinates = $derived(
@@ -55,7 +58,7 @@
 	);
 
 	const linkWeightDomain = $derived(d3.extent(sourceTargetCoordinates.map((link) => link.weight)));
-	const linkWeightScale = $derived(d3.scaleLinear().domain(linkWeightDomain).range([0.5, 5]));
+	const linkWeightScale = $derived(d3.scaleLinear().domain(linkWeightDomain).range([1, 20]));
 
 	$effect(() => {
 		if (canvas) {
@@ -78,6 +81,9 @@
 				World
 			);
 
+			// projection.center([-3.6833306, 40.3999984]);
+			// projection.scale(400);
+
 			if (context) {
 				context.scale(dpi, dpi);
 				context.beginPath(),
@@ -98,9 +104,7 @@
 							context.beginPath(),
 								path(feature.geometry),
 								(context.fillStyle =
-									primaryCountryNode.iso === feature.properties.adm0_iso
-										? 'red'
-										: coverageScale(node['shared_articles'].length)),
+									primaryCountryNode.iso === feature.properties.adm0_iso ? 'red' : lightAccentHex),
 								context.fill();
 						}
 					});
@@ -109,8 +113,9 @@
 				sourceTargetCoordinates.map((line) => {
 					console.log(line.priority);
 					context?.beginPath(),
+						(context.lineCap = 'round'),
 						(context.lineWidth = line.priority === 0 ? 0.00001 : linkWeightScale(line.weight)),
-						(context.strokeStyle = '#0036AC');
+						(context.strokeStyle = darkAccentHex);
 					path(line), context?.stroke();
 				});
 

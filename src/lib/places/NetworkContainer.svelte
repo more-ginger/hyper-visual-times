@@ -54,8 +54,8 @@
 	});
 
 	const dataDomain = $derived.by(() => {
-		const extentZeit = extent(nodes.zeit.map((d) => d.shared_articles.length));
-		const extentNYT = extent(nodes.nyt.map((d) => d.shared_articles.length));
+		const extentZeit = extent(nodes.zeit.map((d) => d.count_zeit));
+		const extentNYT = extent(nodes.nyt.map((d) => d.count_nyt));
 		const crossOutletsExtent = extentNYT.concat(extentZeit);
 		return extent(crossOutletsExtent);
 	});
