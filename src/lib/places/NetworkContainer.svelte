@@ -27,10 +27,6 @@
 	let primaryCountry = dropdownData.find((d: { key: string }) => d.key == 'United Kingdom');
 	let primaryCountryKey = $state(primaryCountry.key);
 
-	const dataDomain = $derived(
-		extent(data.map((d: countryDataForComparison) => [d.count_nyt, d.count_zeit]).flat())
-	);
-
 	let nodes = $derived.by(() => {
 		let overlaps: Record<string, countryDataForComparison[]> = {};
 		if (primaryCountry) {
@@ -55,6 +51,13 @@
 			});
 		}
 		return overlaps;
+	});
+
+	const dataDomain = $derived.by(() => {
+		const extentZeit = extent(nodes.zeit.map((d) => d.shared_articles.length));
+		const extentNYT = extent(nodes.nyt.map((d) => d.shared_articles.length));
+		const crossOutletsExtent = extentNYT.concat(extentZeit);
+		return extent(crossOutletsExtent);
 	});
 
 	let links = $derived.by(() => {
@@ -163,6 +166,7 @@
 				links={links[selectedOutlet]}
 				{selectedOutlet}
 				{primaryCountryKey}
+				{dataDomain}
 			/>
 		</div>
 	{/if}

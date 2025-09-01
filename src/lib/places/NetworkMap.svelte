@@ -3,8 +3,10 @@
 	import * as d3 from 'd3';
 	import World from '../../content/data/places/world.json';
 
-	const { nodes, links, selectedOutlet, primaryCountryKey } = $props();
+	const { nodes, links, selectedOutlet, primaryCountryKey, dataDomain } = $props();
 	const darkIvoryHex = '#82561b';
+	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#FFBC36');
+	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
 	let canvas: HTMLCanvasElement | null = $state(null);
 	let context: CanvasRenderingContext2D | null = $state(null);
 	let width = $state(0);
@@ -25,7 +27,7 @@
 		d3.extent(nodes.map((node: { shared_articles: [] }) => node['shared_articles'].length))
 	);
 	const coverageScale = $derived(
-		d3.scaleSequential().range(['#D9E5FF', '#0036AC']).domain(colorDomain)
+		d3.scaleSequential().range([lightAccentHex, darkAccentHex]).domain(dataDomain)
 	);
 
 	$effect(() => {
