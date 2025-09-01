@@ -8,7 +8,7 @@
 	import { extent } from 'd3-array';
 	let { data, onMounted = () => {} } = $props();
 	const outlets = ['zeit', 'nyt'];
-	const selectedOutlet = $derived(outlets[0]);
+	let selectedOutlet = $state(outlets[0]);
 
 	// The first dropdown lets the user
 	// select the primary country for analysis
@@ -117,7 +117,7 @@
 </script>
 
 <div class="flex w-full">
-	<div class="mr-10">
+	<div class="mr-10 w-2/3 bg-yellow-100">
 		<div class="mt-4 border-b">
 			<h5>
 				What other countries share coverage with
@@ -128,17 +128,36 @@
 			</h5>
 		</div>
 		<div>
-			<p>
+			<!-- <p>
 				The two networks visualizations show the coverage directly shared between {primaryCountryKey}
 				and other countries. Interact with the nodes to see how coutries are connected with each other
 				in relation to {primaryCountryKey}. Use the dropdown menu above to switch primary country.
-			</p>
+			</p> -->
 		</div>
+	</div>
+	<div class="mr-10 w-1/3 bg-green-100">
+		<div class="mt-4 border-b">Legend</div>
 	</div>
 </div>
 {#if primaryCountryKey}
 	{#if selectedOutlet}
-		<div>
+		<div class="w-full">
+			<div class="flex w-full justify-end bg-yellow-100">
+				<div class="m-2">
+					<button
+						onclick={() => {
+							selectedOutlet = outlets[0];
+						}}>Zeit</button
+					>
+				</div>
+				<div class="m-2">
+					<button
+						onclick={() => {
+							selectedOutlet = outlets[1];
+						}}>The New York Times</button
+					>
+				</div>
+			</div>
 			<NetworkMap
 				nodes={nodes[selectedOutlet]}
 				links={links[selectedOutlet]}

@@ -56,14 +56,6 @@
 					(context.strokeStyle = darkIvoryHex),
 					(context.lineWidth = 0.1);
 				context.stroke();
-				context.beginPath(),
-					path(outline),
-					context.clip(),
-					(context.strokeStyle = darkIvoryHex),
-					(context.lineWidth = 2),
-					(context.fillStyle = 'transparent'),
-					context.stroke();
-				context.fillRect(0, 0, width, height);
 
 				World.features.map((feature) => {
 					nodes.map((node: { iso: string; shared_articles: [] }) => {
@@ -86,13 +78,21 @@
 					(context.lineWidth = 0.5),
 					context.fill(),
 					context.stroke();
+
+				context.beginPath(),
+					path(outline),
+					context.clip(),
+					(context.strokeStyle = darkIvoryHex),
+					(context.lineWidth = 2),
+					(context.fillStyle = 'transparent'),
+					context.stroke();
 			}
 		}
 	});
 </script>
 
 <div class="flex">
-	<div class="w-1/3 bg-red-100">Titles card</div>
+	<div class="mr-2 w-1/3 rounded-xl border bg-red-100">Titles card</div>
 	<div class="h-150 w-2/3" bind:clientWidth={width} bind:clientHeight={height}>
 		<canvas bind:this={canvas} {width} {height}></canvas>
 	</div>
