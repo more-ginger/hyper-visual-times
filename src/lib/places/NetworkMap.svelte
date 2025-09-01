@@ -26,6 +26,37 @@
 		d3.scaleSequential().range([lightAccentHex, darkAccentHex]).domain(dataDomain)
 	);
 
+	const sourceTargetCoordinates = $derived(
+		links.map((link: { source_iso: string; target_iso: string }) => {
+			const sourceFeature = World.features.find(
+				(feature) => feature.properties.adm0_iso === link.source_iso
+			);
+
+			const targetFeature = World.features.find(
+				(feature) => feature.properties.adm0_iso === link.target_iso
+			);
+
+			const sourceCentroidCoords = [
+				sourceFeature?.properties.label_x,
+				sourceFeature?.properties.label_y
+			];
+			const targetCentroidCoords = [
+				targetFeature?.properties.label_x,
+				targetFeature?.properties.label_y
+			];
+
+			return {
+				type: 'LineString',
+				coordinates: [sourceCentroidCoords, targetCentroidCoords],
+				priority: link.priority,
+				weight: link.weight
+			};
+		})
+	);
+
+	const linkWeightDomain = $derived(d3.extent(sourceTargetCoordinates.map((link) => link.weight)));
+	const linkWeightScale = $derived(d3.scaleLinear().domain(linkWeightDomain).range([0.5, 5]));
+
 	$effect(() => {
 		if (canvas) {
 			context = canvas.getContext('2d');
@@ -51,13 +82,19 @@
 				context.scale(dpi, dpi);
 				context.beginPath(),
 					path(graticule),
-					(context.strokeStyle = darkIvoryHex),
-					(context.lineWidth = 0.1);
+					(context.strokeStyle = 'white'),
+					(context.lineWidth = 1);
 				context.stroke();
+
+				context.beginPath(),
+					path(World),
+					(context.strokeStyle = darkIvoryHex),
+					(context.fillStyle = 'white'),
+					context.fill();
 
 				World.features.map((feature) => {
 					nodes.map((node: { iso: string; shared_articles: [] }) => {
-						if (node.iso === feature.properties.adm0_iso) {
+						if (node.iso === feature.properties.adm0_iso && context) {
 							context.beginPath(),
 								path(feature.geometry),
 								(context.fillStyle =
@@ -69,9 +106,17 @@
 					});
 				});
 
+				sourceTargetCoordinates.map((line) => {
+					console.log(line.priority);
+					context?.beginPath(),
+						(context.lineWidth = line.priority === 0 ? 0.00001 : linkWeightScale(line.weight)),
+						(context.strokeStyle = '#0036AC');
+					path(line), context?.stroke();
+				});
+
 				context.beginPath(),
 					path(World),
-					(context.strokeStyle = darkIvoryHex),
+					(context.strokeStyle = darkAccentHex),
 					(context.fillStyle = 'transparent'),
 					(context.lineWidth = 0.5),
 					context.fill(),
@@ -80,8 +125,8 @@
 				context.beginPath(),
 					path(outline),
 					context.clip(),
-					(context.strokeStyle = darkIvoryHex),
-					(context.lineWidth = 2),
+					(context.strokeStyle = darkAccentHex),
+					(context.lineWidth = 5),
 					(context.fillStyle = 'transparent'),
 					context.stroke();
 			}
@@ -91,7 +136,7 @@
 
 <div class="flex">
 	<div class="mr-2 w-1/3 rounded-xl border bg-red-100">Titles card</div>
-	<div class="h-150 w-2/3" bind:clientWidth={width} bind:clientHeight={height}>
+	<div class="h-150 w-2/3 rounded-xl" bind:clientWidth={width} bind:clientHeight={height}>
 		<canvas bind:this={canvas} {width} {height}></canvas>
 	</div>
 </div>

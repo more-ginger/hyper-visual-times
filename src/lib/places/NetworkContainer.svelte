@@ -100,6 +100,8 @@
 							linksArray.push({
 								source: nodesOutlet[i].country,
 								target: nodesOutlet[j].country,
+								source_iso: nodesOutlet[i].iso,
+								target_iso: nodesOutlet[j].iso,
 								weight: countOverlap(idsA, idsB),
 								priority: nodesOutlet[i].country === primaryCountryKey ? 1 : 0
 							});
