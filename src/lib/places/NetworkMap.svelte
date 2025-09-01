@@ -4,16 +4,29 @@
 	import World from '../../content/data/places/world.json';
 
 	const { nodes, links, selectedOutlet, primaryCountryKey } = $props();
+	const darkIvoryHex = '#82561b';
 	let canvas: HTMLCanvasElement | null = $state(null);
 	let context: CanvasRenderingContext2D | null = $state(null);
 	let width = $state(0);
 	let height = $state(0);
+	let dpi = 1;
 
 	let projection = $derived(d3.geoNaturalEarth1());
 	let path = $derived(d3.geoPath(projection, context));
-	let dpi = 1;
 	let graticule = d3.geoGraticule10();
 	let outline = { type: 'Sphere' };
+
+	let primaryCountryNode = $derived(
+		nodes.find((d: { country: string }) => d.country == primaryCountryKey)
+	);
+	$inspect(primaryCountryNode);
+
+	const colorDomain = $derived(
+		d3.extent(nodes.map((node: { shared_articles: [] }) => node['shared_articles'].length))
+	);
+	const coverageScale = $derived(
+		d3.scaleSequential().range(['#D9E5FF', '#0036AC']).domain(colorDomain)
+	);
 
 	$effect(() => {
 		if (canvas) {
@@ -27,7 +40,6 @@
 			canvas.height = canvas.offsetHeight * dpi;
 			width = canvas.offsetWidth * dpi;
 			height = canvas.offsetHeight * dpi;
-			const positioningFactor = dpi > 1 ? 4 : 2;
 
 			projection.fitExtent(
 				[
@@ -39,18 +51,39 @@
 
 			if (context) {
 				context.scale(dpi, dpi);
-				context.beginPath(), path(graticule), (context.strokeStyle = '#ccc'), context.stroke();
+				context.beginPath(),
+					path(graticule),
+					(context.strokeStyle = darkIvoryHex),
+					(context.lineWidth = 0.1);
+				context.stroke();
 				context.beginPath(),
 					path(outline),
 					context.clip(),
-					(context.strokeStyle = '#000'),
+					(context.strokeStyle = darkIvoryHex),
+					(context.lineWidth = 2),
 					(context.fillStyle = 'transparent'),
 					context.stroke();
 				context.fillRect(0, 0, width, height);
+
+				World.features.map((feature) => {
+					nodes.map((node: { iso: string; shared_articles: [] }) => {
+						if (node.iso === feature.properties.adm0_iso) {
+							context.beginPath(),
+								path(feature.geometry),
+								(context.fillStyle =
+									primaryCountryNode.iso === feature.properties.adm0_iso
+										? 'red'
+										: coverageScale(node['shared_articles'].length)),
+								context.fill();
+						}
+					});
+				});
+
 				context.beginPath(),
 					path(World),
-					(context.strokeStyle = '#000'),
+					(context.strokeStyle = darkIvoryHex),
 					(context.fillStyle = 'transparent'),
+					(context.lineWidth = 0.5),
 					context.fill(),
 					context.stroke();
 			}
