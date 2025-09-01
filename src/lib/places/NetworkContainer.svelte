@@ -2,11 +2,13 @@
 	import type { countryDataForComparison } from '../../types';
 	import { onMount } from 'svelte';
 	import Dropdown from '$lib/common/Dropdown.svelte';
+	import NetworkMap from './NetworkMap.svelte';
 	import Network from './Network.svelte';
 	// @ts-expect-error
 	import { extent } from 'd3-array';
 	let { data, onMounted = () => {} } = $props();
 	const outlets = ['zeit', 'nyt'];
+	const selectedOutlet = $derived(outlets[0]);
 
 	// The first dropdown lets the user
 	// select the primary country for analysis
@@ -135,7 +137,17 @@
 	</div>
 </div>
 {#if primaryCountryKey}
-	<div class="flex">
+	{#if selectedOutlet}
+		<div>
+			<NetworkMap
+				nodes={nodes[selectedOutlet]}
+				links={links[selectedOutlet]}
+				{selectedOutlet}
+				{primaryCountryKey}
+			/>
+		</div>
+	{/if}
+	<!-- <div class="flex">
 		{#each outlets as outlet}
 			<div class="w-1/2">
 				<Network
@@ -147,5 +159,5 @@
 				/>
 			</div>
 		{/each}
-	</div>
+	</div> -->
 {/if}
