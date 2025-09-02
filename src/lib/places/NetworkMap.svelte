@@ -13,11 +13,18 @@
 	let height = $state(0);
 	let dpi = 1;
 
-	let projection = $state(d3.geoNaturalEarth1());
+	let projection = $state(
+		d3
+			.geoNaturalEarth1()
+			.scale(1 / (2 * Math.PI))
+			.translate([0, 0])
+	);
 	let path = $derived(d3.geoPath(projection, context));
 	let graticule = d3.geoGraticule10();
 	let outline = { type: 'Sphere' };
-	let baseScale = $state(projection.scale());
+
+	const initialScale = 1000;
+	const initialCenter = [0, 0];
 
 	let primaryCountryNode = $derived(
 		nodes.find((d: { country: string }) => d.country == primaryCountryKey)
@@ -137,13 +144,9 @@
 			context.save();
 
 			if (transform) {
-				// context.translate(transform.x, transform.y);
-				// context.scale(transform.k, transform.k);
-
+				console.log(transform);
 				// Update projection with smooth transform
-				projection
-					.scale(baseScale * transform.k)
-					.translate([transform.x + width / 4, transform.y + height / 4]);
+				projection.scale(transform.k / (2 * Math.PI));
 
 				renderCanvasContent();
 			}
@@ -165,25 +168,23 @@
 			width = canvas.offsetWidth * dpi;
 			height = canvas.offsetHeight * dpi;
 
-			projection.fitExtent(
-				[
-					[10, 0],
-					[width / 2 - 10, height / 2]
-				],
-				World
-			);
+			// projection.fitExtent(
+			// 	[
+			// 		[10, 10],
+			// 		[canvas.offsetWidth - 10, canvas.offsetHeight]
+			// 	],
+			// 	World
+			// );
 
 			// Store the base scale after fitting the extent
-			baseScale = projection.scale();
-			console.log(baseScale);
 
 			// Set initial translation
 			projection.translate([width / 4, height / 4]);
 
 			const zoom = d3
 				.zoom()
-				.scaleExtent([0.5, baseScale])
-				.translateExtent([
+				.scaleExtent([1000, 100000])
+				.extent([
 					[0, 0],
 					[width, height]
 				])
@@ -192,7 +193,17 @@
 			if (context) {
 				context.scale(dpi, dpi);
 				renderCanvasContent();
-				d3.select(canvas).call(zoom).call(zoom.transform, d3.zoomIdentity);
+
+				d3.select(canvas)
+					.call(zoom)
+					.call(
+						zoom.transform,
+						d3.zoomIdentity
+							.translate(width / 2, height / 2)
+							.scale(-initialScale)
+							.translate(...projection(initialCenter))
+							.scale(-1)
+					);
 			}
 		}
 	});
