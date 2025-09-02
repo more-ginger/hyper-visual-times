@@ -3,7 +3,6 @@
 	import { onMount } from 'svelte';
 	import Dropdown from '$lib/common/Dropdown.svelte';
 	import NetworkMap from './NetworkMap.svelte';
-	import Network from './Network.svelte';
 	// @ts-expect-error
 	import { extent } from 'd3-array';
 	let { data, onMounted = () => {} } = $props();
@@ -24,7 +23,7 @@
 	);
 
 	// Set the primary country to calc overlaps
-	let primaryCountry = dropdownData.find((d: { key: string }) => d.key == 'United Kingdom');
+	let primaryCountry = dropdownData.find((d: { key: string }) => d.key == 'Germany');
 	let primaryCountryKey = $state(primaryCountry.key);
 
 	let nodes = $derived.by(() => {
@@ -171,7 +170,6 @@
 				links={links[selectedOutlet]}
 				{selectedOutlet}
 				{primaryCountryKey}
-				{dataDomain}
 			/>
 		</div>
 	{/if}
