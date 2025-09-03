@@ -10,10 +10,13 @@
 	};
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
-	let { node, feature, projection, primaryCountryKey, colors, onFeaturesDraw } = $props();
+	let { node, feature, projection, borderProjection, primaryCountryKey, colors, onFeaturesDraw } =
+		$props();
+	let outline = { type: 'Sphere' };
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
 
 	const geoPathGenerator = $derived(d3.geoPath(projection, localCtx));
+	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
 	const centroid = $derived(geoPathGenerator.centroid(feature));
 
 	function determinePrimaryCountryCentroid() {
@@ -26,6 +29,12 @@
 
 	function draw(ctx: CanvasRenderingContext2D) {
 		localCtx = ctx;
+
+		ctx.beginPath(),
+			borderPathGenerator(outline),
+			ctx.clip(),
+			(ctx.fillStyle = 'transparent'),
+			ctx.stroke();
 
 		if (node.country === primaryCountryKey) {
 			ctx.beginPath(), geoPathGenerator(feature), (ctx.fillStyle = 'red'), ctx.fill();

@@ -10,17 +10,16 @@
 	};
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
-	let { World, projection, w, h, feature = undefined, colors = undefined } = $props();
+	let {
+		World,
+		projection,
+		borderProjection,
+		w,
+		h,
+		feature = undefined,
+		colors = undefined
+	} = $props();
 	let outline = { type: 'Sphere' };
-
-	let borderProjection = $derived(
-		d3
-			.geoNaturalEarth1()
-			.fitSize([w, h], World)
-			.scale(w / 6)
-			.center([0, 0])
-			.translate([w / 2, h / 2])
-	);
 
 	function draw(ctx: CanvasRenderingContext2D) {
 		const geoPathGenerator = d3.geoPath(projection, ctx);

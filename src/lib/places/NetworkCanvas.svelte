@@ -11,7 +11,7 @@
 	let w = $state(0);
 	let h = $state(0);
 	let initCenter = $state([0, 0]);
-	let initScale = $state(1900);
+	let initScale = $state(0);
 	let initTranslate = $state([0, 0]);
 	let newCenter = $state([0, 0]);
 
@@ -27,7 +27,22 @@
 			.translate(initTranslate)
 	);
 
-	function testCenterMap() {
+	let borderProjection = $derived(
+		d3
+			.geoNaturalEarth1()
+			.fitSize([w, h], World)
+			.scale(w / 6)
+			.center([0, 0])
+			.translate([w / 2, h / 2])
+	);
+
+	function revertZoom() {
+		initCenter = [0, 0];
+		initScale = w / 6;
+		initTranslate = [w / 2, h / 2];
+	}
+
+	function zoomToCountry() {
 		initCenter = newCenter;
 		initScale = w / 3;
 	}
@@ -50,10 +65,8 @@
 	});
 
 	$effect(() => {
-		$inspect(newCenter);
 		if (newCenter) {
-			initCenter = newCenter;
-			initScale = w / 3;
+			zoomToCountry();
 		}
 	});
 </script>
@@ -61,16 +74,22 @@
 <div class="relative">
 	<button
 		onclick={() => {
-			testCenterMap();
-		}}>Center</button
+			revertZoom();
+		}}>Zoom out</button
 	>
-	<div class="h-150 w-full rounded-xl" bind:clientWidth={w} bind:clientHeight={h}>
+	<button
+		onclick={() => {
+			zoomToCountry();
+		}}>Zoom to country</button
+	>
+	<div class="h-120 w-full rounded-xl" bind:clientWidth={w} bind:clientHeight={h}>
 		<Canvas {w} {h} contextName={'map'}>
 			{#each nodes as node}
 				<CountryDot
 					{node}
 					feature={extractCurrentFeature(node)}
 					{projection}
+					{borderProjection}
 					{primaryCountryKey}
 					colors={{ darkAccentHex, lightAccentHex }}
 					{onFeaturesDraw}
@@ -78,13 +97,21 @@
 				<Map
 					{World}
 					{projection}
+					{borderProjection}
 					{w}
 					{h}
 					feature={extractCurrentFeature(node)}
 					colors={{ darkAccentHex, lightAccentHex }}
 				/>
 			{/each}
-			<Map {World} {projection} {w} {h} colors={{ darkAccentHex, lightAccentHex }} />
+			<Map
+				{World}
+				{projection}
+				{borderProjection}
+				{w}
+				{h}
+				colors={{ darkAccentHex, lightAccentHex }}
+			/>
 		</Canvas>
 	</div>
 </div>
