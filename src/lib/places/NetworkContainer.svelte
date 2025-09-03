@@ -2,7 +2,7 @@
 	import type { countryDataForComparison } from '../../types';
 	import { onMount } from 'svelte';
 	import Dropdown from '$lib/common/Dropdown.svelte';
-	import NetworkMap from './NetworkMap.svelte';
+	import NetworkCanvas from './NetworkCanvas.svelte';
 	// @ts-expect-error
 	import { extent } from 'd3-array';
 	let { data, onMounted = () => {} } = $props();
@@ -40,6 +40,11 @@
 					const aArticles = new Set(a[`ids_of_articles_${outlet}`]);
 					const bArticles = new Set(b[`ids_of_articles_${outlet}`]);
 					const shared_articles = [...aArticles].filter((k) => bArticles.has(k));
+
+					const aKeywords = a[`keywords_${outlet}`];
+					const bKeywords = b[`keywords_${outlet}`];
+					//const sharedKeywords = [...aKeywords].filter((k) => bKeywords.has(k));
+					//console.log(aArticles, aKeywords);
 
 					if (shared_articles.length > 0) {
 						b.priority = 0;
@@ -121,7 +126,7 @@
 </script>
 
 <div class="flex w-full">
-	<div class="mr-10 w-2/3 bg-yellow-100">
+	<div class="mr-10 w-2/3">
 		<div class="mt-4 border-b">
 			<h5>
 				What other countries share coverage with
@@ -138,9 +143,6 @@
 				in relation to {primaryCountryKey}. Use the dropdown menu above to switch primary country.
 			</p> -->
 		</div>
-	</div>
-	<div class="mr-10 w-1/3 bg-green-100">
-		<div class="mt-4 border-b">Legend</div>
 	</div>
 </div>
 {#if primaryCountryKey}
@@ -165,12 +167,20 @@
 					>
 				</div>
 			</div>
-			<NetworkMap
+			<div class="w-full">
+				<NetworkCanvas
+					nodes={nodes[selectedOutlet]}
+					links={links[selectedOutlet]}
+					{selectedOutlet}
+					{primaryCountryKey}
+				/>
+			</div>
+			<!-- <NetworkMap
 				nodes={nodes[selectedOutlet]}
 				links={links[selectedOutlet]}
 				{selectedOutlet}
 				{primaryCountryKey}
-			/>
+			/> -->
 		</div>
 	{/if}
 	<!-- <div class="flex">
