@@ -10,18 +10,8 @@
 	};
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
-	let { World, initTranslate, initScale, initCenter, w, h } = $props();
-	let graticule = d3.geoGraticule10();
+	let { World, projection, w, h, feature = undefined, colors = undefined } = $props();
 	let outline = { type: 'Sphere' };
-
-	let projection = $derived(
-		d3
-			.geoNaturalEarth1()
-			.fitSize([w, h], World)
-			.scale(initScale)
-			.center(initCenter)
-			.translate(initTranslate)
-	);
 
 	let borderProjection = $derived(
 		d3
@@ -35,27 +25,26 @@
 	function draw(ctx: CanvasRenderingContext2D) {
 		const geoPathGenerator = d3.geoPath(projection, ctx);
 		const borderPathGenerator = d3.geoPath(borderProjection, ctx);
+
 		ctx.beginPath(),
 			borderPathGenerator(outline),
 			ctx.clip(),
-			(ctx.strokeStyle = 'black'),
-			(ctx.lineWidth = 5),
+			(ctx.strokeStyle = colors.darkAccentHex),
+			(ctx.lineWidth = 2),
 			(ctx.fillStyle = 'transparent'),
 			ctx.stroke();
 
 		ctx.beginPath(),
 			geoPathGenerator(World),
-			(ctx.strokeStyle = 'black'),
+			(ctx.strokeStyle = colors.darkAccentHex),
 			(ctx.lineWidth = 0.5),
-			(ctx.fillStyle = 'white'),
 			ctx.stroke();
-		ctx.fill();
 
 		ctx.beginPath(),
 			borderPathGenerator(outline),
 			ctx.clip(),
-			(ctx.strokeStyle = 'black'),
-			(ctx.lineWidth = 5),
+			(ctx.strokeStyle = colors.darkAccentHex),
+			(ctx.lineWidth = 2),
 			(ctx.fillStyle = 'transparent'),
 			ctx.stroke();
 	}

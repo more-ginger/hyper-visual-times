@@ -56,7 +56,6 @@
 			drawFunctions.splice(drawFunctions.indexOf(fn), 1);
 		},
 		invalidate() {
-			console.log('run invalidate');
 			if (pendingInvalidation) return;
 			pendingInvalidation = true;
 			frameId = requestAnimationFrame(update);
@@ -70,6 +69,6 @@
 	});
 </script>
 
-<canvas bind:this={canvas} class="bg-red-100">
+<canvas bind:this={canvas}>
 	{@render children?.()}
 </canvas>
