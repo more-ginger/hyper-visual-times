@@ -14,6 +14,7 @@
 		World,
 		projection,
 		borderProjection,
+		primaryCountryKey,
 		w,
 		h,
 		feature = undefined,
@@ -25,27 +26,26 @@
 		const geoPathGenerator = d3.geoPath(projection, ctx);
 		const borderPathGenerator = d3.geoPath(borderProjection, ctx);
 
-		ctx.beginPath(),
-			borderPathGenerator(outline),
-			ctx.clip(),
-			(ctx.strokeStyle = colors.darkAccentHex),
-			(ctx.lineWidth = 2),
-			(ctx.fillStyle = 'transparent'),
-			ctx.stroke();
+		ctx.beginPath(), borderPathGenerator(outline);
+		ctx.clip();
+		ctx.strokeStyle = colors.darkAccentHex;
+		ctx.lineWidth = 2;
+		ctx.fillStyle = 'transparent';
+		ctx.stroke();
 
-		ctx.beginPath(),
-			geoPathGenerator(World),
-			(ctx.strokeStyle = colors.darkAccentHex),
-			(ctx.lineWidth = 0.5),
-			ctx.stroke();
+		ctx.beginPath();
+		geoPathGenerator(World);
+		ctx.strokeStyle = colors.darkAccentHex;
+		ctx.lineWidth = 0.7;
+		ctx.stroke();
 
-		ctx.beginPath(),
-			borderPathGenerator(outline),
-			ctx.clip(),
-			(ctx.strokeStyle = colors.darkAccentHex),
-			(ctx.lineWidth = 2),
-			(ctx.fillStyle = 'transparent'),
-			ctx.stroke();
+		ctx.beginPath();
+		borderPathGenerator(outline);
+		ctx.clip();
+		ctx.strokeStyle = colors.darkAccentHex;
+		ctx.lineWidth = 2;
+		ctx.fillStyle = 'transparent';
+		ctx.stroke();
 	}
 
 	onMount(() => {
@@ -58,7 +58,7 @@
 	});
 
 	$effect(() => {
-		if (projection) {
+		if (projection || primaryCountryKey) {
 			invalidate();
 		}
 	});

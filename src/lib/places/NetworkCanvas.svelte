@@ -5,7 +5,9 @@
 	import Canvas from '$lib/places/canvas/Canvas.svelte';
 	import Map from '$lib/places/canvas/Map.svelte';
 	import World from '../../content/data/places/world.json';
-	import CountryDot from './canvas/CountryDot.svelte';
+	import CountryDot from './canvas/CountryFeature.svelte';
+	import LinkBetweenCountries from './canvas/LinkBetweenCountries.svelte';
+	import { tick } from 'svelte';
 
 	const { nodes, links, selectedOutlet, primaryCountryKey } = $props();
 	let w = $state(0);
@@ -17,6 +19,9 @@
 
 	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
+
+	const linkWeightDomain = $derived(d3.extent(links.map((link) => link.weight)));
+	const linksMode = $derived(d3.mode(links.map((link) => link.weight)));
 
 	let projection = $derived(
 		d3
@@ -44,12 +49,12 @@
 
 	function zoomToCountry() {
 		initCenter = newCenter;
-		initScale = w / 3;
+		initScale = w / 2;
 	}
 
-	function extractCurrentFeature(node: { iso: string }) {
+	function extractCurrentFeature(iso: string) {
 		const currentNodeFeature = World.features.find((feature) => {
-			return feature.properties.adm0_iso === node.iso;
+			return feature.properties.adm0_iso === iso;
 		});
 
 		return currentNodeFeature;
@@ -72,46 +77,80 @@
 </script>
 
 <div class="relative">
-	<button
-		onclick={() => {
-			revertZoom();
-		}}>Zoom out</button
-	>
-	<button
-		onclick={() => {
-			zoomToCountry();
-		}}>Zoom to country</button
-	>
-	<div class="h-120 w-full rounded-xl" bind:clientWidth={w} bind:clientHeight={h}>
+	<div class="h-150 w-full rounded-xl" bind:clientWidth={w} bind:clientHeight={h}>
 		<Canvas {w} {h} contextName={'map'}>
-			{#each nodes as node}
-				<CountryDot
-					{node}
-					feature={extractCurrentFeature(node)}
-					{projection}
-					{borderProjection}
-					{primaryCountryKey}
-					colors={{ darkAccentHex, lightAccentHex }}
-					{onFeaturesDraw}
-				/>
-				<Map
-					{World}
-					{projection}
-					{borderProjection}
-					{w}
-					{h}
-					feature={extractCurrentFeature(node)}
-					colors={{ darkAccentHex, lightAccentHex }}
-				/>
-			{/each}
 			<Map
 				{World}
 				{projection}
 				{borderProjection}
 				{w}
 				{h}
+				{primaryCountryKey}
 				colors={{ darkAccentHex, lightAccentHex }}
 			/>
+			{#each nodes as node}
+				<Map
+					{World}
+					{projection}
+					{borderProjection}
+					{w}
+					{h}
+					{primaryCountryKey}
+					feature={extractCurrentFeature(node.iso)}
+					colors={{ darkAccentHex, lightAccentHex }}
+				/>
+				<CountryDot
+					{node}
+					feature={extractCurrentFeature(node.iso)}
+					{projection}
+					{borderProjection}
+					{primaryCountryKey}
+					colors={{ darkAccentHex, lightAccentHex }}
+					{onFeaturesDraw}
+				/>
+			{/each}
+
+			{#each links as link}
+				<LinkBetweenCountries
+					{link}
+					{projection}
+					{borderProjection}
+					sfeature={extractCurrentFeature(link.source_iso)}
+					tfeature={extractCurrentFeature(link.target_iso)}
+					{linkWeightDomain}
+					colors={{ darkAccentHex, lightAccentHex }}
+				/>
+			{/each}
 		</Canvas>
+	</div>
+	<div class="absolute bottom-0 h-100 w-80">
+		<div class="mb-2">
+			<button
+				class="bg-ivory-default"
+				onclick={() => {
+					revertZoom();
+				}}>Zoom out</button
+			>
+			<button
+				class="bg-ivory-default"
+				onclick={() => {
+					zoomToCountry();
+				}}>Zoom to country</button
+			>
+		</div>
+		<div class="bg-ivory-default border-ivory-dark h-full rounded-xl border">
+			<div class="h-14 border-b">
+				<p class="m-2">
+					Countries sharing coverage with {primaryCountryKey} in {selectedOutlet}
+				</p>
+			</div>
+			<div class="h-83 overflow-scroll p-2">
+				{#each nodes as node}
+					{#if node.country !== primaryCountryKey}
+						<div>{node.country}</div>
+					{/if}
+				{/each}
+			</div>
+		</div>
 	</div>
 </div>

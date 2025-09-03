@@ -126,8 +126,8 @@
 </script>
 
 <div class="flex w-full">
-	<div class="mr-10 w-2/3">
-		<div class="mt-4 border-b">
+	<div class="mr-10 flex w-full justify-between">
+		<div>
 			<h5>
 				What other countries share coverage with
 				<span>
@@ -137,18 +137,7 @@
 			</h5>
 		</div>
 		<div>
-			<!-- <p>
-				The two networks visualizations show the coverage directly shared between {primaryCountryKey}
-				and other countries. Interact with the nodes to see how coutries are connected with each other
-				in relation to {primaryCountryKey}. Use the dropdown menu above to switch primary country.
-			</p> -->
-		</div>
-	</div>
-</div>
-{#if primaryCountryKey}
-	{#if selectedOutlet}
-		<div class="w-full">
-			<div class="flex w-full justify-end">
+			<div class="flex justify-end">
 				<div class="m-2">
 					<button
 						class={selectedOutlet === outlets[0] ? `bg-zeit-light` : `bg-default`}
@@ -167,6 +156,12 @@
 					>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+{#if primaryCountryKey}
+	{#if selectedOutlet}
+		<div class="w-full">
 			<div class="w-full">
 				<NetworkCanvas
 					nodes={nodes[selectedOutlet]}
@@ -175,25 +170,6 @@
 					{primaryCountryKey}
 				/>
 			</div>
-			<!-- <NetworkMap
-				nodes={nodes[selectedOutlet]}
-				links={links[selectedOutlet]}
-				{selectedOutlet}
-				{primaryCountryKey}
-			/> -->
 		</div>
 	{/if}
-	<!-- <div class="flex">
-		{#each outlets as outlet}
-			<div class="w-1/2">
-				<Network
-					nodes={nodes[outlet]}
-					links={links[outlet]}
-					{outlet}
-					{dataDomain}
-					{primaryCountryKey}
-				/>
-			</div>
-		{/each}
-	</div> -->
 {/if}

@@ -2,12 +2,7 @@
 	// @ts-expect-error
 	import * as d3 from 'd3';
 	import { getContext, onDestroy, onMount } from 'svelte';
-
-	type MapContext = {
-		register: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
-		deregister: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
-		invalidate: () => void;
-	};
+	import type { MapContext } from '../../../types';
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
 	let { node, feature, projection, borderProjection, primaryCountryKey, colors, onFeaturesDraw } =
@@ -30,28 +25,25 @@
 	function draw(ctx: CanvasRenderingContext2D) {
 		localCtx = ctx;
 
-		ctx.beginPath(),
-			borderPathGenerator(outline),
-			ctx.clip(),
-			(ctx.fillStyle = 'transparent'),
-			ctx.stroke();
+		ctx.beginPath(), borderPathGenerator(outline);
+		ctx.clip();
+		ctx.fillStyle = 'transparent';
+		ctx.stroke();
 
 		if (node.country === primaryCountryKey) {
-			ctx.beginPath(), geoPathGenerator(feature), (ctx.fillStyle = 'red'), ctx.fill();
-		} else {
-			ctx.beginPath(),
-				geoPathGenerator(feature),
-				(ctx.fillStyle = colors.lightAccentHex),
-				ctx.fill();
-		}
+			ctx.beginPath();
+			geoPathGenerator(feature);
+			ctx.fillStyle = colors.lightAccentHex;
+			ctx.fill();
 
-		ctx.translate(centroid[0], centroid[1]);
-		ctx.beginPath(),
-			ctx.arc(0, 0, 2, 0, 2 * Math.PI),
-			(ctx.fillStyle = colors.darkAccentHex),
-			ctx.fill(),
-			(ctx.strokeStyle = 'white'),
-			ctx.stroke();
+			//const selectedCountryCentroid = geoPathGenerator(feature);
+
+			ctx.translate(centroid[0], centroid[1]);
+			ctx.beginPath();
+			ctx.arc(0, 0, 3, 0, Math.PI * 2);
+			ctx.fillStyle = colors.darkAccentHex;
+			ctx.fill();
+		}
 	}
 
 	onMount(() => {
