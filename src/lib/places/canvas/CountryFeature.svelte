@@ -12,7 +12,9 @@
 
 	const geoPathGenerator = $derived(d3.geoPath(projection, localCtx));
 	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
-	const centroid = $derived(geoPathGenerator.centroid(feature));
+	const centroid = $derived(
+		feature ? projection([feature.properties.label_x, feature.properties.label_y]) : [0, 0]
+	);
 
 	function determinePrimaryCountryCentroid() {
 		if (node.country === primaryCountryKey) {
@@ -31,18 +33,39 @@
 		ctx.stroke();
 
 		if (node.country === primaryCountryKey) {
-			ctx.beginPath();
-			geoPathGenerator(feature);
-			ctx.fillStyle = colors.lightAccentHex;
-			ctx.fill();
-
 			//const selectedCountryCentroid = geoPathGenerator(feature);
 
 			ctx.translate(centroid[0], centroid[1]);
 			ctx.beginPath();
-			ctx.arc(0, 0, 3, 0, Math.PI * 2);
-			ctx.fillStyle = colors.darkAccentHex;
-			ctx.fill();
+			ctx.arc(0, 0, 10, 0, Math.PI * 2);
+			ctx.strokeStyle = 'red';
+			ctx.stroke();
+
+			if (projection.scale() > 400) {
+				//ctx.translate(centroid[0], centroid[1]);
+				const txt = node.country;
+
+				const metrics = ctx.measureText(txt);
+				const width = metrics.width;
+				const fontHeight = metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
+
+				ctx.fillStyle = 'white';
+				ctx.strokeStyle = colors.darkAccentHex;
+				ctx.lineWidth = 2;
+				ctx.beginPath();
+				ctx.roundRect(
+					-width / 2 - 4,
+					-fontHeight - metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent - 4.5,
+					width + 8,
+					fontHeight + 6,
+					20
+				);
+				ctx.stroke();
+				ctx.fill();
+
+				ctx.fillStyle = colors.darkAccentHex;
+				ctx.fillText(txt, -width / 2, -fontHeight);
+			}
 		}
 	}
 

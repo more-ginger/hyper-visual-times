@@ -14,7 +14,9 @@
 	const geoPathGenerator = $derived(d3.geoPath(projection, localCtx));
 	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
 
-	const sourceCentroid = $derived(geoPathGenerator.centroid(sfeature));
+	const sourceCentroid = $derived(
+		sfeature ? projection([sfeature.properties.label_x, sfeature.properties.label_y]) : [0, 0]
+	);
 	const targetCentroid = $derived(
 		tfeature ? projection([tfeature.properties.label_x, tfeature.properties.label_y]) : [0, 0]
 	);

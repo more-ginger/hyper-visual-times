@@ -6,20 +6,16 @@
 	type MapContext = {
 		register: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
 		deregister: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
+		transition: (
+			duration: number,
+			onUpdate: (progress: number) => void,
+			onComplete?: (progress: number) => void
+		) => void;
 		invalidate: () => void;
 	};
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
-	let {
-		World,
-		projection,
-		borderProjection,
-		primaryCountryKey,
-		w,
-		h,
-		feature = undefined,
-		colors = undefined
-	} = $props();
+	let { World, projection, borderProjection, primaryCountryKey, colors = undefined } = $props();
 	let outline = { type: 'Sphere' };
 
 	function draw(ctx: CanvasRenderingContext2D) {
@@ -48,8 +44,25 @@
 		ctx.stroke();
 	}
 
+	// boiler plate for in-canvas transition
+	// function animateCircle() {
+	// 	transition(
+	// 		1000,
+	// 		(progress) => {
+	// 			const eased = -Math.cos(progress * Math.PI) / 2 + 0.5;
+	// 			x = eased * 200;
+	// 			y = eased * 200;
+	// 			invalidate();
+	// 		},
+	// 		() => {
+	// 			console.log('Animation Complete');
+	// 		}
+	// 	);
+	// }
+
 	onMount(() => {
 		register(draw);
+		//animateCircle();
 		invalidate();
 	});
 

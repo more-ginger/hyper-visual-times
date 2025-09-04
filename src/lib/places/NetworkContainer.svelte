@@ -23,7 +23,7 @@
 	);
 
 	// Set the primary country to calc overlaps
-	let primaryCountry = dropdownData.find((d: { key: string }) => d.key == 'Germany');
+	let primaryCountry = dropdownData.find((d: { key: string }) => d.key == 'Japan');
 	let primaryCountryKey = $state(primaryCountry.key);
 
 	let nodes = $derived.by(() => {
@@ -40,11 +40,6 @@
 					const aArticles = new Set(a[`ids_of_articles_${outlet}`]);
 					const bArticles = new Set(b[`ids_of_articles_${outlet}`]);
 					const shared_articles = [...aArticles].filter((k) => bArticles.has(k));
-
-					const aKeywords = a[`keywords_${outlet}`];
-					const bKeywords = b[`keywords_${outlet}`];
-					//const sharedKeywords = [...aKeywords].filter((k) => bKeywords.has(k));
-					//console.log(aArticles, aKeywords);
 
 					if (shared_articles.length > 0) {
 						b.priority = 0;
@@ -160,16 +155,16 @@
 	</div>
 </div>
 {#if primaryCountryKey}
-	{#if selectedOutlet}
+	<div class="w-full">
 		<div class="w-full">
-			<div class="w-full">
+			{#if selectedOutlet}
 				<NetworkCanvas
 					nodes={nodes[selectedOutlet]}
 					links={links[selectedOutlet]}
 					{selectedOutlet}
 					{primaryCountryKey}
 				/>
-			</div>
+			{/if}
 		</div>
-	{/if}
+	</div>
 {/if}
