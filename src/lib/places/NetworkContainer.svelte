@@ -31,7 +31,7 @@
 		if (primaryCountry) {
 			const a = data.find((d: { country: string }) => d.country == primaryCountryKey);
 			a.shared_articles = [];
-			a.priority = 1;
+			//a.priority = 1;
 			outlets.forEach((outlet: string) => {
 				const outletArray: countryDataForComparison[] = [a];
 				for (let index = 0; index < data.length; index++) {
@@ -42,7 +42,7 @@
 					const shared_articles = [...aArticles].filter((k) => bArticles.has(k));
 
 					if (shared_articles.length > 0) {
-						b.priority = 0;
+						//b.priority = 0;
 						outletArray.push({ ...b, shared_articles });
 					}
 				}

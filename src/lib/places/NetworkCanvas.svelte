@@ -4,21 +4,23 @@
 	import { onMount } from 'svelte';
 	import Canvas from '$lib/places/canvas/Canvas.svelte';
 	import Map from '$lib/places/canvas/Map.svelte';
-	import MapBg from '$lib/places/canvas/MapBg.svelte';
 
 	import World from '../../content/data/places/world.json';
 	import CountryFeature from './canvas/CountryFeature.svelte';
 	import LinkBetweenCountries from './canvas/LinkBetweenCountries.svelte';
 	import CountryCard from './CountryCard.svelte';
+	import DataPlaceholder from './canvas/DataPlaceholder.svelte';
 
 	const { nodes, links, selectedOutlet, primaryCountryKey } = $props();
 	let w = $state(0);
 	let h = $state(0);
-	let initScale = $state(0);
-	let initTranslate = $state([0, 0]);
 	let start: number;
+	let initialProjectionVariables = $state({
+		scale: 0,
+		translate: [0, 0],
+		center: [0, 0]
+	});
 
-	let newCenter = $state([0, 0]);
 	let currentLatPos = $state(0);
 	let currentLongPos = $state(0);
 	let currentCenter = $derived([currentLatPos, currentLongPos]);
@@ -28,7 +30,9 @@
 	let isListMode = $state(true);
 	let currentNode = $state(null);
 
-	nodes.sort((a, b) => b[`count_${selectedOutlet}`] - a[`count_${selectedOutlet}`]);
+	const orderedListOfNodes = $derived(
+		[...nodes].sort((a, b) => b.shared_articles.length - a.shared_articles.length)
+	);
 
 	const linkWeightDomain = $derived(
 		d3.extent(links.map((link: { weight: string }) => link.weight))
@@ -38,9 +42,9 @@
 		d3
 			.geoNaturalEarth1()
 			.fitSize([w, h], World)
-			.scale(initScale)
+			.scale(initialProjectionVariables.scale)
 			.center(currentCenter)
-			.translate(initTranslate)
+			.translate(initialProjectionVariables.translate)
 	);
 
 	let borderProjection = $derived(
@@ -53,16 +57,17 @@
 	);
 
 	function revertZoom() {
-		//initCenter = [0, 0];
-		initScale = w / 6;
-
-		initTranslate = [w / 2, h / 2];
+		initialProjectionVariables.scale = w / 6;
+		initialProjectionVariables.translate = [w / 2, h / 2];
 	}
 
 	function zoomToCountry() {
-		//initCenter = newCenter;
-		initScale = w / 2;
-		if (currentLatPos !== newCenter[0] || currentLongPos !== newCenter[1]) {
+		initialProjectionVariables.scale = w / 2;
+
+		if (
+			currentLatPos !== initialProjectionVariables.center[0] ||
+			currentLongPos !== initialProjectionVariables.center[1]
+		) {
 			requestAnimationFrame(panToCenter);
 		}
 	}
@@ -80,7 +85,7 @@
 	}
 
 	function onFeaturesDraw(data: { centroid: [number] }) {
-		newCenter = data.centroid;
+		initialProjectionVariables.center = data.centroid;
 	}
 
 	let count = 0;
@@ -90,8 +95,8 @@
 			start = timestamp;
 		}
 		const elapsed = timestamp - start;
-		const endLat = newCenter[0];
-		const endLong = newCenter[1];
+		const endLat = initialProjectionVariables.center[0];
+		const endLong = initialProjectionVariables.center[1];
 		const eased = -Math.cos(elapsed * Math.PI) / 2 + 0.5;
 
 		count = count + 0.01 * eased;
@@ -116,16 +121,25 @@
 	}
 
 	onMount(() => {
-		initTranslate = [w / 2, h / 2];
-		initScale = w / 6;
-		currentLatPos = newCenter[0];
-		currentLongPos = newCenter[1];
-		//requestAnimationFrame(panToCenter);
+		initialProjectionVariables.translate = [w / 2, h / 2];
+		initialProjectionVariables.scale = w / 6;
+		currentLatPos = initialProjectionVariables.center[0];
+		currentLongPos = initialProjectionVariables.center[1];
 	});
 
 	$effect(() => {
-		if (newCenter) {
+		if (initialProjectionVariables.center && nodes[0][`count_${selectedOutlet}`] > 0) {
 			zoomToCountry();
+		}
+
+		if (nodes[0][`count_${selectedOutlet}`] === 0) {
+			initialProjectionVariables.scale = w / 6;
+			currentLatPos = 0;
+			currentLongPos = 0;
+		}
+
+		if (primaryCountryKey) {
+			isListMode = true;
 		}
 	});
 </script>
@@ -137,32 +151,9 @@
 				{World}
 				{projection}
 				{borderProjection}
-				{w}
-				{h}
 				{primaryCountryKey}
 				colors={{ darkAccentHex, lightAccentHex }}
 			/>
-
-			<!-- {#each nodes as node}
-				<MapBg
-					{node}
-					feature={extractCurrentFeature(node.iso)}
-					{projection}
-					{borderProjection}
-					{primaryCountryKey}
-					colors={{ darkAccentHex, lightAccentHex }}
-				/>
-				<Map
-					{World}
-					{projection}
-					{borderProjection}
-					{w}
-					{h}
-					{primaryCountryKey}
-					feature={extractCurrentFeature(node.iso)}
-					colors={{ darkAccentHex, lightAccentHex }}
-				/>
-			{/each}
 			{#each links as link}
 				<LinkBetweenCountries
 					{link}
@@ -174,50 +165,21 @@
 					colors={{ darkAccentHex, lightAccentHex }}
 				/>
 			{/each}
-			{#each links as link}
-				<LinkBetweenCountries
-					{link}
-					{projection}
-					{borderProjection}
-					sfeature={extractCurrentFeature(link.source_iso)}
-					tfeature={extractCurrentFeature(link.target_iso)}
-					{linkWeightDomain}
-					colors={{ darkAccentHex, lightAccentHex }}
-				/>
-			{/each}
-			{#each nodes as node}
-				<CountryFeature
-					{node}
-					feature={extractCurrentFeature(node.iso)}
-					{projection}
-					{borderProjection}
-					{primaryCountryKey}
-					colors={{ darkAccentHex, lightAccentHex }}
-					{onFeaturesDraw}
-				/>
-			{/each} -->
-			{#each links as link}
-				<LinkBetweenCountries
-					{link}
-					{projection}
-					{borderProjection}
-					sfeature={extractCurrentFeature(link.source_iso)}
-					tfeature={extractCurrentFeature(link.target_iso)}
-					{linkWeightDomain}
-					colors={{ darkAccentHex, lightAccentHex }}
-				/>
-			{/each}
-			{#each nodes as node}
-				<CountryFeature
-					{node}
-					feature={extractCurrentFeature(node.iso)}
-					{projection}
-					{borderProjection}
-					{primaryCountryKey}
-					colors={{ darkAccentHex, lightAccentHex }}
-					{onFeaturesDraw}
-				/>
-			{/each}
+			{#if nodes[0][`count_${selectedOutlet}`]}
+				{#each nodes as node}
+					<CountryFeature
+						{node}
+						feature={extractCurrentFeature(node.iso)}
+						{projection}
+						{borderProjection}
+						{primaryCountryKey}
+						colors={{ darkAccentHex, lightAccentHex }}
+						{onFeaturesDraw}
+					/>
+				{/each}
+			{:else}
+				<DataPlaceholder {w} {h} />
+			{/if}
 		</Canvas>
 	</div>
 	<div class="absolute bottom-0 h-100 w-80">
@@ -244,7 +206,7 @@
 						</p>
 					</div>
 					<div class="h-83 overflow-scroll p-2">
-						{#each nodes as node, n}
+						{#each orderedListOfNodes as node, n}
 							{#if node.country !== primaryCountryKey}
 								<div>
 									<div class="flex">
@@ -253,6 +215,7 @@
 											onclick={() => {
 												isListMode = false;
 												extractCurrentNode(node);
+												//currentTargetFeature = extractCurrentFeature(node.iso);
 											}}>{node.shared_articles.length}</button
 										>
 									</div>
@@ -263,7 +226,9 @@
 				</div>
 			{:else}
 				<div>
-					<CountryCard {primaryCountryKey} {currentNode} {selectedOutlet} />
+					{#if primaryCountryKey}
+						<CountryCard {primaryCountryKey} {currentNode} {selectedOutlet} />
+					{/if}
 				</div>
 			{/if}
 		</div>

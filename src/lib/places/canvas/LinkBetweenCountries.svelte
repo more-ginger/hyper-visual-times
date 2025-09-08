@@ -11,7 +11,6 @@
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
 	let outline = { type: 'Sphere' };
 
-	const geoPathGenerator = $derived(d3.geoPath(projection, localCtx));
 	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
 
 	const sourceCentroid = $derived(
@@ -36,7 +35,7 @@
 			ctx.moveTo(sourceCentroid[0], sourceCentroid[1]);
 			ctx.lineTo(targetCentroid[0], targetCentroid[1]);
 			ctx.lineWidth = linkWeightScale(link.weight);
-			ctx.globalAlpha = link.priority > 0 ? 0.7 : 0;
+			ctx.globalAlpha = link.priority > 0 ? 1 : 0;
 			ctx.strokeStyle = colors.darkAccentHex;
 			ctx.stroke();
 
