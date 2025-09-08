@@ -8,7 +8,6 @@
 	import World from '../../content/data/places/world.json';
 	import CountryFeature from './canvas/CountryFeature.svelte';
 	import LinkBetweenCountries from './canvas/LinkBetweenCountries.svelte';
-	import CountryCard from './CountryCard.svelte';
 	import DataPlaceholder from './canvas/DataPlaceholder.svelte';
 
 	const { nodes, links, selectedOutlet, primaryCountryKey, onDropdownChange } = $props();
@@ -24,6 +23,7 @@
 	let currentLatPos = $state(0);
 	let currentLongPos = $state(0);
 	let currentCenter = $derived([currentLatPos, currentLongPos]);
+	let isAnimationRunning = $state(false);
 
 	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
@@ -68,6 +68,9 @@
 			currentLatPos !== initialProjectionVariables.center[0] ||
 			currentLongPos !== initialProjectionVariables.center[1]
 		) {
+			setTimeout(() => {
+				requestAnimationFrame(panToCenter);
+			}, 100);
 			requestAnimationFrame(panToCenter);
 		}
 	}
@@ -104,29 +107,22 @@
 		if (start === undefined) {
 			start = timestamp;
 		}
-		const elapsed = timestamp - start;
+
 		const endLat = initialProjectionVariables.center[0];
 		const endLong = initialProjectionVariables.center[1];
-		const eased = -Math.cos(elapsed * Math.PI) / 2 + 0.5;
+		const elapsed = timestamp - start;
+		const duration = 1000; // Animation duration in ms (adjust as needed)
+		const progress = Math.min(elapsed / duration, 1); // 0 to 1
 
-		count = count + 0.01 * eased;
+		// Linear interpolation for both coordinates
+		currentLatPos = currentLatPos + (endLat - currentLatPos) * progress;
+		currentLongPos = currentLongPos + (endLong - currentLongPos) * progress;
 
-		// do we need to count up or down from current position
-		const weNeedToCountUp = endLat > currentLatPos;
-		const weNeedToCountDown = endLong > currentLongPos;
-
-		// if lat long are bigger we need to count up and take the min value
-		// if lat long are smaller we need to count down and take the max value
-		currentLatPos = weNeedToCountUp
-			? Math.min(currentLatPos + count, endLat)
-			: Math.max(currentLatPos - count, endLat);
-
-		currentLongPos = weNeedToCountDown
-			? Math.min(currentLongPos + count, endLong)
-			: Math.max(currentLongPos - count, endLong);
-
-		if (currentLatPos !== endLat || currentLongPos !== endLong) {
+		if (progress < 1) {
 			requestAnimationFrame(panToCenter);
+			isAnimationRunning = true;
+		} else {
+			isAnimationRunning = false;
 		}
 	}
 
@@ -164,17 +160,19 @@
 				{primaryCountryKey}
 				colors={{ darkAccentHex, lightAccentHex }}
 			/>
-			{#each links as link}
-				<LinkBetweenCountries
-					{link}
-					{projection}
-					{borderProjection}
-					sfeature={extractCurrentFeature(link.source_iso)}
-					tfeature={extractCurrentFeature(link.target_iso)}
-					{linkWeightDomain}
-					colors={{ darkAccentHex, lightAccentHex }}
-				/>
-			{/each}
+			{#if !isAnimationRunning}
+				{#each links as link}
+					<LinkBetweenCountries
+						{link}
+						{projection}
+						{borderProjection}
+						sfeature={extractCurrentFeature(link.source_iso)}
+						tfeature={extractCurrentFeature(link.target_iso)}
+						{linkWeightDomain}
+						colors={{ darkAccentHex, lightAccentHex }}
+					/>
+				{/each}
+			{/if}
 			{#if nodes[0][`count_${selectedOutlet}`]}
 				{#each nodes as node}
 					<CountryFeature
@@ -242,15 +240,17 @@
 				</div>
 			{:else}
 				<div>
-					{#if primaryCountryKey}
-						<CountryCard
-							{primaryCountryKey}
-							{currentNode}
-							{selectedOutlet}
-							{onCardReset}
-							{onPrimaryCountryChange}
-						/>
-					{/if}
+					{#await import('./CountryCard.svelte') then { default: CountryCard }}
+						{#if primaryCountryKey}
+							<CountryCard
+								{primaryCountryKey}
+								{currentNode}
+								{selectedOutlet}
+								{onCardReset}
+								{onPrimaryCountryChange}
+							/>
+						{/if}
+					{/await}
 				</div>
 			{/if}
 		</div>

@@ -2,7 +2,6 @@
 	import type { countryDataForComparison } from '../../types';
 	import { onMount } from 'svelte';
 	import Dropdown from '$lib/common/Dropdown.svelte';
-	import NetworkCanvas from './NetworkCanvas.svelte';
 
 	let { data, onMounted = () => {} } = $props();
 	const outlets = ['zeit', 'nyt'];
@@ -156,13 +155,15 @@
 	<div class="w-full">
 		<div class="w-full">
 			{#if selectedOutlet}
-				<NetworkCanvas
-					nodes={nodes[selectedOutlet]}
-					links={links[selectedOutlet]}
-					{selectedOutlet}
-					{primaryCountryKey}
-					{onDropdownChange}
-				/>
+				{#await import('./NetworkCanvas.svelte') then { default: NetworkCanvas }}
+					<NetworkCanvas
+						nodes={nodes[selectedOutlet]}
+						links={links[selectedOutlet]}
+						{selectedOutlet}
+						{primaryCountryKey}
+						{onDropdownChange}
+					/>
+				{/await}
 			{/if}
 		</div>
 	</div>
