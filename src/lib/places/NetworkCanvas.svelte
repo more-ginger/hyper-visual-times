@@ -11,7 +11,7 @@
 	import CountryCard from './CountryCard.svelte';
 	import DataPlaceholder from './canvas/DataPlaceholder.svelte';
 
-	const { nodes, links, selectedOutlet, primaryCountryKey } = $props();
+	const { nodes, links, selectedOutlet, primaryCountryKey, onDropdownChange } = $props();
 	let w = $state(0);
 	let h = $state(0);
 	let start: number;
@@ -86,6 +86,16 @@
 
 	function onFeaturesDraw(data: { centroid: [number] }) {
 		initialProjectionVariables.center = data.centroid;
+	}
+
+	function onCardReset() {
+		if (!isListMode) {
+			isListMode = true;
+		}
+	}
+
+	function onPrimaryCountryChange(data: { key: string }) {
+		onDropdownChange(data.key);
 	}
 
 	let count = 0;
@@ -197,7 +207,7 @@
 				}}>Zoom to country</button
 			>
 		</div>
-		<div class="bg-ivory-default border-ivory-dark h-full rounded-xl border">
+		<div class="bg-ivory-default/50 border-ivory-dark h-full rounded-xl border backdrop-blur-sm">
 			{#if isListMode}
 				<div>
 					<div class="h-14 border-b">
@@ -208,16 +218,22 @@
 					<div class="h-83 overflow-scroll p-2">
 						{#each orderedListOfNodes as node, n}
 							{#if node.country !== primaryCountryKey}
-								<div>
-									<div class="flex">
-										<h5>#{n + 1} {node.country}</h5>
-										<button
-											onclick={() => {
-												isListMode = false;
-												extractCurrentNode(node);
-												//currentTargetFeature = extractCurrentFeature(node.iso);
-											}}>{node.shared_articles.length}</button
-										>
+								<div class="py-2">
+									<div>
+										<div class="flex justify-between">
+											<h5>#{n + 1} {node.country}</h5>
+											<button
+												onclick={() => {
+													isListMode = false;
+													extractCurrentNode(node);
+												}}
+												>{node.shared_articles.length} shared articles
+												<img class="mx-auto inline" src="icons/ui-forward.svg" alt="arrow right" />
+											</button>
+										</div>
+										<div>
+											<p>Keywords</p>
+										</div>
 									</div>
 								</div>
 							{/if}
@@ -227,7 +243,13 @@
 			{:else}
 				<div>
 					{#if primaryCountryKey}
-						<CountryCard {primaryCountryKey} {currentNode} {selectedOutlet} />
+						<CountryCard
+							{primaryCountryKey}
+							{currentNode}
+							{selectedOutlet}
+							{onCardReset}
+							{onPrimaryCountryChange}
+						/>
 					{/if}
 				</div>
 			{/if}

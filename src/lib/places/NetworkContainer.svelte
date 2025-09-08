@@ -3,8 +3,7 @@
 	import { onMount } from 'svelte';
 	import Dropdown from '$lib/common/Dropdown.svelte';
 	import NetworkCanvas from './NetworkCanvas.svelte';
-	// @ts-expect-error
-	import { extent } from 'd3-array';
+
 	let { data, onMounted = () => {} } = $props();
 	const outlets = ['zeit', 'nyt'];
 	let selectedOutlet = $state(outlets[0]);
@@ -23,8 +22,14 @@
 	);
 
 	// Set the primary country to calc overlaps
-	let primaryCountry = dropdownData.find((d: { key: string }) => d.key == 'Japan');
+	let primaryCountry = $state(dropdownData.find((d: { key: string }) => d.key == 'Japan'));
+
 	let primaryCountryKey = $state(primaryCountry.key);
+
+	function onDropdownChange(data: string) {
+		let newPrimaryCountry = dropdownData.find((d: { key: string }) => d.key == data);
+		primaryCountryKey = newPrimaryCountry.key;
+	}
 
 	let nodes = $derived.by(() => {
 		let overlaps: Record<string, countryDataForComparison[]> = {};
@@ -50,13 +55,6 @@
 			});
 		}
 		return overlaps;
-	});
-
-	const dataDomain = $derived.by(() => {
-		const extentZeit = extent(nodes.zeit.map((d) => d.count_zeit));
-		const extentNYT = extent(nodes.nyt.map((d) => d.count_nyt));
-		const crossOutletsExtent = extentNYT.concat(extentZeit);
-		return extent(crossOutletsExtent);
 	});
 
 	let links = $derived.by(() => {
@@ -163,6 +161,7 @@
 					links={links[selectedOutlet]}
 					{selectedOutlet}
 					{primaryCountryKey}
+					{onDropdownChange}
 				/>
 			{/if}
 		</div>
