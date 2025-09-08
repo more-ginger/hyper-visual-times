@@ -164,6 +164,7 @@
 				{borderProjection}
 				{primaryCountryKey}
 				colors={{ darkAccentHex, lightAccentHex }}
+				priority={0}
 			/>
 			{#if !isAnimationRunning}
 				{#each links as link}
@@ -175,6 +176,7 @@
 						tfeature={extractCurrentFeature(link.target_iso)}
 						{linkWeightDomain}
 						colors={{ darkAccentHex, lightAccentHex }}
+						priority={1}
 					/>
 				{/each}
 			{/if}
@@ -188,6 +190,7 @@
 						{primaryCountryKey}
 						colors={{ darkAccentHex, lightAccentHex }}
 						{onFeaturesDraw}
+						priority={2}
 					/>
 				{/each}
 			{:else}

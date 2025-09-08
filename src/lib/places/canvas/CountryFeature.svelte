@@ -5,8 +5,16 @@
 	import type { MapContext } from '../../../types';
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
-	let { node, feature, projection, borderProjection, primaryCountryKey, colors, onFeaturesDraw } =
-		$props();
+	let {
+		node,
+		feature,
+		projection,
+		borderProjection,
+		primaryCountryKey,
+		colors,
+		onFeaturesDraw,
+		priority
+	} = $props();
 	let outline = { type: 'Sphere' };
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
 
@@ -70,7 +78,7 @@
 	}
 
 	onMount(() => {
-		register(draw);
+		register(draw, priority);
 		invalidate();
 
 		determinePrimaryCountryCentroid();

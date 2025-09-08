@@ -105,7 +105,7 @@ export interface renderedLinks {
 
 
 export interface MapContext {
-		register: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
+		register: (fn: (ctx: CanvasRenderingContext2D) => void,priority?: number) => void;
 		deregister: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
 		invalidate: () => void;
 	};

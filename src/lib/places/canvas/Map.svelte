@@ -2,20 +2,17 @@
 	// @ts-expect-error
 	import * as d3 from 'd3';
 	import { getContext, onDestroy, onMount } from 'svelte';
-
-	type MapContext = {
-		register: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
-		deregister: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
-		transition: (
-			duration: number,
-			onUpdate: (progress: number) => void,
-			onComplete?: (progress: number) => void
-		) => void;
-		invalidate: () => void;
-	};
+	import type { MapContext } from '../../../types';
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
-	let { World, projection, borderProjection, primaryCountryKey, colors = undefined } = $props();
+	let {
+		World,
+		projection,
+		borderProjection,
+		primaryCountryKey,
+		colors = undefined,
+		priority = 0
+	} = $props();
 	let outline = { type: 'Sphere' };
 
 	function draw(ctx: CanvasRenderingContext2D) {
@@ -61,7 +58,7 @@
 	// }
 
 	onMount(() => {
-		register(draw);
+		register(draw, priority);
 		//animateCircle();
 		invalidate();
 	});

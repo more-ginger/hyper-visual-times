@@ -2,6 +2,11 @@
 	import { onMount, onDestroy, setContext } from 'svelte';
 	let { w, h, contextName = 'canvas', children } = $props();
 
+	interface DrawFunction {
+		fn: (ctx: CanvasRenderingContext2D | null) => void;
+		priority: number;
+	}
+
 	interface Transition {
 		startTime: number;
 		duration: number;
@@ -14,7 +19,7 @@
 	let pendingInvalidation: boolean = false;
 	let frameId: number | undefined;
 
-	const drawFunctions: Array<(ctx: CanvasRenderingContext2D | null) => void> = [];
+	const drawFunctions: DrawFunction[] = [];
 	let activeTransitions: Transition[] = [];
 
 	function scaleCanvas(
@@ -44,7 +49,9 @@
 
 		ctx.clearRect(0, 0, w, h);
 
-		drawFunctions.forEach((fn) => {
+		const sortedDrawFunctions = [...drawFunctions].sort((a, b) => a.priority - b.priority);
+
+		sortedDrawFunctions.forEach(({ fn }) => {
 			ctx?.save();
 			fn(ctx);
 			ctx?.restore();
@@ -82,11 +89,13 @@
 	});
 
 	setContext(contextName, {
-		register(fn: (ctx: CanvasRenderingContext2D | null) => void) {
-			drawFunctions.push(fn);
+		register(fn: (ctx: CanvasRenderingContext2D | null) => void, priority: number = 0) {
+			console.log(priority);
+			drawFunctions.push({ fn, priority });
 		},
 		deregister(fn: (ctx: CanvasRenderingContext2D | null) => void) {
-			drawFunctions.splice(drawFunctions.indexOf(fn), 1);
+			const index = drawFunctions.findIndex((item) => item.fn === fn);
+			drawFunctions.splice(index, 1);
 		},
 		invalidate,
 		transition(duration: number, onUpdate: (progress: number) => void, onComplete?: () => void) {

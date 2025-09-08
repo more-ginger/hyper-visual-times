@@ -6,8 +6,16 @@
 	import type { MapContext } from '../../../types';
 
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
-	const { link, sfeature, tfeature, projection, borderProjection, colors, linkWeightDomain } =
-		$props();
+	const {
+		link,
+		sfeature,
+		tfeature,
+		projection,
+		borderProjection,
+		colors,
+		linkWeightDomain,
+		priority
+	} = $props();
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
 	let outline = { type: 'Sphere' };
 
@@ -49,7 +57,7 @@
 	}
 
 	onMount(() => {
-		register(draw);
+		register(draw, priority);
 		invalidate();
 	});
 
