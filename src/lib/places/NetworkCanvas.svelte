@@ -101,8 +101,6 @@
 		onDropdownChange(data.key);
 	}
 
-	let count = 0;
-
 	function panToCenter(timestamp: number) {
 		if (start === undefined) {
 			start = timestamp;
@@ -111,12 +109,14 @@
 		const endLat = initialProjectionVariables.center[0];
 		const endLong = initialProjectionVariables.center[1];
 		const elapsed = timestamp - start;
-		const duration = 1000; // Animation duration in ms (adjust as needed)
-		const progress = Math.min(elapsed / duration, 1); // 0 to 1
+		const duration = 2000; // Animation duration in ms (adjust as needed)
+		const progress = Math.min(elapsed / duration, 1);
+		// Apply easing (e.g., ease-in-out)
+		const easedProgress = easeInOutQuad(progress);
 
 		// Linear interpolation for both coordinates
-		currentLatPos = currentLatPos + (endLat - currentLatPos) * progress;
-		currentLongPos = currentLongPos + (endLong - currentLongPos) * progress;
+		currentLatPos = currentLatPos + (endLat - currentLatPos) * easedProgress;
+		currentLongPos = currentLongPos + (endLong - currentLongPos) * easedProgress;
 
 		if (progress < 1) {
 			requestAnimationFrame(panToCenter);
@@ -124,6 +124,11 @@
 		} else {
 			isAnimationRunning = false;
 		}
+	}
+
+	// Example easing function (ease-in-out quadratic)
+	function easeInOutQuad(t: number): number {
+		return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 	}
 
 	onMount(() => {
