@@ -9,6 +9,7 @@
 	import World from '../../content/data/places/world.json';
 	import CountryFeature from './canvas/CountryFeature.svelte';
 	import LinkBetweenCountries from './canvas/LinkBetweenCountries.svelte';
+	import CountryCard from './CountryCard.svelte';
 
 	const { nodes, links, selectedOutlet, primaryCountryKey } = $props();
 	let w = $state(0);
@@ -24,6 +25,10 @@
 
 	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
+	let isListMode = $state(true);
+	let currentNode = $state(null);
+
+	nodes.sort((a, b) => b[`count_${selectedOutlet}`] - a[`count_${selectedOutlet}`]);
 
 	const linkWeightDomain = $derived(
 		d3.extent(links.map((link: { weight: string }) => link.weight))
@@ -60,6 +65,10 @@
 		if (currentLatPos !== newCenter[0] || currentLongPos !== newCenter[1]) {
 			requestAnimationFrame(panToCenter);
 		}
+	}
+
+	function extractCurrentNode(node) {
+		currentNode = node;
 	}
 
 	function extractCurrentFeature(iso: string) {
@@ -227,18 +236,36 @@
 			>
 		</div>
 		<div class="bg-ivory-default border-ivory-dark h-full rounded-xl border">
-			<div class="h-14 border-b">
-				<p class="m-2">
-					Countries sharing coverage with {primaryCountryKey} in {selectedOutlet}
-				</p>
-			</div>
-			<div class="h-83 overflow-scroll p-2">
-				{#each nodes as node}
-					{#if node.country !== primaryCountryKey}
-						<div>{node.country}</div>
-					{/if}
-				{/each}
-			</div>
+			{#if isListMode}
+				<div>
+					<div class="h-14 border-b">
+						<p class="m-2">
+							Countries sharing coverage with {primaryCountryKey} in {selectedOutlet}
+						</p>
+					</div>
+					<div class="h-83 overflow-scroll p-2">
+						{#each nodes as node, n}
+							{#if node.country !== primaryCountryKey}
+								<div>
+									<div class="flex">
+										<h5>#{n + 1} {node.country}</h5>
+										<button
+											onclick={() => {
+												isListMode = false;
+												extractCurrentNode(node);
+											}}>{node.shared_articles.length}</button
+										>
+									</div>
+								</div>
+							{/if}
+						{/each}
+					</div>
+				</div>
+			{:else}
+				<div>
+					<CountryCard {primaryCountryKey} {currentNode} {selectedOutlet} />
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>
