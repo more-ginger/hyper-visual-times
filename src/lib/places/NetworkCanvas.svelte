@@ -13,7 +13,7 @@
 	const { nodes, links, selectedOutlet, primaryCountryKey, onDropdownChange } = $props();
 	let w = $state(0);
 	let h = $state(0);
-	let start: number;
+	let start: number | undefined;
 	let initialProjectionVariables = $state({
 		scale: 0,
 		translate: [0, 0],
@@ -101,9 +101,20 @@
 		onDropdownChange(data.key);
 	}
 
+	let initialLat = initialProjectionVariables.center[0];
+	let initialLong = initialProjectionVariables.center[1];
+
 	function panToCenter(timestamp: number) {
+		if (!isAnimationRunning) {
+			start = undefined;
+		}
+
 		if (start === undefined) {
 			start = timestamp;
+			isAnimationRunning = true;
+			// Store initial positions at the start of each animation
+			initialLat = currentLatPos;
+			initialLong = currentLongPos;
 		}
 
 		const endLat = initialProjectionVariables.center[0];
@@ -115,13 +126,14 @@
 		const easedProgress = easeInOutQuad(progress);
 
 		// Linear interpolation for both coordinates
-		currentLatPos = currentLatPos + (endLat - currentLatPos) * easedProgress;
-		currentLongPos = currentLongPos + (endLong - currentLongPos) * easedProgress;
+		currentLatPos = initialLat + (endLat - initialLat) * easedProgress;
+		currentLongPos = initialLong + (endLong - initialLong) * easedProgress;
 
 		if (progress < 1) {
 			requestAnimationFrame(panToCenter);
 			isAnimationRunning = true;
 		} else {
+			start = undefined;
 			isAnimationRunning = false;
 		}
 	}
@@ -166,20 +178,20 @@
 				colors={{ darkAccentHex, lightAccentHex }}
 				priority={0}
 			/>
-			{#if !isAnimationRunning}
-				{#each links as link}
-					<LinkBetweenCountries
-						{link}
-						{projection}
-						{borderProjection}
-						sfeature={extractCurrentFeature(link.source_iso)}
-						tfeature={extractCurrentFeature(link.target_iso)}
-						{linkWeightDomain}
-						colors={{ darkAccentHex, lightAccentHex }}
-						priority={1}
-					/>
-				{/each}
-			{/if}
+
+			{#each links as link}
+				<LinkBetweenCountries
+					{link}
+					{projection}
+					{borderProjection}
+					sfeature={extractCurrentFeature(link.source_iso)}
+					tfeature={extractCurrentFeature(link.target_iso)}
+					{linkWeightDomain}
+					colors={{ darkAccentHex, lightAccentHex }}
+					priority={1}
+				/>
+			{/each}
+
 			{#if nodes[0][`count_${selectedOutlet}`]}
 				{#each nodes as node}
 					<CountryFeature
