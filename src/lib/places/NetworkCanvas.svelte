@@ -209,7 +209,7 @@
 			{/if}
 		</Canvas>
 	</div>
-	<div class="absolute bottom-0 h-100 w-80">
+	<div class="absolute right-0 bottom-10 h-100 w-80">
 		<div class="mb-2">
 			<button
 				class="bg-ivory-default"
