@@ -27,6 +27,7 @@
 
 	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
+
 	let isListMode = $state(true);
 	let currentNode = $state(null);
 
@@ -79,13 +80,13 @@
 		currentNode = node;
 	}
 
-	function extractCurrentFeature(iso: string) {
-		const currentNodeFeature = World.features.find((feature) => {
-			return feature.properties.adm0_a3 === iso || feature.properties.iso_a3 === iso;
-		});
+	// function extractCurrentFeature(iso: string) {
+	// 	const currentNodeFeature = World.features.find((feature) => {
+	// 		return feature.properties.adm0_a3 === iso || feature.properties.iso_a3 === iso;
+	// 	});
 
-		return currentNodeFeature;
-	}
+	// 	return currentNodeFeature;
+	// }
 
 	function onFeaturesDraw(data: { centroid: [number] }) {
 		initialProjectionVariables.center = data.centroid;
@@ -178,28 +179,26 @@
 				colors={{ darkAccentHex, lightAccentHex }}
 				priority={0}
 			/>
-
 			{#each links as link}
 				<LinkBetweenCountries
 					{link}
 					{projection}
 					{borderProjection}
-					sfeature={extractCurrentFeature(link.source_iso)}
-					tfeature={extractCurrentFeature(link.target_iso)}
+					{primaryCountryKey}
+					{currentNode}
 					{linkWeightDomain}
 					colors={{ darkAccentHex, lightAccentHex }}
 					priority={1}
 				/>
 			{/each}
-
 			{#if nodes[0][`count_${selectedOutlet}`]}
 				{#each nodes as node}
 					<CountryFeature
 						{node}
-						feature={extractCurrentFeature(node.iso)}
 						{projection}
 						{borderProjection}
 						{primaryCountryKey}
+						{currentNode}
 						colors={{ darkAccentHex, lightAccentHex }}
 						{onFeaturesDraw}
 						priority={2}

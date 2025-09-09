@@ -28,8 +28,10 @@
 
 		ctx.beginPath();
 		geoPathGenerator(World);
+		ctx.fillStyle = colors.lightAccentHex;
 		ctx.strokeStyle = colors.darkAccentHex;
 		ctx.lineWidth = 0.7;
+		ctx.fill();
 		ctx.stroke();
 
 		ctx.beginPath();

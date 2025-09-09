@@ -8,13 +8,13 @@
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
 	const {
 		link,
-		sfeature,
-		tfeature,
 		projection,
 		borderProjection,
 		colors,
 		linkWeightDomain,
-		priority
+		priority,
+		primaryCountryKey,
+		currentNode
 	} = $props();
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
 	let outline = { type: 'Sphere' };
@@ -27,7 +27,6 @@
 	const targetCentroid = $derived(
 		link ? projection([link.target_coords[1], link.target_coords[0]]) : [0, 0]
 	);
-
 	const linkWeightScale = $derived(d3.scaleLog().domain(linkWeightDomain).range([0.4, 5]).base(2));
 
 	function draw(ctx: CanvasRenderingContext2D) {
@@ -44,7 +43,8 @@
 			ctx.lineTo(targetCentroid[0], targetCentroid[1]);
 			ctx.lineWidth = linkWeightScale(link.weight);
 			ctx.globalAlpha = link.priority > 0 ? 1 : 0;
-			ctx.strokeStyle = colors.darkAccentHex;
+			ctx.strokeStyle =
+				currentNode && link.target === currentNode.country ? 'red' : colors.darkAccentHex;
 			ctx.stroke();
 
 			ctx.translate(targetCentroid[0], targetCentroid[1]);
@@ -67,6 +67,10 @@
 
 	$effect(() => {
 		if (link) {
+			invalidate();
+		}
+
+		if (currentNode) {
 			invalidate();
 		}
 	});

@@ -7,13 +7,13 @@
 	const { register, deregister, invalidate } = getContext<MapContext>('map');
 	let {
 		node,
-		feature,
 		projection,
 		borderProjection,
 		primaryCountryKey,
 		colors,
 		onFeaturesDraw,
-		priority
+		priority,
+		currentNode
 	} = $props();
 	let outline = { type: 'Sphere' };
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
@@ -37,8 +37,10 @@
 		ctx.fillStyle = 'transparent';
 		ctx.stroke();
 
-		console.log(node.country, primaryCountryKey);
-		if (node.country === primaryCountryKey) {
+		if (
+			node.country === primaryCountryKey ||
+			(currentNode && node.country === currentNode.country)
+		) {
 			ctx.translate(centroid[0], centroid[1]);
 			ctx.beginPath();
 			ctx.arc(0, 0, 10, 0, Math.PI * 2);
