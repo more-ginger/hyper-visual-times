@@ -81,7 +81,7 @@
 
 	function extractCurrentFeature(iso: string) {
 		const currentNodeFeature = World.features.find((feature) => {
-			return feature.properties.adm0_iso === iso;
+			return feature.properties.adm0_a3 === iso || feature.properties.iso_a3 === iso;
 		});
 
 		return currentNodeFeature;

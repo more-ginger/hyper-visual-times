@@ -18,7 +18,6 @@
 	let outline = { type: 'Sphere' };
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
 
-	const geoPathGenerator = $derived(d3.geoPath(projection, localCtx));
 	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
 	const centroid = $derived(
 		feature ? projection([feature.properties.label_x, feature.properties.label_y]) : [0, 0]
@@ -27,7 +26,7 @@
 	function determinePrimaryCountryCentroid() {
 		if (node.country === primaryCountryKey) {
 			onFeaturesDraw({
-				centroid: [feature.properties.label_x, feature.properties.label_y]
+				centroid: feature ? [feature.properties.label_x, feature.properties.label_y] : [0, 0]
 			});
 		}
 	}
@@ -41,8 +40,6 @@
 		ctx.stroke();
 
 		if (node.country === primaryCountryKey) {
-			//const selectedCountryCentroid = geoPathGenerator(feature);
-
 			ctx.translate(centroid[0], centroid[1]);
 			ctx.beginPath();
 			ctx.arc(0, 0, 10, 0, Math.PI * 2);
@@ -50,7 +47,6 @@
 			ctx.stroke();
 
 			if (projection.scale() > 400) {
-				//ctx.translate(centroid[0], centroid[1]);
 				const txt = node.country;
 
 				const metrics = ctx.measureText(txt);
