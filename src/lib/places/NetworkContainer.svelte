@@ -56,6 +56,8 @@
 		return overlaps;
 	});
 
+	$inspect(nodes);
+
 	let links = $derived.by(() => {
 		const links: Record<string, { source: string; target: string; weight: number }[]> = {};
 
@@ -98,6 +100,8 @@
 								target: nodesOutlet[j].country,
 								source_iso: nodesOutlet[i].iso,
 								target_iso: nodesOutlet[j].iso,
+								source_coords: nodesOutlet[i].coords,
+								target_coords: nodesOutlet[j].coords,
 								weight: countOverlap(idsA, idsB),
 								priority: nodesOutlet[i].country === primaryCountryKey ? 1 : 0
 							});

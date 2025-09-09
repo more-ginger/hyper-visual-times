@@ -19,14 +19,12 @@
 	let localCtx: CanvasRenderingContext2D | null = $state(null);
 
 	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
-	const centroid = $derived(
-		feature ? projection([feature.properties.label_x, feature.properties.label_y]) : [0, 0]
-	);
+	const centroid = $derived(node ? projection([node.coords[1], node.coords[0]]) : [0, 0]);
 
 	function determinePrimaryCountryCentroid() {
 		if (node.country === primaryCountryKey) {
 			onFeaturesDraw({
-				centroid: feature ? [feature.properties.label_x, feature.properties.label_y] : [0, 0]
+				centroid: node ? [node.coords[1], node.coords[0]] : [0, 0]
 			});
 		}
 	}
@@ -39,6 +37,7 @@
 		ctx.fillStyle = 'transparent';
 		ctx.stroke();
 
+		console.log(node.country, primaryCountryKey);
 		if (node.country === primaryCountryKey) {
 			ctx.translate(centroid[0], centroid[1]);
 			ctx.beginPath();

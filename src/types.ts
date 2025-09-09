@@ -18,6 +18,7 @@ export interface countryDataForComparison {
     country: string,
     count_zeit: number,
     count_nyt: number,
+    coords: number[],
     iso: string,
     [key: `ids_of_articles_${string}`]: string[]
 }

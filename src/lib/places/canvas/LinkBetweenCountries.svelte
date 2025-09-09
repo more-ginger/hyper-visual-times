@@ -22,10 +22,10 @@
 	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
 
 	const sourceCentroid = $derived(
-		sfeature ? projection([sfeature.properties.label_x, sfeature.properties.label_y]) : [0, 0]
+		link ? projection([link.source_coords[1], link.source_coords[0]]) : [0, 0]
 	);
 	const targetCentroid = $derived(
-		tfeature ? projection([tfeature.properties.label_x, tfeature.properties.label_y]) : [0, 0]
+		link ? projection([link.target_coords[1], link.target_coords[0]]) : [0, 0]
 	);
 
 	const linkWeightScale = $derived(d3.scaleLog().domain(linkWeightDomain).range([0.4, 5]).base(2));
@@ -38,7 +38,7 @@
 		ctx.fillStyle = 'transparent';
 		ctx.stroke();
 
-		if (sfeature && tfeature) {
+		if (link) {
 			ctx.beginPath();
 			ctx.moveTo(sourceCentroid[0], sourceCentroid[1]);
 			ctx.lineTo(targetCentroid[0], targetCentroid[1]);

@@ -9,6 +9,7 @@
 		snippet: string;
 		pub_date: string | number;
 		byline: string;
+		parsed_date: Date;
 	};
 	let articles = $state<Article[]>([]);
 	let firstArticleIndex = $state(0);
@@ -38,6 +39,7 @@
 						snippet: article.snippet,
 						web_url: article.web_url,
 						pub_date: fullDate,
+						parsed_date: parsedPubDate,
 						byline
 					});
 				});
@@ -49,11 +51,19 @@
 		}
 	}
 
+	const orderedArticles = $derived(
+		[...articles].sort((a: { parsed_date: Date }, b: { parsed_date: Date }) => {
+			return b.parsed_date.getTime() - a.parsed_date.getTime();
+		})
+	);
+
+	$inspect(orderedArticles);
+
 	function resetCard() {
 		onCardReset();
 	}
 
-	function changePrimaryCountry(node) {
+	function changePrimaryCountry(node: string) {
 		onPrimaryCountryChange({
 			key: node
 		});
@@ -81,7 +91,7 @@
 </script>
 
 <div class=" h-99 overflow-scroll rounded-xl">
-	<div class=" bg-ivory-default sticky top-0 flex justify-between p-2">
+	<div class=" bg-ivory-default sticky top-0 flex justify-between px-2 pt-2">
 		<div class="flex pt-1">
 			<div class="pr-2">{primaryCountryKey}</div>
 			<div class="pr-2">
@@ -103,28 +113,36 @@
 			>
 		</div>
 	</div>
-	<div class="px-2 py-3 text-center">
-		<button
-			onclick={() => {
-				changePrimaryCountry(currentNode.country);
-			}}
-			class="border-red-500 text-red-500">Set {currentNode.country} as primary country</button
-		>
-	</div>
-	<div class="px-2">
-		{#each articles as article}<div class="my-3 rounded-xl border border-black p-2 hover:bg-white">
-				<a href={article.web_url}>
-					<div>
-						<div>{article.headline}</div>
-						<div class="py-2 text-sm">{article.snippet}</div>
-						<div class="text-xs">{article.byline}, {article.pub_date}</div>
-					</div>
-				</a>
-			</div>{/each}
-		<div class="my-2 text-center">
-			{#if currentNode.shared_articles.length > lastArticleIndex}
-				<button onclick={increaseIndexesToFetchMoreArticles}>Load More</button>
-			{/if}
+	<div>
+		<div class="px-2 pb-3 text-left text-xs">
+			<button
+				onclick={() => {
+					changePrimaryCountry(currentNode.country);
+				}}
+				class="border-red-500 text-red-500">Set {currentNode.country} as primary country</button
+			>
 		</div>
 	</div>
+	{#await orderedArticles}
+		<div>Loading articles</div>
+	{:then}
+		<div class="px-2">
+			{#each orderedArticles as article}<div
+					class="my-3 rounded-xl border border-black p-2 hover:bg-white"
+				>
+					<a href={article.web_url}>
+						<div>
+							<div>{article.headline}</div>
+							<div class="py-2 text-sm">{article.snippet}</div>
+							<div class="text-xs">{article.byline}, {article.pub_date}</div>
+						</div>
+					</a>
+				</div>{/each}
+			<div class="my-2 text-center">
+				{#if currentNode.shared_articles.length > lastArticleIndex}
+					<button onclick={increaseIndexesToFetchMoreArticles}>Load More</button>
+				{/if}
+			</div>
+		</div>
+	{/await}
 </div>
