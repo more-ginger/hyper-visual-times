@@ -29,7 +29,7 @@
 			if (data.length > 0) {
 				const headlines = data.map((article: Article) => {
 					let parsedByline = JSON.parse(article.byline);
-					let byline = parsedByline.length > 0 ? parsedByline[0]['name'] : '';
+					let byline = parsedByline.length > 0 ? `${parsedByline[0]['name']},` : '';
 
 					let parsedPubDate = new Date(article.pub_date);
 					let fullDate = `${parsedPubDate.getDate()}.${parsedPubDate.getMonth() + 1}.${parsedPubDate.getFullYear()}`;
@@ -84,6 +84,8 @@
 			fetchArticles(currentNode);
 		}
 	});
+
+	$inspect(articles);
 </script>
 
 <div class="w-full overflow-scroll rounded-xl md:h-99">
@@ -140,7 +142,7 @@
 						<div>
 							<div>{article.headline}</div>
 							<div class="py-2 text-sm">{article.snippet}</div>
-							<div class="text-xs">{article.byline}, {article.pub_date}</div>
+							<div class="text-xs">{article.byline} {article.pub_date}</div>
 						</div>
 					</a>
 				</div>
