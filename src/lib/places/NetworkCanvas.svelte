@@ -230,16 +230,19 @@
 		<div class="bg-ivory-default/50 border-ivory-dark h-full rounded-xl border backdrop-blur-sm">
 			{#if isListMode}
 				<div>
-					<div class="h-14 border-b">
+					<div class="h-14 border-b text-center italic">
 						<p class="m-2">
-							Countries sharing coverage with {primaryCountryKey} in {selectedOutlet}
+							There are {nodes.length} countries sharing coverage with {primaryCountryKey} in {selectedOutlet ===
+							'zeit'
+								? 'Zeit Online'
+								: 'The New York Times'}
 						</p>
 					</div>
-					<div class="h-83 overflow-scroll py-2">
+					<div class="h-83 overflow-scroll py-4">
 						{#each orderedListOfNodes as node, n}
 							{#if node.country !== primaryCountryKey}
 								<div
-									class="cursor-crosshair px-2 py-2 hover:bg-white hover:text-red-500 hover:shadow-sm"
+									class="cursor-crosshair border-t px-2 py-3 hover:bg-white hover:shadow-sm"
 									role="button"
 									tabindex="0"
 									onmouseenter={() => {
@@ -253,7 +256,7 @@
 										<div class="flex justify-between">
 											<h5>#{n + 1} {node.country}</h5>
 											<button
-												class="text-sm"
+												class="left-0 transition-all hover:-translate-y-0.5 hover:shadow-sm"
 												onclick={() => {
 													isListMode = false;
 												}}

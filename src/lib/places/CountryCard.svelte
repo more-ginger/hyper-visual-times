@@ -32,7 +32,7 @@
 					let byline = parsedByline.length > 0 ? parsedByline[0]['name'] : '';
 
 					let parsedPubDate = new Date(article.pub_date);
-					let fullDate = `${parsedPubDate.getDate()}.${parsedPubDate.getMonth()}.${parsedPubDate.getFullYear()}`;
+					let fullDate = `${parsedPubDate.getDate()}.${parsedPubDate.getMonth() + 1}.${parsedPubDate.getFullYear()}`;
 
 					articles.push({
 						headline: article.headline,
@@ -119,26 +119,31 @@
 			>
 		</div>
 	</div>
-	{#await orderedArticles}
+	{#await articles}
 		<div>Loading articles</div>
-	{:then}
+	{:then orderedArticles}
 		<div class="px-2">
-			{#each orderedArticles as article}<div
-					class="my-3 rounded-xl border border-black p-2 hover:bg-white"
-				>
-					<a href={article.web_url}>
+			{#each orderedArticles as article}
+				<div class="my-3 rounded-xl border border-black p-2 hover:bg-white">
+					<a href={article.web_url} target="_blank">
 						<div>
 							<div>{article.headline}</div>
 							<div class="py-2 text-sm">{article.snippet}</div>
 							<div class="text-xs">{article.byline}, {article.pub_date}</div>
 						</div>
 					</a>
-				</div>{/each}
-			<div class="my-2 text-center">
-				{#if currentNode.shared_articles.length > lastArticleIndex}
-					<button onclick={increaseIndexesToFetchMoreArticles}>Load More</button>
-				{/if}
-			</div>
+				</div>
+			{/each}
 		</div>
 	{/await}
+	{#if orderedArticles.length > 0}
+		<div class="absolute bottom-0 my-2 w-full text-center">
+			{#if currentNode.shared_articles.length > lastArticleIndex}
+				<button
+					class="bg-ivory-default transition-all hover:-translate-y-0.5 hover:shadow-sm"
+					onclick={increaseIndexesToFetchMoreArticles}>Load More</button
+				>
+			{/if}
+		</div>
+	{/if}
 </div>
