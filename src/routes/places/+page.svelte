@@ -51,8 +51,8 @@
 	>
 		<div class="flex h-[98vh]">
 			<p class="m-4 inline-block self-center text-center align-middle">
-				Your device is too small and these visualization tools require large viewports to be
-				meaningfully usable! Please switch tablet or desktop computer.
+				Your device is too small. This visualization tool requires a large viewport to be used
+				meaningfully! Please switch tablet or desktop computer.
 			</p>
 		</div>
 	</div>
