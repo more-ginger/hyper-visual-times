@@ -18,7 +18,6 @@
 	const scroller = scrollama();
 	let step = $state(0);
 	let networkMounted = $state(false);
-	let w = $state(0);
 
 	$effect(() => {
 		scroller
@@ -47,7 +46,7 @@
 	<p>Waiting for data</p>
 {:then data}
 	<div
-		class="bg-ivory-default/90 fixed fixed z-100 h-[200vh] w-[100vw] overflow-hidden backdrop-blur-sm md:hidden"
+		class="bg-ivory-default/90 fixed fixed z-100 h-[200vh] w-full overflow-hidden backdrop-blur-sm md:hidden"
 	>
 		<div class="flex h-[98vh]">
 			<p class="m-4 inline-block self-center text-center align-middle">
@@ -57,11 +56,11 @@
 		</div>
 	</div>
 	<div
-		class="base m-auto w-11/12 overflow-hidden pt-20 md:overflow-scroll"
+		class="base m-auto w-11/12 pt-20"
 		class:opacity-0={!networkMounted}
 		class:opacity-100={networkMounted}
 	>
-		<div id="places-essay" bind:clientWidth={w}>
+		<div id="places-essay">
 			<section id="intro" class="mb-30">
 				<div class="m-auto w-full md:w-3/7">
 					<BlocksRenderer rawtext={rawIntroText} />
