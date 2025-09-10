@@ -18,6 +18,8 @@ export interface countryDataForComparison {
     country: string,
     count_zeit: number,
     count_nyt: number,
+    coords: number[],
+    iso: string,
     [key: `ids_of_articles_${string}`]: string[]
 }
 
@@ -101,3 +103,10 @@ export interface renderedLinks {
         y:number
     }
 }
+
+
+export interface MapContext {
+		register: (fn: (ctx: CanvasRenderingContext2D) => void,priority?: number) => void;
+		deregister: (fn: (ctx: CanvasRenderingContext2D) => void) => void;
+		invalidate: () => void;
+	};

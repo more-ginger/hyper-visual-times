@@ -46,6 +46,16 @@
 	<p>Waiting for data</p>
 {:then data}
 	<div
+		class="bg-ivory-default/90 fixed fixed z-100 h-[200vh] w-full overflow-hidden backdrop-blur-sm md:hidden"
+	>
+		<div class="flex h-[98vh]">
+			<p class="m-4 inline-block self-center text-center align-middle">
+				Your device is too small. This visualization tool requires a large viewport to be used
+				meaningfully! Please switch tablet or desktop computer.
+			</p>
+		</div>
+	</div>
+	<div
 		class="base m-auto w-11/12 pt-20"
 		class:opacity-0={!networkMounted}
 		class:opacity-100={networkMounted}
@@ -186,7 +196,7 @@
 					<NetworkContainer data={data.data} onMounted={handleNetworkMount} />
 				</figure>
 			</section>
-			<section id="outro">
+			<section class="mt-2" id="outro">
 				<div class="m-auto w-full md:w-3/7">
 					<BlocksRenderer rawtext={rawOutroText} />
 				</div>
