@@ -6,6 +6,7 @@
 	let { data, onMounted = () => {} } = $props();
 	const outlets = ['zeit', 'nyt'];
 	let selectedOutlet = $state(outlets[0]);
+	let isHelp = $state(false);
 
 	// The first dropdown lets the user
 	// select the primary country for analysis
@@ -114,21 +115,54 @@
 		return links;
 	});
 
+	function toggleHelp() {
+		isHelp = !isHelp;
+	}
+
 	onMount(() => {
 		onMounted();
 	});
 </script>
 
-<div class="flex w-full">
+<div class="relative flex w-full">
+	{#if isHelp}
+		<div
+			class="bg-ivory-default/75 absolute top-[6vh] left-[30vw] z-9000 w-90 rounded-sm border p-4 text-sm backdrop-blur-sm"
+		>
+			<p class="py-2">
+				This visualization tool lets you explore coverage shared between geographic entities, namely
+				articles that mention both. You can:
+			</p>
+			<ul class="list-inside list-decimal">
+				<li class="pb-2">Use the dropdown menu to select a new country or region.</li>
+				<li class="pb-2">
+					Use the toggle at the top right of the screen to switch between outlets.
+				</li>
+				<li class="pb-2">
+					Use the card at the bottom right of the screen to see the shared coverage between two
+					countries.
+				</li>
+				<li class="pb-2">
+					Zoom in and out using the toggles above the bottom right card. This will allow you to
+					shift focus between a close view of the country and a broader overview.
+				</li>
+			</ul>
+		</div>
+	{/if}
 	<div class="mr-10 flex w-full justify-between">
 		<div>
-			<h5>
+			<h3 class="font-serif text-xl">
 				What other countries share coverage with
 				<span>
 					<Dropdown availableFilter={dropdownData} bind:selected={primaryCountryKey} />
 				</span>
 				?
-			</h5>
+				<span
+					class="cursor-pointer rounded-xl border p-2 text-xs"
+					onmouseenter={toggleHelp}
+					onmouseleave={toggleHelp}>i</span
+				>
+			</h3>
 		</div>
 		<div>
 			<div class="flex justify-end">

@@ -215,7 +215,7 @@
 				onclick={() => {
 					isZoomedOut = true;
 					//revertZoom();
-				}}>Zoom out to world view</button
+				}}>Zoom out</button
 			>
 			<button
 				disabled={!isZoomedOut}
@@ -223,7 +223,7 @@
 				onclick={() => {
 					isZoomedOut = false;
 					//zoomToCountry();
-				}}>Zoom to country</button
+				}}>Zoom to selection</button
 			>
 		</div>
 		<div class="bg-ivory-default/50 border-ivory-dark h-full rounded-xl border backdrop-blur-sm">
@@ -255,7 +255,7 @@
 								>
 									<div>
 										<div class="flex justify-between">
-											<h5 class="max-w-[140px] truncate bg-red-100">#{n + 1} {node.country}</h5>
+											<h5 class="max-w-[140px] truncate">#{n + 1} {node.country}</h5>
 											<button
 												class="left-0 transition-all hover:-translate-y-0.5 hover:shadow-sm"
 												onclick={() => {
