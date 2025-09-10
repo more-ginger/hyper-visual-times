@@ -14,7 +14,7 @@
 	const { nodes, links, selectedOutlet, primaryCountryKey, onDropdownChange } = $props();
 	let w = $state(0);
 	let h = $state(0);
-	let start: number | undefined;
+
 	let initialProjectionVariables: {
 		scale: number;
 		translate: number[];
@@ -25,7 +25,13 @@
 		center: [0, 0]
 	});
 
+	let start: number | undefined;
+	let panProgress: number | undefined = $state(0);
 	let isAnimationRunning: boolean = $state(false);
+
+	let startScaleAnimation: number | undefined;
+	let isScaleAnimationRunning: boolean = $state(false);
+
 	let isZoomedOut: boolean = $state(false);
 	let currentLatPos = $state(0);
 	let currentLongPos = $state(0);
@@ -65,11 +71,11 @@
 	);
 
 	function revertZoom() {
-		initialProjectionVariables.scale = w / 6;
-
-		initialProjectionVariables.center = [0, 0];
 		currentLatPos = 0;
 		currentLongPos = 0;
+		initialProjectionVariables.center = [0, 0];
+		initialProjectionVariables.scale = w / 6;
+
 		//requestAnimationFrame(panToCenter);
 	}
 
@@ -78,6 +84,35 @@
 		if (currentFeatureCentroid !== null) {
 			initialProjectionVariables.center = currentFeatureCentroid;
 			requestAnimationFrame(panToCenter);
+		}
+	}
+
+	function scaleToCountry(timestamp: number) {
+		if (!isScaleAnimationRunning && !isAnimationRunning) {
+			startScaleAnimation = undefined;
+		}
+
+		if (startScaleAnimation === undefined) {
+			startScaleAnimation = timestamp;
+			isScaleAnimationRunning = true;
+		}
+
+		const initialScale = w / 6; // Starting scale
+		const targetScale = w / 2; // Target scale
+		const elapsed = timestamp - startScaleAnimation;
+		const duration = 1000; // Animation duration in ms
+		const progress = Math.min(elapsed / duration, 1);
+		const easedProgress = easeInOutQuad(progress);
+
+		// Interpolate between initial and target scale
+		initialProjectionVariables.scale = initialScale + (targetScale - initialScale) * easedProgress;
+
+		if (progress < 1) {
+			requestAnimationFrame(scaleToCountry);
+			isScaleAnimationRunning = true;
+		} else {
+			start = undefined;
+			isScaleAnimationRunning = false;
 		}
 	}
 
@@ -104,7 +139,7 @@
 	let initialLong = initialProjectionVariables.center[1];
 
 	function panToCenter(timestamp: number) {
-		if (!isAnimationRunning) {
+		if (!isScaleAnimationRunning && !isAnimationRunning) {
 			start = undefined;
 		}
 
@@ -119,7 +154,7 @@
 		const endLat = initialProjectionVariables.center[0];
 		const endLong = initialProjectionVariables.center[1];
 		const elapsed = timestamp - start;
-		const duration = 2000; // Animation duration in ms (adjust as needed)
+		const duration = 1000; // Animation duration in ms (adjust as needed)
 		const progress = Math.min(elapsed / duration, 1);
 		// Apply easing (e.g., ease-in-out)
 		const easedProgress = easeInOutQuad(progress);
@@ -131,9 +166,11 @@
 		if (progress < 1) {
 			requestAnimationFrame(panToCenter);
 			isAnimationRunning = true;
+			panProgress = progress;
 		} else {
 			start = undefined;
 			isAnimationRunning = false;
+			panProgress = undefined;
 		}
 	}
 
@@ -152,6 +189,7 @@
 			revertZoom();
 		} else {
 			if (nodes[0][`count_${selectedOutlet}`] > 0) {
+				console.log('effect zoomToCountry');
 				zoomToCountry();
 			} else {
 				if (nodes[0][`count_${selectedOutlet}`] === 0) {
@@ -207,10 +245,10 @@
 			{/if}
 		</Canvas>
 	</div>
-	<div class="absolute right-0 bottom-10 h-100 w-80">
+	<div class="absolute bottom-10 left-0 h-100 w-80">
 		<div class="mb-2">
 			<button
-				disabled={isZoomedOut}
+				disabled={isZoomedOut || panProgress !== undefined}
 				class="bg-ivory-default disabled:border-gray-500 disabled:text-gray-500"
 				onclick={() => {
 					isZoomedOut = true;
@@ -222,6 +260,7 @@
 				class="bg-ivory-default disabled:border-gray-500 disabled:text-gray-500"
 				onclick={() => {
 					isZoomedOut = false;
+					requestAnimationFrame(scaleToCountry);
 					//zoomToCountry();
 				}}>Zoom to selection</button
 			>
