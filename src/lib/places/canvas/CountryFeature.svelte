@@ -47,6 +47,14 @@
 			ctx.strokeStyle = 'red';
 			ctx.stroke();
 
+			ctx.beginPath();
+			ctx.arc(0, 0, 3, 0, Math.PI * 2);
+			ctx.fillStyle = 'red';
+			ctx.strokeStyle = colors.darkAccentHex;
+			ctx.lineWidth = 2;
+			ctx.stroke();
+			ctx.fill();
+
 			if (projection.scale() > 400) {
 				const txt = node.country;
 

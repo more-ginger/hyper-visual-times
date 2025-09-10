@@ -36,23 +36,32 @@
 		ctx.clip();
 		ctx.fillStyle = 'transparent';
 		ctx.stroke();
-
+		//console.log(currentNode);
 		if (link) {
-			ctx.beginPath();
-			ctx.moveTo(sourceCentroid[0], sourceCentroid[1]);
-			ctx.lineTo(targetCentroid[0], targetCentroid[1]);
-			ctx.lineWidth = linkWeightScale(link.weight);
-			ctx.globalAlpha = link.priority > 0 ? 1 : 0;
-			ctx.strokeStyle =
-				currentNode && link.target === currentNode.country ? 'red' : colors.darkAccentHex;
-			ctx.stroke();
+			if (currentNode) {
+				ctx.beginPath();
+				ctx.moveTo(sourceCentroid[0], sourceCentroid[1]);
+				ctx.lineTo(targetCentroid[0], targetCentroid[1]);
+				ctx.lineWidth = linkWeightScale(link.weight);
+				ctx.globalAlpha = link.priority > 0 ? 1 : 0;
+				ctx.strokeStyle = currentNode.country === link.target ? 'red' : 'transparent';
+				ctx.stroke();
+			} else {
+				ctx.beginPath();
+				ctx.moveTo(sourceCentroid[0], sourceCentroid[1]);
+				ctx.lineTo(targetCentroid[0], targetCentroid[1]);
+				ctx.lineWidth = linkWeightScale(link.weight);
+				ctx.globalAlpha = link.priority > 0 ? 1 : 0;
+				ctx.strokeStyle = colors.darkAccentHex;
+				ctx.stroke();
 
-			ctx.translate(targetCentroid[0], targetCentroid[1]);
-			ctx.beginPath();
-			ctx.arc(0, 0, 3, 0, 2 * Math.PI);
-			ctx.globalAlpha = 1;
-			ctx.fillStyle = colors.darkAccentHex;
-			ctx.fill();
+				ctx.translate(targetCentroid[0], targetCentroid[1]);
+				ctx.beginPath();
+				ctx.arc(0, 0, 3, 0, 2 * Math.PI);
+				ctx.globalAlpha = 1;
+				ctx.fillStyle = colors.darkAccentHex;
+				ctx.fill();
+			}
 		}
 	}
 

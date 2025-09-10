@@ -90,7 +90,6 @@
 
 	setContext(contextName, {
 		register(fn: (ctx: CanvasRenderingContext2D | null) => void, priority: number = 0) {
-			console.log(priority);
 			drawFunctions.push({ fn, priority });
 		},
 		deregister(fn: (ctx: CanvasRenderingContext2D | null) => void) {

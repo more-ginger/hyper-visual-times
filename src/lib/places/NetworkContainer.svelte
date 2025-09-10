@@ -21,7 +21,7 @@
 	);
 
 	// Set the primary country to calc overlaps
-	let primaryCountry = $state(dropdownData.find((d: { key: string }) => d.key == 'Japan'));
+	let primaryCountry = $state(dropdownData.find((d: { key: string }) => d.key == 'Germany'));
 
 	let primaryCountryKey = $state(primaryCountry.key);
 

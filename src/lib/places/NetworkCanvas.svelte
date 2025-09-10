@@ -15,21 +15,27 @@
 	let w = $state(0);
 	let h = $state(0);
 	let start: number | undefined;
-	let initialProjectionVariables = $state({
+	let initialProjectionVariables: {
+		scale: number;
+		translate: number[];
+		center: number[];
+	} = $state({
 		scale: 0,
 		translate: [0, 0],
 		center: [0, 0]
 	});
 
+	let isAnimationRunning: boolean = $state(false);
+	let isZoomedOut: boolean = $state(false);
 	let currentLatPos = $state(0);
 	let currentLongPos = $state(0);
+	let currentFeatureCentroid: number[] | null = $state(null);
 	let currentCenter = $derived([currentLatPos, currentLongPos]);
-	let isAnimationRunning = $state(false);
 
 	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
 
-	let isListMode = $state(true);
+	let isListMode: boolean = $state(true);
 	let currentNode: countryDataForComparison | null = $state(null);
 
 	const orderedListOfNodes = $derived(
@@ -60,31 +66,32 @@
 
 	function revertZoom() {
 		initialProjectionVariables.scale = w / 6;
-		initialProjectionVariables.translate = [w / 2, h / 2];
+
+		initialProjectionVariables.center = [0, 0];
+		currentLatPos = 0;
+		currentLongPos = 0;
+		//requestAnimationFrame(panToCenter);
 	}
 
 	function zoomToCountry() {
 		initialProjectionVariables.scale = w / 2;
-
-		if (
-			currentLatPos !== initialProjectionVariables.center[0] ||
-			currentLongPos !== initialProjectionVariables.center[1]
-		) {
+		if (currentFeatureCentroid !== null) {
+			initialProjectionVariables.center = currentFeatureCentroid;
 			requestAnimationFrame(panToCenter);
 		}
 	}
 
 	function extractCurrentNode(node: countryDataForComparison) {
-		console.log(node);
 		currentNode = node;
 	}
 
 	function onFeaturesDraw(data: { centroid: [number] }) {
-		initialProjectionVariables.center = data.centroid;
+		currentFeatureCentroid = data.centroid;
 	}
 
 	function onCardReset() {
 		if (!isListMode) {
+			currentNode = null;
 			isListMode = true;
 		}
 	}
@@ -138,22 +145,23 @@
 	onMount(() => {
 		initialProjectionVariables.translate = [w / 2, h / 2];
 		initialProjectionVariables.scale = w / 6;
-		currentLatPos = initialProjectionVariables.center[0];
-		currentLongPos = initialProjectionVariables.center[1];
 	});
 
 	$effect(() => {
-		if (initialProjectionVariables.center && nodes[0][`count_${selectedOutlet}`] > 0) {
-			zoomToCountry();
-		}
-
-		if (nodes[0][`count_${selectedOutlet}`] === 0) {
-			initialProjectionVariables.scale = w / 6;
-			currentLatPos = 0;
-			currentLongPos = 0;
+		if (isZoomedOut) {
+			revertZoom();
+		} else {
+			if (nodes[0][`count_${selectedOutlet}`] > 0) {
+				zoomToCountry();
+			} else {
+				if (nodes[0][`count_${selectedOutlet}`] === 0) {
+					revertZoom();
+				}
+			}
 		}
 
 		if (primaryCountryKey) {
+			currentNode = null;
 			isListMode = true;
 		}
 	});
@@ -203,15 +211,19 @@
 	<div class="absolute right-0 bottom-10 h-100 w-80">
 		<div class="mb-2">
 			<button
-				class="bg-ivory-default"
+				disabled={isZoomedOut}
+				class="bg-ivory-default disabled:border-gray-500 disabled:text-gray-500"
 				onclick={() => {
-					revertZoom();
-				}}>Zoom out</button
+					isZoomedOut = true;
+					//revertZoom();
+				}}>Zoom out to world view</button
 			>
 			<button
-				class="bg-ivory-default"
+				disabled={!isZoomedOut}
+				class="bg-ivory-default disabled:border-gray-500 disabled:text-gray-500"
 				onclick={() => {
-					zoomToCountry();
+					isZoomedOut = false;
+					//zoomToCountry();
 				}}>Zoom to country</button
 			>
 		</div>
@@ -223,24 +235,31 @@
 							Countries sharing coverage with {primaryCountryKey} in {selectedOutlet}
 						</p>
 					</div>
-					<div class="h-83 overflow-scroll p-2">
+					<div class="h-83 overflow-scroll py-2">
 						{#each orderedListOfNodes as node, n}
 							{#if node.country !== primaryCountryKey}
-								<div class="py-2">
+								<div
+									class="cursor-crosshair px-2 py-2 hover:bg-white hover:text-red-500 hover:shadow-sm"
+									role="button"
+									tabindex="0"
+									onmouseenter={() => {
+										extractCurrentNode(node);
+									}}
+									onmouseleave={() => {
+										currentNode = null;
+									}}
+								>
 									<div>
 										<div class="flex justify-between">
 											<h5>#{n + 1} {node.country}</h5>
 											<button
+												class="text-sm"
 												onclick={() => {
 													isListMode = false;
-													extractCurrentNode(node);
 												}}
-												>{node.shared_articles.length} shared articles
+												>Browse {node.shared_articles.length} articles
 												<img class="mx-auto inline" src="icons/ui-forward.svg" alt="arrow right" />
 											</button>
-										</div>
-										<div>
-											<p>Keywords</p>
 										</div>
 									</div>
 								</div>

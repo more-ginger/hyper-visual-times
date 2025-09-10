@@ -88,6 +88,11 @@
 
 <div class=" h-99 overflow-scroll rounded-xl">
 	<div class=" bg-ivory-default sticky top-0 flex justify-between px-2 pt-2">
+		<div>
+			<button onclick={resetCard}
+				><img src="icons/ui-forward.svg" class="rotate-180 py-2" alt="arrow back" /></button
+			>
+		</div>
 		<div class="flex pt-1">
 			<div class="pr-2">{primaryCountryKey}</div>
 			<div class="pr-2">
@@ -103,14 +108,9 @@
 				/ {currentNode.shared_articles.length}
 			</div>
 		</div>
-		<div>
-			<button onclick={resetCard}
-				><img src="icons/ui-forward.svg" class="rotate-180 py-2" alt="arrow back" /></button
-			>
-		</div>
 	</div>
 	<div>
-		<div class="px-2 pb-3 text-left text-xs">
+		<div class="px-2 py-3 text-right text-xs">
 			<button
 				onclick={() => {
 					changePrimaryCountry(currentNode.country);
