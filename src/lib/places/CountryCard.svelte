@@ -94,11 +94,19 @@
 			>
 		</div>
 		<div class="flex pt-1">
-			<div class="pr-2">{primaryCountryKey}</div>
+			<div class="pr-2">
+				{primaryCountryKey === 'The Democratic Republic of the Congo'
+					? 'DR of Congo'
+					: primaryCountryKey}
+			</div>
 			<div class="pr-2">
 				<img class="mx-auto inline" src="icons/ui-forward.svg" alt="arrow right" />
 			</div>
-			<div class="pr-2">{currentNode.country}</div>
+			<div class="pr-2">
+				{currentNode.country === 'The Democratic Republic of the Congo'
+					? 'DR of Congo'
+					: currentNode.country}
+			</div>
 			<div class="pr-2">
 				{#if lastArticleIndex < currentNode.shared_articles.length}
 					{lastArticleIndex}
@@ -115,7 +123,10 @@
 				onclick={() => {
 					changePrimaryCountry(currentNode.country);
 				}}
-				class="border-red-500 text-red-500">Set {currentNode.country} as primary country</button
+				class="border-red-500 text-red-500"
+				>Set {currentNode.country === 'The Democratic Republic of the Congo'
+					? 'DR of Congo'
+					: currentNode.country} as primary country</button
 			>
 		</div>
 	</div>

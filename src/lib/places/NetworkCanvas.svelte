@@ -183,7 +183,6 @@
 					{link}
 					{projection}
 					{borderProjection}
-					{primaryCountryKey}
 					{currentNode}
 					{linkWeightDomain}
 					colors={{ darkAccentHex, lightAccentHex }}
@@ -232,8 +231,10 @@
 				<div>
 					<div class="h-14 border-b text-center italic">
 						<p class="m-2">
-							There are {nodes.length} countries sharing coverage with {primaryCountryKey} in {selectedOutlet ===
-							'zeit'
+							There are {nodes.length} countries sharing coverage with {primaryCountryKey ===
+							'The Democratic Republic of the Congo'
+								? 'DR of Congo'
+								: primaryCountryKey} in {selectedOutlet === 'zeit'
 								? 'Zeit Online'
 								: 'The New York Times'}
 						</p>
@@ -254,7 +255,7 @@
 								>
 									<div>
 										<div class="flex justify-between">
-											<h5>#{n + 1} {node.country}</h5>
+											<h5 class="max-w-[140px] truncate bg-red-100">#{n + 1} {node.country}</h5>
 											<button
 												class="left-0 transition-all hover:-translate-y-0.5 hover:shadow-sm"
 												onclick={() => {
