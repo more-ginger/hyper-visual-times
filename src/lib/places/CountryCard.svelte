@@ -86,7 +86,7 @@
 	});
 </script>
 
-<div class=" h-99 overflow-scroll rounded-xl">
+<div class="w-full overflow-scroll rounded-xl md:h-99">
 	<div class=" bg-ivory-default sticky top-0 flex justify-between px-2 pt-2">
 		<div>
 			<button onclick={resetCard}

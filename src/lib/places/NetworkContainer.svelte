@@ -134,38 +134,51 @@
 				articles that mention both. You can:
 			</p>
 			<ul class="list-inside list-decimal">
-				<li class="pb-2">Use the dropdown menu to select a new country or region.</li>
 				<li class="pb-2">
-					Use the toggle at the top right of the screen to switch between outlets.
+					Use the dropdown menu <img
+						class="inline rotate-180"
+						src="/icons/ui-scroll.svg"
+						alt="arrow up label"
+					/>
+					to select a new country or region.
 				</li>
 				<li class="pb-2">
-					Use the card at the bottom right of the screen to see the shared coverage between two
-					countries.
+					Use the toggle <img class="inline" src="/icons/ui-switch.svg" alt="switch label" /> at the
+					top right of the screen to switch between outlets.
 				</li>
 				<li class="pb-2">
-					Zoom in and out using the toggles above the bottom right card. This will allow you to
-					shift focus between a close view of the country and a broader overview.
+					Use the card <img class="inline" src="/icons/ui-interact.svg" alt="interact label" /> at the
+					bottom left of the screen to see the shared coverage between two countries.
+				</li>
+				<li class="pb-2">
+					Zoom in and out using the toggles <img
+						class="inline"
+						src="/icons/ui-interact.svg"
+						alt="interact label"
+					/> above the bottom left card. This will allow you to shift focus between a close view of the
+					country and a broader overview.
 				</li>
 			</ul>
 		</div>
 	{/if}
-	<div class="mr-10 flex w-full justify-between">
+	<div class="w-full lg:mr-10 lg:flex lg:justify-between">
+		<h3 class="text-center font-serif text-xl lg:text-left">
+			What other countries share coverage with
+			<span>
+				<Dropdown availableFilter={dropdownData} bind:selected={primaryCountryKey} />
+			</span>
+			?
+			<span
+				role="button"
+				tabindex="0"
+				aria-label="Show help"
+				class="cursor-pointer rounded-xl border p-2 text-xs"
+				onmouseenter={toggleHelp}
+				onmouseleave={toggleHelp}>i</span
+			>
+		</h3>
 		<div>
-			<h3 class="font-serif text-xl">
-				What other countries share coverage with
-				<span>
-					<Dropdown availableFilter={dropdownData} bind:selected={primaryCountryKey} />
-				</span>
-				?
-				<span
-					class="cursor-pointer rounded-xl border p-2 text-xs"
-					onmouseenter={toggleHelp}
-					onmouseleave={toggleHelp}>i</span
-				>
-			</h3>
-		</div>
-		<div>
-			<div class="flex justify-end">
+			<div class="flex justify-center p-2 lg:justify-end lg:p-0">
 				<div class="m-2">
 					<button
 						class={selectedOutlet === outlets[0] ? `bg-zeit-light` : `bg-default`}

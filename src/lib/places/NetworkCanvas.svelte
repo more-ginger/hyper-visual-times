@@ -205,8 +205,8 @@
 	});
 </script>
 
-<div class="relative">
-	<div class="h-150 w-full rounded-xl" bind:clientWidth={w} bind:clientHeight={h}>
+<div class="relative h-220 md:h-140">
+	<div class="h-100 w-full rounded-xl lg:h-150" bind:clientWidth={w} bind:clientHeight={h}>
 		<Canvas {w} {h} contextName={'map'}>
 			<Map
 				{World}
@@ -241,11 +241,11 @@
 					/>
 				{/each}
 			{:else}
-				<DataPlaceholder {w} {h} />
+				<DataPlaceholder {w} {h} colors={{ darkAccentHex, lightAccentHex }} />
 			{/if}
 		</Canvas>
 	</div>
-	<div class="absolute bottom-10 left-0 h-100 w-80">
+	<div class="md:absolute md:bottom-0 md:left-0 md:w-80">
 		<div class="mb-2">
 			<button
 				disabled={isZoomedOut || panProgress !== undefined}
@@ -253,7 +253,7 @@
 				onclick={() => {
 					isZoomedOut = true;
 					//revertZoom();
-				}}>Zoom out</button
+				}}>- Zoom out</button
 			>
 			<button
 				disabled={!isZoomedOut}
@@ -262,7 +262,7 @@
 					isZoomedOut = false;
 					requestAnimationFrame(scaleToCountry);
 					//zoomToCountry();
-				}}>Zoom to selection</button
+				}}>+ Zoom to selection</button
 			>
 		</div>
 		<div class="bg-ivory-default/50 border-ivory-dark h-full rounded-xl border backdrop-blur-sm">

@@ -186,7 +186,7 @@
 					<NetworkContainer data={data.data} onMounted={handleNetworkMount} />
 				</figure>
 			</section>
-			<section id="outro">
+			<section class="mt-2" id="outro">
 				<div class="m-auto w-full md:w-3/7">
 					<BlocksRenderer rawtext={rawOutroText} />
 				</div>
