@@ -56,8 +56,6 @@
 		return overlaps;
 	});
 
-	$inspect(nodes);
-
 	let links = $derived.by(() => {
 		const links: Record<string, { source: string; target: string; weight: number }[]> = {};
 

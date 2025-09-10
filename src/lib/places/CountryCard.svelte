@@ -57,8 +57,6 @@
 		})
 	);
 
-	$inspect(orderedArticles);
-
 	function resetCard() {
 		onCardReset();
 	}
@@ -86,8 +84,6 @@
 			fetchArticles(currentNode);
 		}
 	});
-
-	$inspect(firstArticleIndex, lastArticleIndex);
 </script>
 
 <div class=" h-99 overflow-scroll rounded-xl">

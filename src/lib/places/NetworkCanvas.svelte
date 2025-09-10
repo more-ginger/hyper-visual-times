@@ -9,6 +9,7 @@
 	import CountryFeature from './canvas/CountryFeature.svelte';
 	import LinkBetweenCountries from './canvas/LinkBetweenCountries.svelte';
 	import DataPlaceholder from './canvas/DataPlaceholder.svelte';
+	import type { countryDataForComparison } from '../../types';
 
 	const { nodes, links, selectedOutlet, primaryCountryKey, onDropdownChange } = $props();
 	let w = $state(0);
@@ -29,7 +30,7 @@
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
 
 	let isListMode = $state(true);
-	let currentNode = $state(null);
+	let currentNode: countryDataForComparison | null = $state(null);
 
 	const orderedListOfNodes = $derived(
 		[...nodes].sort((a, b) => b.shared_articles.length - a.shared_articles.length)
@@ -69,24 +70,14 @@
 			currentLatPos !== initialProjectionVariables.center[0] ||
 			currentLongPos !== initialProjectionVariables.center[1]
 		) {
-			setTimeout(() => {
-				requestAnimationFrame(panToCenter);
-			}, 100);
 			requestAnimationFrame(panToCenter);
 		}
 	}
 
-	function extractCurrentNode(node) {
+	function extractCurrentNode(node: countryDataForComparison) {
+		console.log(node);
 		currentNode = node;
 	}
-
-	// function extractCurrentFeature(iso: string) {
-	// 	const currentNodeFeature = World.features.find((feature) => {
-	// 		return feature.properties.adm0_a3 === iso || feature.properties.iso_a3 === iso;
-	// 	});
-
-	// 	return currentNodeFeature;
-	// }
 
 	function onFeaturesDraw(data: { centroid: [number] }) {
 		initialProjectionVariables.center = data.centroid;
