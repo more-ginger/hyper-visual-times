@@ -12,6 +12,7 @@
 	let simulation;
 	let finalClusters: cluster[] = $state([]);
 	let clusterRadius = $derived(width / 2);
+	const maxRangeRadius = $derived(width <= 800 ? 90 : 180);
 	let categories = $derived(TopicClusters.map((d: { group: string }) => d.group));
 	let uniqueCategories = $derived(
 		categories.filter((value: string, index: number, array: string[]) => {
@@ -43,7 +44,7 @@
 					})
 				)
 			)
-			.range([12, 180])
+			.range([12, maxRangeRadius])
 	);
 
 	const categoryScale = $derived(

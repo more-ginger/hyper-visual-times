@@ -31,10 +31,11 @@
 	}
 </script>
 
-<div class="m-2">
-	<div class="mb-2 flex items-center justify-between">
-		<p class="border-b font-serif text-xs">{selectedCluster[0].manualLabel}</p>
+<div class="m-2 h-20 lg:h-full">
+	<div class="mb-2 flex justify-between text-center">
+		<p class="hidden border-b font-serif text-xs lg:block">{selectedCluster[0].manualLabel}</p>
 		<button
+			class="m-auto lg:m-0"
 			onclick={() => {
 				handleClusterSelection();
 			}}
@@ -47,7 +48,7 @@
 			>Go to Network</button
 		>
 	</div>
-	<div class="h-70 w-full" bind:clientWidth={width} bind:clientHeight={height}>
+	<div class="hidden h-70 w-full lg:block" bind:clientWidth={width} bind:clientHeight={height}>
 		<svg {width} {height}>
 			<g class="-translate-y-2">
 				{#each data as word, w}
@@ -55,7 +56,7 @@
 						x={xScale(w)}
 						y={height - yScale(word.value)}
 						width="10"
-						height={yScale(word.value)}
+						height={Math.abs(yScale(word.value))}
 					/>
 				{/each}
 				<g>

@@ -37,11 +37,11 @@
 	}
 </script>
 
-<div class="base m-auto flex h-dvh pt-20 md:w-full">
-	<div class="flex h-full px-2 pb-2 md:w-full">
-		<div class="w-4/12">
-			<div class="">
-				<p class="text-sm">
+<div class="base m-auto flex h-dvh w-full pt-20">
+	<div class="h-full w-full px-2 pb-2 lg:flex">
+		<div class="w-full lg:w-4/12">
+			<div>
+				<p class="w-2/3 w-full text-sm md:w-2/3 lg:w-full">
 					One bubble represents a topic, a cluster of common words extracted from The New York
 					Times' articles. The most common topics are marked in <span
 						class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
@@ -65,24 +65,28 @@
 					>.
 				</p>
 			</div>
-			<div class="2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15">
-				<div class="mt-2 mb-6">
-					<p class="text-sm">Currently selected:</p>
-					<h1 class="my-2 font-serif text-xl md:text-2xl">
+			<div
+				class="fixed bottom-0 mb-2 h-40 w-[96vw] rounded-xl border lg:relative lg:w-full lg:border-none 2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15"
+			>
+				<div class="mt-2 mb-6 pt-2 pl-2 lg:p-0">
+					<p class="text-center text-sm md:text-left">Currently selected:</p>
+					<h1 class="my-2 text-center font-serif text-xl lg:text-left lg:text-2xl">
 						{selectedCluster[0].manualLabel}
 					</h1>
-					<p>
+					<p class="hidden lg:block">
 						{selectedCluster[0].description}
 					</p>
 				</div>
-				{#if selectionIsActive && !networkIsActive}
-					<ClusterBarchart {selectedCluster} {switchView} />
-				{:else}
-					<NetworkCard {selectedPair} {selectedIds} />
-				{/if}
+				<div>
+					{#if selectionIsActive && !networkIsActive}
+						<ClusterBarchart {selectedCluster} {switchView} />
+					{:else}
+						<NetworkCard {selectedPair} {selectedIds} />
+					{/if}
+				</div>
 			</div>
 		</div>
-		<div class="w-8/12">
+		<div class="mt-4 h-100 md:h-150 lg:mt-0 lg:h-full lg:w-8/12">
 			{#if selectionIsActive && !networkIsActive}
 				<BubbleChart {TopicClusters} {selectNewCluster} {switchView} {selectedClusterLabel} />
 			{:else}
