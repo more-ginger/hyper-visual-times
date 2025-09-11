@@ -31,7 +31,7 @@
 	}
 </script>
 
-<div class="m-2 h-20 lg:h-full">
+<div class="m-2 md:h-20 lg:h-full">
 	<div class="mb-2 flex justify-between text-center">
 		<p class="hidden border-b font-serif text-xs lg:block">{selectedCluster[0].manualLabel}</p>
 		<button

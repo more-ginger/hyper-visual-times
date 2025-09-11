@@ -23,7 +23,7 @@
 	});
 </script>
 
-<div class="rounded-xl border p-2">
+<div class="p-2 md:rounded-xl md:border">
 	<div class="flex justify-between border-b">
 		<div class="mb-2 rounded-xl bg-white p-2">
 			{selectedPair[0] ? selectedPair[0] : 'select first node'}

@@ -84,7 +84,7 @@
 	}
 </script>
 
-<div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
+<div class="h-100 w-full md:h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg {width} {height}>
 		{#await finalClusters then finalClusters}
 			{#each finalClusters as cluster, c}

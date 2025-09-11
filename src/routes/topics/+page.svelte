@@ -37,36 +37,45 @@
 	}
 </script>
 
-<div class="base m-auto flex h-dvh w-full pt-20">
+<div class="base m-auto flex h-dvh w-full pt-20 md:overflow-hidden">
 	<div class="h-full w-full px-2 pb-2 lg:flex">
 		<div class="w-full lg:w-4/12">
 			<div>
-				<p class="w-2/3 w-full text-sm md:w-2/3 lg:w-full">
-					One bubble represents a topic, a cluster of common words extracted from The New York
-					Times' articles. The most common topics are marked in <span
-						class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
-						>orange</span
-					>
-					and are related to foreign politics and conflict. followed by internal politics and economy
-					– here in
-					<span
-						class="rounded-xl border border-[#FFBC35] px-2 before:pr-1 before:text-[#FFBC35] before:content-['•']"
-						>yellow</span
-					>
-					. Miscellaneous topics like culture, health, society, and sports are represented in
-					<span
-						class="rounded-xl border border-[#FFDAB9] px-2 before:pr-1 before:text-[#FFDAB9] before:content-['•']"
-						>pink</span
-					>. Orange bubbles represent topics connected to foreign politics. Climate-related topics
-					are
-					<span
-						class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
-						>green</span
-					>.
-				</p>
+				{#if selectionIsActive && !networkIsActive}
+					<p class="w-2/3 w-full text-sm md:w-2/3 lg:w-full">
+						One bubble represents a topic, a cluster of common words extracted from The New York
+						Times' articles. The most common topics are marked in <span
+							class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
+							>orange</span
+						>
+						and are related to foreign politics and conflict. followed by internal politics and economy
+						– here in
+						<span
+							class="rounded-xl border border-[#FFBC35] px-2 before:pr-1 before:text-[#FFBC35] before:content-['•']"
+							>yellow</span
+						>
+						. Miscellaneous topics like culture, health, society, and sports are represented in
+						<span
+							class="rounded-xl border border-[#FFDAB9] px-2 before:pr-1 before:text-[#FFDAB9] before:content-['•']"
+							>pink</span
+						>. Orange bubbles represent topics connected to foreign politics. Climate-related topics
+						are
+						<span
+							class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
+							>green</span
+						>.
+					</p>
+				{:else}
+					<p>
+						One network represents how terms and words relate to each other across the articles'
+						corpus. Nodes are linked if terms are shared across one or more article in the corpus.
+						Select a pair of nodes to browse through the headlines of shared coverage. Drag nodes
+						apart to relax dense networks.
+					</p>
+				{/if}
 			</div>
 			<div
-				class="fixed bottom-0 mb-2 h-40 w-[96vw] rounded-xl border lg:relative lg:w-full lg:border-none 2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15"
+				class="fixed bottom-0 mb-2 h-40 w-[96vw] overflow-scroll rounded-xl border md:h-full md:overflow-hidden lg:relative lg:w-full lg:border-none 2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15"
 			>
 				<div class="mt-2 mb-6 pt-2 pl-2 lg:p-0">
 					<p class="text-center text-sm md:text-left">Currently selected:</p>
@@ -86,7 +95,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="mt-4 h-100 md:h-150 lg:mt-0 lg:h-full lg:w-8/12">
+		<div class="mt-4 h-110 md:h-150 lg:mt-0 lg:h-full lg:w-8/12">
 			{#if selectionIsActive && !networkIsActive}
 				<BubbleChart {TopicClusters} {selectNewCluster} {switchView} {selectedClusterLabel} />
 			{:else}
