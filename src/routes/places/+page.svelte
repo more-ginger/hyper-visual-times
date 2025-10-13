@@ -67,7 +67,7 @@
 				</div>
 			</section>
 			<section id="scrolly-2" class="md:flex md:flex-row-reverse">
-				<figure class="w-fullp-4 sticky top-0 h-dvh md:basis-2/3 xl:p-4 xl:pt-20">
+				<figure class="w-full p-4 sticky top-0 h-dvh md:basis-2/3 xl:p-4 xl:pt-20">
 					<VoronoiTreemap regionData={data.coverageByRegion} {step} />
 				</figure>
 				<article class="relative w-full md:basis-1/3">

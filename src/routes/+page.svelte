@@ -110,8 +110,8 @@
 										>
 									</li>
 									<li class="pb-4">
-										<button class="pointer-events-none flex items-center px-2 py-[2px]"
-											><div class="mr-[5px] h-[15px] w-[15px] rounded-xl bg-red-500"></div>
+										<button class="flex items-center px-2 py-[2px]"
+											><div class="mr-[5px] h-[15px] w-[15px] rounded-xl bg-green-500"></div>
 											<a href="/images">The language of images</a></button
 										>
 									</li>
