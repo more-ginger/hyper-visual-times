@@ -1,0 +1,283 @@
+[
+    {
+        "personA": "olaf-scholz",
+        "personB": "wolodimir-selenski",
+        "news_desks": {
+            "News": 6,
+            "Politik": 3
+        }
+    },
+    {
+        "personA": "friedrich-merz",
+        "personB": "olaf-scholz",
+        "news_desks": {
+            "Politik": 4,
+            "News": 3,
+            "Wirtschaft": 1
+        }
+    },
+    {
+        "personA": "friedrich-merz",
+        "personB": "robert-habeck",
+        "news_desks": {
+            "Politik": 3,
+            "News": 1,
+            "Wirtschaft": 1
+        }
+    },
+    {
+        "personA": "olaf-scholz",
+        "personB": "robert-habeck",
+        "news_desks": {
+            "Politik": 14,
+            "News": 10,
+            "Wirtschaft": 2
+        }
+    },
+    {
+        "personA": "friedrich-merz",
+        "personB": "markus-söder",
+        "news_desks": {
+            "News": 11,
+            "Politik": 3
+        }
+    },
+    {
+        "personA": "annalena-baerbock",
+        "personB": "christian-lindner",
+        "news_desks": {
+            "Politik": 1,
+            "News": 1
+        }
+    },
+    {
+        "personA": "annalena-baerbock",
+        "personB": "robert-habeck",
+        "news_desks": {
+            "Politik": 2,
+            "News": 1
+        }
+    },
+    {
+        "personA": "christian-lindner",
+        "personB": "robert-habeck",
+        "news_desks": {
+            "Politik": 12,
+            "News": 9,
+            "Wirtschaft": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "joe-biden",
+        "news_desks": {
+            "Politik": 15
+        }
+    },
+    {
+        "personA": "christian-lindner",
+        "personB": "olaf-scholz",
+        "news_desks": {
+            "Politik": 12,
+            "News": 6,
+            "Wirtschaft": 1
+        }
+    },
+    {
+        "personA": "michael-kretschmer",
+        "personB": "robert-habeck",
+        "news_desks": {
+            "News": 1,
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "annalena-baerbock",
+        "personB": "olaf-scholz",
+        "news_desks": {
+            "News": 3,
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "annalena-baerbock",
+        "personB": "wolodimir-selenski",
+        "news_desks": {
+            "News": 2
+        }
+    },
+    {
+        "personA": "dietmar-woidtke",
+        "personB": "michael-kretschmer",
+        "news_desks": {
+            "Politik": 2
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "Politik": 5,
+            "News": 2
+        }
+    },
+    {
+        "personA": "friedrich-merz",
+        "personB": "mario-voigt",
+        "news_desks": {
+            "News": 1,
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "vladimir-putin",
+        "news_desks": {
+            "Politik": 2
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "wolodimir-selenski",
+        "news_desks": {
+            "Politik": 5
+        }
+    },
+    {
+        "personA": "olaf-scholz",
+        "personB": "sahra-wagenknecht",
+        "news_desks": {
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "vladimir-putin",
+        "news_desks": {
+            "News": 1
+        }
+    },
+    {
+        "personA": "markus-söder",
+        "personB": "olaf-scholz",
+        "news_desks": {
+            "News": 1
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "olaf-scholz",
+        "news_desks": {
+            "Politik": 4,
+            "News": 1
+        }
+    },
+    {
+        "personA": "olaf-scholz",
+        "personB": "vladimir-putin",
+        "news_desks": {
+            "Politik": 2
+        }
+    },
+    {
+        "personA": "friedrich-merz",
+        "personB": "michael-kretschmer",
+        "news_desks": {
+            "News": 2,
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "markus-söder",
+        "personB": "michael-kretschmer",
+        "news_desks": {
+            "News": 4
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "Politik": 14,
+            "News": 4
+        }
+    },
+    {
+        "personA": "annalena-baerbock",
+        "personB": "dietmar-woidtke",
+        "news_desks": {
+            "News": 1
+        }
+    },
+    {
+        "personA": "michael-kretschmer",
+        "personB": "olaf-scholz",
+        "news_desks": {
+            "News": 1
+        }
+    },
+    {
+        "personA": "dietmar-woidtke",
+        "personB": "mario-voigt",
+        "news_desks": {
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "dietmar-woidtke",
+        "personB": "sahra-wagenknecht",
+        "news_desks": {
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "mario-voigt",
+        "personB": "michael-kretschmer",
+        "news_desks": {
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "mario-voigt",
+        "personB": "sahra-wagenknecht",
+        "news_desks": {
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "michael-kretschmer",
+        "personB": "sahra-wagenknecht",
+        "news_desks": {
+            "Politik": 2
+        }
+    },
+    {
+        "personA": "friedrich-merz",
+        "personB": "sahra-wagenknecht",
+        "news_desks": {
+            "Politik": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "wolodimir-selenski",
+        "news_desks": {
+            "Politik": 3,
+            "News": 2
+        }
+    },
+    {
+        "personA": "annalena-baerbock",
+        "personB": "sahra-wagenknecht",
+        "news_desks": {
+            "News": 1
+        }
+    },
+    {
+        "personA": "friedrich-merz",
+        "personB": "wolodimir-selenski",
+        "news_desks": {
+            "News": 1
+        }
+    }
+]

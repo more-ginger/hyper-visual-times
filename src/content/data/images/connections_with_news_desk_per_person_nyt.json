@@ -1,0 +1,261 @@
+[
+    {
+        "personA": "donald-trump",
+        "personB": "todd-blanche",
+        "news_desks": {
+            "Metro": 42,
+            "Politics": 13,
+            "Podcasts": 6
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "Graphics": 54,
+            "NYTNow": 14,
+            "OpEd": 11
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "jd-vance",
+        "news_desks": {
+            "Politics": 10,
+            "Business": 6,
+            "Washington": 3
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "Politics": 8,
+            "Washington": 5,
+            "OpEd": 3
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "robert-kennedy",
+        "news_desks": {
+            "NYTNow": 2,
+            "Washington": 2,
+            "Politics": 2
+        }
+    },
+    {
+        "personA": "benjamin-netanjahu",
+        "personB": "mike-johnson",
+        "news_desks": {
+            "NYTNow": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "joe-biden",
+        "news_desks": {
+            "Politics": 18,
+            "OpEd": 3,
+            "Business": 2
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "mike-johnson",
+        "news_desks": {
+            "Washington": 2,
+            "Politics": 2,
+            "NYTNow": 1
+        }
+    },
+    {
+        "personA": "kamala-harris",
+        "personB": "mike-johnson",
+        "news_desks": {
+            "Washington": 2,
+            "NYTNow": 1,
+            "Politics": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "vladimir-putin",
+        "news_desks": {
+            "Foreign": 1,
+            "Culture": 1,
+            "Metro": 1
+        }
+    },
+    {
+        "personA": "anthony-blinken",
+        "personB": "joe-biden",
+        "news_desks": {
+            "Foreign": 1,
+            "NYTNow": 1
+        }
+    },
+    {
+        "personA": "benjamin-netanjahu",
+        "personB": "vladimir-putin",
+        "news_desks": {
+            "Foreign": 1
+        }
+    },
+    {
+        "personA": "benjamin-netanjahu",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "OpEd": 1
+        }
+    },
+    {
+        "personA": "benjamin-netanjahu",
+        "personB": "joe-biden",
+        "news_desks": {
+            "Foreign": 2,
+            "NYTNow": 1,
+            "Podcasts": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "mike-johnson",
+        "news_desks": {
+            "Washington": 1,
+            "Podcasts": 1,
+            "Politics": 1
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "nikki-haley",
+        "news_desks": {
+            "OpEd": 1
+        }
+    },
+    {
+        "personA": "kamala-harris",
+        "personB": "tim-walz",
+        "news_desks": {
+            "NYTNow": 4,
+            "Politics": 3,
+            "Upshot": 2
+        }
+    },
+    {
+        "personA": "elon-musk",
+        "personB": "robert-kennedy",
+        "news_desks": {
+            "Climate": 1
+        }
+    },
+    {
+        "personA": "benjamin-netanjahu",
+        "personB": "donald-trump",
+        "news_desks": {
+            "BookReview": 1,
+            "Foreign": 1,
+            "Politics": 1
+        }
+    },
+    {
+        "personA": "jd-vance",
+        "personB": "mike-johnson",
+        "news_desks": {
+            "Politics": 2,
+            "Podcasts": 2,
+            "Business": 1
+        }
+    },
+    {
+        "personA": "jd-vance",
+        "personB": "tim-walz",
+        "news_desks": {
+            "OpEd": 4,
+            "Politics": 2,
+            "Election Analytics": 1
+        }
+    },
+    {
+        "personA": "anthony-blinken",
+        "personB": "benjamin-netanjahu",
+        "news_desks": {
+            "NYTNow": 1
+        }
+    },
+    {
+        "personA": "bob-menendez",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "Politics": 1
+        }
+    },
+    {
+        "personA": "jd-vance",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "National": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "elon-musk",
+        "news_desks": {
+            "Politics": 2,
+            "Washington": 1,
+            "Culture": 1
+        }
+    },
+    {
+        "personA": "elon-musk",
+        "personB": "jd-vance",
+        "news_desks": {
+            "OpEd": 1,
+            "Graphics": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "nikki-haley",
+        "news_desks": {
+            "OpEd": 1,
+            "Graphics": 1
+        }
+    },
+    {
+        "personA": "donald-trump",
+        "personB": "tim-walz",
+        "news_desks": {
+            "Editorial": 1
+        }
+    },
+    {
+        "personA": "elon-musk",
+        "personB": "joe-biden",
+        "news_desks": {
+            "Editorial": 1
+        }
+    },
+    {
+        "personA": "elon-musk",
+        "personB": "kamala-harris",
+        "news_desks": {
+            "Editorial": 1
+        }
+    },
+    {
+        "personA": "elon-musk",
+        "personB": "tim-walz",
+        "news_desks": {
+            "Editorial": 1
+        }
+    },
+    {
+        "personA": "joe-biden",
+        "personB": "tim-walz",
+        "news_desks": {
+            "Editorial": 1
+        }
+    }
+]
