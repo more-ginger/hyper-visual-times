@@ -19,8 +19,8 @@
 		const geoPathGenerator = d3.geoPath(projection, ctx);
 		const borderPathGenerator = d3.geoPath(borderProjection, ctx);
 
-		ctx.beginPath(), borderPathGenerator(outline);
-		ctx.clip();
+		//ctx.beginPath(), borderPathGenerator(outline);
+		//ctx.clip();
 		ctx.strokeStyle = colors.darkAccentHex;
 		ctx.lineWidth = 2;
 		ctx.fillStyle = 'transparent';
@@ -34,13 +34,13 @@
 		ctx.fill();
 		ctx.stroke();
 
-		ctx.beginPath();
-		borderPathGenerator(outline);
-		ctx.clip();
-		ctx.strokeStyle = colors.darkAccentHex;
-		ctx.lineWidth = 2;
-		ctx.fillStyle = 'transparent';
-		ctx.stroke();
+		// ctx.beginPath();
+		// borderPathGenerator(outline);
+		// ctx.clip();
+		// ctx.strokeStyle = colors.darkAccentHex;
+		// ctx.lineWidth = 2;
+		// ctx.fillStyle = 'transparent';
+		// ctx.stroke();
 	}
 
 	// boiler plate for in-canvas transition

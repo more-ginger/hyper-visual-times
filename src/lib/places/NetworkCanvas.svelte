@@ -220,7 +220,6 @@
 				<LinkBetweenCountries
 					{link}
 					{projection}
-					{borderProjection}
 					{currentNode}
 					{linkWeightDomain}
 					colors={{ darkAccentHex, lightAccentHex }}
@@ -232,7 +231,6 @@
 					<CountryFeature
 						{node}
 						{projection}
-						{borderProjection}
 						{primaryCountryKey}
 						{currentNode}
 						colors={{ darkAccentHex, lightAccentHex }}
