@@ -61,22 +61,11 @@
 			.translate(initialProjectionVariables.translate)
 	);
 
-	let borderProjection = $derived(
-		d3
-			.geoNaturalEarth1()
-			.fitSize([w, h], World)
-			.scale(w / 6)
-			.center([0, 0])
-			.translate([w / 2, h / 2])
-	);
-
 	function revertZoom() {
 		currentLatPos = 0;
 		currentLongPos = 0;
 		initialProjectionVariables.center = [0, 0];
 		initialProjectionVariables.scale = w / 6;
-
-		//requestAnimationFrame(panToCenter);
 	}
 
 	function zoomToCountry() {
@@ -206,12 +195,11 @@
 </script>
 
 <div class="relative h-220 md:h-140">
-	<div class="h-100 w-full rounded-xl lg:h-150" bind:clientWidth={w} bind:clientHeight={h}>
+	<div class="h-100 w-full rounded-xl lg:h-150 border" bind:clientWidth={w} bind:clientHeight={h}>
 		<Canvas {w} {h} contextName={'map'}>
 			<Map
 				{World}
 				{projection}
-				{borderProjection}
 				{primaryCountryKey}
 				colors={{ darkAccentHex, lightAccentHex }}
 				priority={0}
@@ -243,7 +231,7 @@
 			{/if}
 		</Canvas>
 	</div>
-	<div class="md:absolute md:bottom-0 md:left-0 md:w-80">
+	<div class="md:absolute md:top-5 md:left-5 md:w-80">
 		<div class="mb-2">
 			<button
 				disabled={isZoomedOut || panProgress !== undefined}
