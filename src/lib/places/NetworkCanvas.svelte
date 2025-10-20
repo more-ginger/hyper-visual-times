@@ -38,11 +38,12 @@
 	let currentFeatureCentroid: number[] | null = $state(null);
 	let currentCenter = $derived([currentLatPos, currentLongPos]);
 
+	let isListMode: boolean = $state(true);
+	let currentNode: countryDataForComparison | null = $state(null);
+
 	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
 
-	let isListMode: boolean = $state(true);
-	let currentNode: countryDataForComparison | null = $state(null);
 
 	const orderedListOfNodes = $derived(
 		[...nodes].sort((a, b) => b.shared_articles.length - a.shared_articles.length)
@@ -178,7 +179,6 @@
 			revertZoom();
 		} else {
 			if (nodes[0][`count_${selectedOutlet}`] > 0) {
-				console.log('effect zoomToCountry');
 				zoomToCountry();
 			} else {
 				if (nodes[0][`count_${selectedOutlet}`] === 0) {
