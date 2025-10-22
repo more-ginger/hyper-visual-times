@@ -158,7 +158,7 @@
 <div class="flex gap-2">
 	<BackwardButton bind:back={steamgraph}>Back to Overview</BackwardButton>
 	<p>
-		Detected <u>{people.reduce((acc, p) => acc + p.count, 0)} faces</u> across
+		Detected and labeled <u>{people.reduce((acc, p) => acc + p.count, 0)} faces</u> across
 		<u>{totalCounts == 0 ? '?' : totalCounts} articles</u>
 		between
 		<u
