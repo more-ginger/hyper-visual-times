@@ -224,8 +224,6 @@
         }
         function dragended(event, d) {
           if (!event.active) simulation.alphaTarget(0);
-          d.fx = null;
-          d.fy = null;
         }
         return d3.drag()
           .on("start", dragstarted)
