@@ -16,6 +16,7 @@
 	let heightDerived = $derived(height / 1.5);
 	let loaded = $state(false);
 	let xScale;
+	let yScale;
 	let axisGenerator;
 	let xAxisDescriptor;
 	let yAxisDescriptor;
@@ -24,6 +25,7 @@
 	let simulation;
 	const margin = { top: 60, right: 40, bottom: 60, left: 40 };
 	const circleRadius = 10;
+	$inspect(peopleSelected);
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
 		bubbles = svg.selectAll('.bubble');
@@ -44,6 +46,10 @@
 			.style('border', '0px')
 			.style('border-radius', '8px')
 			.style('pointer-events', 'none');
+		yScale = d3
+			.scaleLinear()
+			.domain([0, d3.max(peopleData, (d) => d.count)])
+			.range([4,100]);
 		// Scales
 		xScale = d3
 			.scaleTime()
@@ -163,13 +169,13 @@
 
 		loaded = true;
 		// Start with no bubbles shown
-		setupChart();
+		updateChart();
 	});
-	function setupChart() {
-		const nodes = peopleData
+	function updateChart() {
+		const nodes = peopleData.filter((d) => peopleSelected.includes(d.person))
 			.map((d) => {
 				let nodes = [];
-				for (let i = 0; i < Math.round(d.count / 15); i++) {
+				for (let i = 0; i < Math.round(d.count / 10); i++) {
 					nodes.push({
 						...d,
 						x: xScale(d.week),
@@ -177,6 +183,12 @@
 						r: circleRadius
 					});
 				}
+					// nodes.push({
+					// 	...d,
+					// 	x: xScale(d.week),
+					// 	y: heightDerived / 2 + (Math.random() - 0.5) * 50,
+					// 	r: yScale(d.count)
+					// });
 				return nodes;
 			})
 			.flat();
@@ -192,7 +204,7 @@
 				'collide',
 				d3.forceCollide((d) => d.r + 1.5)
 			)
-			.alphaDecay(0.1)
+			.alphaDecay(0.05)
 			.on('tick', ticked);
 
 		bubbles = bubbles.data(nodes, (d) => d.person + d.week);
@@ -201,8 +213,6 @@
 		function ticked() {
 			bubbles.attr('transform', (d) => `translate(${d.x}, ${d.y})`);
 		}
-	}
-	function updateChart() {
 		const entered = bubbles
 			.enter()
 			.append('g')
@@ -223,7 +233,7 @@
 
 		entered
 			.append('circle')
-			.attr('r', circleRadius)
+			.attr('r', circleRadius /*(d) => d.r*/)
 			.attr('stroke', 'black')
 			.attr('fill', 'var(--color-ivory-default)')
 			.attr('class', 'cursor-pointer')
@@ -251,20 +261,21 @@
 			.attr('y', -circleRadius)
 			.attr('class', 'pointer-events-none')
 			.attr('clip-path', `circle(${circleRadius}px at center)`);
+		// entered
+		// 	.append('image')
+		// 	.attr('xlink:href', (d) => `/img/people/${d.person}.webp`)
+		// 	.attr('width', d => d.r * 2)
+		// 	.attr('height', d => d.r * 2)
+		// 	.attr('x', d => -d.r)
+		// 	.attr('y', d => -d.r)
+		// 	.attr('class', 'pointer-events-none')
+		// 	.attr('clip-path', d => `circle(${d.r}px at center)`);
 
-		bubbles = entered
-			.merge(bubbles)
-			.attr('opacity', (d) => (peopleSelected.includes(d.person) ? 1 : 0.1));
+		bubbles = entered.merge(bubbles)
 	}
 	// auto update the chart on change of the dataset
 	$effect(() => {
-		if ((currentSource && loaded) || (peopleData && loaded) || (steamgraph && loaded)) {
-			console.log('setup chart');
-			setupChart();
-		}
-	});
-	$effect(() => {
-		if (peopleSelected) {
+		if ((peopleSelected) && (currentSource && loaded) || (peopleData && loaded) || (steamgraph && loaded)) {
 			console.log('update chart');
 			updateChart();
 		}
@@ -284,12 +295,20 @@
 		{#if !blocked}
 			<OutletSwitch bind:currentOutlet={currentSource} />
 		{/if}
-		<div id="steamgraph-chart-controls" class="flex flex-wrap gap-1">
+		<div id="steamgraph-chart-controls" class="grid grid-cols-3	gap-1">
 			{#each peopleOrdered as person, i}
 				<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
 				<div
-					class={`control py rounded-xl border px-3 hover:cursor-pointer`}
-					class:pointer-events-none={blocked}
+					class={`control py rounded-xl border px-3 hover:cursor-pointer col-span-1`}
+					class:col-start-1={Math.floor(i / 5) == 0}
+					class:col-start-2={Math.floor(i / 5) == 1}
+					class:col-start-3={Math.floor(i / 5) == 2}
+					class:row-start-1={i % 5 == 0}
+					class:row-start-2={i % 5 == 1}
+					class:row-start-3={i % 5 == 2}
+					class:row-start-4={i % 5 == 3}
+					class:row-start-5={i % 5 == 4}
+					class:pointer-events-none={false/*blocked*/}
 					class:bg-[var(--color-nyt-light)]={peopleSelected.includes(person) &&
 						currentSource == 'NYT'}
 					class:bg-[var(--color-zeit-light)]={peopleSelected.includes(person) &&
