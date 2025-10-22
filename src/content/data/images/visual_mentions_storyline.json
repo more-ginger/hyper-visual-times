@@ -1,0 +1,51 @@
+[
+	{
+	"source": "NYT",
+	"visible": [
+		"anthony-blinken",
+		"benjamin-netanjahu",
+		"bob-menendez",
+		"donald-trump",
+		"elon-musk",
+		"eric-adams",
+		"jd-vance",
+		"joe-biden",
+		"kamala-harris",
+		"mike-johnson",
+		"nikki-haley",
+		"robert-kennedy",
+		"tim-walz",
+		"todd-blanche",
+		"vladimir-putin"
+	]
+},{
+	"source": "Zeit",
+	"visible": ["annalena-baerbock",
+		"christian-lindner",
+		"dietmar-woidtke",
+		"donald-trump",
+		"friedrich-merz",
+		"joe-biden",
+		"kamala-harris",
+		"mario-voigt",
+		"markus-soeder",
+		"michael-kretschmer",
+		"olaf-scholz",
+		"robert-habeck",
+		"sahra-wagenknecht",
+		"vladimir-putin",
+		"wolodimir-selenski"]
+},
+{
+	"source": "NYT",
+	"visible": [
+		"donald-trump"
+	]
+},
+{
+	"source": "Zeit",
+	"visible": [
+		"olaf-scholz"
+	]
+}
+]
