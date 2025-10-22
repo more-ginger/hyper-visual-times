@@ -14,6 +14,8 @@
 	let loaded = $state(false);
 	let tooltip;
 	let bubbles;
+  let selection1 = $state(null);
+  let selection2 = $state(null);
 	let simulation;
 	onMount(() => {
 		svg = d3.select('#network-graph');
@@ -101,7 +103,18 @@
         .data(nodes)
         .join("g")
         .attr("class", "node")
-        .call(drag(simulation));
+        .call(drag(simulation))
+        .on('click', (event, d) => {
+            if (selection1 === null) {
+                selection1 = d.id;
+            } else if (selection1 !== null && selection2 === null && d.id !== selection1) {
+                selection2 = d.id;
+            }else if (selection1 === d.id) {
+                selection1 = null;
+            } else if (selection2 === d.id) {
+                selection2 = null;
+            }
+        });
 
 		node
 			.append('circle')
@@ -111,15 +124,19 @@
 			.attr('class', 'cursor-pointer')
 			.attr('stroke-width', 1)
 			.on('mouseover', function (event, d) {
+        if (selection1 != d.id && selection2 != d.id) {
 				event.target.setAttribute(
 					'fill',
 					`var(--color-${currentSource.toLocaleLowerCase()}-light)`
 				);
+        }
                 event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 1);
 			})
 			.on('mouseout', function (event, d) {
-				event.target.setAttribute('fill', `var(--color-ivory-default)`);
-                event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 0);
+        if (selection1 != d.id && selection2 != d.id) {
+				  event.target.setAttribute('fill', `var(--color-ivory-default)`)
+        }
+        event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 0);
 
 			})
         node.append('circle')
@@ -144,7 +161,7 @@
      
     let pills = node
 			.append('foreignObject')
-			.attr('y', (d) => 20) // position below the bubble
+			.attr('y', 23) // position below the bubble
 			.attr('height', 30) // height of pill)
 			.style('display', 'flex')
 			.style('flex-direction', 'row');
@@ -169,7 +186,7 @@
 				d3.select(this.parentNode) // parent foreignObject
 					.attr('width', bb.width * 2)
 					.attr('x', -bb.width) // center under node
-					.attr('y', 20); // position below the bubble
+					.attr('y', 23); // position below the bubble
 			});
 
       simulation.on("tick", () => {
@@ -179,7 +196,18 @@
                     .attr('cx', d =>  d.x)
                     .attr('cy', d =>  d.y);
             }
-        link.attr("d", d => {
+        link
+        .attr('opacity',d => {
+          console.log(selection1, selection2,d);
+            if (selection1 == null || selection2 == null) {
+                return 1;
+            } else if (selection1 != null && selection2 != null && ((d.source.id === selection1 && d.target.id === selection2)) || (d.source.id === selection2 && d.target.id === selection1)) {
+                return 1;
+            } else {
+                return 0.2;
+            }
+        } )
+        .attr("d", d => {
           const sx = d.source.x, sy = d.source.y;
           const tx = d.target.x, ty = d.target.y;
 
@@ -207,8 +235,23 @@
           // Draw quadratic Bézier curve
           return `M${sx},${sy} Q${controlX},${controlY} ${tx},${ty}`;
         });
-
-        node.attr("transform", d => `translate(${d.x},${d.y})`);
+        node.select('circle').attr('fill', d => {
+            if (d.id === selection1 || d.id === selection2) {
+                return currentSource == 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)';
+            } else {
+                return 'var(--color-ivory-default)';
+            }
+        }); 
+        node.attr("transform", d => `translate(${d.x},${d.y})`)
+        .attr('opacity', d => {
+            if (selection1 == null || selection2 == null) {
+                return 1;
+            } else if (selection1 != null && selection2 != null && (d.id === selection1 || d.id === selection2)) {
+                return 1;
+            } else {
+                return 0.2;
+            }
+        });
       });
 
       // --- Dragging behavior ---
