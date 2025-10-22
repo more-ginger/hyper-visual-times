@@ -3,12 +3,12 @@
 	import { onMount } from 'svelte';
 	import translateCard from '../../content/data/images/translate_map.json';
 	import ImageBubblechart from './ImageBubblechart.svelte';
-	import BackwardButton from '$lib/common/BackwardButton.svelte';
+	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//props
 	let { peopleOrdered, peopleData, peopleSelected, currentSource, blocked } = $props();
 	//setup for the two views (steamgraph and bubblechart)
 	let steamgraph = $state(true);
-	let selectedDate = $state(null);
+	let selectedWeek = $state(null);
 	//setup for the steamgraph svg
 	let svg;
 	let width = $state(0);
@@ -17,13 +17,14 @@
 	let loaded = $state(false);
 	let xScale;
 	let axisGenerator;
+	let xAxisDescriptor;
+	let yAxisDescriptor;
 	let tooltip;
 	let bubbles;
 	let simulation;
 	const margin = { top: 60, right: 40, bottom: 60, left: 40 };
 	const circleRadius = 10;
 	onMount(() => {
-		console.log(peopleData)
 		svg = d3.select('#steamgraph-chart');
 		bubbles = svg.selectAll('.bubble');
 		tooltip = d3
@@ -50,21 +51,56 @@
 			.range([margin.left, width - margin.right]);
 		// Axes
 		axisGenerator = d3
-					.axisBottom(xScale)
-					.tickValues([
-						new Date('2024-01-01'),
-						new Date('2024-04-01'),
-						new Date('2024-07-01'),
-						new Date('2024-10-01'),
-						new Date('2024-12-31')
-					])
-					.tickFormat((d) => d3.utcFormat('%B')(d))
+			.axisBottom(xScale)
+			.tickValues([
+				new Date('2024-01-01'),
+				new Date('2024-04-01'),
+				new Date('2024-07-01'),
+				new Date('2024-10-01'),
+				new Date('2024-12-31')
+			])
+			.tickFormat((d, i) => d3.utcFormat('%B')(d));
+		xAxisDescriptor = svg.append('g');
+		xAxisDescriptor
+			.append('path')
+			.attr(
+				'd',
+				`M${margin.left + width - margin.right - 100},${heightDerived - 30} L${margin.left + width - margin.right},${heightDerived - 30}`
+			)
+			.attr('stroke', 'black')
+			.attr('stroke-width', 0.5)
+			.attr('marker-end', 'url(#arrowhead)');
+		xAxisDescriptor
+			.append('text')
+			.attr('x', margin.left + width - margin.right - 100)
+			.attr('y', heightDerived - 18)
+			.attr('text-anchor', 'start')
+			.attr('font-size', '10')
+			.text('Time');
+
+		yAxisDescriptor = svg.append('g').attr('transform', `rotate(-90 ${margin.left} ${100})`);
+
+		yAxisDescriptor
+			.append('path')
+			.attr('d', `M${margin.left - 100},${100 - 15} L${margin.left + 150 - 115},${100 - 15}`)
+			.attr('stroke', 'black')
+			.attr('stroke-width', 0.5)
+			.attr('marker-end', 'url(#arrowhead)')
+			.attr('marker-start', 'url(#arrowhead-reverse)');
+
+		yAxisDescriptor
+			.append('text')
+			.attr('x', margin.left - 90)
+			.attr('y', 100 - 5 - 15)
+			.attr('text-anchor', 'start')
+			.attr('font-size', '10')
+			.text('Amount of detected Faces');
 		svg
 			.append('g')
 			.attr('class', 'axis')
-			.attr('transform', `translate(5,${heightDerived - margin.bottom})`)
+			.attr('transform', `translate(0,${heightDerived - margin.bottom})`)
 			.call(axisGenerator)
-			.call(g => g.select('.domain').remove())
+			.call((g) => g.select('.domain').remove())
 			.call((g) =>
 				g
 					.selectAll('.tick line')
@@ -73,49 +109,67 @@
 					.attr('stroke-dasharray', '5,5')
 					.attr('y2', -heightDerived + margin.top + margin.bottom)
 			);
+
+		svg
+			.append('text')
+			.attr('id', 'year-label')
+			.attr('x', margin.left)
+			.attr('y', heightDerived - 25)
+			.attr('text-anchor', 'middle')
+			.attr('font-size', '10')
+			.text('2024');
 		window.addEventListener('resize', () => {
-			console.log(width)
+			console.log(width);
 			xScale = d3
 				.scaleTime()
 				.domain([new Date('2024-01-01'), new Date('2024-12-31')])
 				.range([margin.left, width - margin.right]);
-			
-			axisGenerator = d3
-					.axisBottom(xScale)
-					.tickValues([
-						new Date('2024-01-01'),
-						new Date('2024-04-01'),
-						new Date('2024-07-01'),
-						new Date('2024-10-01'),
-						new Date('2024-12-31')
-					])
-					.tickFormat((d) => d3.utcFormat('%B')(d))
 
-			svg.select('.axis')
-			.attr('transform', `translate(5,${heightDerived - margin.bottom})`)
-			.call(axisGenerator)
-			.call(g => g.select('.domain').remove())
-			.call((g) =>
-				g
-					.selectAll('.tick line')
-					.attr('opacity', 0.5)
-					.attr('stroke-width', 0.5)
-					.attr('stroke-dasharray', '5,5')
-					.attr('y2', -heightDerived + margin.top + margin.bottom)
-			);
-			updateChart();		
-		})
+			svg
+				.select('.axis')
+				.attr('transform', `translate(5,${heightDerived - margin.bottom})`)
+				.call(axisGenerator)
+				.call((g) => g.select('.domain').remove())
+				.call((g) =>
+					g
+						.selectAll('.tick line')
+						.attr('opacity', 0.5)
+						.attr('stroke-width', 0.5)
+						.attr('stroke-dasharray', '5,5')
+						.attr('y2', -heightDerived + margin.top + margin.bottom)
+				);
+			xAxisDescriptor
+				.select('path')
+				.attr(
+					'd',
+					`M${margin.left + width - margin.right - 100},${heightDerived - 30} L${margin.left + width - margin.right},${heightDerived - 30}`
+				);
+			xAxisDescriptor
+				.select('text')
+				.attr('x', margin.left + width - margin.right - 100)
+				.attr('y', heightDerived - 18);
+
+			yAxisDescriptor
+				.select('path')
+				.attr('d', `M${margin.left - 100},${100 - 15} L${margin.left + 150 - 100},${100 - 15}`);
+			yAxisDescriptor
+				.select('text')
+				.attr('x', margin.left - 100)
+				.attr('y', 100 - 5 - 15);
+			d3.select('#year-label')
+				.attr('x', margin.left)
+				.attr('y', heightDerived - 25);
+		});
+
 		loaded = true;
 		// Start with no bubbles shown
-		updateChart();
+		setupChart();
 	});
-	
-
-	function updateChart() {
-		const nodes = peopleData.filter((d) => peopleSelected.includes(d.person))
+	function setupChart() {
+		const nodes = peopleData
 			.map((d) => {
 				let nodes = [];
-				for (let i = 0; i < Math.round(d.count / 12); i++) {
+				for (let i = 0; i < Math.round(d.count / 15); i++) {
 					nodes.push({
 						...d,
 						x: xScale(d.week),
@@ -138,18 +192,23 @@
 				'collide',
 				d3.forceCollide((d) => d.r + 1.5)
 			)
-			.alphaDecay(0.05)
+			.alphaDecay(0.1)
 			.on('tick', ticked);
 
 		bubbles = bubbles.data(nodes, (d) => d.person + d.week);
 		bubbles.exit().remove();
 
+		function ticked() {
+			bubbles.attr('transform', (d) => `translate(${d.x}, ${d.y})`);
+		}
+	}
+	function updateChart() {
 		const entered = bubbles
 			.enter()
 			.append('g')
 			.attr('class', 'bubble')
 			.attr('transform', (d) => `translate(${xScale(d.week)}, ${heightDerived / 2})`)
-			.on('mouseover', function(event, d){
+			.on('mouseover', function (event, d) {
 				tooltip.transition().duration(200).style('opacity', 1);
 				tooltip
 					.html(
@@ -158,8 +217,8 @@
 					.style('left', event.pageX + 10 + 'px')
 					.style('top', event.pageY - 28 + 'px');
 			})
-			.on('mouseout', function(){
-				tooltip.transition().duration(300).style('opacity', 0)
+			.on('mouseout', function () {
+				tooltip.transition().duration(300).style('opacity', 0);
 			});
 
 		entered
@@ -167,81 +226,111 @@
 			.attr('r', circleRadius)
 			.attr('stroke', 'black')
 			.attr('fill', 'var(--color-ivory-default)')
-			.attr('class','cursor-pointer')
+			.attr('class', 'cursor-pointer')
 			.attr('stroke-width', 1)
-			.on('mouseover',function(event,d){
-				event.target.setAttribute('fill',`var(--color-${currentSource.toLocaleLowerCase()}-light)`)
+			.on('mouseover', function (event, d) {
+				event.target.setAttribute(
+					'fill',
+					`var(--color-${currentSource.toLocaleLowerCase()}-light)`
+				);
 			})
-			.on('mouseout',function(event,d){
-				event.target.setAttribute('fill',`var(--color-ivory-default)`)
+			.on('mouseout', function (event, d) {
+				event.target.setAttribute('fill', `var(--color-ivory-default)`);
 			})
-			.on('click',function(event,d){
+			.on('click', function (event, d) {
 				steamgraph = false;
-				selectedDate = d.week;
-				console.log(selectedDate)
-			})
+				selectedWeek = d.week;
+			});
 
 		entered
 			.append('image')
-			.attr('xlink:href',(d) => `/img/people/${d.person}.webp`)
+			.attr('xlink:href', (d) => `/img/people/${d.person}.webp`)
 			.attr('width', circleRadius * 2)
-			.attr('height',circleRadius * 2)
-			.attr('x',  -circleRadius)
+			.attr('height', circleRadius * 2)
+			.attr('x', -circleRadius)
 			.attr('y', -circleRadius)
-			.attr('class','pointer-events-none')
-			.attr('clip-path',`circle(${circleRadius}px at center)`);
+			.attr('class', 'pointer-events-none')
+			.attr('clip-path', `circle(${circleRadius}px at center)`);
 
-		bubbles = entered.merge(bubbles);
-
-		function ticked() {
-			bubbles.attr('transform', (d) => `translate(${d.x}, ${d.y})`);
-		}
+		bubbles = entered
+			.merge(bubbles)
+			.attr('opacity', (d) => (peopleSelected.includes(d.person) ? 1 : 0.1));
 	}
 	// auto update the chart on change of the dataset
 	$effect(() => {
-		if ((peopleData && loaded) || (peopleSelected && loaded) || (steamgraph && loaded)) {
+		if ((currentSource && loaded) || (peopleData && loaded) || (steamgraph && loaded)) {
+			console.log('setup chart');
+			setupChart();
+		}
+	});
+	$effect(() => {
+		if (peopleSelected) {
+			console.log('update chart');
 			updateChart();
 		}
 	});
-	function togglePerson(event){
-		let person = event.target.dataset.person
-		if(peopleSelected.includes(person)){
-			peopleSelected = peopleSelected.filter(p => p!=person)
-		}else{
-			peopleSelected = [...peopleSelected,person]
+	function togglePerson(event) {
+		let person = event.target.dataset.person;
+		if (peopleSelected.includes(person)) {
+			peopleSelected = peopleSelected.filter((p) => p != person);
+		} else {
+			peopleSelected = [...peopleSelected, person];
 		}
 	}
 </script>
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
-	<div id="steamgraph-chart-controls" class="flex flex-wrap gap-1" class:hidden={!steamgraph}>
-		{#each peopleOrdered as person, i}
-			<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
-			<div
-				class={`control py rounded-xl border px-3 hover:cursor-pointer`}
-				class:pointer-events-none={blocked}
-				class:bg-[var(--color-nyt-light)]={peopleSelected.includes(person) && currentSource == 'NYT'}
-				class:bg-[var(--color-zeit-light)]={peopleSelected.includes(person) && currentSource == 'Zeit'}
-				onclick={togglePerson}
-				data-person={person}
-			>
-				{i + 1}. {translateCard[person]}
-			</div>
-		{/each}
+	<div class:hidden={!steamgraph}>
+		{#if !blocked}
+			<OutletSwitch bind:currentOutlet={currentSource} />
+		{/if}
+		<div id="steamgraph-chart-controls" class="flex flex-wrap gap-1">
+			{#each peopleOrdered as person, i}
+				<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
+				<div
+					class={`control py rounded-xl border px-3 hover:cursor-pointer`}
+					class:pointer-events-none={blocked}
+					class:bg-[var(--color-nyt-light)]={peopleSelected.includes(person) &&
+						currentSource == 'NYT'}
+					class:bg-[var(--color-zeit-light)]={peopleSelected.includes(person) &&
+						currentSource == 'Zeit'}
+					onclick={togglePerson}
+					data-person={person}
+				>
+					{i + 1}. {translateCard[person]}
+				</div>
+			{/each}
+		</div>
+		<svg {width} height={heightDerived} id="steamgraph-chart" class:hidden={!steamgraph}>
+			<defs>
+				<circle id="circle" cx="25%" cy="25%" r="15" />
+				<clipPath id="clip">
+					<use xlink:href="#circle" />
+				</clipPath>
+				<marker id="arrowhead" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto">
+					<path d="M2,2 L2,12 L10,7 L2,2"></path>
+				</marker>
+				<marker
+					id="arrowhead-reverse"
+					markerWidth="14"
+					markerHeight="14"
+					refX="8"
+					refY="7"
+					orient="auto"
+				>
+					<path d="M8,2 L8,12 L0,7 L8,2"></path>
+				</marker>
+			</defs>
+		</svg>
 	</div>
-	<svg {width} height={heightDerived} id="steamgraph-chart" class:hidden={!steamgraph}>
-		<defs>
-			<circle id="circle" cx="25%" cy="25%" r="15" />
-			<clipPath id="clip">
-				<use xlink:href="#circle" />
-			</clipPath>
-		</defs>
-	</svg>
 	{#if !steamgraph}
-	<div class="flex gap-2">
-		<BackwardButton backto={"Chart"} bind:back={steamgraph}/>
-		<p>Found <u>{peopleData.filter(p => p.week.getTime() == (selectedDate.getTime())).reduce((acc, p) => acc + p.count, 0)}</u> visual mentions on <u>{selectedDate.toLocaleDateString('de')}</u></p>
-	</div>
-		<ImageBubblechart {width} height={heightDerived} {currentSource} people = {peopleData.filter(p => p.week.getTime() == (selectedDate.getTime()))}/>
+		<ImageBubblechart
+			bind:steamgraph
+			{width}
+			height={heightDerived}
+			{selectedWeek}
+			{currentSource}
+			people={peopleData.filter((p) => p.week.getTime() == new Date(selectedWeek).getTime())}
+		/>
 	{/if}
 </div>

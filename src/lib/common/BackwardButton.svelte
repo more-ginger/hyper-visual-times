@@ -1,5 +1,5 @@
 <script>
-    let {backto, back = $bindable()} = $props()
+    let {children, back = $bindable()} = $props()
     function handleBack(){
         console.log(back)
         if (!back){
@@ -14,5 +14,5 @@
 			class="inline-block align-middle rotate-180"
 			alt="arrow backward"
 		/></span>
-    Back to {backto}
+   {@render children()}
 </button>

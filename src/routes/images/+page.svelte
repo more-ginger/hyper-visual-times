@@ -5,15 +5,14 @@
 	import { onMount } from 'svelte';
 	import dataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
 	import dataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
-	import visualStorylineNYT from '../../content/data/images/visual_mentions_storyline_nyt.json';
-	import visualStorylineZeit from '../../content/data/images/visual_mentions_storyline_zeit.json';
+	import visualStoryline from '../../content/data/images/visual_mentions_storyline.json';
 	import rawIntroText from '@/content/images/images-intro.md?raw';
 	import rawOutroText from '@/content/images/images-outro.md?raw';
 	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//scrollama setup
 	const scroller = scrollama();
 	let step = $state(0);
-	let blocked = $state(false);
+	let blocked = $state(true);
 	onMount(async () => {
 		scroller
 			.setup({
@@ -23,10 +22,12 @@
 			})
 			.onStepEnter((response) => {
 				step = response.index;
-				if(currentSource == 'NYT'){
-					peopleSelected = visualStorylineNYT[step]
+				if(visualStoryline[step] && step > 0){
+					currentSource = visualStoryline[step].source
+					peopleSelected = visualStoryline[step].visible
 				}else{
-					peopleSelected = visualStorylineZeit[step]
+					currentSource = 'NYT'
+					peopleSelected = [...peopleOrdered]
 				}
 				//console.log('entering block', response.index);
 				// { element, index, direction }
@@ -75,9 +76,7 @@
 							Grassland (2023) has already observed how Western European newspapers tend to cover
 							macro-regions of interests: areas that have geographical and political significance
 							for the host country of the newspaper. Looking at the visualization on the right, this
-							observation seems to be confirmed: <OutletSwitch
-								bind:currentOutlet={currentSource}
-							/>, Central and Western Europe are the main regions of interest. Even in relation to
+							observation seems to be confirmed, Central and Western Europe are the main regions of interest. Even in relation to
 							conflict and against the cultural background that ties Germany and Israel, the use of
 							Russia-Ukraine keywords is much higher than Israel–Palestine ones.
 						</p>
@@ -96,13 +95,12 @@
 				</div>
 				<div data-step="2" class="step p-6" style="height:900px">
 					<div class="table-cell align-middle">
-						Grassland (2023) has already observed how Western European newspapers tend to cover
-						macro-regions of interests: areas that have geographical and political significance for
-						the host country of the newspaper. Looking at the visualization on the right, this
-						observation seems to be confirmed: for Zeit, Central and Western Europe are the main
-						regions of interest. Even in relation to conflict and against the cultural background
-						that ties Germany and Israel, the use of Russia-Ukraine keywords is much higher than
-						Israel–Palestine ones.
+						Donald Trump
+					</div>
+				</div>
+				<div data-step="3" class="step p-6" style="height:900px">
+					<div class="table-cell align-middle">
+						Olaf Scholz
 					</div>
 				</div>
 			</article>
