@@ -25,6 +25,8 @@
 	let simulation;
 	const margin = { top: 60, right: 40, bottom: 60, left: 40 };
 	const circleRadius = 10;
+	let diagramInnerHeight = $derived(heightDerived - margin.top - margin.bottom);
+	let diagramCenterY = $derived(diagramInnerHeight / 2);
 	$inspect(peopleSelected);
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
@@ -49,7 +51,7 @@
 		yScale = d3
 			.scaleLinear()
 			.domain([0, d3.max(peopleData, (d) => d.count)])
-			.range([4,100]);
+			.range([5, 100]);
 		// Scales
 		xScale = d3
 			.scaleTime()
@@ -76,6 +78,7 @@
 			.attr('stroke', 'black')
 			.attr('stroke-width', 0.5)
 			.attr('marker-end', 'url(#arrowhead)');
+
 		xAxisDescriptor
 			.append('text')
 			.attr('x', margin.left + width - margin.right - 100)
@@ -84,11 +87,16 @@
 			.attr('font-size', '10')
 			.text('Time');
 
-		yAxisDescriptor = svg.append('g').attr('transform', `rotate(-90 ${margin.left} ${100})`);
+		yAxisDescriptor = svg
+			.append('g')
+			.attr('transform', `rotate(-90 ${margin.left} ${diagramCenterY})`);
 
 		yAxisDescriptor
 			.append('path')
-			.attr('d', `M${margin.left - 100},${100 - 15} L${margin.left + 150 - 115},${100 - 15}`)
+			.attr(
+				'd',
+				`M${margin.left - 150},${diagramCenterY - 25} L${margin.left + 	50},${diagramCenterY - 25}`
+			)
 			.attr('stroke', 'black')
 			.attr('stroke-width', 0.5)
 			.attr('marker-end', 'url(#arrowhead)')
@@ -96,9 +104,9 @@
 
 		yAxisDescriptor
 			.append('text')
-			.attr('x', margin.left - 90)
-			.attr('y', 100 - 5 - 15)
-			.attr('text-anchor', 'start')
+			.attr('x', margin.left - 105)
+			.attr('y', diagramCenterY - 30)
+			.attr('text-anchor', 'center')
 			.attr('font-size', '10')
 			.text('Amount of detected Faces');
 		svg
@@ -155,13 +163,20 @@
 				.attr('x', margin.left + width - margin.right - 100)
 				.attr('y', heightDerived - 18);
 
+			yAxisDescriptor.attr('transform', `rotate(-90 ${margin.left} ${diagramCenterY})`);
+
 			yAxisDescriptor
 				.select('path')
-				.attr('d', `M${margin.left - 100},${100 - 15} L${margin.left + 150 - 100},${100 - 15}`);
+				.attr(
+					'd',
+				`M${margin.left - 150},${diagramCenterY - 25} L${margin.left + 	50},${diagramCenterY - 25}`
+				);
+
 			yAxisDescriptor
 				.select('text')
-				.attr('x', margin.left - 100)
-				.attr('y', 100 - 5 - 15);
+				.attr('x', margin.left - 105)
+			.attr('y', diagramCenterY - 30)
+
 			d3.select('#year-label')
 				.attr('x', margin.left)
 				.attr('y', heightDerived - 25);
@@ -172,7 +187,8 @@
 		updateChart();
 	});
 	function updateChart() {
-		const nodes = peopleData.filter((d) => peopleSelected.includes(d.person))
+		const nodes = peopleData
+			.filter((d) => peopleSelected.includes(d.person))
 			.map((d) => {
 				let nodes = [];
 				for (let i = 0; i < Math.round(d.count / 10); i++) {
@@ -183,12 +199,12 @@
 						r: circleRadius
 					});
 				}
-					// nodes.push({
-					// 	...d,
-					// 	x: xScale(d.week),
-					// 	y: heightDerived / 2 + (Math.random() - 0.5) * 50,
-					// 	r: yScale(d.count)
-					// });
+				// nodes.push({
+				// 	...d,
+				// 	x: xScale(d.week),
+				// 	y: heightDerived / 2 + (Math.random() - 0.5) * 50,
+				// 	r: yScale(d.count)
+				// });
 				return nodes;
 			})
 			.flat();
@@ -271,11 +287,15 @@
 		// 	.attr('class', 'pointer-events-none')
 		// 	.attr('clip-path', d => `circle(${d.r}px at center)`);
 
-		bubbles = entered.merge(bubbles)
+		bubbles = entered.merge(bubbles);
 	}
 	// auto update the chart on change of the dataset
 	$effect(() => {
-		if ((peopleSelected) && (currentSource && loaded) || (peopleData && loaded) || (steamgraph && loaded)) {
+		if (
+			(peopleSelected && currentSource && loaded) ||
+			(peopleData && loaded) ||
+			(steamgraph && loaded)
+		) {
 			console.log('update chart');
 			updateChart();
 		}
@@ -295,11 +315,11 @@
 		{#if !blocked}
 			<OutletSwitch bind:currentOutlet={currentSource} />
 		{/if}
-		<div id="steamgraph-chart-controls" class="grid grid-cols-3	gap-1">
+		<div id="steamgraph-chart-controls" class="grid grid-cols-3 gap-1">
 			{#each peopleOrdered as person, i}
 				<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
 				<div
-					class={`control py rounded-xl border px-3 hover:cursor-pointer col-span-1`}
+					class={`control py col-span-1 rounded-xl border px-3 hover:cursor-pointer`}
 					class:col-start-1={Math.floor(i / 5) == 0}
 					class:col-start-2={Math.floor(i / 5) == 1}
 					class:col-start-3={Math.floor(i / 5) == 2}
@@ -308,7 +328,7 @@
 					class:row-start-3={i % 5 == 2}
 					class:row-start-4={i % 5 == 3}
 					class:row-start-5={i % 5 == 4}
-					class:pointer-events-none={false/*blocked*/}
+					class:pointer-events-none={false}
 					class:bg-[var(--color-nyt-light)]={peopleSelected.includes(person) &&
 						currentSource == 'NYT'}
 					class:bg-[var(--color-zeit-light)]={peopleSelected.includes(person) &&
