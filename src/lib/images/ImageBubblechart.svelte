@@ -12,7 +12,7 @@
 	let scaleLog = d3
 		.scaleLinear()
 		.domain(d3.extent(people.map((p) => p.count)))
-		.range([width/100, width/20]);
+		.range([width/100, width/10]);
 	let data = $state([]);
 	let totalCounts = $state(0);
 	let selectedPerson = $state(null);
@@ -54,13 +54,13 @@
 		// Stop any running simulation
 		if (simulation) simulation.stop();
 		people.map((p) => {
-			p.x = width / 4;
+			p.x = width / 3.5;
 			p.y = height / 2;
 		});
 
 		simulation = d3
 			.forceSimulation(people)
-			.force('x', d3.forceX(width / 4).strength(0.25))
+			.force('x', d3.forceX(width / 3.5).strength(0.25))
 			.force('y', d3.forceY(height / 2).strength(0.25))
 			.force(
 				'collide',
@@ -168,8 +168,8 @@
 		>
 	</p>
 </div>
-<div class="grid grid-cols-2 items-center justify-items-center gap-4">
-	<svg width={width/2} {height} id="bubble-chart">
+<div class="grid grid-cols-5 items-center justify-items-center gap-4">
+	<svg width={width/1.5} {height} id="bubble-chart" class="col-span-3">
 		<defs>
 			<circle id="circle" cx="25%" cy="25%" r="15" />
 			<clipPath id="clip">
@@ -177,5 +177,7 @@
 			</clipPath>
 		</defs>
 	</svg>
-	<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading} />
+	<div class="col-span-2">
+		<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading} />
+	</div>
 </div>

@@ -13,13 +13,18 @@
 			return by[0].name ?? 'Author unknown'
 		 }
 	}
+	$effect(() => {
+		if(loading){
+			articles = [];
+		}
+	});
 </script>
 
 <div
 	class="h-60 w-[300px] overflow-scroll overscroll-none rounded-xl border border-black backdrop-blur-lg md:h-80">
 	<div class="sticky top-0 flex justify-between p-2 backdrop-blur-sm shadow-md bg-[var(--color-ivory-default)]">
 		<div class="grid grid-cols-2 pt-1">
-		{#if articles.length == 0}
+		{#if articles.length == 0 && !loading}
 			<div class="pr-2 col-span-2 font-bold">
 				Select a Person
 			</div>
