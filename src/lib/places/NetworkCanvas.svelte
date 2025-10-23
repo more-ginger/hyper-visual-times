@@ -38,11 +38,12 @@
 	let currentFeatureCentroid: number[] | null = $state(null);
 	let currentCenter = $derived([currentLatPos, currentLongPos]);
 
+	let isListMode: boolean = $state(true);
+	let currentNode: countryDataForComparison | null = $state(null);
+
 	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
 	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
 
-	let isListMode: boolean = $state(true);
-	let currentNode: countryDataForComparison | null = $state(null);
 
 	const orderedListOfNodes = $derived(
 		[...nodes].sort((a, b) => b.shared_articles.length - a.shared_articles.length)
@@ -61,22 +62,11 @@
 			.translate(initialProjectionVariables.translate)
 	);
 
-	let borderProjection = $derived(
-		d3
-			.geoNaturalEarth1()
-			.fitSize([w, h], World)
-			.scale(w / 6)
-			.center([0, 0])
-			.translate([w / 2, h / 2])
-	);
-
 	function revertZoom() {
 		currentLatPos = 0;
 		currentLongPos = 0;
 		initialProjectionVariables.center = [0, 0];
 		initialProjectionVariables.scale = w / 6;
-
-		//requestAnimationFrame(panToCenter);
 	}
 
 	function zoomToCountry() {
@@ -189,7 +179,6 @@
 			revertZoom();
 		} else {
 			if (nodes[0][`count_${selectedOutlet}`] > 0) {
-				console.log('effect zoomToCountry');
 				zoomToCountry();
 			} else {
 				if (nodes[0][`count_${selectedOutlet}`] === 0) {
@@ -206,12 +195,11 @@
 </script>
 
 <div class="relative h-220 md:h-140">
-	<div class="h-100 w-full rounded-xl lg:h-150" bind:clientWidth={w} bind:clientHeight={h}>
+	<div class="h-100 w-full rounded-xl lg:h-150 border" bind:clientWidth={w} bind:clientHeight={h}>
 		<Canvas {w} {h} contextName={'map'}>
 			<Map
 				{World}
 				{projection}
-				{borderProjection}
 				{primaryCountryKey}
 				colors={{ darkAccentHex, lightAccentHex }}
 				priority={0}
@@ -220,7 +208,6 @@
 				<LinkBetweenCountries
 					{link}
 					{projection}
-					{borderProjection}
 					{currentNode}
 					{linkWeightDomain}
 					colors={{ darkAccentHex, lightAccentHex }}
@@ -232,7 +219,6 @@
 					<CountryFeature
 						{node}
 						{projection}
-						{borderProjection}
 						{primaryCountryKey}
 						{currentNode}
 						colors={{ darkAccentHex, lightAccentHex }}
@@ -245,7 +231,7 @@
 			{/if}
 		</Canvas>
 	</div>
-	<div class="md:absolute md:bottom-0 md:left-0 md:w-80">
+	<div class="md:absolute md:top-5 md:left-5 md:w-80">
 		<div class="mb-2">
 			<button
 				disabled={isZoomedOut || panProgress !== undefined}
