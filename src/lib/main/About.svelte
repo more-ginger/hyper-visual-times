@@ -5,12 +5,12 @@
 	<div class="w-3/5">
 		<div>
 			<h2 class="font-serif text-2xl">About the project</h2>
-			<p class="mt-8">
-				<span>
+			<div class="mt-8">
+				<p class="mb-2">
 					Panopticum News investigates journalism through the use of visual methods and data
 					visualization, the project aims at charting the landscape of online news.
-				</span>
-				<span>
+				</p>
+				<p class="mb-2">
 					In contrast to its past made of ink and paper, digital news is a volatile, lightweight,
 					and ambiguous item. News has absorbed the characteristics and affordances of digital
 					media. These affordances are remodeling the social and cultural role of news and
@@ -20,30 +20,37 @@
 					is also difficult to account for its volume and boundaries. The quantity of news items
 					published daily is humongous, even concerning one specific outlet, country, or topic.
 					Given these premises, the creation of a comprehensive impression of what is published by
-					news outlets has become a complex endeavor. Taking inspiration from the philosophical
-					concept of the Panopticon – this project explores questions related to these challenges.
-					Individual news consumption happens at a mesoscopic level. For instance, as readers, we
-					are able to consume one individual article. We absorb the point of view of one author,
-					within the editorial boundaries of one specific news outlet. However, the way digital news
-					is published and archived would allow us to go beyond the boundaries of individual
-					consumption. What happens on different scales? How do certain narratives unfold at a
-					microscopic or macroscopic level? Digital archiving of news allows us to trace the history
-					of a particular topic, author, or news outlet. Are news outlets insular to each other and
-					the topics they discuss? At the same time, the hypertextual nature of web-pages allow us
-					for a granular look into the microscopic dynamics of newspapers. How are certain concepts
-					linked and discussed across several articles? What discourses are converging? Which ones
-					are diverging? Finally, How can visualization make micro, meso, and macro dimensions of
-					news narratives visible? This main question drives the project and focuses on the
-					discovery of relations between different levels of news publishing. We use data
-					visualization as a method of inquiry to make these levels visible and build meaningful
-					interrelations. Like a panopticon, visualization might be able to observe the observers.
-					In other words, we strive to bring forward the underlying mechanisms of journalism and
-					make them visible. Panopticum News is part of project SPLEE (Streaming Platform für
-					Longreads und Essays aus Europa). SPLEE aims to create a pilot model for a pan-European
-					communication channel that enables access to quality media across national and linguistic
-					borders.
-				</span>
-			</p>
+					news outlets has become a complex endeavor.
+				</p>
+				<p class="mb-2">
+					Motivated by this premise, Panopticum News is an artistic and investigative project
+					dedicated to exploring the material characteristics of online news, by testing potential
+					ways of consumption that transcend the individual article. By using one year of data from
+					two large Western news outlets – The New York Times (USA) and Zeit Online (DE) – the
+					project introduces a series of essays, visualisation-driven interfaces and widgets that
+					experiment with news articles as quantitative data.
+				</p>
+				<p class="mb-2">
+					In chapter 1 "The geo-politics of news", geographical entities extracted from individual
+					articles are used to uncover the geopolitical alignment of the newspapers. In chapter 2
+					"Discoursive interrelations", the textual metadata of news pieces (titles, descriptions,
+					and keywords) are aggregated into clusters of topics – exposing common patterns of
+					conversation in the New York Times. In chapter 3 "The Language of Images", all header
+					images from the two newspapers have been subjected to facial recognition and clustered to
+					showcase the most represented people over the course of one year of coverage.
+				</p>
+				<p class="mb-2">
+					The results bring forward the underlying mechanisms of journalism and make them visible.
+					These experiments are not only a form of reflection and critique of current journalism
+					practice, but also evidence to the potential of data visualisation in supporting readers'
+					experience with news content on a large scale.
+				</p>
+				<p class="mb-2">
+					Panopticum News is part of project SPLEE (Streaming Platform für Longreads und Essays aus
+					Europa). SPLEE aims to create a pilot model for a pan-European communication channel that
+					enables access to quality media across national and linguistic borders.
+				</p>
+			</div>
 		</div>
 		<div class="mt-10">
 			<h2 class="font-serif text-2xl">Team</h2>
@@ -138,39 +145,44 @@
 		</div>
 	</div>
 	<div class="w-2/5 pl-12">
-		<div>
-			<h2 class="font-serif text-2xl">Fundings & Partners</h2>
-			<div class="mt-8">
-				<div><img class="w-[250px]" src="/img/partners/BMFTR.jpg" alt="BMFTR Logo" /></div>
-				<div>
-					<img class="w-[200px]" src="/img/partners/Filmuni.png" alt="Film University Logo" />
+		<div class="sticky top-20">
+			<div>
+				<h2 class="font-serif text-2xl">Fundings & Partners</h2>
+				<div class="mt-8">
+					<div><img class="w-[250px]" src="/img/partners/BMFTR.jpg" alt="BMFTR Logo" /></div>
+					<div>
+						<img class="w-[200px]" src="/img/partners/Filmuni.png" alt="Film University Logo" />
+					</div>
+					<div><img class="w-[150px]" src="/img/partners/difgl_logo.jpeg" alt="DIFGL Logo" /></div>
 				</div>
-				<div><img class="w-[150px]" src="/img/partners/difgl_logo.jpeg" alt="DIFGL Logo" /></div>
 			</div>
-		</div>
-		<div class="mt-10">
-			<h2 class="font-serif text-2xl">Related links</h2>
-			<div class="mt-8">
-				<ul>
-					<li class="pb-4">
-						<button class="flex items-center px-2 py-[2px]">
-							<a href="/places">Documentation</a>
-							<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span>
-						</button>
-					</li>
-					<li class="pb-4">
-						<button class="flex items-center px-2 py-[2px]">
-							<a href="/topics">Github repository</a>
-							<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span>
-						</button>
-					</li>
-					<li class="pb-4">
-						<button class="pointer-events-none flex items-center px-2 py-[2px]">
-							<a href="/images">Impressum</a>
-							<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span>
-						</button>
-					</li>
-				</ul>
+			<div class="mt-10">
+				<h2 class="font-serif text-2xl">Related links</h2>
+				<div class="mt-8">
+					<ul>
+						<li class="pb-4">
+							<button class="flex items-center px-2 py-[2px]">
+								<a href="/places">Documentation</a>
+								<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span
+								>
+							</button>
+						</li>
+						<li class="pb-4">
+							<button class="flex items-center px-2 py-[2px]">
+								<a href="/topics">Github repository</a>
+								<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span
+								>
+							</button>
+						</li>
+						<li class="pb-4">
+							<button class="pointer-events-none flex items-center px-2 py-[2px]">
+								<a href="/images">Impressum</a>
+								<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span
+								>
+							</button>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
