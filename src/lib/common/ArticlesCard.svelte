@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { get } from 'svelte/store';
 	import translateMap from '../../content/data/images/translate_map.json';
-	let { articles, currentSource, selectedPerson, selectedDate, loading } = $props();
+	let { children, articles, currentSource, selectedPerson=null, selectedDate=null, loading=null } = $props();
 	function getAuthorSourceAgnostic(byline){
 		 if (currentSource == 'NYT'){
 			let by = JSON.parse(JSON.parse(byline))
@@ -25,27 +24,12 @@
 	<div class="sticky top-0 flex justify-between p-2 backdrop-blur-sm shadow-md bg-[var(--color-ivory-default)]">
 		<div class="grid grid-cols-2 pt-1">
 		{#if articles.length == 0 && !loading}
-			<div class="pr-2 col-span-2 font-bold">
-				Select a Person
-			</div>
-				<div class="pr-2 col-span-2">
-					(Date - Date)
-					<img class=" inline" src="icons/ui-forward.svg" alt="arrow right" />
-					 <u>{articles.length == 0 ?'?' : articles.length}</u> Articles 
-			</div>
+			Loading...
 		{:else}
-			<div class="pr-2 col-span-2 font-bold">
-				{translateMap[selectedPerson]} 
-			</div>
-				<div class="pr-2 col-span-2">
-					({new Date(selectedDate).toLocaleDateString('de')} - {new Date(new Date(selectedDate).getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('de')})
-					<img class=" inline" src="icons/ui-forward.svg" alt="arrow right" />
-					 <u>{articles.length == 0 ?'?' : articles.length}</u> Articles 
-			</div>
+			{@render children()}
 		{/if}
 		</div>
 	</div>
-
 		{#if articles.length == 0}
 		<div class="flex h-max-content w-full flex-col items-center justify-center p-4">
 			{#if loading}

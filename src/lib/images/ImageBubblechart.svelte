@@ -64,7 +64,7 @@
 			.force('y', d3.forceY(height / 2).strength(0.25))
 			.force(
 				'collide',
-				d3.forceCollide((d) => scaleLog(d.count) + 25)
+				d3.forceCollide((d) => scaleLog(d.count) + 20)
 			)
 			.alphaDecay(0.05)
 			.on('tick', ticked);
@@ -178,6 +178,12 @@
 		</defs>
 	</svg>
 	<div class="col-span-2">
-		<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading} />
+		<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading}>
+			<div class="col-span-2">
+					<b>{translateCard[selectedPerson] ?? selectedPerson}</b><br>
+					Found in <u>{data.length == 0 ? '?' : data.length} articles</u> <br>
+					between <u>{selectedDate ? new Date(selectedDate).toLocaleDateString('de') : '?'} - {selectedDate ? new Date(new Date(selectedDate).getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0].replaceAll('-','.') : '?'}</u>
+			</div>
+		</ArticlesCard>
 	</div>
 </div>
