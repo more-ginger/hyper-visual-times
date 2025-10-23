@@ -6,20 +6,43 @@
 		<div>
 			<h2 class="font-serif text-2xl">About the project</h2>
 			<p class="mt-8">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tellus metus, accumsan
-				quis rutrum sed, viverra ac mi. Cras eget nisi orci. Suspendisse lectus lorem, molestie ac
-				libero vitae, pellentesque volutpat enim. Fusce eu sodales nibh. Maecenas hendrerit est non
-				dolor hendrerit faucibus. In sed ligula a eros malesuada ultrices a vitae felis. Class
-				aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce
-				venenatis leo mauris, non tincidunt magna tristique vitae. Vivamus euismod, nisi vel rhoncus
-				viverra, purus nisl congue nulla, et elementum neque est in odio. Quisque faucibus vitae
-				diam id vestibulum. Suspendisse viverra consequat ligula, rhoncus tincidunt nisl mollis et.
-				Sed elementum suscipit venenatis. Nullam tristique bibendum massa, eget volutpat magna
-				egestas nec. Aenean ullamcorper risus nec eros aliquam bibendum. Maecenas felis turpis,
-				ultrices sed lectus eget, accumsan malesuada dolor. Pellentesque ornare facilisis neque ac
-				aliquam. Etiam augue felis, convallis in neque et, aliquam blandit tortor. Nullam purus
-				nulla, euismod consequat ullamcorper eget, luctus id dui. Nam ut eros sem. Proin justo quam,
-				condimentum eget dictum eget, convallis id erat.
+				<span>
+					Panopticum News investigates journalism through the use of visual methods and data
+					visualization, the project aims at charting the landscape of online news.
+				</span>
+				<span>
+					In contrast to its past made of ink and paper, digital news is a volatile, lightweight,
+					and ambiguous item. News has absorbed the characteristics and affordances of digital
+					media. These affordances are remodeling the social and cultural role of news and
+					journalism at large. For instance, news articles and snippets are published across
+					platforms, copied, edited, and repurposed. Online news is shape-shifting. It is impossible
+					to talk about the “news flow”, it is more appropriate to talk about “flows” – plural. It
+					is also difficult to account for its volume and boundaries. The quantity of news items
+					published daily is humongous, even concerning one specific outlet, country, or topic.
+					Given these premises, the creation of a comprehensive impression of what is published by
+					news outlets has become a complex endeavor. Taking inspiration from the philosophical
+					concept of the Panopticon – this project explores questions related to these challenges.
+					Individual news consumption happens at a mesoscopic level. For instance, as readers, we
+					are able to consume one individual article. We absorb the point of view of one author,
+					within the editorial boundaries of one specific news outlet. However, the way digital news
+					is published and archived would allow us to go beyond the boundaries of individual
+					consumption. What happens on different scales? How do certain narratives unfold at a
+					microscopic or macroscopic level? Digital archiving of news allows us to trace the history
+					of a particular topic, author, or news outlet. Are news outlets insular to each other and
+					the topics they discuss? At the same time, the hypertextual nature of web-pages allow us
+					for a granular look into the microscopic dynamics of newspapers. How are certain concepts
+					linked and discussed across several articles? What discourses are converging? Which ones
+					are diverging? Finally, How can visualization make micro, meso, and macro dimensions of
+					news narratives visible? This main question drives the project and focuses on the
+					discovery of relations between different levels of news publishing. We use data
+					visualization as a method of inquiry to make these levels visible and build meaningful
+					interrelations. Like a panopticon, visualization might be able to observe the observers.
+					In other words, we strive to bring forward the underlying mechanisms of journalism and
+					make them visible. Panopticum News is part of project SPLEE (Streaming Platform für
+					Longreads und Essays aus Europa). SPLEE aims to create a pilot model for a pan-European
+					communication channel that enables access to quality media across national and linguistic
+					borders.
+				</span>
 			</p>
 		</div>
 		<div class="mt-10">
