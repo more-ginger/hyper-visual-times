@@ -37,13 +37,15 @@
 	}
 </script>
 
-<div class="base m-auto flex h-dvh pt-20 md:w-full">
-	<div class="flex h-full px-2 pb-2 md:w-full">
-		<div class="w-4/12">
+<div class="base m-auto h-[100vh] relative flex pt-20 md:w-full">
+	<div class="flex h-full px-2 pb-2 md:w-full overflow-scroll">
+		<div class="w-4/12 pb-250">
 			<div class="">
 				<p class="text-sm">
-					One bubble represents a topic, a cluster of common words extracted from The New York
-					Times' articles. The most common topics are marked in <span
+					<p class="mb-2">
+					This project frames the patterns of language and narrative of a year's corpus of news data, digging into the divergent simultaneous discourses discourses that occur across the newspaper's articles, sections, and timeframes.
+					</p>
+					One bubble represents a topic, a cluster of common words extracted from The New York Times' articles. The most common topics are marked in <span
 						class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
 						>orange</span
 					>
@@ -63,7 +65,7 @@
 						class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
 						>green</span
 					>.
-				</p>
+				
 			</div>
 			<div class="2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15">
 				<div class="mt-2 mb-6">
@@ -82,7 +84,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="w-8/12">
+		<div class="w-8/12 sticky top-0">
 			{#if selectionIsActive && !networkIsActive}
 				<BubbleChart {TopicClusters} {selectNewCluster} {switchView} {selectedClusterLabel} />
 			{:else}
