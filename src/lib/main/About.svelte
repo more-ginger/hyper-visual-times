@@ -1,10 +1,10 @@
 <script lang="ts">
 </script>
 
-<div class="m-auto flex w-4/5">
-	<div class="w-3/5 bg-red-100">
+<div class="m-auto flex w-4/5 pb-20">
+	<div class="w-3/5">
 		<div>
-			<h2>About the project</h2>
+			<h2 class="font-serif text-2xl">About the project</h2>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tellus metus, accumsan
 				quis rutrum sed, viverra ac mi. Cras eget nisi orci. Suspendisse lectus lorem, molestie ac
@@ -23,65 +23,82 @@
 			</p>
 		</div>
 		<div>
-			<h2>Team</h2>
+			<h2 class="font-serif text-2xl">Team</h2>
 			<div class="grid grid-cols-3">
 				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
 					<img class="h-[250px] w-96 object-cover" src="img/team/fm_team.jpg" />
-					<div class="absolute bottom-0 z-50 w-full bg-white p-2">
+					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
 						<p>Francesca Morini</p>
-						<p class="text-xs">Principal Investigator</p>
+						<p class="text-xs">Principal Investigator, design and development</p>
 					</div>
 				</div>
 				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
 					<img class="h-[250px] w-96 object-cover" src="img/team/pp_team.webp" />
-					<div class="absolute bottom-0 z-50 w-full bg-white p-2">
+					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
 						<p>Philipp Proff</p>
-						<p class="text-xs">Information Design</p>
+						<p class="text-xs">Researcher, design and development</p>
 					</div>
 				</div>
 				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
 					<img class="h-[250px] w-96 object-cover" src="img/team/ab_team.jpeg" />
-					<div class="absolute bottom-0 z-50 w-full bg-white p-2">
+					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
 						<p>Angela Brennecke</p>
-						<p class="text-xs">Project Management</p>
+						<p class="text-xs">Professor, project management and administration</p>
 					</div>
 				</div>
 				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
 					<img class="h-[250px] w-96 object-cover" src="img/team/js_team.jpeg" />
-					<div class="absolute bottom-0 z-50 w-full bg-white p-2">
+					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
 						<p>Jocelyn Shek</p>
-						<p class="text-xs">Data Analysis</p>
+						<p class="text-xs">Student researcher, Data Analysis</p>
 					</div>
 				</div>
 				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
 					<img class="h-[250px] w-96 object-cover" src="img/placeholder-nyt.png" />
-					<div class="absolute bottom-0 z-50 w-full bg-white p-2">
+					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
 						<p>Nemuël Link</p>
-						<p class="text-xs">Data Analysis and Design</p>
+						<p class="text-xs">Student researcher, Data Analysis and Design</p>
 					</div>
 				</div>
 				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
 					<img class="h-[250px] w-96 object-cover" src="img/team/ka_team.jpg" />
-					<div class="absolute bottom-0 z-50 w-full bg-white p-2">
+					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
 						<p>Kim Albrecht</p>
-						<p class="text-xs">Research Supervision</p>
+						<p class=" text-xs">Professor, Research Supervision and administration</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="w-2/5 bg-green-100">
+	<div class="w-2/5 pl-4">
 		<div>
-			<h2>Fundings & Partners</h2>
-			<div>Logo BMBF</div>
-			<div>Logo Filmuni</div>
-			<div>Logo difgl</div>
+			<h2 class="font-serif text-2xl">Fundings & Partners</h2>
+			<div><img class="w-[250px]" src="/img/partners/BMFTR.jpg" /></div>
+			<div><img class="w-[200px]" src="/img/partners/Filmuni.png" /></div>
+			<div><img class="w-[150px]" src="/img/partners/difgl_logo.jpeg" /></div>
 		</div>
+
 		<div>
-			<h2>Related links</h2>
-			<div>Documentation</div>
-			<div>Github repository</div>
-			<div>Impressum</div>
+			<h2 class="font-serif text-2xl">Related links</h2>
+			<div>
+				<ul>
+					<li class="pb-4">
+						<button class="flex items-center px-2 py-[2px]">
+							<a href="/places">Documentation</a></button
+						>
+					</li>
+					<li class="pb-4">
+						<button class="flex items-center px-2 py-[2px]">
+							<a href="/topics">Github repository</a></button
+						>
+					</li>
+					<li class="pb-4">
+						<button class="pointer-events-none flex items-center px-2 py-[2px]">
+							<a href="/images">Impressum</a></button
+						>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>
