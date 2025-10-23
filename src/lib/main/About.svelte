@@ -25,70 +25,90 @@
 		<div class="mt-10">
 			<h2 class="font-serif text-2xl">Team</h2>
 			<div class="mt-8 grid grid-cols-3">
-				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
-					<img
-						class="h-[250px] w-96 object-cover"
-						src="img/team/fm_team.jpg"
-						alt="Portrait of Francesca Morini"
-					/>
-					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
-						<p>Francesca Morini</p>
-						<p class="text-xs">Principal Investigator, design and development</p>
+				<div class="m-2 ml-0">
+					<div><p class="text-sm">Principal Investigator</p></div>
+					<div class="relative max-h-[400px] overflow-hidden rounded-xl border bg-white">
+						<img
+							class="h-[400px] w-96 object-cover"
+							src="img/team/fm_team.jpg"
+							alt="Portrait of Francesca Morini"
+						/>
+						<div class="absolute bottom-0 z-50 min-h-24 w-full border-t bg-white p-2">
+							<p>Francesca Morini</p>
+							<p class="text-xs">
+								Film University Babelsberg KONRAD WOLF, Metalab Berlin + Harvard
+							</p>
+						</div>
 					</div>
 				</div>
-				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
-					<img
-						class="h-[250px] w-96 object-cover"
-						src="img/team/pp_team.webp"
-						alt="Portrait of Philipp Proff"
-					/>
-					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
-						<p>Philipp Proff</p>
-						<p class="text-xs">Researcher, design and development</p>
+				<div class="m-2 ml-0">
+					<div><p class="text-sm">Design and Development</p></div>
+					<div class="relative h-[400px] overflow-hidden rounded-xl border bg-white">
+						<img
+							class="h-[300px] w-96 object-cover"
+							src="img/team/pp_team.webp"
+							alt="Portrait of Philipp Proff"
+						/>
+						<div class="absolute bottom-0 z-50 min-h-24 w-full border-t bg-white p-2">
+							<p>Philipp Proff</p>
+							<p class="text-xs">Film University Babelsberg KONRAD WOLF</p>
+						</div>
 					</div>
 				</div>
-				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
-					<img
-						class="h-[250px] w-96 object-cover"
-						src="img/team/ab_team.jpeg"
-						alt="Portrait of Angela Brennecke"
-					/>
-					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
-						<p>Angela Brennecke</p>
-						<p class="text-xs">Professor, project management and administration</p>
+				<div class="m-2 ml-0">
+					<div><p class="text-sm">Project Management</p></div>
+					<div class="relative h-[400px] overflow-hidden rounded-xl border bg-white">
+						<img
+							class="h-[400px] w-96 object-cover"
+							src="img/team/ab_team.jpeg"
+							alt="Portrait of Angela Brennecke"
+						/>
+						<div class="absolute bottom-0 z-50 min-h-24 w-full border-t bg-white p-2">
+							<p>Angela Brennecke</p>
+							<p class="text-xs">Film University Babelsberg KONRAD WOLF</p>
+						</div>
 					</div>
 				</div>
-				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
-					<img
-						class="h-[250px] w-96 object-cover"
-						src="img/team/js_team.jpeg"
-						alt="Portrait of Jocelyn Shek"
-					/>
-					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
-						<p>Jocelyn Shek</p>
-						<p class="text-xs">Student researcher, Data Analysis</p>
+				<div class="m-2 ml-0">
+					<div><p class="text-sm">Data Analysis, Student Assistant</p></div>
+					<div class="relative h-[400px] overflow-hidden rounded-xl border bg-white">
+						<img
+							class="h-[400px] w-96 object-cover"
+							src="img/team/js_team.jpeg"
+							alt="Portrait of Jocelyn Shek"
+						/>
+						<div class="absolute bottom-0 z-50 min-h-24 w-full border-t bg-white p-2">
+							<p>Jocelyn Shek</p>
+							<p class="text-xs">Harvard University</p>
+						</div>
 					</div>
 				</div>
-				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
-					<img
-						class="h-[250px] w-96 object-cover"
-						src="img/placeholder-nyt.png"
-						alt="Portrait of Nemuël Link"
-					/>
-					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
-						<p>Nemuël Link</p>
-						<p class="text-xs">Student researcher, Data Analysis and Design</p>
+				<div class="m-2 ml-0">
+					<div><p class="text-sm">Data Analysis, Student Assistant</p></div>
+					<div class="relative h-[400px] overflow-hidden rounded-xl border bg-white">
+						<img
+							class="h-[400px] w-96 object-cover"
+							src="img/placeholder-nyt.png"
+							alt="Portrait of >Nemuël Link"
+						/>
+						<div class="absolute bottom-0 z-50 min-h-24 w-full border-t bg-white p-2">
+							<p>Nemuël Link</p>
+							<p class="text-xs">Lucerne University of Applied Sciences and Arts</p>
+						</div>
 					</div>
 				</div>
-				<div class="relative m-2 max-h-[250px] overflow-hidden rounded-xl border bg-white">
-					<img
-						class="h-[250px] w-96 object-cover"
-						src="img/team/ka_team.jpg"
-						alt="Portrait of Kim Albrecht"
-					/>
-					<div class="absolute bottom-0 z-50 w-full border-t bg-white p-2">
-						<p>Kim Albrecht</p>
-						<p class=" text-xs">Professor, Research Supervision and administration</p>
+				<div class="m-2 ml-0">
+					<div><p class="text-sm">Research Supervision</p></div>
+					<div class="relative h-[400px] overflow-hidden rounded-xl border bg-white">
+						<img
+							class="h-[400px] w-96 object-cover object-right"
+							src="img/team/ka_team.jpg"
+							alt="Portrait of Kim Albrecht"
+						/>
+						<div class="absolute bottom-0 z-50 min-h-24 w-full border-t bg-white p-2">
+							<p>Kim Albrecht</p>
+							<p class="text-xs">Folkwang University of the Arts</p>
+						</div>
 					</div>
 				</div>
 			</div>
