@@ -10,9 +10,9 @@
 	let bubbles;
 	let simulation;
 	let scaleLog = d3
-		.scaleLinear()
+		.scaleLog()
 		.domain(d3.extent(people.map((p) => p.count)))
-		.range([10, 100]);
+		.range([15, 50]);
 	let data = $state([]);
 	let totalCounts = $state(0);
 	let selectedPerson = $state(null);
@@ -26,7 +26,7 @@
 			const result = await response.json();
 			console.log('fetching total counts for date:', result);
 			totalCounts = result.length;
-			loading = false
+			loading = false;
 		} catch (error) {
 			console.log('Error in fetching total counts inside fetchTotalCounts', error);
 		}
@@ -54,7 +54,7 @@
 		// Stop any running simulation
 		if (simulation) simulation.stop();
 		people.map((p) => {
-			p.x = width / 3.5;
+			p.x = width / 3;
 			p.y = height / 2;
 		});
 
@@ -64,7 +64,7 @@
 			.force('y', d3.forceY(height / 2).strength(0.1))
 			.force(
 				'collide',
-				d3.forceCollide((d) => scaleLog(d.count)+ 20)
+				d3.forceCollide((d) => scaleLog(d.count) + 15)
 			)
 			.alphaDecay(0.05)
 			.on('tick', ticked);
@@ -124,6 +124,7 @@
 			.style('width', 'fit-content')
 			.style('margin', 'auto')
 			.style('padding', '4px 8px')
+			.style('z-index', '10')
 			.style('backdrop-filter', 'blur(5px)')
 			.style('border', '1px solid #999')
 			.style('border-radius', '9999px') // pill shape
@@ -144,7 +145,11 @@
 		bubbles = entered.merge(bubbles);
 
 		function ticked() {
-			bubbles.attr('transform', (d) => `translate(${Math.max(scaleLog(d.count), Math.min(width - scaleLog(d.count), d.x))}, ${Math.max(scaleLog(d.count), Math.min(height - scaleLog(d.count), d.y))})`);
+			bubbles.attr(
+				'transform',
+				(d) =>
+					`translate(${Math.max(scaleLog(d.count), Math.min(width - scaleLog(d.count), d.x))}, ${Math.max(scaleLog(d.count), Math.min(height - scaleLog(d.count), d.y))})`
+			);
 		}
 	}
 	// auto update the chart on change of the dataset
@@ -168,8 +173,9 @@
 		>
 	</p>
 </div>
-<div class="grid grid-cols-5 items-center justify-items-center gap-4">
-	<svg width={width/1.5} {height} id="bubble-chart" class="col-span-3">
+<div class="grid grid-cols-5 items-start justify-items-center gap-4 mt-4">
+	<div class="col-span-3">
+			<svg width={width / 1.5} {height} id="bubble-chart" >
 		<defs>
 			<circle id="circle" cx="25%" cy="25%" r="15" />
 			<clipPath id="clip">
@@ -177,13 +183,26 @@
 			</clipPath>
 		</defs>
 	</svg>
+	</div>
 	<div class="col-span-2">
-		<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading}>
-			<div class="col-span-2">
-					<b>{translateCard[selectedPerson] ?? selectedPerson}</b><br>
-					Found in <u>{data.length == 0 ? '?' : data.length} articles</u> <br>
-					between <u>{selectedDate ? new Date(selectedDate).toLocaleDateString('de') : '?'} - {selectedDate ? new Date(new Date(selectedDate).getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0].replaceAll('-','.') : '?'}</u>
-			</div>
-		</ArticlesCard>
+				<img class="my-4 mx-auto" src="/img/explain_images_bubblechart.svg" alt="" />
+
+		<div>
+			<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading}>
+				<div class="col-span-2">
+					<b>{translateCard[selectedPerson] ?? selectedPerson}</b><br />
+					Found in <u>{data.length == 0 ? '?' : data.length} articles</u> <br />
+					between
+					<u
+						>{selectedDate ? new Date(selectedDate).toLocaleDateString('de') : '?'} - {selectedDate
+							? new Date(new Date(selectedDate).getTime() + 7 * 24 * 60 * 60 * 1000)
+									.toISOString()
+									.split('T')[0]
+									.replaceAll('-', '.')
+							: '?'}</u
+					>
+				</div>
+			</ArticlesCard>
+		</div>
 	</div>
 </div>
