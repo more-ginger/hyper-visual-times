@@ -3,281 +3,717 @@
         "personA": "olaf-scholz",
         "personB": "wolodimir-selenski",
         "news_desks": {
-            "News": 6,
-            "Politik": 3
+            "News": {
+                "number": 6,
+                "ids": [
+                    "8359450820",
+                    "8356510450",
+                    "8413459044",
+                    "2024-09-478962357",
+                    "7960856378",
+                    "7982762861"
+                ]
+            },
+            "Politik": {
+                "number": 3,
+                "ids": [
+                    "8180593629",
+                    "7983190336",
+                    "8439813153"
+                ]
+            }
         }
     },
     {
         "personA": "friedrich-merz",
         "personB": "olaf-scholz",
         "news_desks": {
-            "Politik": 4,
-            "News": 3,
-            "Wirtschaft": 1
+            "News": {
+                "number": 3,
+                "ids": [
+                    "8468135106",
+                    "2024-11-558441017",
+                    "8123475098"
+                ]
+            },
+            "Politik": {
+                "number": 4,
+                "ids": [
+                    "8442945906",
+                    "8191676293",
+                    "8329807291",
+                    "8196601126"
+                ]
+            },
+            "Wirtschaft": {
+                "number": 1,
+                "ids": [
+                    "8425037376"
+                ]
+            }
         }
     },
     {
         "personA": "friedrich-merz",
         "personB": "robert-habeck",
         "news_desks": {
-            "Politik": 3,
-            "News": 1,
-            "Wirtschaft": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "2024-11-558441017"
+                ]
+            },
+            "Politik": {
+                "number": 3,
+                "ids": [
+                    "8165427770",
+                    "8239767298",
+                    "8329807291"
+                ]
+            },
+            "Wirtschaft": {
+                "number": 1,
+                "ids": [
+                    "8462124397"
+                ]
+            }
         }
     },
     {
         "personA": "olaf-scholz",
         "personB": "robert-habeck",
         "news_desks": {
-            "Politik": 14,
-            "News": 10,
-            "Wirtschaft": 2
+            "News": {
+                "number": 10,
+                "ids": [
+                    "8072468041",
+                    "8254461841",
+                    "8460674648",
+                    "7955649140",
+                    "8383842011",
+                    "2024-12-566004466",
+                    "2024-11-558441017",
+                    "8381372776",
+                    "8336619812",
+                    "8452570543"
+                ]
+            },
+            "Politik": {
+                "number": 14,
+                "ids": [
+                    "8327478840",
+                    "8398985797",
+                    "8211397046",
+                    "7992731016",
+                    "8211185885",
+                    "8388034272",
+                    "8169442853",
+                    "8393937691",
+                    "7990808824",
+                    "8329807291",
+                    "8268061890",
+                    "8400201356",
+                    "8397410832",
+                    "8204480452"
+                ]
+            },
+            "Wirtschaft": {
+                "number": 2,
+                "ids": [
+                    "8442164071",
+                    "8427643527"
+                ]
+            }
         }
     },
     {
         "personA": "friedrich-merz",
-        "personB": "markus-soeder",
+        "personB": "markus-so\u0308der",
         "news_desks": {
-            "News": 11,
-            "Politik": 3
+            "News": {
+                "number": 11,
+                "ids": [
+                    "7999551057",
+                    "8022831222",
+                    "8324740355",
+                    "8071516363",
+                    "8292934205",
+                    "8324778018",
+                    "8461333438",
+                    "8460872447",
+                    "8333233616",
+                    "8292880990",
+                    "2024-12-567071045"
+                ]
+            },
+            "Politik": {
+                "number": 3,
+                "ids": [
+                    "8461516335",
+                    "8456537695",
+                    "8360682661"
+                ]
+            }
         }
     },
     {
         "personA": "annalena-baerbock",
         "personB": "christian-lindner",
         "news_desks": {
-            "Politik": 1,
-            "News": 1
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "7914415345"
+                ]
+            },
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8072468041"
+                ]
+            }
         }
     },
     {
         "personA": "annalena-baerbock",
         "personB": "robert-habeck",
         "news_desks": {
-            "Politik": 2,
-            "News": 1
+            "Politik": {
+                "number": 2,
+                "ids": [
+                    "7914415345",
+                    "8327175759"
+                ]
+            },
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8072468041"
+                ]
+            }
         }
     },
     {
         "personA": "christian-lindner",
         "personB": "robert-habeck",
         "news_desks": {
-            "Politik": 12,
-            "News": 9,
-            "Wirtschaft": 1
+            "Politik": {
+                "number": 12,
+                "ids": [
+                    "8391667726",
+                    "8398985797",
+                    "7914415345",
+                    "8211397046",
+                    "8211185885",
+                    "8388034272",
+                    "8208967610",
+                    "8169442853",
+                    "8393937691",
+                    "8400201356",
+                    "8465833312",
+                    "8204480452"
+                ]
+            },
+            "News": {
+                "number": 9,
+                "ids": [
+                    "8072468041",
+                    "7955649140",
+                    "8383842011",
+                    "8107485457",
+                    "8381372776",
+                    "8336619812",
+                    "7970735358",
+                    "7964513267",
+                    "8325290278"
+                ]
+            },
+            "Wirtschaft": {
+                "number": 1,
+                "ids": [
+                    "7965716378"
+                ]
+            }
         }
     },
     {
         "personA": "donald-trump",
         "personB": "joe-biden",
         "news_desks": {
-            "Politik": 15
+            "Politik": {
+                "number": 15,
+                "ids": [
+                    "8453933325",
+                    "8403815007",
+                    "8327380276",
+                    "8014266734",
+                    "8008207788",
+                    "8198119560",
+                    "8199459015",
+                    "8373295087",
+                    "8416151039",
+                    "7934989870",
+                    "8199056255",
+                    "8079809781",
+                    "8206984441",
+                    "8199783568",
+                    "7969034143"
+                ]
+            }
         }
     },
     {
         "personA": "christian-lindner",
         "personB": "olaf-scholz",
         "news_desks": {
-            "Politik": 12,
-            "News": 6,
-            "Wirtschaft": 1
+            "News": {
+                "number": 6,
+                "ids": [
+                    "8314247904",
+                    "8072468041",
+                    "7955649140",
+                    "8383842011",
+                    "8381372776",
+                    "8336619812"
+                ]
+            },
+            "Wirtschaft": {
+                "number": 1,
+                "ids": [
+                    "7967401022"
+                ]
+            },
+            "Politik": {
+                "number": 12,
+                "ids": [
+                    "8398985797",
+                    "8211397046",
+                    "8337978578",
+                    "8211185885",
+                    "8388034272",
+                    "8169442853",
+                    "8249419260",
+                    "8393937691",
+                    "8370668651",
+                    "8400201356",
+                    "8273599106",
+                    "8204480452"
+                ]
+            }
         }
     },
     {
         "personA": "michael-kretschmer",
         "personB": "robert-habeck",
         "news_desks": {
-            "News": 1,
-            "Politik": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "7979570799"
+                ]
+            },
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8023826849"
+                ]
+            }
         }
     },
     {
         "personA": "annalena-baerbock",
         "personB": "olaf-scholz",
         "news_desks": {
-            "News": 3,
-            "Politik": 1
+            "News": {
+                "number": 3,
+                "ids": [
+                    "7982762861",
+                    "8099946849",
+                    "8072468041"
+                ]
+            },
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8398608200"
+                ]
+            }
         }
     },
     {
         "personA": "annalena-baerbock",
         "personB": "wolodimir-selenski",
         "news_desks": {
-            "News": 2
+            "News": {
+                "number": 2,
+                "ids": [
+                    "7982762861",
+                    "8137874499"
+                ]
+            }
         }
     },
     {
         "personA": "dietmar-woidtke",
         "personB": "michael-kretschmer",
         "news_desks": {
-            "Politik": 2
+            "Politik": {
+                "number": 2,
+                "ids": [
+                    "8366567013",
+                    "8011974625"
+                ]
+            }
         }
     },
     {
         "personA": "joe-biden",
         "personB": "kamala-harris",
         "news_desks": {
-            "Politik": 5,
-            "News": 2
+            "Politik": {
+                "number": 5,
+                "ids": [
+                    "8280840789",
+                    "8373295087",
+                    "8017724619",
+                    "8276861709",
+                    "8018097658"
+                ]
+            },
+            "News": {
+                "number": 2,
+                "ids": [
+                    "8237347492",
+                    "8403041858"
+                ]
+            }
         }
     },
     {
         "personA": "friedrich-merz",
         "personB": "mario-voigt",
         "news_desks": {
-            "News": 1,
-            "Politik": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8072495619"
+                ]
+            },
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8374015773"
+                ]
+            }
         }
     },
     {
         "personA": "joe-biden",
         "personB": "vladimir-putin",
         "news_desks": {
-            "Politik": 2
+            "Politik": {
+                "number": 2,
+                "ids": [
+                    "8095728199",
+                    "8254651164"
+                ]
+            }
         }
     },
     {
         "personA": "joe-biden",
         "personB": "wolodimir-selenski",
         "news_desks": {
-            "Politik": 5
+            "Politik": {
+                "number": 5,
+                "ids": [
+                    "8221250017",
+                    "8338815388",
+                    "8416151039",
+                    "8221284013",
+                    "8176687415"
+                ]
+            }
         }
     },
     {
         "personA": "olaf-scholz",
         "personB": "sahra-wagenknecht",
         "news_desks": {
-            "Politik": 1
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8183985611"
+                ]
+            }
         }
     },
     {
         "personA": "donald-trump",
         "personB": "vladimir-putin",
         "news_desks": {
-            "News": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8216132653"
+                ]
+            }
         }
     },
     {
-        "personA": "markus-soeder",
+        "personA": "markus-so\u0308der",
         "personB": "olaf-scholz",
         "news_desks": {
-            "News": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8250568873"
+                ]
+            }
         }
     },
     {
         "personA": "joe-biden",
         "personB": "olaf-scholz",
         "news_desks": {
-            "Politik": 4,
-            "News": 1
+            "Politik": {
+                "number": 4,
+                "ids": [
+                    "8369471059",
+                    "8254651164",
+                    "8335975532",
+                    "8356393900"
+                ]
+            },
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8336642294"
+                ]
+            }
         }
     },
     {
         "personA": "olaf-scholz",
         "personB": "vladimir-putin",
         "news_desks": {
-            "Politik": 2
+            "Politik": {
+                "number": 2,
+                "ids": [
+                    "8344716030",
+                    "8254651164"
+                ]
+            }
         }
     },
     {
         "personA": "friedrich-merz",
         "personB": "michael-kretschmer",
         "news_desks": {
-            "News": 2,
-            "Politik": 1
+            "News": {
+                "number": 2,
+                "ids": [
+                    "8292880990",
+                    "8292934205"
+                ]
+            },
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8333479549"
+                ]
+            }
         }
     },
     {
-        "personA": "markus-soeder",
+        "personA": "markus-so\u0308der",
         "personB": "michael-kretschmer",
         "news_desks": {
-            "News": 4
+            "News": {
+                "number": 4,
+                "ids": [
+                    "8380516622",
+                    "8379673723",
+                    "8292880990",
+                    "8292934205"
+                ]
+            }
         }
     },
     {
         "personA": "donald-trump",
         "personB": "kamala-harris",
         "news_desks": {
-            "Politik": 14,
-            "News": 4
+            "Politik": {
+                "number": 14,
+                "ids": [
+                    "8315769959",
+                    "8316054187",
+                    "8319849188",
+                    "8373295087",
+                    "8390952462",
+                    "8397245676",
+                    "8316243427",
+                    "8343150658",
+                    "8315052784",
+                    "8356501806",
+                    "8316898226",
+                    "8387510790",
+                    "8402209666",
+                    "8354797833"
+                ]
+            },
+            "News": {
+                "number": 4,
+                "ids": [
+                    "8394972558",
+                    "8385549167",
+                    "8461931093",
+                    "8396047879"
+                ]
+            }
         }
     },
     {
         "personA": "annalena-baerbock",
         "personB": "dietmar-woidtke",
         "news_desks": {
-            "News": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8321011379"
+                ]
+            }
         }
     },
     {
         "personA": "michael-kretschmer",
         "personB": "olaf-scholz",
         "news_desks": {
-            "News": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8356425298"
+                ]
+            }
         }
     },
     {
         "personA": "dietmar-woidtke",
         "personB": "mario-voigt",
         "news_desks": {
-            "Politik": 1
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8366567013"
+                ]
+            }
         }
     },
     {
         "personA": "dietmar-woidtke",
         "personB": "sahra-wagenknecht",
         "news_desks": {
-            "Politik": 1
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8366567013"
+                ]
+            }
         }
     },
     {
         "personA": "mario-voigt",
         "personB": "michael-kretschmer",
         "news_desks": {
-            "Politik": 1
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8366567013"
+                ]
+            }
         }
     },
     {
         "personA": "mario-voigt",
         "personB": "sahra-wagenknecht",
         "news_desks": {
-            "Politik": 1
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8366567013"
+                ]
+            }
         }
     },
     {
         "personA": "michael-kretschmer",
         "personB": "sahra-wagenknecht",
         "news_desks": {
-            "Politik": 2
+            "Politik": {
+                "number": 2,
+                "ids": [
+                    "8366567013",
+                    "8384414415"
+                ]
+            }
         }
     },
     {
         "personA": "friedrich-merz",
         "personB": "sahra-wagenknecht",
         "news_desks": {
-            "Politik": 1
+            "Politik": {
+                "number": 1,
+                "ids": [
+                    "8384847798"
+                ]
+            }
         }
     },
     {
         "personA": "donald-trump",
         "personB": "wolodimir-selenski",
         "news_desks": {
-            "Politik": 3,
-            "News": 2
+            "Politik": {
+                "number": 3,
+                "ids": [
+                    "8447035893",
+                    "8416151039",
+                    "8410633049"
+                ]
+            },
+            "News": {
+                "number": 2,
+                "ids": [
+                    "8447406565",
+                    "8448157637"
+                ]
+            }
         }
     },
     {
         "personA": "annalena-baerbock",
         "personB": "sahra-wagenknecht",
         "news_desks": {
-            "News": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8424122418"
+                ]
+            }
         }
     },
     {
         "personA": "friedrich-merz",
         "personB": "wolodimir-selenski",
         "news_desks": {
-            "News": 1
+            "News": {
+                "number": 1,
+                "ids": [
+                    "8448871304"
+                ]
+            }
         }
     }
 ]
