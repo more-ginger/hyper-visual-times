@@ -60,8 +60,8 @@
 
 		simulation = d3
 			.forceSimulation(people)
-			.force('x', d3.forceX(width / 3.5).strength(0.25))
-			.force('y', d3.forceY(height / 2).strength(0.25))
+			.force('x', d3.forceX(width / 3.5).strength(0.1))
+			.force('y', d3.forceY(height / 2).strength(0.1))
 			.force(
 				'collide',
 				d3.forceCollide((d) => scaleLog(d.count) + 20)
@@ -144,7 +144,7 @@
 		bubbles = entered.merge(bubbles);
 
 		function ticked() {
-			bubbles.attr('transform', (d) => `translate(${d.x}, ${d.y})`);
+			bubbles.attr('transform', (d) => `translate(${Math.max(scaleLog(d.count), Math.min(width - scaleLog(d.count), d.x))}, ${Math.max(scaleLog(d.count), Math.min(height - scaleLog(d.count), d.y))})`);
 		}
 	}
 	// auto update the chart on change of the dataset
