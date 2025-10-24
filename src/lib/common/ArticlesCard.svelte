@@ -24,7 +24,10 @@
 	<div class="sticky top-0 flex justify-between p-2 backdrop-blur-sm shadow-md bg-[var(--color-ivory-default)]">
 		<div class="grid grid-cols-2 pt-1">
 		{#if articles.length == 0 && !loading}
-			Loading...
+			<div class="col-span-2">
+							Select a <u>bubble</u> to inspect the <u>articles</u>.
+
+			</div>
 		{:else}
 			{@render children()}
 		{/if}
