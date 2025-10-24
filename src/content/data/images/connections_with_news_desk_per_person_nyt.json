@@ -3,1231 +3,593 @@
         "personA": "donald-trump",
         "personB": "todd-blanche",
         "news_desks": {
-            "Metro": {
-                "number": 42,
-                "ids": [
-                    "nyt://article/a330109b-46db-585f-aa95-b36d0f3030bb",
-                    "nyt://article/30553094-bc3f-5949-a49f-434b2bb15c95",
-                    "nyt://article/b04f35f9-6b1c-5164-99eb-ebb3ffc542b1",
-                    "nyt://article/9a329929-c78e-56be-a831-3c309d0e569b",
-                    "nyt://article/fbfb9050-436d-5b33-b9ac-44960761d7e9",
-                    "nyt://article/76ba3120-0d72-5fdf-9987-d83e3cf3d314",
-                    "nyt://article/9b41c9e2-8785-5e35-b618-54915d693bc2",
-                    "nyt://article/0aff550a-f87e-52b6-a9fc-6c31ef0bcfde",
-                    "nyt://article/3a48e317-89fc-5756-95cb-fe6e1d7da957",
-                    "nyt://article/acc2ca68-8c76-5272-981a-21262d62029b",
-                    "nyt://article/15a79e6f-e278-5f46-9fd7-a4ee423cb390",
-                    "nyt://article/619b9015-9580-50fe-9c28-9fcb2a448f25",
-                    "nyt://article/000194c5-aeba-50c4-bbdd-540863bdacb8",
-                    "nyt://article/f5255ab2-f396-567c-8f38-22991ee8b720",
-                    "nyt://article/bae6b762-e4cc-5788-99eb-ae06ac4328a1",
-                    "nyt://article/0e6b203c-c282-533d-b12d-9979944fdf08",
-                    "nyt://article/4a7cca3e-9e67-5fd9-a251-7d90202134bb",
-                    "nyt://article/9f8679f5-86e6-5fff-8e6b-5c2cf77ef4b7",
-                    "nyt://article/3a8da145-2969-5706-b37b-0d7805d03f7d",
-                    "nyt://article/b8a5362a-6524-5ec7-839a-5271399651bc",
-                    "nyt://article/62f1864e-97fb-5432-8abc-2de9bde128ec",
-                    "nyt://article/9c1662db-6f23-55d5-a691-1f194f6b0702",
-                    "nyt://article/b48c5570-159b-5d3a-b644-1ff3da173258",
-                    "nyt://article/ce03c4fb-610f-5901-ae3a-7c65fd88cd4e",
-                    "nyt://article/e06cb004-29a8-5e4a-988f-58ba028b54b3",
-                    "nyt://article/faf9ab01-68e6-5dea-a808-347c2fe699f3",
-                    "nyt://article/afccb419-10a2-5779-8d30-238ef3003569",
-                    "nyt://article/a66ddca0-e16d-5d54-a655-7af557137826",
-                    "nyt://article/8162d66b-5f29-501e-8a3d-a246f76d9a5b",
-                    "nyt://article/2f16e042-4c71-58aa-9366-523300d7c110",
-                    "nyt://article/e94bfee5-a483-522b-8629-67eb87fca6cd",
-                    "nyt://article/04799e4a-ef6a-5ccf-8f2f-f95ac4e9aab6",
-                    "nyt://article/fcf2d952-ccea-5d76-acd1-f26cb9d6177c",
-                    "nyt://article/017985ac-3c63-5de2-9451-14497f9e34a4",
-                    "nyt://article/10be9d17-4562-553c-86b9-e62b06f5e977",
-                    "nyt://article/2d5a9e0f-8ada-5883-b42b-423056f71409",
-                    "nyt://article/422f15a0-8a24-5420-9f1a-c2897645a0f8",
-                    "nyt://article/8fce8cd0-c7ec-5c20-bc5a-0c5340c3d8c2",
-                    "nyt://article/c1015932-1d09-5e70-8c76-cda181d7f1a9",
-                    "nyt://article/ca88ada3-4243-5189-b7eb-80bf1fd7b3ec",
-                    "nyt://article/e66dc775-e2ab-5d10-9548-096d2b98babc",
-                    "nyt://article/3ce7ed3f-d343-5741-9711-808926f53140"
-                ]
-            },
-            "Politics": {
-                "number": 13,
-                "ids": [
-                    "nyt://article/20bd5e80-2a91-5b90-bed9-32f84635e9a6",
-                    "nyt://article/0dde0e11-b896-5699-95da-609df6e624a9",
-                    "nyt://article/fd80fcde-2ccc-57cc-8ac7-6235929f5b0a",
-                    "nyt://article/61fd2b82-25e9-5dbc-bd23-485e71b5aca8",
-                    "nyt://article/66ce195a-d163-56f6-bb3f-ce49589652a0",
-                    "nyt://article/c6a7528b-613e-5d83-9ad4-36a6e65d62d9",
-                    "nyt://article/bf2954a1-c977-59d1-8af3-f695fbfb40a8",
-                    "nyt://article/c02a0cd0-927d-55a3-92d6-46f6ab871db1",
-                    "nyt://article/3e95b8ae-3219-5e8e-a175-7a57f06aafe2",
-                    "nyt://article/54c2d82d-f91f-5fd7-bb71-d3fb9e317391",
-                    "nyt://article/7043475f-78bb-54e9-a5ac-1d40f8db243a",
-                    "nyt://article/59ccde1b-0622-5f09-b8ba-1a6dee3bd3a7",
-                    "nyt://article/66b90b2a-0696-5940-abad-297f2f92a046"
-                ]
-            },
-            "NYTNow": {
-                "number": 5,
-                "ids": [
-                    "nyt://article/f4905e1d-76d1-58ad-8151-96c5630b3011",
-                    "nyt://article/7d91f334-c6f8-5ab0-b16c-e615245da5b0",
-                    "nyt://article/25735e28-a55a-55e0-9787-422dcbf865d7",
-                    "nyt://article/a832e9c9-57fc-5414-a923-b9afb4a35766",
-                    "nyt://article/bc57790c-3c9c-580b-91c9-d0ea50b17703"
-                ]
-            },
-            "Business": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/27bb4240-39ec-5a77-947e-04e011e64ed5"
-                ]
-            },
-            "Podcasts": {
-                "number": 6,
-                "ids": [
-                    "nyt://article/d7ed6725-e988-59ec-a801-50fb9532a5e6",
-                    "nyt://article/3c55d271-0ed2-5151-93f8-1c646d0e744d",
-                    "nyt://article/b7c7d477-5cae-519e-ae92-b3690fa1ec2e",
-                    "nyt://article/5198d449-eb82-5251-8dde-60dfab09a7e1",
-                    "nyt://article/eae12f41-f01c-5d9b-a6a8-8fa511a9403b",
-                    "nyt://article/3e89f076-cb1f-5a81-930f-20e20aa3f76e"
-                ]
-            },
-            "Culture": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/43c5d77b-5e79-5a8d-8b66-218c3f99c0b0"
-                ]
-            },
-            "Insider": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/51852f69-1e54-5c14-b077-59c6a209723f"
-                ]
-            },
-            "OpEd": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/fdfdcc21-3331-5a5a-b033-acb12f1ea284",
-                    "nyt://article/56c3d848-e370-5c85-951a-fd056adc1e72"
-                ]
-            },
-            "Washington": {
-                "number": 5,
-                "ids": [
-                    "nyt://article/5bedfa3f-0d88-5795-994f-68ae6700491b",
-                    "nyt://article/f31e119b-044c-5b77-aaab-93464ae47bed",
-                    "nyt://article/c73281c0-5fc5-5107-aabb-f113a8fd5d8b",
-                    "nyt://article/a163648d-2b0e-5185-b3a2-b795dee82bd3",
-                    "nyt://article/bda3c34b-4f2a-5aec-a36f-570dad6c86b1"
-                ]
-            },
-            "Briefing": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/5f754d33-17d7-5055-b7f5-85d8ac25a34e"
-                ]
-            }
-        }
+            "Metro": 42,
+            "Politics": 13,
+            "Podcasts": 6
+        },
+        "ids": [
+            "nyt://article/000194c5-aeba-50c4-bbdd-540863bdacb8",
+            "nyt://article/017985ac-3c63-5de2-9451-14497f9e34a4",
+            "nyt://article/04799e4a-ef6a-5ccf-8f2f-f95ac4e9aab6",
+            "nyt://article/0aff550a-f87e-52b6-a9fc-6c31ef0bcfde",
+            "nyt://article/0dde0e11-b896-5699-95da-609df6e624a9",
+            "nyt://article/0e6b203c-c282-533d-b12d-9979944fdf08",
+            "nyt://article/10be9d17-4562-553c-86b9-e62b06f5e977",
+            "nyt://article/15a79e6f-e278-5f46-9fd7-a4ee423cb390",
+            "nyt://article/20bd5e80-2a91-5b90-bed9-32f84635e9a6",
+            "nyt://article/2d5a9e0f-8ada-5883-b42b-423056f71409",
+            "nyt://article/2f16e042-4c71-58aa-9366-523300d7c110",
+            "nyt://article/30553094-bc3f-5949-a49f-434b2bb15c95",
+            "nyt://article/3a48e317-89fc-5756-95cb-fe6e1d7da957",
+            "nyt://article/3a8da145-2969-5706-b37b-0d7805d03f7d",
+            "nyt://article/3c55d271-0ed2-5151-93f8-1c646d0e744d",
+            "nyt://article/3ce7ed3f-d343-5741-9711-808926f53140",
+            "nyt://article/3e89f076-cb1f-5a81-930f-20e20aa3f76e",
+            "nyt://article/3e95b8ae-3219-5e8e-a175-7a57f06aafe2",
+            "nyt://article/422f15a0-8a24-5420-9f1a-c2897645a0f8",
+            "nyt://article/4a7cca3e-9e67-5fd9-a251-7d90202134bb",
+            "nyt://article/5198d449-eb82-5251-8dde-60dfab09a7e1",
+            "nyt://article/54c2d82d-f91f-5fd7-bb71-d3fb9e317391",
+            "nyt://article/59ccde1b-0622-5f09-b8ba-1a6dee3bd3a7",
+            "nyt://article/619b9015-9580-50fe-9c28-9fcb2a448f25",
+            "nyt://article/61fd2b82-25e9-5dbc-bd23-485e71b5aca8",
+            "nyt://article/62f1864e-97fb-5432-8abc-2de9bde128ec",
+            "nyt://article/66b90b2a-0696-5940-abad-297f2f92a046",
+            "nyt://article/66ce195a-d163-56f6-bb3f-ce49589652a0",
+            "nyt://article/7043475f-78bb-54e9-a5ac-1d40f8db243a",
+            "nyt://article/76ba3120-0d72-5fdf-9987-d83e3cf3d314",
+            "nyt://article/8162d66b-5f29-501e-8a3d-a246f76d9a5b",
+            "nyt://article/8fce8cd0-c7ec-5c20-bc5a-0c5340c3d8c2",
+            "nyt://article/9a329929-c78e-56be-a831-3c309d0e569b",
+            "nyt://article/9b41c9e2-8785-5e35-b618-54915d693bc2",
+            "nyt://article/9c1662db-6f23-55d5-a691-1f194f6b0702",
+            "nyt://article/9f8679f5-86e6-5fff-8e6b-5c2cf77ef4b7",
+            "nyt://article/a330109b-46db-585f-aa95-b36d0f3030bb",
+            "nyt://article/a66ddca0-e16d-5d54-a655-7af557137826",
+            "nyt://article/acc2ca68-8c76-5272-981a-21262d62029b",
+            "nyt://article/afccb419-10a2-5779-8d30-238ef3003569",
+            "nyt://article/b04f35f9-6b1c-5164-99eb-ebb3ffc542b1",
+            "nyt://article/b48c5570-159b-5d3a-b644-1ff3da173258",
+            "nyt://article/b7c7d477-5cae-519e-ae92-b3690fa1ec2e",
+            "nyt://article/b8a5362a-6524-5ec7-839a-5271399651bc",
+            "nyt://article/bae6b762-e4cc-5788-99eb-ae06ac4328a1",
+            "nyt://article/bf2954a1-c977-59d1-8af3-f695fbfb40a8",
+            "nyt://article/c02a0cd0-927d-55a3-92d6-46f6ab871db1",
+            "nyt://article/c1015932-1d09-5e70-8c76-cda181d7f1a9",
+            "nyt://article/c6a7528b-613e-5d83-9ad4-36a6e65d62d9",
+            "nyt://article/ca88ada3-4243-5189-b7eb-80bf1fd7b3ec",
+            "nyt://article/ce03c4fb-610f-5901-ae3a-7c65fd88cd4e",
+            "nyt://article/d7ed6725-e988-59ec-a801-50fb9532a5e6",
+            "nyt://article/e06cb004-29a8-5e4a-988f-58ba028b54b3",
+            "nyt://article/e66dc775-e2ab-5d10-9548-096d2b98babc",
+            "nyt://article/e94bfee5-a483-522b-8629-67eb87fca6cd",
+            "nyt://article/eae12f41-f01c-5d9b-a6a8-8fa511a9403b",
+            "nyt://article/f5255ab2-f396-567c-8f38-22991ee8b720",
+            "nyt://article/faf9ab01-68e6-5dea-a808-347c2fe699f3",
+            "nyt://article/fbfb9050-436d-5b33-b9ac-44960761d7e9",
+            "nyt://article/fcf2d952-ccea-5d76-acd1-f26cb9d6177c",
+            "nyt://article/fd80fcde-2ccc-57cc-8ac7-6235929f5b0a"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "kamala-harris",
         "news_desks": {
-            "Politics": {
-                "number": 10,
-                "ids": [
-                    "nyt://article/f23e9251-42e0-58fe-9784-da49eb31e00c",
-                    "nyt://article/4a4b70a6-7b93-5c4e-8e2d-4ad829436dce",
-                    "nyt://article/e9872f92-0fad-5ed4-8b3d-721c4f731902",
-                    "nyt://article/dea65940-15a0-538e-9da3-2128d7af0990",
-                    "nyt://article/019821b5-6ae0-512b-b1d7-4d85762b2a32",
-                    "nyt://article/99fcbc9f-5664-5dd2-9494-2af0e298971c",
-                    "nyt://article/18dd679b-5859-513c-a792-1c7894bca36a",
-                    "nyt://article/52bf7dfe-5252-5fc0-b630-61b20d1a41d5",
-                    "nyt://article/d56aa613-3389-58c2-8feb-7e9cf0d6479e",
-                    "nyt://article/65a4d0e6-6098-5177-8ff9-f35f50afbf07"
-                ]
-            },
-            "OpEd": {
-                "number": 11,
-                "ids": [
-                    "nyt://article/a76e0582-cf7b-5b53-8731-554829541356",
-                    "nyt://article/0309896f-fc0c-528b-b136-0388d5ee19f9",
-                    "nyt://article/cd7b1741-a7af-57b6-b66c-28ea6d85079d",
-                    "nyt://article/1010e760-eeed-5a86-ba8a-3dce9793c981",
-                    "nyt://article/ce878e73-916c-51ae-9c26-c4fc9ef2dbd7",
-                    "nyt://article/d34b247f-c491-5d93-8472-c78709bc2e33",
-                    "nyt://article/7434be43-7a2f-57fc-ac9b-49fbcd985928",
-                    "nyt://article/ce2744e4-e875-5c72-ba3c-0b3aefcea030",
-                    "nyt://article/e911d273-bf74-5dcd-84d5-3b503c3859ed",
-                    "nyt://article/609de58d-c42f-517d-a9d6-77c0d95d7bf8",
-                    "nyt://article/56b0d2a0-68b5-52de-a5d0-582a4ad8baaa"
-                ]
-            },
-            "Culture": {
-                "number": 3,
-                "ids": [
-                    "nyt://article/6e9604ca-63e4-517e-9948-400d537a28ec",
-                    "nyt://article/0d7fb0ba-a03c-58d1-ba9c-b101eee1feae",
-                    "nyt://article/3026f580-27ab-5b83-a424-8aaf3959ab24"
-                ]
-            },
-            "NYTNow": {
-                "number": 14,
-                "ids": [
-                    "nyt://article/0e2958f4-3942-58c5-a7f1-b3c48b1a35c0",
-                    "nyt://article/8015e394-af14-52a4-910e-2aecaad2d27a",
-                    "nyt://article/a9caa77c-98e6-50a0-889a-c3113277b47e",
-                    "nyt://article/66e441ca-ac6f-5ce4-bd90-659e16c19a97",
-                    "nyt://article/0fb5f130-5117-5107-87f7-6c7c51f0b8e9",
-                    "nyt://article/80358a02-4314-5c91-9bd5-85f94e8e74ce",
-                    "nyt://article/d18310e2-4f10-5c2c-917a-85a9384fb336",
-                    "nyt://article/84968342-49ac-5b85-8bc9-2a98d346588c",
-                    "nyt://article/8e936254-7e31-5823-a9d6-d9866b498f70",
-                    "nyt://article/a82dc0df-f16c-5a5d-829b-e58cad37e053",
-                    "nyt://article/1ede2d96-f8f8-553f-864c-8701e921814b",
-                    "nyt://article/8a51064e-570a-5956-b75c-c25c3249301e",
-                    "nyt://article/2c5a2c43-efab-5165-b7c8-969389f99c38",
-                    "nyt://article/f92b36b5-e446-5be5-a802-5872aec65680"
-                ]
-            },
-            "Washington": {
-                "number": 4,
-                "ids": [
-                    "nyt://article/190367d0-ba9b-5263-9889-ad83db08d31e",
-                    "nyt://article/7e7f65fd-9b7e-56ea-9b1b-7a01c5a88a7d",
-                    "nyt://article/58f428e7-3459-552d-9df8-a3900e61e73e",
-                    "nyt://article/2e21b714-728f-5f5e-8438-3a8527245fd4"
-                ]
-            },
-            "RealEstate": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/1b7185c5-353f-517a-b11e-d8a8e7cac870"
-                ]
-            },
-            "Business": {
-                "number": 9,
-                "ids": [
-                    "nyt://article/7271aea1-2b3e-5f43-b20d-63441bcf1818",
-                    "nyt://article/52a85650-0b8e-50a7-a5e9-dc649695cd95",
-                    "nyt://article/86617635-eb7b-520b-a3d1-d77b37167b4f",
-                    "nyt://article/8cea0856-dcc5-5524-a97d-6a0b7f886eb1",
-                    "nyt://article/5f406ae3-5e44-5e99-834a-872bc5a264e7",
-                    "nyt://article/2183e374-49e8-5a22-9e40-ad2f1443a500",
-                    "nyt://article/2de79d0a-09ed-58b9-a408-8ccc82b036ed",
-                    "nyt://article/b74e5a60-b5b3-520e-922c-b540c35ca561",
-                    "nyt://article/6fd08ed7-2eb6-50ef-b2f2-999a9b354326"
-                ]
-            },
-            "Election Analytics": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/2440f085-1b1c-5d41-8dd0-ec16ff00f259"
-                ]
-            },
-            "Learning": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/29976464-51aa-5889-85a8-40c032853c6a"
-                ]
-            },
-            "Podcasts": {
-                "number": 8,
-                "ids": [
-                    "nyt://article/a541cbaf-d26c-5400-92e9-9ee27eb02926",
-                    "nyt://article/9c7d3f9d-b9f3-509f-91c2-a0500b94bf9e",
-                    "nyt://article/e1cf7f74-2427-5042-af11-14117736e9a1",
-                    "nyt://article/66f6960a-587f-5e46-854e-75fee2c04c9f",
-                    "nyt://article/e11b066f-4e77-5c93-8edd-d2b141f598bc",
-                    "nyt://article/57d30706-0bfe-52a0-a095-f7d7d943388c",
-                    "nyt://article/2facc9f9-c139-5745-a1bd-b702e654a90d",
-                    "nyt://article/a845c121-5b36-56c2-aed4-1ffb8b5edaa9"
-                ]
-            },
-            "Metropolitan": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/3c3cd3f4-6a6a-531c-989b-b8958d0a7355"
-                ]
-            },
-            "Upshot": {
-                "number": 4,
-                "ids": [
-                    "nyt://article/cad166bb-1ff9-5ddc-bfb8-735f59b9104e",
-                    "nyt://article/4dfc2905-8497-5728-a256-5933b0fc9078",
-                    "nyt://article/e9766a3e-bc42-52c0-8617-b055a43d230e",
-                    "nyt://article/f3f064ac-3bf7-569b-b677-d357a67db199"
-                ]
-            },
-            "Styles": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/6d4cd6f6-7239-5797-92df-6cab803e7303"
-                ]
-            },
-            "Letters": {
-                "number": 3,
-                "ids": [
-                    "nyt://article/717e63ac-8e11-5fec-9e8a-77992819f06c",
-                    "nyt://article/fc24ca39-ba9a-51c5-94f1-a8ee818ece7d",
-                    "nyt://article/7b9aef2d-f10d-5c48-b83a-3c026cccf50e"
-                ]
-            },
-            "Climate": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/771b3d00-8965-55eb-85bf-142cbb3235c4"
-                ]
-            },
-            "Science": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/83878064-978c-5153-bd42-3d3ab6064668"
-                ]
-            },
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            },
-            "Graphics": {
-                "number": 54,
-                "ids": [
-                    "nyt://interactive/3829d2b1-49d7-5f3b-9bb8-9128ae7adb5e",
-                    "nyt://interactive/1bcde783-a30e-59d4-aa74-a11055c4f3f8",
-                    "nyt://interactive/528871ef-b526-5c06-a008-d120cb243b84",
-                    "nyt://interactive/655c6486-5fdd-5f27-887a-32875a1b3aa9",
-                    "nyt://interactive/10cba015-2300-5ec0-91ed-ab3a4ed95f2a",
-                    "nyt://interactive/1ee7454d-26cc-50a9-8c73-ffe5eacc84cc",
-                    "nyt://interactive/aab1b702-9c4d-5034-bdb0-81355ec9f063",
-                    "nyt://interactive/5d5a4cea-23ed-5a81-8ef8-53b2bd72553d",
-                    "nyt://interactive/a5e2cc45-d3d9-5e19-bc3e-dc43088f5f1a",
-                    "nyt://interactive/9b4ab2e8-a367-5c59-b85a-e0913428920c",
-                    "nyt://interactive/db7c6c6e-1d43-5fc0-be8d-abcd88482062",
-                    "nyt://interactive/3a8ff43f-ad04-55c2-a97d-3013de286d8f",
-                    "nyt://interactive/2d9b99df-9671-51b2-bc4a-9187cd3d7acb",
-                    "nyt://interactive/d4e6b04f-169c-5855-98f5-bbd90a3b435b",
-                    "nyt://interactive/1ecf3e61-b28c-5768-9d45-cab5b81c1700",
-                    "nyt://interactive/d3291933-ef4a-51f9-9c63-54b2a1356177",
-                    "nyt://interactive/264ec5e7-ce02-53b2-8a78-770b571417b8",
-                    "nyt://interactive/6745053d-33bb-5730-916e-2ca351d31a96",
-                    "nyt://interactive/5efe4642-e029-5f01-b33d-824f3bae5fd6",
-                    "nyt://interactive/3107100c-1026-5ce8-ad2e-8a36bd5f4f23",
-                    "nyt://interactive/cbd54117-2e6e-5cef-8b26-6376749c8332",
-                    "nyt://interactive/cb9c54b6-6610-5213-a11e-23415c81a7cb",
-                    "nyt://interactive/dbf22b06-f095-5437-808d-58745c1d1525",
-                    "nyt://interactive/846e4ecc-e937-5832-a21b-01c3f5b9ea73",
-                    "nyt://interactive/75c1582b-c823-5cee-b4c4-c7e6955ecb6d",
-                    "nyt://interactive/3d9dcbbf-b3f8-51bb-9d48-1d68ac14fcab",
-                    "nyt://interactive/5eaf20c1-baa5-52bf-94c2-1063a230551d",
-                    "nyt://interactive/51f99bbf-aeef-5625-8c1f-dc8025ec3176",
-                    "nyt://interactive/3a8f096b-c8ef-5825-9025-31c4ef0046ca",
-                    "nyt://interactive/56b7c021-14b9-5876-8b0d-93da704bd015",
-                    "nyt://interactive/6be695fd-2648-5366-b5e4-643260a5c674",
-                    "nyt://interactive/4a6e43ff-094a-5ca1-90a6-a76457240f53",
-                    "nyt://interactive/91fdd914-4d06-5ffd-a783-333955737c48",
-                    "nyt://interactive/9eb35ef3-58df-5f5d-855d-85e2c103b23a",
-                    "nyt://interactive/ba855085-44ea-51c6-b51a-43a2afe825f2",
-                    "nyt://interactive/67832498-38ae-520a-85b3-0c9228fa6c6a",
-                    "nyt://interactive/95aefe21-c21e-511c-b071-654e4c1da9b6",
-                    "nyt://interactive/d97420d4-bab5-5ca1-b8ff-e9c94794bcb7",
-                    "nyt://interactive/dca1a40a-b098-5004-91fa-db859bf89d08",
-                    "nyt://interactive/0e1ecce5-7e26-5cd8-b865-94403f264b43",
-                    "nyt://interactive/0c219c25-7d38-509e-9e92-e5558bf9868d",
-                    "nyt://interactive/e4243d4d-9778-5beb-b9d4-6a098a2812ce",
-                    "nyt://interactive/4b7a34ee-c5b1-5f61-97c3-686ce4c18d74",
-                    "nyt://interactive/62b54dbb-484e-52aa-95ce-cf50a2d07ac5",
-                    "nyt://interactive/15315e13-6138-50be-b727-35555786cfa4",
-                    "nyt://interactive/0ad720f0-0a7e-512c-9ee2-37bf94151b2e",
-                    "nyt://interactive/03a61a9e-f658-51d9-9090-bf4292533159",
-                    "nyt://interactive/364dbbd9-67c5-54e7-a48a-c5ba18c793cc",
-                    "nyt://interactive/62c6b340-a7ab-5be0-8b53-19bc1063dea7",
-                    "nyt://interactive/ebe2e6c9-5120-5aa6-a0b9-d4f6bb80f95a",
-                    "nyt://interactive/e288a7f0-5196-5dfb-b261-a55a84a56be1",
-                    "nyt://interactive/e6000ed3-fe7e-52a2-81ca-ad3179272ee1",
-                    "nyt://interactive/37eafbfd-5b3b-5786-b82b-573c56c74534",
-                    "nyt://interactive/80493479-f52b-54c9-a0ee-5f728f2ac702"
-                ]
-            },
-            "Opinion": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/299883d9-fcf2-5a45-8401-5f74d0224e48"
-                ]
-            },
-            "U.S.": {
-                "number": 2,
-                "ids": [
-                    "nyt://interactive/2d4b2aad-73f0-59a9-9e87-220f87677492",
-                    "nyt://interactive/46adad53-a601-5682-93d5-307bf3e06d00"
-                ]
-            },
-            "Briefing": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/688dd729-e985-5736-9194-4d02f9eeb250"
-                ]
-            }
-        }
+            "Graphics": 54,
+            "NYTNow": 14,
+            "OpEd": 11
+        },
+        "ids": [
+            "nyt://article/0309896f-fc0c-528b-b136-0388d5ee19f9",
+            "nyt://article/0e2958f4-3942-58c5-a7f1-b3c48b1a35c0",
+            "nyt://article/0fb5f130-5117-5107-87f7-6c7c51f0b8e9",
+            "nyt://article/1010e760-eeed-5a86-ba8a-3dce9793c981",
+            "nyt://article/1ede2d96-f8f8-553f-864c-8701e921814b",
+            "nyt://article/2c5a2c43-efab-5165-b7c8-969389f99c38",
+            "nyt://article/56b0d2a0-68b5-52de-a5d0-582a4ad8baaa",
+            "nyt://article/609de58d-c42f-517d-a9d6-77c0d95d7bf8",
+            "nyt://article/66e441ca-ac6f-5ce4-bd90-659e16c19a97",
+            "nyt://article/7434be43-7a2f-57fc-ac9b-49fbcd985928",
+            "nyt://article/8015e394-af14-52a4-910e-2aecaad2d27a",
+            "nyt://article/80358a02-4314-5c91-9bd5-85f94e8e74ce",
+            "nyt://article/84968342-49ac-5b85-8bc9-2a98d346588c",
+            "nyt://article/8a51064e-570a-5956-b75c-c25c3249301e",
+            "nyt://article/8e936254-7e31-5823-a9d6-d9866b498f70",
+            "nyt://article/a76e0582-cf7b-5b53-8731-554829541356",
+            "nyt://article/a82dc0df-f16c-5a5d-829b-e58cad37e053",
+            "nyt://article/a9caa77c-98e6-50a0-889a-c3113277b47e",
+            "nyt://article/cd7b1741-a7af-57b6-b66c-28ea6d85079d",
+            "nyt://article/ce2744e4-e875-5c72-ba3c-0b3aefcea030",
+            "nyt://article/ce878e73-916c-51ae-9c26-c4fc9ef2dbd7",
+            "nyt://article/d18310e2-4f10-5c2c-917a-85a9384fb336",
+            "nyt://article/d34b247f-c491-5d93-8472-c78709bc2e33",
+            "nyt://article/e911d273-bf74-5dcd-84d5-3b503c3859ed",
+            "nyt://article/f92b36b5-e446-5be5-a802-5872aec65680",
+            "nyt://interactive/03a61a9e-f658-51d9-9090-bf4292533159",
+            "nyt://interactive/0ad720f0-0a7e-512c-9ee2-37bf94151b2e",
+            "nyt://interactive/0c219c25-7d38-509e-9e92-e5558bf9868d",
+            "nyt://interactive/0e1ecce5-7e26-5cd8-b865-94403f264b43",
+            "nyt://interactive/10cba015-2300-5ec0-91ed-ab3a4ed95f2a",
+            "nyt://interactive/15315e13-6138-50be-b727-35555786cfa4",
+            "nyt://interactive/1bcde783-a30e-59d4-aa74-a11055c4f3f8",
+            "nyt://interactive/1ecf3e61-b28c-5768-9d45-cab5b81c1700",
+            "nyt://interactive/1ee7454d-26cc-50a9-8c73-ffe5eacc84cc",
+            "nyt://interactive/264ec5e7-ce02-53b2-8a78-770b571417b8",
+            "nyt://interactive/2d9b99df-9671-51b2-bc4a-9187cd3d7acb",
+            "nyt://interactive/3107100c-1026-5ce8-ad2e-8a36bd5f4f23",
+            "nyt://interactive/364dbbd9-67c5-54e7-a48a-c5ba18c793cc",
+            "nyt://interactive/37eafbfd-5b3b-5786-b82b-573c56c74534",
+            "nyt://interactive/3829d2b1-49d7-5f3b-9bb8-9128ae7adb5e",
+            "nyt://interactive/3a8f096b-c8ef-5825-9025-31c4ef0046ca",
+            "nyt://interactive/3a8ff43f-ad04-55c2-a97d-3013de286d8f",
+            "nyt://interactive/3d9dcbbf-b3f8-51bb-9d48-1d68ac14fcab",
+            "nyt://interactive/4a6e43ff-094a-5ca1-90a6-a76457240f53",
+            "nyt://interactive/4b7a34ee-c5b1-5f61-97c3-686ce4c18d74",
+            "nyt://interactive/51f99bbf-aeef-5625-8c1f-dc8025ec3176",
+            "nyt://interactive/528871ef-b526-5c06-a008-d120cb243b84",
+            "nyt://interactive/56b7c021-14b9-5876-8b0d-93da704bd015",
+            "nyt://interactive/5d5a4cea-23ed-5a81-8ef8-53b2bd72553d",
+            "nyt://interactive/5eaf20c1-baa5-52bf-94c2-1063a230551d",
+            "nyt://interactive/5efe4642-e029-5f01-b33d-824f3bae5fd6",
+            "nyt://interactive/62b54dbb-484e-52aa-95ce-cf50a2d07ac5",
+            "nyt://interactive/62c6b340-a7ab-5be0-8b53-19bc1063dea7",
+            "nyt://interactive/655c6486-5fdd-5f27-887a-32875a1b3aa9",
+            "nyt://interactive/6745053d-33bb-5730-916e-2ca351d31a96",
+            "nyt://interactive/67832498-38ae-520a-85b3-0c9228fa6c6a",
+            "nyt://interactive/6be695fd-2648-5366-b5e4-643260a5c674",
+            "nyt://interactive/75c1582b-c823-5cee-b4c4-c7e6955ecb6d",
+            "nyt://interactive/80493479-f52b-54c9-a0ee-5f728f2ac702",
+            "nyt://interactive/846e4ecc-e937-5832-a21b-01c3f5b9ea73",
+            "nyt://interactive/91fdd914-4d06-5ffd-a783-333955737c48",
+            "nyt://interactive/95aefe21-c21e-511c-b071-654e4c1da9b6",
+            "nyt://interactive/9b4ab2e8-a367-5c59-b85a-e0913428920c",
+            "nyt://interactive/9eb35ef3-58df-5f5d-855d-85e2c103b23a",
+            "nyt://interactive/a5e2cc45-d3d9-5e19-bc3e-dc43088f5f1a",
+            "nyt://interactive/aab1b702-9c4d-5034-bdb0-81355ec9f063",
+            "nyt://interactive/ba855085-44ea-51c6-b51a-43a2afe825f2",
+            "nyt://interactive/cb9c54b6-6610-5213-a11e-23415c81a7cb",
+            "nyt://interactive/cbd54117-2e6e-5cef-8b26-6376749c8332",
+            "nyt://interactive/d3291933-ef4a-51f9-9c63-54b2a1356177",
+            "nyt://interactive/d4e6b04f-169c-5855-98f5-bbd90a3b435b",
+            "nyt://interactive/d97420d4-bab5-5ca1-b8ff-e9c94794bcb7",
+            "nyt://interactive/db7c6c6e-1d43-5fc0-be8d-abcd88482062",
+            "nyt://interactive/dbf22b06-f095-5437-808d-58745c1d1525",
+            "nyt://interactive/dca1a40a-b098-5004-91fa-db859bf89d08",
+            "nyt://interactive/e288a7f0-5196-5dfb-b261-a55a84a56be1",
+            "nyt://interactive/e4243d4d-9778-5beb-b9d4-6a098a2812ce",
+            "nyt://interactive/e6000ed3-fe7e-52a2-81ca-ad3179272ee1",
+            "nyt://interactive/ebe2e6c9-5120-5aa6-a0b9-d4f6bb80f95a"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "jd-vance",
         "news_desks": {
-            "OpEd": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/01f0f878-de70-52a9-903c-f1d5b524672f",
-                    "nyt://article/b6ef1d25-644e-5d65-83fe-f3aefc006a3e"
-                ]
-            },
-            "Upshot": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/0a70ff5f-4898-5c44-a30b-5e782edc0da7"
-                ]
-            },
-            "Politics": {
-                "number": 10,
-                "ids": [
-                    "nyt://article/131c053f-b29d-538a-841c-0470d54b4977",
-                    "nyt://article/46e54e9d-c699-55bc-9025-eee5ccf7a8a7",
-                    "nyt://article/8ddc1e75-0717-58a0-a196-34856bc8019d",
-                    "nyt://article/3775ad1f-4aa8-546c-b855-da6b72c08ada",
-                    "nyt://article/fbbfd789-ff39-5bd8-a272-0b29aad0eab0",
-                    "nyt://article/b16c1d1e-285f-5dab-9d9e-a8f90a2b7cb8",
-                    "nyt://article/9ee1bfb4-72a1-5630-beaa-02d0d56c4f5b",
-                    "nyt://article/e632e7c4-a5d8-5eb1-87f1-d8f6d3d0c4a2",
-                    "nyt://article/c3d5c70e-8b59-5046-87eb-5367560197d7",
-                    "nyt://article/f955bef7-4ee8-50e4-98cb-2ca18613c006"
-                ]
-            },
-            "Business": {
-                "number": 6,
-                "ids": [
-                    "nyt://article/1c5dea8b-16e9-596b-b332-d08b9e77220e",
-                    "nyt://article/33b596ae-b964-5bf2-a5f6-919c057b1e75",
-                    "nyt://article/f68bebfa-e585-55cc-9e87-7739b615f67f",
-                    "nyt://article/239cf37d-367c-5860-b882-49e881baceb3",
-                    "nyt://article/8375e828-8346-50c0-bcbe-6ec3926593cb",
-                    "nyt://article/37f989ec-578e-5f82-aac8-b6dcec279711"
-                ]
-            },
-            "Culture": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/2a5480ae-cf16-5341-896b-84510f8b1a66"
-                ]
-            },
-            "Washington": {
-                "number": 3,
-                "ids": [
-                    "nyt://article/86df66de-4d56-5989-bf4c-973ec157f18b",
-                    "nyt://article/a8411d79-8525-5d3f-92f6-e4d255765126",
-                    "nyt://article/70b7b6bd-d669-550d-a33c-800048f481c3"
-                ]
-            },
-            "Podcasts": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/95a19363-7681-57f9-b11e-82dba2184a25"
-                ]
-            },
-            "Graphics": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/79db4dc1-999d-543e-9cdd-68097998a88d"
-                ]
-            }
-        }
+            "Politics": 10,
+            "Business": 6,
+            "Washington": 3
+        },
+        "ids": [
+            "nyt://article/131c053f-b29d-538a-841c-0470d54b4977",
+            "nyt://article/1c5dea8b-16e9-596b-b332-d08b9e77220e",
+            "nyt://article/239cf37d-367c-5860-b882-49e881baceb3",
+            "nyt://article/33b596ae-b964-5bf2-a5f6-919c057b1e75",
+            "nyt://article/3775ad1f-4aa8-546c-b855-da6b72c08ada",
+            "nyt://article/37f989ec-578e-5f82-aac8-b6dcec279711",
+            "nyt://article/46e54e9d-c699-55bc-9025-eee5ccf7a8a7",
+            "nyt://article/70b7b6bd-d669-550d-a33c-800048f481c3",
+            "nyt://article/8375e828-8346-50c0-bcbe-6ec3926593cb",
+            "nyt://article/86df66de-4d56-5989-bf4c-973ec157f18b",
+            "nyt://article/8ddc1e75-0717-58a0-a196-34856bc8019d",
+            "nyt://article/9ee1bfb4-72a1-5630-beaa-02d0d56c4f5b",
+            "nyt://article/a8411d79-8525-5d3f-92f6-e4d255765126",
+            "nyt://article/b16c1d1e-285f-5dab-9d9e-a8f90a2b7cb8",
+            "nyt://article/c3d5c70e-8b59-5046-87eb-5367560197d7",
+            "nyt://article/e632e7c4-a5d8-5eb1-87f1-d8f6d3d0c4a2",
+            "nyt://article/f68bebfa-e585-55cc-9e87-7739b615f67f",
+            "nyt://article/f955bef7-4ee8-50e4-98cb-2ca18613c006",
+            "nyt://article/fbbfd789-ff39-5bd8-a272-0b29aad0eab0"
+        ]
     },
     {
         "personA": "joe-biden",
         "personB": "kamala-harris",
         "news_desks": {
-            "National": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/04d6d0db-50e6-5b64-b5b0-20842a2c6f40"
-                ]
-            },
-            "Washington": {
-                "number": 5,
-                "ids": [
-                    "nyt://article/2254e1ae-6867-5bac-8ae5-bee1b70e844e",
-                    "nyt://article/8b133a4a-b36f-50c6-8d35-ccdbeebdfebf",
-                    "nyt://article/f5b6c72f-7e1a-5df4-8654-bae8994a2b2d",
-                    "nyt://article/78f02290-831e-54c0-a29c-218dc218387e",
-                    "nyt://article/0c225a2e-9aaa-528a-bea0-5b76468d4179"
-                ]
-            },
-            "OpEd": {
-                "number": 3,
-                "ids": [
-                    "nyt://article/c8e80ab1-f3ac-558a-904f-d93f78989f3a",
-                    "nyt://article/2bb1438c-f0c7-5f7f-84c7-377b361821e2",
-                    "nyt://article/f5553215-b090-5689-b931-bd32ced3d3d0"
-                ]
-            },
-            "NYTNow": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/2fed95b1-9f8a-50c4-9b4e-f77162823b73",
-                    "nyt://article/3af7b76b-a4fc-5c33-b6e2-00ad3323a871"
-                ]
-            },
-            "Business": {
-                "number": 3,
-                "ids": [
-                    "nyt://article/da170635-464a-5b9b-af60-ccb3aa7b188d",
-                    "nyt://article/3385dcfb-19df-561c-8052-67680962ecce",
-                    "nyt://article/34cbe791-1bc4-5efd-8f4a-6db31a562c40"
-                ]
-            },
-            "Politics": {
-                "number": 8,
-                "ids": [
-                    "nyt://article/8f140aa6-3c9b-58a2-9997-459f41915b7a",
-                    "nyt://article/7d9335b4-59d9-5d46-9818-f2bb1c798516",
-                    "nyt://article/a3f5750a-a9ec-5ab1-9409-f28f5be1d17f",
-                    "nyt://article/b2b1e69c-b10b-5e51-ae9f-2ff865a5de13",
-                    "nyt://article/6a776799-d172-5d4b-848b-e797bbb855b7",
-                    "nyt://article/f91fe29d-409b-5ec4-8ab2-ac3cbff98724",
-                    "nyt://article/3908fda1-9f84-54c5-9a9b-c41ee6487dab",
-                    "nyt://article/752ffbbc-5fb7-519b-8657-40f58f554fb2"
-                ]
-            },
-            "Podcasts": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/3e1855ef-2d7f-56e7-bcf5-f0b45193039c"
-                ]
-            },
-            "Upshot": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/4fe7013b-b4ca-57f6-b14c-5e643292761b"
-                ]
-            },
-            "Learning": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/b52d5597-a61d-52ec-b0fe-b8b9e069d690"
-                ]
-            },
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "Politics": 8,
+            "Washington": 5,
+            "Business": 3
+        },
+        "ids": [
+            "nyt://article/0c225a2e-9aaa-528a-bea0-5b76468d4179",
+            "nyt://article/2254e1ae-6867-5bac-8ae5-bee1b70e844e",
+            "nyt://article/3385dcfb-19df-561c-8052-67680962ecce",
+            "nyt://article/34cbe791-1bc4-5efd-8f4a-6db31a562c40",
+            "nyt://article/3908fda1-9f84-54c5-9a9b-c41ee6487dab",
+            "nyt://article/6a776799-d172-5d4b-848b-e797bbb855b7",
+            "nyt://article/752ffbbc-5fb7-519b-8657-40f58f554fb2",
+            "nyt://article/78f02290-831e-54c0-a29c-218dc218387e",
+            "nyt://article/7d9335b4-59d9-5d46-9818-f2bb1c798516",
+            "nyt://article/8b133a4a-b36f-50c6-8d35-ccdbeebdfebf",
+            "nyt://article/8f140aa6-3c9b-58a2-9997-459f41915b7a",
+            "nyt://article/a3f5750a-a9ec-5ab1-9409-f28f5be1d17f",
+            "nyt://article/b2b1e69c-b10b-5e51-ae9f-2ff865a5de13",
+            "nyt://article/da170635-464a-5b9b-af60-ccb3aa7b188d",
+            "nyt://article/f5b6c72f-7e1a-5df4-8654-bae8994a2b2d",
+            "nyt://article/f91fe29d-409b-5ec4-8ab2-ac3cbff98724"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "robert-kennedy",
         "news_desks": {
-            "NYTNow": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/36aeb018-98e9-575b-9887-e0264a8e8979",
-                    "nyt://article/073486f4-940e-54a5-b081-ff3b09db2418"
-                ]
-            },
-            "Washington": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/6bad406c-41c8-58dd-9b2a-ab8fab455e4c",
-                    "nyt://article/672fa9ce-c68e-583f-9455-d97f0cd4e0e7"
-                ]
-            },
-            "Politics": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/d8c609d9-da3c-51d5-a06c-9a9cba99f68a",
-                    "nyt://article/f5e5a082-3a56-58cb-a05a-75469772d17f"
-                ]
-            }
-        }
+            "NYTNow": 2,
+            "Politics": 2,
+            "Washington": 2
+        },
+        "ids": [
+            "nyt://article/073486f4-940e-54a5-b081-ff3b09db2418",
+            "nyt://article/36aeb018-98e9-575b-9887-e0264a8e8979",
+            "nyt://article/672fa9ce-c68e-583f-9455-d97f0cd4e0e7",
+            "nyt://article/6bad406c-41c8-58dd-9b2a-ab8fab455e4c",
+            "nyt://article/d8c609d9-da3c-51d5-a06c-9a9cba99f68a",
+            "nyt://article/f5e5a082-3a56-58cb-a05a-75469772d17f"
+        ]
     },
     {
         "personA": "benjamin-netanjahu",
         "personB": "mike-johnson",
         "news_desks": {
-            "NYTNow": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/080a9380-8e72-5097-b205-b35188fe91e7"
-                ]
-            }
-        }
+            "NYTNow": 1
+        },
+        "ids": [
+            "nyt://article/080a9380-8e72-5097-b205-b35188fe91e7"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "joe-biden",
         "news_desks": {
-            "Politics": {
-                "number": 18,
-                "ids": [
-                    "nyt://article/0a65ddc8-e28b-58c3-83b9-9c673150f8d4",
-                    "nyt://article/2e90f3c0-c7df-55f2-bb5d-8deeed36285e",
-                    "nyt://article/a3b5db04-bec7-57f3-a103-843d9c285be0",
-                    "nyt://article/5d3d6038-c575-564e-a9b4-05c0127c6ff5",
-                    "nyt://article/41e7f982-918b-5271-b381-c2a7f785d766",
-                    "nyt://article/a17ae0a9-8782-59af-ba36-efccc3b8c232",
-                    "nyt://article/c00e359a-8c4d-5f87-ad66-ff59e1717657",
-                    "nyt://article/3b1448bc-2895-506e-a61e-d9649cc09e46",
-                    "nyt://article/240f4fe8-3ef6-5443-9799-463f5b072975",
-                    "nyt://article/44262d3d-88e8-5d87-89cf-273dc7366b12",
-                    "nyt://article/81ccff0a-71c3-5538-b487-5fed90978ed2",
-                    "nyt://article/d7f20fba-e824-51fb-9d59-fa9cccb17bbf",
-                    "nyt://article/e00eed22-24f5-5b06-814f-9be453252da2",
-                    "nyt://article/f23a6c56-9c7b-55ef-bc13-230b07969d60",
-                    "nyt://article/6d61bc74-6654-57d9-bc2c-ef0e27801a81",
-                    "nyt://article/a1ace0bf-2485-5d47-84c4-43e3fdddc4a2",
-                    "nyt://article/d2c7e90d-36a8-5b1c-b7bd-e6ad612315a9",
-                    "nyt://article/be062169-599d-5663-83ca-1e83c2aa50e5"
-                ]
-            },
-            "Business": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/2a3efc63-d48c-578d-a875-6bfdfe106d9f",
-                    "nyt://article/1547f037-31fc-50ca-b816-2b8d4097c800"
-                ]
-            },
-            "OpEd": {
-                "number": 3,
-                "ids": [
-                    "nyt://article/37db82c4-388d-52d0-9b79-a866af3e4147",
-                    "nyt://article/7552f866-a6a0-56b2-a01f-9b34325ba68f",
-                    "nyt://article/8de82b62-e193-55cf-9c97-01acd3ca5418"
-                ]
-            },
-            "National": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/6061dd45-db2b-5e68-a370-bccc1308ab11"
-                ]
-            },
-            "Styles": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/6d7bb0e7-52db-5e14-b4d0-b5eb1930f255"
-                ]
-            },
-            "NYTNow": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/7c627ba6-1e8a-5798-b720-e06443abe78f"
-                ]
-            },
-            "Washington": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/97500a43-f199-5667-babb-a9f3b26557d6"
-                ]
-            },
-            "Podcasts": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/afdfd8cd-0cc6-53a1-b960-d390a7ae949c"
-                ]
-            },
-            "Culture": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/d6018a13-4aa3-515f-8af9-922ccc54b8b3"
-                ]
-            },
-            "Letters": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/e9bdfdd8-b350-51b9-99ee-040edd964444",
-                    "nyt://article/da23d964-d5d2-53b6-991e-fbc308b58668"
-                ]
-            },
-            "Upshot": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/e3933f66-67d7-5f78-acba-ee17e8614452"
-                ]
-            },
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            },
-            "U.S.": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/00c64eb8-3fad-50ec-81b9-94dd40587dc9"
-                ]
-            },
-            "Graphics": {
-                "number": 2,
-                "ids": [
-                    "nyt://interactive/d70fae6d-0c18-5652-899f-8384d82e6c79",
-                    "nyt://interactive/66700371-e171-5be5-86da-ed556eae2554"
-                ]
-            }
-        }
+            "Politics": 18,
+            "OpEd": 3,
+            "Business": 2
+        },
+        "ids": [
+            "nyt://article/0a65ddc8-e28b-58c3-83b9-9c673150f8d4",
+            "nyt://article/1547f037-31fc-50ca-b816-2b8d4097c800",
+            "nyt://article/240f4fe8-3ef6-5443-9799-463f5b072975",
+            "nyt://article/2a3efc63-d48c-578d-a875-6bfdfe106d9f",
+            "nyt://article/2e90f3c0-c7df-55f2-bb5d-8deeed36285e",
+            "nyt://article/37db82c4-388d-52d0-9b79-a866af3e4147",
+            "nyt://article/3b1448bc-2895-506e-a61e-d9649cc09e46",
+            "nyt://article/41e7f982-918b-5271-b381-c2a7f785d766",
+            "nyt://article/44262d3d-88e8-5d87-89cf-273dc7366b12",
+            "nyt://article/5d3d6038-c575-564e-a9b4-05c0127c6ff5",
+            "nyt://article/6d61bc74-6654-57d9-bc2c-ef0e27801a81",
+            "nyt://article/7552f866-a6a0-56b2-a01f-9b34325ba68f",
+            "nyt://article/81ccff0a-71c3-5538-b487-5fed90978ed2",
+            "nyt://article/8de82b62-e193-55cf-9c97-01acd3ca5418",
+            "nyt://article/a17ae0a9-8782-59af-ba36-efccc3b8c232",
+            "nyt://article/a1ace0bf-2485-5d47-84c4-43e3fdddc4a2",
+            "nyt://article/a3b5db04-bec7-57f3-a103-843d9c285be0",
+            "nyt://article/be062169-599d-5663-83ca-1e83c2aa50e5",
+            "nyt://article/c00e359a-8c4d-5f87-ad66-ff59e1717657",
+            "nyt://article/d2c7e90d-36a8-5b1c-b7bd-e6ad612315a9",
+            "nyt://article/d7f20fba-e824-51fb-9d59-fa9cccb17bbf",
+            "nyt://article/e00eed22-24f5-5b06-814f-9be453252da2",
+            "nyt://article/f23a6c56-9c7b-55ef-bc13-230b07969d60"
+        ]
     },
     {
         "personA": "joe-biden",
         "personB": "mike-johnson",
         "news_desks": {
-            "Washington": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/f5b6c72f-7e1a-5df4-8654-bae8994a2b2d",
-                    "nyt://article/0c225a2e-9aaa-528a-bea0-5b76468d4179"
-                ]
-            },
-            "NYTNow": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/2fed95b1-9f8a-50c4-9b4e-f77162823b73"
-                ]
-            },
-            "Politics": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/d15b1930-bb1b-5984-b4d1-59ec97ee5bb8",
-                    "nyt://article/7d9335b4-59d9-5d46-9818-f2bb1c798516"
-                ]
-            },
-            "Learning": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/b52d5597-a61d-52ec-b0fe-b8b9e069d690"
-                ]
-            },
-            "OpEd": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/c18ae82e-37f4-5795-a391-af6fe3cb9534"
-                ]
-            }
-        }
+            "Politics": 2,
+            "Washington": 2,
+            "Learning": 1
+        },
+        "ids": [
+            "nyt://article/0c225a2e-9aaa-528a-bea0-5b76468d4179",
+            "nyt://article/7d9335b4-59d9-5d46-9818-f2bb1c798516",
+            "nyt://article/b52d5597-a61d-52ec-b0fe-b8b9e069d690",
+            "nyt://article/d15b1930-bb1b-5984-b4d1-59ec97ee5bb8",
+            "nyt://article/f5b6c72f-7e1a-5df4-8654-bae8994a2b2d"
+        ]
     },
     {
         "personA": "kamala-harris",
         "personB": "mike-johnson",
         "news_desks": {
-            "Washington": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/f5b6c72f-7e1a-5df4-8654-bae8994a2b2d",
-                    "nyt://article/0c225a2e-9aaa-528a-bea0-5b76468d4179"
-                ]
-            },
-            "NYTNow": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/2fed95b1-9f8a-50c4-9b4e-f77162823b73"
-                ]
-            },
-            "Politics": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/7d9335b4-59d9-5d46-9818-f2bb1c798516"
-                ]
-            },
-            "Learning": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/b52d5597-a61d-52ec-b0fe-b8b9e069d690"
-                ]
-            }
-        }
+            "Washington": 2,
+            "Learning": 1,
+            "NYTNow": 1
+        },
+        "ids": [
+            "nyt://article/0c225a2e-9aaa-528a-bea0-5b76468d4179",
+            "nyt://article/2fed95b1-9f8a-50c4-9b4e-f77162823b73",
+            "nyt://article/b52d5597-a61d-52ec-b0fe-b8b9e069d690",
+            "nyt://article/f5b6c72f-7e1a-5df4-8654-bae8994a2b2d"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "vladimir-putin",
         "news_desks": {
-            "Foreign": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/0d2612b1-9d53-546f-9af2-cf35cff425ac"
-                ]
-            },
-            "Culture": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/3561ca9c-08e6-54c2-960e-c8903a0a7332"
-                ]
-            },
-            "Metro": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/c449c671-aca6-5060-a7b8-4f15972f97a1"
-                ]
-            },
-            "Washington": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/fcfc41f8-98ac-54b4-a612-a8ad7c3f043a"
-                ]
-            }
-        }
+            "Culture": 1,
+            "Foreign": 1,
+            "Metro": 1
+        },
+        "ids": [
+            "nyt://article/0d2612b1-9d53-546f-9af2-cf35cff425ac",
+            "nyt://article/3561ca9c-08e6-54c2-960e-c8903a0a7332",
+            "nyt://article/c449c671-aca6-5060-a7b8-4f15972f97a1"
+        ]
     },
     {
         "personA": "anthony-blinken",
         "personB": "joe-biden",
         "news_desks": {
-            "Foreign": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/101643e1-4aaa-5f22-be58-2fc8a89ffefa"
-                ]
-            },
-            "NYTNow": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/fae67c3a-b1df-5b39-a0e4-622733c9fbe2"
-                ]
-            }
-        }
+            "Foreign": 1,
+            "NYTNow": 1
+        },
+        "ids": [
+            "nyt://article/101643e1-4aaa-5f22-be58-2fc8a89ffefa",
+            "nyt://article/fae67c3a-b1df-5b39-a0e4-622733c9fbe2"
+        ]
     },
     {
         "personA": "benjamin-netanjahu",
         "personB": "vladimir-putin",
         "news_desks": {
-            "Foreign": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/11cefebc-a63b-56ce-8eb4-090b5d4da51d"
-                ]
-            }
-        }
+            "Foreign": 1
+        },
+        "ids": [
+            "nyt://article/11cefebc-a63b-56ce-8eb4-090b5d4da51d"
+        ]
     },
     {
         "personA": "benjamin-netanjahu",
         "personB": "kamala-harris",
         "news_desks": {
-            "OpEd": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/12fd7193-e930-5d34-830b-7a1aed70c2f8"
-                ]
-            }
-        }
+            "OpEd": 1
+        },
+        "ids": [
+            "nyt://article/12fd7193-e930-5d34-830b-7a1aed70c2f8"
+        ]
     },
     {
         "personA": "benjamin-netanjahu",
         "personB": "joe-biden",
         "news_desks": {
-            "Foreign": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/2d3ec9af-04a8-50da-86fb-d71aedca88dc",
-                    "nyt://article/15957e3f-43d7-5548-80a5-ea0f5a724c94"
-                ]
-            },
-            "NYTNow": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/535ea474-fff2-54ae-8dc0-de0ab0788993"
-                ]
-            },
-            "Podcasts": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/b63f2bac-fcc8-5ccc-9dd8-2d61d1acbd73"
-                ]
-            },
-            "OpEd": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/e72531fb-cb7e-5ecd-b2d2-b1e8da3c5d47"
-                ]
-            },
-            "Opinion": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/ddc0b0cf-9dbc-55fd-8cae-541abe3223c4"
-                ]
-            }
-        }
+            "Foreign": 2,
+            "NYTNow": 1,
+            "OpEd": 1
+        },
+        "ids": [
+            "nyt://article/15957e3f-43d7-5548-80a5-ea0f5a724c94",
+            "nyt://article/2d3ec9af-04a8-50da-86fb-d71aedca88dc",
+            "nyt://article/535ea474-fff2-54ae-8dc0-de0ab0788993",
+            "nyt://article/e72531fb-cb7e-5ecd-b2d2-b1e8da3c5d47"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "mike-johnson",
         "news_desks": {
-            "Washington": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/171c17c0-c99c-527f-a36e-668ff2912787"
-                ]
-            },
-            "Podcasts": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/95a19363-7681-57f9-b11e-82dba2184a25"
-                ]
-            },
-            "Politics": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/e3e95a88-833e-5db6-8afc-32b4b5b6ba09"
-                ]
-            }
-        }
+            "Podcasts": 1,
+            "Politics": 1,
+            "Washington": 1
+        },
+        "ids": [
+            "nyt://article/171c17c0-c99c-527f-a36e-668ff2912787",
+            "nyt://article/95a19363-7681-57f9-b11e-82dba2184a25",
+            "nyt://article/e3e95a88-833e-5db6-8afc-32b4b5b6ba09"
+        ]
     },
     {
         "personA": "joe-biden",
         "personB": "nikki-haley",
         "news_desks": {
-            "OpEd": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/290e58cb-9915-5b44-b693-918052cdc556"
-                ]
-            }
-        }
+            "OpEd": 1
+        },
+        "ids": [
+            "nyt://article/290e58cb-9915-5b44-b693-918052cdc556"
+        ]
     },
     {
         "personA": "kamala-harris",
         "personB": "tim-walz",
         "news_desks": {
-            "Business": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/2b115f70-dbde-5a19-b328-071cb67d3e8b"
-                ]
-            },
-            "Culture": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/2cc8f399-d045-5c1b-8771-60827bda8a1c"
-                ]
-            },
-            "Upshot": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/2e717524-ab86-54b1-841b-e9c1e108e58a",
-                    "nyt://article/f6d4af78-543f-50da-9183-72562f4ad3fc"
-                ]
-            },
-            "Politics": {
-                "number": 3,
-                "ids": [
-                    "nyt://article/513d2a06-b064-5aa2-864c-adc920562ced",
-                    "nyt://article/993280d8-79bd-5a24-8e42-c4cff6ade74d",
-                    "nyt://article/7273a3bb-c687-53ec-8571-cc7fcdc8248e"
-                ]
-            },
-            "Styles": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/56cd0e21-3349-5c4b-a7fc-6cd9bb7de37f"
-                ]
-            },
-            "NYTNow": {
-                "number": 4,
-                "ids": [
-                    "nyt://article/9e01a35d-792c-58c0-82e4-022b6d085a1e",
-                    "nyt://article/e91323c9-b579-5562-bfae-600afae412d8",
-                    "nyt://article/8c23e16a-00df-52f2-975d-1e223ce24139",
-                    "nyt://article/de15d135-3896-5486-9a61-89aebd2432fd"
-                ]
-            },
-            "Podcasts": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/dfb855f9-db2d-59b9-9d85-56ade20935f1"
-                ]
-            },
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "NYTNow": 4,
+            "Politics": 3,
+            "Upshot": 2
+        },
+        "ids": [
+            "nyt://article/2e717524-ab86-54b1-841b-e9c1e108e58a",
+            "nyt://article/513d2a06-b064-5aa2-864c-adc920562ced",
+            "nyt://article/7273a3bb-c687-53ec-8571-cc7fcdc8248e",
+            "nyt://article/8c23e16a-00df-52f2-975d-1e223ce24139",
+            "nyt://article/993280d8-79bd-5a24-8e42-c4cff6ade74d",
+            "nyt://article/9e01a35d-792c-58c0-82e4-022b6d085a1e",
+            "nyt://article/de15d135-3896-5486-9a61-89aebd2432fd",
+            "nyt://article/e91323c9-b579-5562-bfae-600afae412d8",
+            "nyt://article/f6d4af78-543f-50da-9183-72562f4ad3fc"
+        ]
     },
     {
         "personA": "elon-musk",
         "personB": "robert-kennedy",
         "news_desks": {
-            "Climate": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/3e1bbfb2-c81c-5e15-8065-f19c59dd1ff0"
-                ]
-            }
-        }
+            "Climate": 1
+        },
+        "ids": [
+            "nyt://article/3e1bbfb2-c81c-5e15-8065-f19c59dd1ff0"
+        ]
     },
     {
         "personA": "benjamin-netanjahu",
         "personB": "donald-trump",
         "news_desks": {
-            "BookReview": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/452b63d9-44df-5797-8810-bf4470dec90e"
-                ]
-            },
-            "Foreign": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/6d9c2403-91b6-5668-ac35-957a32b88a0b"
-                ]
-            },
-            "Politics": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/d6f51298-b750-51fa-a5bf-91293bd87beb"
-                ]
-            }
-        }
+            "BookReview": 1,
+            "Foreign": 1,
+            "Politics": 1
+        },
+        "ids": [
+            "nyt://article/452b63d9-44df-5797-8810-bf4470dec90e",
+            "nyt://article/6d9c2403-91b6-5668-ac35-957a32b88a0b",
+            "nyt://article/d6f51298-b750-51fa-a5bf-91293bd87beb"
+        ]
     },
     {
         "personA": "jd-vance",
         "personB": "mike-johnson",
         "news_desks": {
-            "Politics": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/c7b10ff7-9e58-542c-b5a9-2a8b195cdb08",
-                    "nyt://article/50864323-e92f-5bb3-9ea6-b54fc4a8d312"
-                ]
-            },
-            "Business": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/5b340289-e31c-515c-9ebf-1184e46de89d"
-                ]
-            },
-            "OpEd": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/743f76f7-4c2e-58a7-8d11-f14797de9cbd"
-                ]
-            },
-            "Podcasts": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/d32c2694-61d4-5610-b15d-fd3be218d203",
-                    "nyt://article/95a19363-7681-57f9-b11e-82dba2184a25"
-                ]
-            }
-        }
+            "Podcasts": 2,
+            "Politics": 2,
+            "Business": 1
+        },
+        "ids": [
+            "nyt://article/50864323-e92f-5bb3-9ea6-b54fc4a8d312",
+            "nyt://article/5b340289-e31c-515c-9ebf-1184e46de89d",
+            "nyt://article/95a19363-7681-57f9-b11e-82dba2184a25",
+            "nyt://article/c7b10ff7-9e58-542c-b5a9-2a8b195cdb08",
+            "nyt://article/d32c2694-61d4-5610-b15d-fd3be218d203"
+        ]
     },
     {
         "personA": "jd-vance",
         "personB": "tim-walz",
         "news_desks": {
-            "Election Analytics": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/52cbb894-1e61-5096-a2f3-c74334518ae2"
-                ]
-            },
-            "Politics": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/ddd5f6be-f63e-5dff-8828-1e656caa82fd",
-                    "nyt://article/65dc2d4e-682d-5cbf-bb80-54d9494d3c45"
-                ]
-            },
-            "OpEd": {
-                "number": 4,
-                "ids": [
-                    "nyt://article/7e9746bb-e618-5eeb-900c-f0c8aaaba195",
-                    "nyt://article/8935d27c-ebe8-580e-bf27-2f678c565f29",
-                    "nyt://article/7e287862-3234-5da0-bcf0-6bfa7739309c",
-                    "nyt://article/be87a601-6bcf-58db-94c1-a7f0c6e41928"
-                ]
-            },
-            "Styles": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/baeb35af-7bf5-57a4-b88c-d0f20116184d"
-                ]
-            },
-            "Podcasts": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/e096a465-aa1a-54a9-9ee1-9a69678cb08f"
-                ]
-            },
-            "Graphics": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/27bd0453-432f-52cd-9f73-3bf0aa93fd62"
-                ]
-            }
-        }
+            "OpEd": 4,
+            "Politics": 2,
+            "Election Analytics": 1
+        },
+        "ids": [
+            "nyt://article/52cbb894-1e61-5096-a2f3-c74334518ae2",
+            "nyt://article/65dc2d4e-682d-5cbf-bb80-54d9494d3c45",
+            "nyt://article/7e287862-3234-5da0-bcf0-6bfa7739309c",
+            "nyt://article/7e9746bb-e618-5eeb-900c-f0c8aaaba195",
+            "nyt://article/8935d27c-ebe8-580e-bf27-2f678c565f29",
+            "nyt://article/be87a601-6bcf-58db-94c1-a7f0c6e41928",
+            "nyt://article/ddd5f6be-f63e-5dff-8828-1e656caa82fd"
+        ]
     },
     {
         "personA": "anthony-blinken",
         "personB": "benjamin-netanjahu",
         "news_desks": {
-            "NYTNow": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/5a049a05-aba3-5993-94d3-8b8fd878c84a"
-                ]
-            }
-        }
+            "NYTNow": 1
+        },
+        "ids": [
+            "nyt://article/5a049a05-aba3-5993-94d3-8b8fd878c84a"
+        ]
     },
     {
         "personA": "bob-menendez",
         "personB": "kamala-harris",
         "news_desks": {
-            "Politics": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/6a5b8ec8-e264-56ed-a3fe-5c50ea45c10d"
-                ]
-            }
-        }
+            "Politics": 1
+        },
+        "ids": [
+            "nyt://article/6a5b8ec8-e264-56ed-a3fe-5c50ea45c10d"
+        ]
     },
     {
         "personA": "jd-vance",
         "personB": "kamala-harris",
         "news_desks": {
-            "National": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/6c597323-d2cc-5013-ac87-b22b56febc4e"
-                ]
-            }
-        }
+            "National": 1
+        },
+        "ids": [
+            "nyt://article/6c597323-d2cc-5013-ac87-b22b56febc4e"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "elon-musk",
         "news_desks": {
-            "Politics": {
-                "number": 2,
-                "ids": [
-                    "nyt://article/816b34fa-15b1-507e-b556-d1d8daae99ab",
-                    "nyt://article/ed05f2bb-18b5-5820-bfa6-9e8327a004e3"
-                ]
-            },
-            "Washington": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/939f0ce5-3188-5ae9-8611-a2b5ed61e432"
-                ]
-            },
-            "Culture": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/bae37e5e-a7d3-503f-83dc-64d4a4bce28d"
-                ]
-            },
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "Politics": 2,
+            "Culture": 1,
+            "Editorial": 1
+        },
+        "ids": [
+            "nyt://article/816b34fa-15b1-507e-b556-d1d8daae99ab",
+            "nyt://article/bae37e5e-a7d3-503f-83dc-64d4a4bce28d",
+            "nyt://article/ed05f2bb-18b5-5820-bfa6-9e8327a004e3",
+            "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
+        ]
     },
     {
         "personA": "elon-musk",
         "personB": "jd-vance",
         "news_desks": {
-            "OpEd": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/860a004b-10f5-518c-ab42-306c5fc72eca"
-                ]
-            },
-            "Graphics": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/1504b848-8d24-529c-96f9-bf740737093a"
-                ]
-            }
-        }
+            "Graphics": 1,
+            "OpEd": 1
+        },
+        "ids": [
+            "nyt://article/860a004b-10f5-518c-ab42-306c5fc72eca",
+            "nyt://interactive/1504b848-8d24-529c-96f9-bf740737093a"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "nikki-haley",
         "news_desks": {
-            "OpEd": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/c8ad2547-7c5a-5f2b-8ead-84e23aabf727"
-                ]
-            },
-            "Graphics": {
-                "number": 1,
-                "ids": [
-                    "nyt://interactive/f15454c4-d6ec-55db-a7bc-1bc3292ce67c"
-                ]
-            }
-        }
+            "Graphics": 1,
+            "OpEd": 1
+        },
+        "ids": [
+            "nyt://article/c8ad2547-7c5a-5f2b-8ead-84e23aabf727",
+            "nyt://interactive/f15454c4-d6ec-55db-a7bc-1bc3292ce67c"
+        ]
     },
     {
         "personA": "donald-trump",
         "personB": "tim-walz",
         "news_desks": {
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "Editorial": 1
+        },
+        "ids": [
+            "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
+        ]
     },
     {
         "personA": "elon-musk",
         "personB": "joe-biden",
         "news_desks": {
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "Editorial": 1
+        },
+        "ids": [
+            "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
+        ]
     },
     {
         "personA": "elon-musk",
         "personB": "kamala-harris",
         "news_desks": {
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "Editorial": 1
+        },
+        "ids": [
+            "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
+        ]
     },
     {
         "personA": "elon-musk",
         "personB": "tim-walz",
         "news_desks": {
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "Editorial": 1
+        },
+        "ids": [
+            "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
+        ]
     },
     {
         "personA": "joe-biden",
         "personB": "tim-walz",
         "news_desks": {
-            "Editorial": {
-                "number": 1,
-                "ids": [
-                    "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
-                ]
-            }
-        }
+            "Editorial": 1
+        },
+        "ids": [
+            "nyt://article/f58c9071-fb02-5d76-b7df-1c67b66f7370"
+        ]
     }
 ]
