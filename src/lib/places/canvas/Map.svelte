@@ -8,19 +8,14 @@
 	let {
 		World,
 		projection,
-		borderProjection,
 		primaryCountryKey,
 		colors = undefined,
 		priority = 0
 	} = $props();
-	let outline = { type: 'Sphere' };
 
 	function draw(ctx: CanvasRenderingContext2D) {
 		const geoPathGenerator = d3.geoPath(projection, ctx);
-		const borderPathGenerator = d3.geoPath(borderProjection, ctx);
 
-		ctx.beginPath(), borderPathGenerator(outline);
-		ctx.clip();
 		ctx.strokeStyle = colors.darkAccentHex;
 		ctx.lineWidth = 2;
 		ctx.fillStyle = 'transparent';
@@ -32,14 +27,6 @@
 		ctx.strokeStyle = colors.darkAccentHex;
 		ctx.lineWidth = 0.7;
 		ctx.fill();
-		ctx.stroke();
-
-		ctx.beginPath();
-		borderPathGenerator(outline);
-		ctx.clip();
-		ctx.strokeStyle = colors.darkAccentHex;
-		ctx.lineWidth = 2;
-		ctx.fillStyle = 'transparent';
 		ctx.stroke();
 	}
 

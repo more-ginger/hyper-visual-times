@@ -161,7 +161,7 @@
 			</ul>
 		</div>
 	{/if}
-	<div class="w-full lg:mr-10 lg:flex lg:justify-between">
+	<div class="w-full lg:mb-4 lg:flex lg:justify-between">
 		<h3 class="text-center font-serif text-xl lg:text-left">
 			What other countries share coverage with
 			<span>

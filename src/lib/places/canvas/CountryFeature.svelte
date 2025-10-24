@@ -1,6 +1,4 @@
 <script lang="ts">
-	// @ts-expect-error
-	import * as d3 from 'd3';
 	import { getContext, onDestroy, onMount } from 'svelte';
 	import type { MapContext } from '../../../types';
 
@@ -8,38 +6,30 @@
 	let {
 		node,
 		projection,
-		borderProjection,
 		primaryCountryKey,
 		colors,
 		onFeaturesDraw,
 		priority,
 		currentNode
 	} = $props();
-	let outline = { type: 'Sphere' };
-	let localCtx: CanvasRenderingContext2D | null = $state(null);
 
-	const borderPathGenerator = $derived(d3.geoPath(borderProjection, localCtx));
-	const centroid = $derived(node ? projection([node.coords[1], node.coords[0]]) : [0, 0]);
+	let localCtx: CanvasRenderingContext2D | null = $state(null);
+	const centroid = $derived(node ? projection([node.coords[1], node.coords[0]]) : null);
 
 	function determinePrimaryCountryCentroid() {
 		if (node.country === primaryCountryKey) {
 			onFeaturesDraw({
-				centroid: node ? [node.coords[1], node.coords[0]] : [0, 0]
+				centroid: node ? [node.coords[1], node.coords[0]] : null
 			});
 		}
 	}
 
 	function draw(ctx: CanvasRenderingContext2D) {
 		localCtx = ctx;
-
-		ctx.beginPath(), borderPathGenerator(outline);
-		ctx.clip();
-		ctx.fillStyle = 'transparent';
-		ctx.stroke();
-
 		if (
-			node.country === primaryCountryKey ||
-			(currentNode && node.country === currentNode.country)
+			centroid &&
+			(node.country === primaryCountryKey ||
+			(currentNode && node.country === currentNode.country))
 		) {
 			ctx.translate(centroid[0], centroid[1]);
 			ctx.beginPath();
@@ -55,9 +45,8 @@
 			ctx.stroke();
 			ctx.fill();
 
-			if (projection.scale() > 400) {
+			if (projection.scale() >= 400) {
 				const txt = node.country;
-
 				const metrics = ctx.measureText(txt);
 				const width = metrics.width;
 				const fontHeight = metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;

@@ -8,6 +8,7 @@
 	import Illustration from '$lib/main/Illustration.svelte';
 	import Chapters from '$lib/main/Chapters.svelte';
 	import Load from '$lib/common/Load.svelte';
+	import About from '$lib/main/About.svelte';
 
 	let { data } = $props();
 	// init scroller for scrollytelling
@@ -139,6 +140,11 @@
 					<Chapters />
 				</div>
 				<BlocksRenderer rawtext={rawOutroText} />
+			</section>
+			<section>
+			<div>
+				<About />
+			</div>
 			</section>
 		</div>
 	</div>

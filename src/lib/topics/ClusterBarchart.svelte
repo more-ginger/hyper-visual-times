@@ -6,10 +6,16 @@
 	let width = $state(0);
 	let height = $state(0);
 
+	$inspect(data.map((d: {}, i: number) => d))
+
+	let maxValue = $derived(
+		d3.max(data.map((d: {value: number}, i: number) => d.value ))
+	)
+
 	let yScale = $derived(
 		d3
 			.scaleLinear()
-			.domain([0, 100])
+			.domain([0, maxValue])
 			.range([0, height - 25])
 	);
 
@@ -65,16 +71,20 @@
 						<line
 							x1="10"
 							x2={width - 10}
-							y1={yScale(tick)}
-							y2={yScale(tick)}
+							y1={yScale(tick) + 25}
+							y2={yScale(tick) + 25}
 							stroke="black"
 							stroke-width="0.5"
 							stroke-dasharray="2 2"
 						/>
 						{#if t === axisTicks.length - 1}
-							<text x="12" y={height - yScale(tick) - 2} font-size="10">
-								{tick}% frequency within cluster
+							<text x="12" y={height - yScale(tick) - 2} font-size="10" fill="transparent" stroke="white">
+								{tick} mentions within cluster
 							</text>
+							<text x="12" y={height - yScale(tick) - 2} font-size="10">
+								{tick} mentions within cluster
+							</text>
+							
 						{:else}
 							<text x="12" y={height - yScale(tick) - 2} font-size="10">{tick}</text>
 						{/if}
