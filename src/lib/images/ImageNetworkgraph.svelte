@@ -58,10 +58,11 @@
 	onMount(() => {
 		svg = d3.select('#network-graph');
 		nodes = svg.selectAll('.nodes');
+		d3.selectAll('.tooltip-networkgraph').remove();
 		tooltip = d3
 			.select('body')
 			.append('div')
-			.attr('class', 'tooltip')
+			.attr('class', 'tooltip-networkgraph')
 			.style('opacity', 0)
 			.style('position', 'absolute')
 			.style('text-align', 'left')

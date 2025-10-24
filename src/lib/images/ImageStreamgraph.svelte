@@ -31,10 +31,12 @@
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
 		bubbles = svg.selectAll('.bubble');
+		d3.selectAll('.tooltip-streamgraph').remove();
+
 		tooltip = d3
 			.select('body')
 			.append('div')
-			.attr('class', 'tooltip')
+			.attr('class', 'tooltip-streamgraph')
 			.style('opacity', 0)
 			.style('position', 'absolute')
 			.style('text-align', 'left')
@@ -199,12 +201,6 @@
 						r: circleRadius
 					});
 				}
-				// nodes.push({
-				// 	...d,
-				// 	x: xScale(d.week),
-				// 	y: heightDerived / 2 + (Math.random() - 0.5) * 50,
-				// 	r: yScale(d.count)
-				// });
 				return nodes;
 			})
 			.flat();
@@ -249,7 +245,7 @@
 
 		entered
 			.append('circle')
-			.attr('r', circleRadius /*(d) => d.r*/)
+			.attr('r', circleRadius)
 			.attr('stroke', 'black')
 			.attr('fill', 'var(--color-ivory-default)')
 			.attr('class', 'cursor-pointer')
@@ -277,15 +273,6 @@
 			.attr('y', -circleRadius)
 			.attr('class', 'pointer-events-none')
 			.attr('clip-path', `circle(${circleRadius}px at center)`);
-		// entered
-		// 	.append('image')
-		// 	.attr('xlink:href', (d) => `/img/people/${d.person}.webp`)
-		// 	.attr('width', d => d.r * 2)
-		// 	.attr('height', d => d.r * 2)
-		// 	.attr('x', d => -d.r)
-		// 	.attr('y', d => -d.r)
-		// 	.attr('class', 'pointer-events-none')
-		// 	.attr('clip-path', d => `circle(${d.r}px at center)`);
 
 		bubbles = entered.merge(bubbles);
 	}
@@ -312,9 +299,7 @@
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<div class:hidden={!steamgraph}>
-		{#if !blocked}
-			<OutletSwitch bind:currentOutlet={currentSource} />
-		{/if}
+		<OutletSwitch bind:currentOutlet={currentSource} />
 		<div id="steamgraph-chart-controls" class="grid grid-cols-3 gap-1">
 			{#each peopleOrdered as person, i}
 				<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
