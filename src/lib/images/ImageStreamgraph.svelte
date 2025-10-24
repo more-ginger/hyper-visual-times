@@ -13,7 +13,7 @@
 	let svg;
 	let width = $state(0);
 	let height = $state(0);
-	let heightDerived = $derived(height / 1.5);
+	let heightDerived = $derived(height / 1.7);
 	let loaded = $state(false);
 	let xScale;
 	let yScale;
@@ -27,7 +27,6 @@
 	const circleRadius = 10;
 	let diagramInnerHeight = $derived(heightDerived - margin.top - margin.bottom);
 	let diagramCenterY = $derived(diagramInnerHeight / 2);
-	$inspect(peopleSelected);
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
 		bubbles = svg.selectAll('.bubble');
@@ -325,8 +324,14 @@
 					data-person={person}
 				>
 					{i + 1}. {translateCard[person]}
-				</div>
-			{/each}
+				
+				<span style="font-size: 8px;text-align: right; pointer-events: none;">
+					({peopleData
+						.filter((p) => p.person == person)
+						.reduce((acc, p) => acc + p.count, 0)} images)
+				</span>
+			</div>
+		{/each}
 		</div>
 		<svg {width} height={heightDerived} id="steamgraph-chart" class:hidden={!steamgraph}>
 			<defs>
