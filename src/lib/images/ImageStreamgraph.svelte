@@ -43,13 +43,13 @@
 			.style('width', 'auto')
 			.style('height', 'auto')
 			.style('padding', '8px')
-			.style('font', '12px sans-serif')
-			.style('background', 'rgba(255,255,255,0.25)')
+			.style('font-size', '10px')
+			.style('background', 'rgba(255,255,255,0.75)')
 			.style('box-shadow', '0px 0px 6px #aaa')
 			.style('backdrop-filter', 'blur(5px)')
 			.style('border', '0px')
 			.style('border-radius', '8px')
-			.style('pointer-events', 'none');
+			.style('pointer-events', 'none')
 		yScale = d3
 			.scaleLinear()
 			.domain([0, d3.max(peopleData, (d) => d.count)])
@@ -231,13 +231,16 @@
 			.attr('class', 'bubble')
 			.attr('transform', (d) => `translate(${xScale(d.week)}, ${heightDerived / 2})`)
 			.on('mouseover', function (event, d) {
+				console.log(event.target.getBoundingClientRect());
+				let bbTooltip = tooltip.node().getBoundingClientRect()
+				let bb = event.target.getBoundingClientRect()
 				tooltip.transition().duration(200).style('opacity', 1);
 				tooltip
 					.html(
 						`<strong>${translateCard[d.person]}</strong><br>${d3.timeFormat('%d/%m/%Y')(d.week)}<br>${d.count} mentions`
 					)
-					.style('left', event.pageX + 10 + 'px')
-					.style('top', event.pageY - 28 + 'px');
+					.style('left', bb.left + bb.width / 2 - bbTooltip.width / 2 + 'px')
+					.style('top', bb.top + window.scrollY - bbTooltip.height - 5 + 'px')
 			})
 			.on('mouseout', function () {
 				tooltip.transition().duration(300).style('opacity', 0);
