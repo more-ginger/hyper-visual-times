@@ -12,7 +12,7 @@
 	let scaleLog = d3
 		.scaleLinear()
 		.domain(d3.extent(people.map((p) => p.count)))
-		.range([width/100, width/10]);
+		.range([10, 100]);
 	let data = $state([]);
 	let totalCounts = $state(0);
 	let selectedPerson = $state(null);
@@ -64,7 +64,7 @@
 			.force('y', d3.forceY(height / 2).strength(0.1))
 			.force(
 				'collide',
-				d3.forceCollide((d) => scaleLog(d.count) + 20)
+				d3.forceCollide((d) => scaleLog(d.count)+ 20)
 			)
 			.alphaDecay(0.05)
 			.on('tick', ticked);
@@ -129,7 +129,7 @@
 			.style('border-radius', '9999px') // pill shape
 			.style('font-weight', 'bold')
 			.style('font-size', '10px')
-			.style('text-align', 'left')
+			.style('text-align', 'center')
 			.style('pointer-events', 'none') // prevent mouse events
 			.text((d) => translateCard[d.person])
 			.each(function (d) {
