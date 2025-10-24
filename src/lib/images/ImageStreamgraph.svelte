@@ -3,18 +3,16 @@
 	import { onMount } from 'svelte';
 	import translateCard from '../../content/data/images/translate_map.json';
 	import ImageBubblechart from './ImageBubblechart.svelte';
+	import dataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
+	import dataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
 	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//props
-	let { peopleOrdered, peopleData, peopleSelected, currentSource, blocked } = $props();
+	let { currentSource, blocked } = $props();
 	//setup for the two views (steamgraph and bubblechart)
 	let steamgraph = $state(true);
 	let selectedWeek = $state(null);
 	//setup for the steamgraph svg
 	let svg;
-	let width = $state(0);
-	let height = $state(0);
-	let heightDerived = $derived(height / 1.7);
-	let loaded = $state(false);
 	let xScale;
 	let yScale;
 	let axisGenerator;
@@ -23,10 +21,42 @@
 	let tooltip;
 	let bubbles;
 	let simulation;
-	const margin = { top: 60, right: 40, bottom: 60, left: 40 };
-	const circleRadius = 10;
+	let width = $state(0);
+	let height = $state(0);
+	let heightDerived = $derived(height / 1.7);
+	let loaded = $state(false);
 	let diagramInnerHeight = $derived(heightDerived - margin.top - margin.bottom);
 	let diagramCenterY = $derived(diagramInnerHeight / 2);
+	let margin = { top: 60, right: 40, bottom: 60, left: 40 };
+	let circleRadius = 10;
+	//dataset setup
+	let currentDataset = $derived(currentSource == 'NYT' ? dataNYT : dataZeit);
+	let peopleSelected = $state([]);
+	let peopleOrdered = $derived(
+		Object.keys(currentDataset.data).sort(
+			(a, b) => currentDataset.data[b].total - currentDataset.data[a].total
+		)
+	);
+	let peopleData = $derived(
+		peopleOrdered
+			.map((person) => {
+				let entries = [];
+				Object.entries(currentDataset.data[person].timeframe).forEach(([week, count]) => {
+					entries.push({
+						person: person,
+						week: new Date(week.slice(0, 10)), // Convert to Date object
+						count: count
+					});
+				});
+				return entries;
+			})
+			.flat()
+	);
+	$effect(() => {
+		if (peopleOrdered) {
+			peopleSelected = [...peopleOrdered];
+		}
+	});
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
 		bubbles = svg.selectAll('.bubble');
@@ -48,7 +78,7 @@
 			.style('backdrop-filter', 'blur(5px)')
 			.style('border', '0px')
 			.style('border-radius', '8px')
-			.style('pointer-events', 'none')
+			.style('pointer-events', 'none');
 		yScale = d3
 			.scaleLinear()
 			.domain([0, d3.max(peopleData, (d) => d.count)])
@@ -96,7 +126,7 @@
 			.append('path')
 			.attr(
 				'd',
-				`M${margin.left - 150},${diagramCenterY - 25} L${margin.left + 	50},${diagramCenterY - 25}`
+				`M${margin.left - 150},${diagramCenterY - 25} L${margin.left + 50},${diagramCenterY - 25}`
 			)
 			.attr('stroke', 'black')
 			.attr('stroke-width', 0.5)
@@ -170,13 +200,13 @@
 				.select('path')
 				.attr(
 					'd',
-				`M${margin.left - 150},${diagramCenterY - 25} L${margin.left + 	50},${diagramCenterY - 25}`
+					`M${margin.left - 150},${diagramCenterY - 25} L${margin.left + 50},${diagramCenterY - 25}`
 				);
 
 			yAxisDescriptor
 				.select('text')
 				.attr('x', margin.left - 105)
-			.attr('y', diagramCenterY - 30)
+				.attr('y', diagramCenterY - 30);
 
 			d3.select('#year-label')
 				.attr('x', margin.left)
@@ -231,15 +261,15 @@
 			.attr('transform', (d) => `translate(${xScale(d.week)}, ${heightDerived / 2})`)
 			.on('mouseover', function (event, d) {
 				console.log(event.target.getBoundingClientRect());
-				let bbTooltip = tooltip.node().getBoundingClientRect()
-				let bb = event.target.getBoundingClientRect()
+				let bbTooltip = tooltip.node().getBoundingClientRect();
+				let bb = event.target.getBoundingClientRect();
 				tooltip.transition().duration(200).style('opacity', 1);
 				tooltip
 					.html(
 						`<strong>${translateCard[d.person]}</strong><br>${d3.timeFormat('%d/%m/%Y')(d.week)}<br>${d.count} mentions`
 					)
 					.style('left', bb.left + bb.width / 2 - bbTooltip.width / 2 + 'px')
-					.style('top', bb.top + window.scrollY - bbTooltip.height - 5 + 'px')
+					.style('top', bb.top + window.scrollY - bbTooltip.height - 5 + 'px');
 			})
 			.on('mouseout', function () {
 				tooltip.transition().duration(300).style('opacity', 0);
@@ -285,7 +315,6 @@
 			(peopleData && loaded) ||
 			(steamgraph && loaded)
 		) {
-			console.log('update chart');
 			updateChart();
 		}
 	});
@@ -301,7 +330,6 @@
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<div class:hidden={!steamgraph}>
-		<OutletSwitch bind:currentOutlet={currentSource} />
 		<div id="steamgraph-chart-controls" class="grid grid-cols-3 gap-1">
 			{#each peopleOrdered as person, i}
 				<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
@@ -324,14 +352,12 @@
 					data-person={person}
 				>
 					{i + 1}. {translateCard[person]}
-				
-				<span style="font-size: 8px;text-align: right; pointer-events: none;">
-					({peopleData
-						.filter((p) => p.person == person)
-						.reduce((acc, p) => acc + p.count, 0)} images)
-				</span>
-			</div>
-		{/each}
+
+					<span style="font-size: 8px;text-align: right; pointer-events: none;">
+						({peopleData.filter((p) => p.person == person).reduce((acc, p) => acc + p.count, 0)} images)
+					</span>
+				</div>
+			{/each}
 		</div>
 		<svg {width} height={heightDerived} id="steamgraph-chart" class:hidden={!steamgraph}>
 			<defs>
@@ -354,6 +380,7 @@
 				</marker>
 			</defs>
 		</svg>
+		<OutletSwitch bind:currentOutlet={currentSource} />
 	</div>
 	{#if !steamgraph}
 		<ImageBubblechart

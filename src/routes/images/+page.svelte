@@ -3,16 +3,17 @@
 	import ImageStreamgraph from '$lib/images/ImageStreamgraph.svelte';
 	import scrollama from 'scrollama';
 	import { onMount } from 'svelte';
-	import dataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
-	import dataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
+	
 	import visualStoryline from '../../content/data/images/visual_mentions_storyline.json';
 	import rawIntroText from '@/content/images/images-intro.md?raw';
 	import rawOutroText from '@/content/images/images-outro.md?raw';
 	import ImageNetworkgraph from '$lib/images/ImageNetworkgraph.svelte';
+	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//scrollama setup
 	const scroller = scrollama();
 	let step = $state(0);
 	let blocked = $state(true);
+	let currentSource = $state('NYT');
 	onMount(async () => {
 		scroller
 			.setup({
@@ -24,37 +25,13 @@
 				step = response.index;
 				if(visualStoryline[step] && step > 0){
 					currentSource = visualStoryline[step].source
-					peopleSelected = visualStoryline[step].visible
 				}else{
 					currentSource = 'NYT'
-					peopleSelected = [...peopleOrdered]
 				}
 				//console.log('entering block', response.index);
 				// { element, index, direction }
 			});
 	});
-	//dataset setup
-	let currentSource:any = $state('Zeit'); // or 'Zeit'
-	let currentDataset:any = $derived(currentSource == 'NYT' ? dataNYT : dataZeit);
-	let peopleOrdered = $derived(
-		Object.keys(currentDataset.data).sort(
-			(a, b) => currentDataset.data[b].total - currentDataset.data[a].total
-		)
-	);
-	let peopleData = $derived(peopleOrdered
-			.map((person: any) => {
-				let entries:any = [];
-				Object.entries(currentDataset.data[person].timeframe).forEach(([week, count]) => {
-					entries.push({
-						person: person,
-						week: new Date(week.slice(0, 10)), // Convert to Date object
-						count: count
-					});
-				});
-				return entries;
-			})
-			.flat());
-	let peopleSelected = $derived([...peopleOrdered])
 </script>
 
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
@@ -66,7 +43,7 @@
 		</section>
 		<section id="scrolly-1" class="md:flex md:flex-row-reverse">
 			<figure class="sticky top-20 h-dvh w-full p-4 basis-1/2 md:basis-2/3 xl:p-4">
-				<ImageStreamgraph {peopleOrdered} {peopleData} {peopleSelected} {currentSource} {blocked}  />
+				<ImageStreamgraph {currentSource} {blocked}  />
 			</figure>
 			<article class="relative w-full basis-1/2 md:basis-1/3">
 				<div data-step="0" class="step p-6">
