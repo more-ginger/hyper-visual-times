@@ -5,41 +5,56 @@
 	import dataNYT from '../../content/data/images/connections_with_news_desk_per_person_nyt.json';
 	import dataZeit from '../../content/data/images/connections_with_news_desk_per_person_zeit.json';
 	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
+	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//props
 	let { currentSource } = $props();
 	//setup for the steamgraph svg
+	let currentDataset = $derived(currentSource === 'NYT' ? dataNYT : dataZeit);
+	let currentColor = $derived(
+		currentSource === 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)'
+	);
 	let svg;
 	let width = $state(0);
 	let height = $state(0);
 	let heightDerived = $derived(height);
 	let loaded = $state(false);
-  let loading = $state(false);
+	let loading = $state(false);
 	let tooltip;
 	let nodes;
 	let links;
 	let selection1 = $state(null);
 	let selection2 = $state(null);
-  let articles = $state([]);
-  let simulation = null;
-  $effect(async() => {
-    if(selection1 !== null && selection2 !== null) {
-      loading = true;
-      console.log('fetching articles for:', selection1, selection2);
-      try { 
-			  const response = await fetch(
-				`/api/articles/compare?source=${currentSource.toLocaleLowerCase()}&person1=${selection1}&person2=${selection2}`
-			);
-        const result = await response.json();
-        console.log(result);
-        articles = result;
-        loading = false;
-      } catch (error) {
-        console.log('Error in fetching total counts inside fetchTotalCounts', error);
-        articles = [];
-        loading = false;
-      }
-    }
-  });
+	let articles = $state([]);
+	let simulation = null;
+	let nArticles = 0;
+	let totalArticles= $state(0);
+	$effect(() => {
+		if (selection1 !== null && selection2 !== null) {
+			nArticles = 0;
+			articles = [];
+			fetchArticles();
+			
+		}
+	});
+	async function fetchArticles(){
+			let selectedConnection = currentDataset.find((d) => (d.personA === selection1 && d.personB === selection2)||(d.personA === selection2 && d.personB === selection1));
+			let truncatedIDs = selectedConnection?.ids.slice(nArticles, nArticles+3) ?? []; // limit to first 100 IDs
+			totalArticles = selectedConnection?.ids?.length ?? 0;
+			loading = true;
+			try {
+				const response = await fetch(
+					`/api/articles?source=${currentSource.toLocaleLowerCase()}&id=${truncatedIDs.join('&id=')}`
+				);
+				const result = await response.json();
+				articles = result;
+				loading = false;
+				nArticles += truncatedIDs.length;
+			} catch (error) {
+				console.log('Error in fetching total counts inside fetchTotalCounts', error);
+				articles = [];
+				loading = false;
+			 }
+	}
 	onMount(() => {
 		svg = d3.select('#network-graph');
 		nodes = svg.selectAll('.nodes');
@@ -66,8 +81,7 @@
 	});
 	function updateChart() {
 		const nodesMap = new Map();
-		let dataset = currentSource == 'NYT' ? dataNYT : dataZeit;
-		dataset.forEach((d) => {
+		currentDataset.forEach((d) => {
 			if (!nodesMap.has(d.personA)) nodesMap.set(d.personA, { id: d.personA });
 			if (!nodesMap.has(d.personB)) nodesMap.set(d.personB, { id: d.personB });
 		});
@@ -75,7 +89,7 @@
 
 		// Expand into individual lines per news_desk per coappearance count
 		const expandedLinks = [];
-		dataset.forEach((d) => {
+		currentDataset.forEach((d) => {
 			let total = 0;
 			let i = 0;
 			Object.entries(d.news_desks).forEach(([desk, count]) => {
@@ -98,9 +112,9 @@
 		const color = d3.scaleOrdinal(newsDesks, d3.schemeTableau10);
 
 		// --- Force simulation ---
-    if(simulation) {
-      simulation.stop();
-    }
+		if (simulation) {
+			simulation.stop();
+		}
 		simulation = d3
 			.forceSimulation(nodesData)
 			.force(
@@ -108,54 +122,39 @@
 				d3
 					.forceLink(expandedLinks)
 					.id((d) => d.id)
-					.distance(150)
+					.distance(100)
 			)
-			.force('charge', d3.forceManyBody().strength(-300))
-			.force('center', d3.forceCenter(width / 2, heightDerived / 2))
+			.force('charge', d3.forceManyBody().strength(-500))
+			.force('center', d3.forceCenter(width / 2, height / 2))
 			.force('collision', d3.forceCollide().radius(50));
 
 		// --- Draw links (balanced curved lines per pair) ---
-    svg.selectAll('path').remove();
-    svg.selectAll('.nodes').remove();
-    links = svg.selectAll('path').data(expandedLinks);
-    links.exit().remove();
-    const linksEnter = links.enter()
-      .append('path')
-      .attr('class', 'link-curve')
+		svg.selectAll('path').remove();
+		svg.selectAll('.nodes').remove();
+		links = svg.selectAll('path').data(expandedLinks);
+		links.exit().remove();
+		const linksEnter = links
+			.enter()
+			.append('path')
+			.attr('class', 'link-curve')
 			.attr('fill', 'none')
 			.attr('stroke-width', 1)
 			.attr('stroke-opacity', 0);
 
 		// --- Draw nodes ---
-    nodes = svg.selectAll('.nodes').data(nodesData);
-    nodes.exit().remove();
-    const nodesEnter = nodes.enter()
-      .append('g')
-      .attr('class', 'nodes')
+		nodes = svg.selectAll('.nodes').data(nodesData);
+		nodes.exit().remove();
+		const nodesEnter = nodes
+			.enter()
+			.append('g')
+			.attr('class', 'nodes')
 			.call(drag(simulation))
-			.on('click', (event, d) => {
-				if (selection1 === null && d.id !== selection2) {
-					selection1 = d.id;
-				} else if (selection1 !== null && selection2 === null && d.id !== selection1) {
-					selection2 = d.id;
-				} else if (selection1 === d.id) {
-					selection1 = null;
-          if(!loading){
-          articles = [];
-          }
-				} else if (selection2 === d.id) {
-					selection2 = null;
-          if(!loading){
-            articles = [];
-          }
-				}
-			});
 
 		nodesEnter
 			.append('circle')
 			.attr('r', 20)
 			.attr('stroke', 'black')
-      .attr('class','node-circle')
+			.attr('class', 'node-circle')
 			.attr('fill', 'var(--color-ivory-default)')
 			.attr('class', 'cursor-pointer')
 			.attr('stroke-width', 1)
@@ -173,9 +172,25 @@
 					event.target.setAttribute('fill', `var(--color-ivory-default)`);
 				}
 				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 0);
+			}).on('click', (event, d) => {
+				if (selection1 === null && d.id !== selection2) {
+					selection1 = d.id;
+				} else if (selection1 !== null && selection2 === null && d.id !== selection1) {
+					selection2 = d.id;
+				} else if (selection1 === d.id) {
+					selection1 = null;
+					if (!loading) {
+						articles = [];
+					}
+				} else if (selection2 === d.id) {
+					selection2 = null;
+					if (!loading) {
+						articles = [];
+					}
+				}
 			});
-		
-    nodesEnter
+
+		nodesEnter
 			.append('circle')
 			.attr('class', 'selection-bubble')
 			.attr('r', 30)
@@ -214,7 +229,7 @@
 			.style('font-size', '10px')
 			.style('text-align', 'left')
 			.style('pointer-events', 'none') // prevent mouse events
-      .text((d) => translateCard[d.id])
+			.text((d) => translateCard[d.id])
 			.each(function (d) {
 				// measure actual pill width after rendering
 				const bb = this.getBoundingClientRect();
@@ -224,23 +239,23 @@
 					.attr('y', 23); // position below the bubble
 			});
 
-    nodes = nodesEnter.merge(nodes);
-    links = linksEnter.merge(links);
+		nodes = nodesEnter.merge(nodes);
+		links = linksEnter.merge(links);
 
-		simulation.on('tick', () => {	
-      links
-        .attr('stroke', (d) => {
-          if(selection1 == null || selection2 == null) {
-            return currentSource == 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)';
-          } else if (
-            selection1 != null &&
-            selection2 != null &&
-            (d.source.id === selection1 || d.source.id === selection2) &&
-            (d.target.id === selection1 || d.target.id === selection2)
-          ) {
-            return color(d.news_desk);
-          }
-        })
+		simulation.on('tick', () => {
+			links
+				.attr('stroke', (d) => {
+					if (selection1 == null || selection2 == null) {
+						return currentColor;
+					} else if (
+						selection1 != null &&
+						selection2 != null &&
+						(d.source.id === selection1 || d.source.id === selection2) &&
+						(d.target.id === selection1 || d.target.id === selection2)
+					) {
+						return color(d.news_desk);
+					}
+				})
 				.attr('stroke-opacity', (d) => {
 					if (selection1 == null || selection2 == null) {
 						return 1;
@@ -263,10 +278,10 @@
 					}
 				})
 				.attr('d', (d, i) => {
-          							const sx = d.source.x,
-								sy = d.source.y;
-							const tx = d.target.x,
-								ty = d.target.y;
+					const sx = d.source.x,
+						sy = d.source.y;
+					const tx = d.target.x,
+						ty = d.target.y;
 					if (selection1 == null || selection2 == null) {
 						if (d.localIndex == 0) {
 							return `M${sx},${sy} L${tx},${ty}`;
@@ -288,7 +303,7 @@
 						const normY = dx / len;
 
 						// Balanced curvature that resets per pair
-						const step = Math.abs((d.localIndex + 1) - (d.total + 1) / 2);
+						const step = Math.abs(d.localIndex + 1 - (d.total + 1) / 2);
 						const direction = (d.localIndex + 1) / d.total <= 0.5 ? 1 : -1;
 						const curvature = step * 10; // curvature strength for each side
 
@@ -299,20 +314,25 @@
 						return `M${sx},${sy} Q${controlX},${controlY} ${tx},${ty}`;
 					}
 				});
-        nodes.select('div').text((d) => translateCard[d.id]).each(function (d) {
-				// measure actual pill width after rendering
-				const bb = this.getBoundingClientRect();
-				d3.select(this.parentNode) // parent foreignObject
-					.attr('width', bb.width * 2)
-					.attr('x', -bb.width) // center under node
-					.attr('y', 23); // position below the bubble
-			});
-      nodes.select('.node-circle').attr('fill','var(--color-ivory-default)');
-      nodes.select('.selection-bubble').attr(
-				'stroke',
-				currentSource == 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)'
-			)
-      nodes
+			nodes
+				.select('div')
+				.text((d) => translateCard[d.id])
+				.each(function (d) {
+					// measure actual pill width after rendering
+					const bb = this.getBoundingClientRect();
+					d3.select(this.parentNode) // parent foreignObject
+						.attr('width', bb.width * 2)
+						.attr('x', -bb.width) // center under node
+						.attr('y', 23); // position below the bubble
+				});
+			nodes.select('.node-circle').attr('fill', 'var(--color-ivory-default)');
+			nodes
+				.select('.selection-bubble')
+				.attr(
+					'stroke',
+					currentColor
+				);
+			nodes
 				.attr('transform', (d) => `translate(${d.x},${d.y})`)
 				.attr('opacity', (d) => {
 					if (selection1 == null || selection2 == null) {
@@ -327,16 +347,16 @@
 						return 0.05;
 					}
 				});
-              
+
 			nodes.select('circle').attr('fill', (d) => {
 				if (d.id === selection1 || d.id === selection2) {
-					return currentSource == 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)';
+					return currentColor;
 				} else {
 					return 'var(--color-ivory-default)';
 				}
 			});
 
-      nodes.select('image').attr('xlink:href', (d) => `/img/people/${d.id}.webp`)
+			nodes.select('image').attr('xlink:href', (d) => `/img/people/${d.id}.webp`);
 		});
 
 		// --- Dragging behavior ---
@@ -358,20 +378,28 @@
 	}
 	// auto update the chart on change of the dataset
 	$effect(() => {
-    if(currentSource && loaded){
-      updateChart();
-    }
-  });
+		if (currentSource && loaded) {
+			updateChart();
+		}
+	});
 </script>
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
+	<OutletSwitch bind:currentOutlet={currentSource} />
 	<svg {width} height={heightDerived} id="network-graph"> </svg>
-  <div class="absolute left-[10%] top-[50%] -translate-y-[50%]" class:hidden={!loading && articles.length === 0}>
-        <ArticlesCard {articles} {currentSource} {loading}>
-          <div class="col-span-2">
-              <span><b>{translateCard[selection1]}</b> <img class="inline" src="/icons/ui-switch.svg"/> <b>{translateCard[selection2]}</b></span><br>
-              appear visually together in <u>{articles.length == 0 ? '?' : articles.length} Articles.</u>
-          </div>
-        </ArticlesCard>
-  </div>
+	<div
+		class="absolute top-[50%] left-[10%] -translate-y-[50%]"
+		class:hidden={!loading && articles.length === 0}
+	>
+		<ArticlesCard {articles} {currentSource} {loading}>
+			<div class="col-span-2">
+				<span
+					><b>{translateCard[selection1 ?? '']}</b>
+					<img class="inline" src="/icons/ui-switch.svg" />
+					<b>{translateCard[selection2 ?? '']}</b></span
+				><br />
+				appear visually together in <u>{totalArticles} Articles.</u>
+			</div>
+		</ArticlesCard>
+	</div>
 </div>
