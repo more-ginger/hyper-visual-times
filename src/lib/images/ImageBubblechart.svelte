@@ -18,6 +18,8 @@
 	let selectedPerson = $state(null);
 	let selectedDate = $state(null);
 	let loading = $state(false);
+	let peopleFixed = people;
+	let selectedWeekFixed = selectedWeek
 	onMount(async () => {
 		try {
 			const response = await fetch(
@@ -44,7 +46,6 @@
 		}
 	}
 	onMount(() => {
-		console.log(people);
 		svg = d3.select('#bubble-chart');
 		bubbles = svg.selectAll('.bubble');
 		loaded = true;
@@ -153,22 +154,22 @@
 		}
 	}
 	// auto update the chart on change of the dataset
-	$effect(() => {
-		if (people && loaded) {
-			updateChart();
-		}
-	});
+	// $effect(() => {
+	// 	if (people && loaded) {
+	// 		updateChart();
+	// 	}
+	// });
 </script>
 
 <div class="flex gap-2">
 	<BackwardButton bind:back={steamgraph}>Back to Overview</BackwardButton>
 	<p>
-		Detected and labeled <u>{people.reduce((acc, p) => acc + p.count, 0)} faces</u> across
+		Detected and labeled <u>{peopleFixed.reduce((acc, p) => acc + p.count, 0)} faces</u> across
 		<u>{totalCounts == 0 ? '?' : totalCounts} articles</u>
 		between
 		<u
-			>{new Date(selectedWeek).toLocaleDateString('de')} - {new Date(
-				new Date(selectedWeek).getTime() + 7 * 24 * 60 * 60 * 1000
+			>{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
+				new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
 			).toLocaleDateString('de')}</u
 		>
 	</p>

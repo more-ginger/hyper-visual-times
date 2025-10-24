@@ -319,6 +319,7 @@
 		}
 	});
 	function togglePerson(event) {
+		if (blocked) return;	
 		let person = event.target.dataset.person;
 		if (peopleSelected.includes(person)) {
 			peopleSelected = peopleSelected.filter((p) => p != person);
