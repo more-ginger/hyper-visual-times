@@ -36,6 +36,7 @@
 
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
 	<div id="images-essay">
+		<video src="img/images_teaser_desktop.webm" autoplay muted loop></video>
 		<section id="intro" class="mb-30">
 			<div class="m-auto w-full md:w-3/7">
 				<BlocksRenderer rawtext={rawIntroText} />
