@@ -1,9 +1,11 @@
 <script lang="ts">
-	import translateMap from '../../content/data/images/translate_map.json';
-	let { children, articles, currentSource, selectedPerson=null, selectedDate=null, loading=null } = $props();
+	import * as d3 from 'd3';
+	let { children, articles, currentSource, newsDesks=[], loading=null } = $props();
 	function getAuthorSourceAgnostic(byline){
+		byline = byline.trim().replaceAll(/'/g, '"').replaceAll('None', '""')
+		try{
 		 if (currentSource == 'NYT'){
-			let by = JSON.parse(JSON.parse(byline))
+			let by = JSON.parse(byline)
 			if (by.original.length == 0) return 'Author unknown'
 			return by.original ?? 'Author unknown'
 		 }else{		
@@ -11,7 +13,11 @@
 			if (!by || by.length == 0) return 'Author unknown'
 			return by[0].name ?? 'Author unknown'
 		 }
+		}catch(e){
+			return 'Author unknown'
+		}
 	}
+	let colorScale = $derived(d3.scaleOrdinal(newsDesks, d3.schemeTableau10))
 	$effect(() => {
 		if(loading){
 			articles = [];
@@ -47,9 +53,17 @@
 						<div>
 							<div>{article.headline}</div>
 							<div class="py-2 text-sm">{article.snippet}</div>
-							<div class="text-xs">
-								{getAuthorSourceAgnostic(article.byline)} |
+							<div>
+								{getAuthorSourceAgnostic(article.byline)}
+							</div>
+							<div class="grid grid-cols-3">
+								<span class="justify-self-start col-span-1">
 								{new Date(article.pub_date).toLocaleDateString('de')}
+								</span>
+								<span class="justify-self-end flex items-center gap-1 col-span-2">
+									<span class="w-[10px] h-[10px] block rounded-full" style="background-color: {colorScale(article.news_desk)};"></span>
+									{article.news_desk}
+								</span>
 							</div>
 						</div>
 					</a>
