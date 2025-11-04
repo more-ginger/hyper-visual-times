@@ -5,7 +5,6 @@
 	import dataNYT from '../../content/data/images/connections_with_news_desk_per_person_nyt.json';
 	import dataZeit from '../../content/data/images/connections_with_news_desk_per_person_zeit.json';
 	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
-	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//props
 	let { currentSource } = $props();
 	//setup for the steamgraph svg
@@ -123,10 +122,11 @@
 				d3
 					.forceLink(expandedLinks)
 					.id((d) => d.id)
-					.distance(100)
+					.distance(d => 300)
 			)
 			.force('charge', d3.forceManyBody().strength(-500))
-			.force('center', d3.forceCenter(width / 2, height / 2))
+			.force('x', d3.forceX(width / 2).strength(0.1))
+			.force('y', d3.forceY(height / 2).strength(0.5))
 			.force('collision', d3.forceCollide().radius(50));
 
 		// --- Draw links (balanced curved lines per pair) ---
@@ -149,6 +149,7 @@
 			.enter()
 			.append('g')
 			.attr('class', 'nodes')
+			.attr('transform', (d) => `translate(${width/2}, ${height/2})`)
 			.call(drag(simulation))
 
 		nodesEnter
@@ -258,8 +259,12 @@
 					}
 				})
 				.attr('stroke-opacity', (d) => {
-					if (selection1 == null || selection2 == null) {
+					if (selection1 == null && selection2 == null) {
 						return 1;
+					}else if(
+						((selection1 != null && selection2 == null) || (selection2 != null && selection1 == null)) && 
+						(d.source.id !== selection1 && d.target.id !== selection2 && d.source.id !== selection2 && d.target.id !== selection1)){
+						return 0.05;
 					} else if (
 						selection1 != null &&
 						selection2 != null &&
@@ -386,7 +391,6 @@
 </script>
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
-	<OutletSwitch bind:currentOutlet={currentSource} />
 	<svg {width} height={heightDerived} id="network-graph"> </svg>
 	<div
 		class="absolute top-[50%] left-[10%] -translate-y-[50%]"
