@@ -25,9 +25,9 @@
 	let height = $state(0);
 	let heightDerived = $derived(height / 1.7);
 	let loaded = $state(false);
+	let margin = { top: 60, right: 40, bottom: 60, left: 40 };
 	let diagramInnerHeight = $derived(heightDerived - margin.top - margin.bottom);
 	let diagramCenterY = $derived(diagramInnerHeight / 2);
-	let margin = { top: 60, right: 40, bottom: 60, left: 40 };
 	let circleRadius = 10;
 	//dataset setup
 	let currentDataset = $derived(currentSource == 'NYT' ? dataNYT : dataZeit);
@@ -387,7 +387,7 @@
 		<ImageBubblechart
 			bind:steamgraph
 			{width}
-			height={heightDerived}
+			height={heightDerived*1.4}
 			{selectedWeek}
 			{currentSource}
 			people={peopleData.filter((p) => p.week.getTime() == new Date(selectedWeek).getTime())}

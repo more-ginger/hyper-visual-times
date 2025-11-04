@@ -12,27 +12,13 @@
 	let scaleLog = d3
 		.scaleLog()
 		.domain(d3.extent(people.map((p) => p.count)))
-		.range([15, 50]);
+		.range([10, 60]);
 	let data = $state([]);
-	let totalCounts = $state(0);
 	let selectedPerson = $state(null);
 	let selectedDate = $state(null);
 	let loading = $state(false);
 	let peopleFixed = people;
 	let selectedWeekFixed = selectedWeek
-	onMount(async () => {
-		try {
-			const response = await fetch(
-				`/api/articles/date?source=${currentSource.toLocaleLowerCase()}&date=${d3.utcFormat('%Y-%m-%d')(selectedWeek)}`
-			);
-			const result = await response.json();
-			console.log('fetching total counts for date:', result);
-			totalCounts = result.length;
-			loading = false;
-		} catch (error) {
-			console.log('Error in fetching total counts inside fetchTotalCounts', error);
-		}
-	});
 	async function fetchArticlesForCards(event) {
 		try {
 			loading = true;
@@ -61,11 +47,11 @@
 
 		simulation = d3
 			.forceSimulation(people)
-			.force('x', d3.forceX(width / 3.5).strength(0.1))
+			.force('x', d3.forceX(width / 3).strength(0.1))
 			.force('y', d3.forceY(height / 2).strength(0.1))
 			.force(
 				'collide',
-				d3.forceCollide((d) => scaleLog(d.count) + 15)
+				d3.forceCollide((d) => scaleLog(d.count) + 30)
 			)
 			.alphaDecay(0.05)
 			.on('tick', ticked);
@@ -76,7 +62,7 @@
 		);
 		bubbles.exit().remove();
 
-		const entered = bubbles.enter().append('g').attr('class', 'bubble');
+		const entered = bubbles.enter().append('g').attr('class', 'bubble').call(drag(simulation))
 
 		entered
 			.append('circle')
@@ -152,6 +138,25 @@
 					`translate(${Math.max(scaleLog(d.count), Math.min(width - scaleLog(d.count), d.x))}, ${Math.max(scaleLog(d.count), Math.min(height - scaleLog(d.count), d.y))})`
 			);
 		}
+				// --- Dragging behavior ---
+		function drag(simulation) {
+			function dragstarted(event, d) {
+				if (!event.active) simulation.alphaTarget(0.3).restart();
+				d.fx = d.x;
+				d.fy = d.y;
+			}
+			function dragged(event, d) {
+				d.fx = event.x;
+				d.fy = event.y;
+			}
+			function dragended(event, d) {
+				if (!event.active) simulation.alphaTarget(0);
+				d.fx = null;
+				d.fy = null;
+
+			}
+			return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
+		}
 	}
 	// auto update the chart on change of the dataset
 	// $effect(() => {
@@ -164,9 +169,7 @@
 <div class="flex gap-2">
 	<BackwardButton bind:back={steamgraph}>Back to Overview</BackwardButton>
 	<p>
-		Detected and labeled <u>{peopleFixed.reduce((acc, p) => acc + p.count, 0)} faces</u> across
-		<u>{totalCounts == 0 ? '?' : totalCounts} articles</u>
-		between
+		Detected and labeled <u>{peopleFixed.reduce((acc, p) => acc + p.count, 0)} faces</u> for the week
 		<u
 			>{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
 				new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
@@ -175,8 +178,8 @@
 	</p>
 </div>
 <div class="grid grid-cols-5 items-start justify-items-center gap-4 mt-4">
-	<div class="col-span-3">
-			<svg width={width / 1.5} {height} id="bubble-chart" >
+	<div class="col-span-3 relative">
+		<svg width={width / 1.5} {height} id="bubble-chart" >
 		<defs>
 			<circle id="circle" cx="25%" cy="25%" r="15" />
 			<clipPath id="clip">
@@ -185,23 +188,13 @@
 		</defs>
 	</svg>
 	</div>
-	<div class="col-span-2">
-				<img class="my-4 mx-auto" src="/img/explain_images_bubblechart.svg" alt="" />
-
+	<div class="col-span-2 flex flex-col items-center gap-4">
+		<img src="/img/bubblechart-legend.svg" alt="" />
 		<div>
 			<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading}>
 				<div class="col-span-2">
 					<b>{translateCard[selectedPerson] ?? selectedPerson}</b><br />
-					Found in <u>{data.length == 0 ? '?' : data.length} articles</u> <br />
-					between
-					<u
-						>{selectedDate ? new Date(selectedDate).toLocaleDateString('de') : '?'} - {selectedDate
-							? new Date(new Date(selectedDate).getTime() + 7 * 24 * 60 * 60 * 1000)
-									.toISOString()
-									.split('T')[0]
-									.replaceAll('-', '.')
-							: '?'}</u
-					>
+					Found in <u>{data.length == 0 ? '?' : data.length} articles</u>
 				</div>
 			</ArticlesCard>
 		</div>

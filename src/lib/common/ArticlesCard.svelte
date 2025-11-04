@@ -25,8 +25,7 @@
 		<div class="grid grid-cols-2 pt-1">
 		{#if articles.length == 0 && !loading}
 			<div class="col-span-2">
-							Select a <u>bubble</u> to inspect the <u>articles</u>.
-
+				Select a <u>bubble</u> to inspect the <u>articles</u>.
 			</div>
 		{:else}
 			{@render children()}
@@ -38,7 +37,7 @@
 			{#if loading}
 				<p>Loading...</p>
 			{:else}
-				<p>no data</p>
+				<p>No Data</p>
 			{/if}
 		</div>
 		{:else}
