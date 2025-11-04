@@ -3,11 +3,9 @@
 	import { onMount } from 'svelte';
 	import translateCard from '../../content/data/images/translate_map.json';
 	import ImageBubblechart from './ImageBubblechart.svelte';
-	import dataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
-	import dataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
 	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//props
-	let { currentSource, blocked } = $props();
+	let { currentSource, peopleSelected, peopleOrdered, peopleData } = $props();
 	//setup for the two views (steamgraph and bubblechart)
 	let steamgraph = $state(true);
 	let selectedWeek = $state(null);
@@ -23,40 +21,13 @@
 	let simulation;
 	let width = $state(0);
 	let height = $state(0);
-	let heightDerived = $derived(height / 1.7);
+	let heightDerived = $derived(height);
 	let loaded = $state(false);
-	let margin = { top: 60, right: 40, bottom: 60, left: 40 };
+	let margin = { top: 0, right: 40, bottom: 150, left: 40 };
 	let diagramInnerHeight = $derived(heightDerived - margin.top - margin.bottom);
 	let diagramCenterY = $derived(diagramInnerHeight / 2);
 	let circleRadius = 10;
 	//dataset setup
-	let currentDataset = $derived(currentSource == 'NYT' ? dataNYT : dataZeit);
-	let peopleSelected = $state([]);
-	let peopleOrdered = $derived(
-		Object.keys(currentDataset.data).sort(
-			(a, b) => currentDataset.data[b].total - currentDataset.data[a].total
-		)
-	);
-	let peopleData = $derived(
-		peopleOrdered
-			.map((person) => {
-				let entries = [];
-				Object.entries(currentDataset.data[person].timeframe).forEach(([week, count]) => {
-					entries.push({
-						person: person,
-						week: new Date(week.slice(0, 10)), // Convert to Date object
-						count: count
-					});
-				});
-				return entries;
-			})
-			.flat()
-	);
-	$effect(() => {
-		if (peopleOrdered) {
-			peopleSelected = [...peopleOrdered];
-		}
-	});
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
 		bubbles = svg.selectAll('.bubble');
@@ -104,7 +75,7 @@
 			.append('path')
 			.attr(
 				'd',
-				`M${margin.left + width - margin.right - 100},${heightDerived - 30} L${margin.left + width - margin.right},${heightDerived - 30}`
+				`M${margin.left + width - margin.right - 125},${heightDerived-margin.bottom+30} L${margin.left + width - margin.right-15},${heightDerived-margin.bottom+30}`
 			)
 			.attr('stroke', 'black')
 			.attr('stroke-width', 0.5)
@@ -112,8 +83,8 @@
 
 		xAxisDescriptor
 			.append('text')
-			.attr('x', margin.left + width - margin.right - 100)
-			.attr('y', heightDerived - 18)
+			.attr('x', margin.left + width - margin.right - 125)
+			.attr('y', heightDerived - margin.bottom + 40)
 			.attr('text-anchor', 'start')
 			.attr('font-size', '10')
 			.text('Time');
@@ -126,7 +97,7 @@
 			.append('path')
 			.attr(
 				'd',
-				`M${margin.left - 150},${diagramCenterY - 25} L${margin.left + 50},${diagramCenterY - 25}`
+				`M${margin.left - 70},${diagramCenterY - 25} L${margin.left + 70},${diagramCenterY - 25}`
 			)
 			.attr('stroke', 'black')
 			.attr('stroke-width', 0.5)
@@ -135,7 +106,7 @@
 
 		yAxisDescriptor
 			.append('text')
-			.attr('x', margin.left - 105)
+			.attr('x', margin.left - 55)
 			.attr('y', diagramCenterY - 30)
 			.attr('text-anchor', 'center')
 			.attr('font-size', '10')
@@ -159,7 +130,7 @@
 			.append('text')
 			.attr('id', 'year-label')
 			.attr('x', margin.left)
-			.attr('y', heightDerived - 25)
+			.attr('y', heightDerived-margin.bottom + 35)
 			.attr('text-anchor', 'middle')
 			.attr('font-size', '10')
 			.text('2024');
@@ -226,7 +197,7 @@
 					nodes.push({
 						...d,
 						x: xScale(d.week),
-						y: heightDerived / 2 + (Math.random() - 0.5) * 50,
+						y: (heightDerived-margin.bottom) / 2 + (Math.random() - 0.5) * 50,
 						r: circleRadius
 					});
 				}
@@ -240,7 +211,7 @@
 		simulation = d3
 			.forceSimulation(nodes)
 			.force('x', d3.forceX((d) => xScale(d.week)).strength(0.7))
-			.force('y', d3.forceY(heightDerived / 2).strength(0.05))
+			.force('y', d3.forceY((heightDerived-margin.bottom) / 2).strength(0.05))
 			.force(
 				'collide',
 				d3.forceCollide((d) => d.r + 1.5)
@@ -318,48 +289,11 @@
 			updateChart();
 		}
 	});
-	function togglePerson(event) {
-		if (blocked) return;	
-		let person = event.target.dataset.person;
-		if (peopleSelected.includes(person)) {
-			peopleSelected = peopleSelected.filter((p) => p != person);
-		} else {
-			peopleSelected = [...peopleSelected, person];
-		}
-	}
+
 </script>
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
-	<div class:hidden={!steamgraph}>
-		<div id="steamgraph-chart-controls" class="grid grid-cols-3 gap-1">
-			{#each peopleOrdered as person, i}
-				<!-- svelte-ignore a11y_no_static_element_interactions, a11y_click_events_have_key_events -->
-				<div
-					class={`control py col-span-1 rounded-xl border px-3 hover:cursor-pointer`}
-					class:col-start-1={Math.floor(i / 5) == 0}
-					class:col-start-2={Math.floor(i / 5) == 1}
-					class:col-start-3={Math.floor(i / 5) == 2}
-					class:row-start-1={i % 5 == 0}
-					class:row-start-2={i % 5 == 1}
-					class:row-start-3={i % 5 == 2}
-					class:row-start-4={i % 5 == 3}
-					class:row-start-5={i % 5 == 4}
-					class:pointer-events-none={false}
-					class:bg-[var(--color-nyt-light)]={peopleSelected.includes(person) &&
-						currentSource == 'NYT'}
-					class:bg-[var(--color-zeit-light)]={peopleSelected.includes(person) &&
-						currentSource == 'Zeit'}
-					onclick={togglePerson}
-					data-person={person}
-				>
-					{i + 1}. {translateCard[person]}
-
-					<span style="font-size: 8px;text-align: right; pointer-events: none;">
-						({peopleData.filter((p) => p.person == person).reduce((acc, p) => acc + p.count, 0)} images)
-					</span>
-				</div>
-			{/each}
-		</div>
+	 <div class:hidden={!steamgraph}>
 		<svg {width} height={heightDerived} id="steamgraph-chart" class:hidden={!steamgraph}>
 			<defs>
 				<circle id="circle" cx="25%" cy="25%" r="15" />
@@ -381,13 +315,12 @@
 				</marker>
 			</defs>
 		</svg>
-		<OutletSwitch bind:currentOutlet={currentSource} />
 	</div>
 	{#if !steamgraph}
 		<ImageBubblechart
 			bind:steamgraph
 			{width}
-			height={heightDerived*1.4}
+			height={heightDerived*0.8}
 			{selectedWeek}
 			{currentSource}
 			people={peopleData.filter((p) => p.week.getTime() == new Date(selectedWeek).getTime())}
