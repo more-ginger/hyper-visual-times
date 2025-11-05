@@ -46,31 +46,30 @@
 				<BlocksRenderer rawtext={rawIntroText} />
 			</div>
 		</section>
-		{#if $selectedView == 'bubblechart'}
-		<section>
-			<figure class="sticky top-15 h-dvh w-full basis-full p-4 xl:p-4">
+		<section id="scrolly-1" class="md:flex md:flex-row-reverse">	
+			{#if $selectedView == 'bubblechart'}
+			<figure class="sticky top-20 h-dvh w-full basis-full">
 				<ImageBubblechart {selectedSource} {selectedWeek} {selectedPeople}  />
-			</figure>
-		</section>
-		{:else if $selectedView == 'streamgraph'}
-		<section id="scrolly-1" class="md:flex md:flex-row-reverse">		
-			<figure class="sticky top-15 h-dvh w-full basis-1/2 p-4 md:basis-7/10 xl:p-4">
+			</figure>	
+			{:else if $selectedView == 'streamgraph'}
+			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-7/10 xl:p-4">
 				<ImageStreamgraph {selectedSource}  bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>
-			<article class="relative w-full basis-1/2 md:basis-3/10">
+			{/if}
+			<article class={`relative w-full basis-1/2 md:basis-3/10 ${$selectedView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
 				<div data-step="0" class="step p-6" style="height: 100vh;">
 					<div class="table-cell align-middle">
 						<h2 class="font-serif text-xl">1. Visual Domination</h2>
-						<img src="img/streamchart-legend.svg" alt="">
-						<p class="mb-2">
+						<p>
 							Grassland (2023) has already observed how Western European newspapers tend to cover
-							macro-regions of interests: areas that have geographical and political significance
-							for the host country of the newspaper. Looking at the visualization on the right, this
-							observation seems to be confirmed, Central and Western Europe are the main regions of
-							interest. Even in relation to conflict and against the cultural background that ties
-							Germany and Israel, the use of Russia-Ukraine keywords is much higher than
-							Israel–Palestine ones.
+							macro-regions.
 						</p>
+						<img src="img/images-streamgraph-legend.svg" class="my-2" alt="">
+						<p>
+							Grassland (2023) has already observed how Western European newspapers tend to cover
+							macro-regions.
+						</p>
+
 					</div>
 				</div>
 				<div data-step="1" class="step p-6" style="height:100vh">
@@ -88,8 +87,8 @@
 					<div class="table-cell align-middle">Donald Trump</div>
 				</div>
 			</article>	
+			
 		</section>
-		{/if}
 		<section class="mt-2">
 				<article class="m-auto w-full md:w-3/7">
 					Grassland (2023) has already observed how Western European newspapers tend to cover
