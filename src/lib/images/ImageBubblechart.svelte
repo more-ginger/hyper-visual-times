@@ -1,6 +1,6 @@
 <script>
 	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
-	import translateCard from '../../content/data/images/translate_map.json';
+	import translateMap from '../../content/data/images/translate_map.json';
 	import BackwardButton from '$lib/common/BackwardButton.svelte';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
@@ -15,15 +15,14 @@
 		.range([10, 60]);
 	let data = $state([]);
 	let selectedPerson = $state(null);
-	let selectedDate = $state(null);
 	let loading = $state(false);
 	let peopleFixed = people;
 	let selectedWeekFixed = selectedWeek
-	async function fetchArticlesForCards(event) {
+	async function fetchArticlesForCards() {
 		try {
 			loading = true;
 			const response = await fetch(
-				`/api/articles/date?source=${currentSource.toLocaleLowerCase()}&person=${selectedPerson}&date=${d3.utcFormat('%Y-%m-%d')(selectedDate)}`
+					`/api/articles?source=${currentSource.toLocaleLowerCase()}&id=${selectedPerson.ids.join('&id=')}`
 			);
 			data = [...(await response.json())];
 			loading = false;
@@ -83,8 +82,7 @@
 			.on('click', function (event, d) {
 				event.stopPropagation();
 				loading = true;
-				selectedPerson = d.person;
-				selectedDate = d.week;
+				selectedPerson = d;
 				fetchArticlesForCards();
 			});
 
@@ -119,7 +117,7 @@
 			.style('font-size', '10px')
 			.style('text-align', 'center')
 			.style('pointer-events', 'none') // prevent mouse events
-			.text((d) => translateCard[d.person])
+			.text((d) => translateMap[d.person])
 			.each(function (d) {
 				// measure actual pill width after rendering
 				const bb = this.getBoundingClientRect();
@@ -191,9 +189,9 @@
 	<div class="col-span-2 flex flex-col items-center gap-4">
 		<img src="/img/bubblechart-legend.svg" alt="" />
 		<div>
-			<ArticlesCard articles={data} {currentSource} {selectedPerson} {selectedDate} {loading}>
+			<ArticlesCard articles={data} {currentSource} selectedPerson={selectedPerson?.person} selectedDate={selectedPerson.date} {loading}>
 				<div class="col-span-2">
-					<b>{translateCard[selectedPerson] ?? selectedPerson}</b><br />
+					<b>{translateMap[selectedPerson.person] ?? selectedPerson.person}</b><br />
 					Found in <u>{data.length == 0 ? '?' : data.length} articles</u>
 				</div>
 			</ArticlesCard>

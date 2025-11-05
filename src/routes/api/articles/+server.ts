@@ -10,7 +10,7 @@ export const GET: RequestHandler = async ({ url }) => {
     if (!source || (source !== "nyt" && source !== "zeit")) {
         return new Response("Invalid source", { status: 400 });
     }
-        let query = supabase.from(`${source}_articles`).select("headline, web_url, snippet, pub_date, byline").in("_id", ids);
+        let query = supabase.from(`${source}_articles_tweaked`).select("headline, web_url, snippet, pub_date, byline,news_desk").in("_id", ids);
         const { data, error } = await query;
         if (error) {
             return new Response(error.message, { status: 500 })
