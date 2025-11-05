@@ -4,37 +4,25 @@
 	import BackwardButton from '$lib/common/BackwardButton.svelte';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	let {selectedSource = $bindable(), selectedWeek, selectedPeople } = $props();
-	let svg;
+	let {selectedSource = $bindable(), selectedWeek ='2024-01-01', selectedPeople= [] } = $props();
 	let width = $state(0);
 	let height = $state(0);
 	let loaded = $state(false);
+	let svg;
 	let bubbles;
 	let simulation;
 	let scaleLog = d3
 		.scaleLog()
 		.domain(d3.extent(selectedPeople.map((p) => p.count)))
-		.range([20, 80]);
-	let data = $state([]);
+		.range([10, 70]);
 	let selectedPerson = $state(null);
-	let loading = $state(false);
 	let selectedPeopleFixed = selectedPeople;
-	let selectedWeekFixed = selectedWeek
-	async function fetchArticlesForCards() {
-		try {
-			loading = true;
-			const response = await fetch(
-					`/api/articles?source=${selectedSource.toLocaleLowerCase()}&id=${selectedPerson.ids.join('&id=')}`
-			);
-			data = [...(await response.json())];
-			loading = false;
-		} catch (error) {
-			console.log('Error in fetching articles inside fetchArticlesForCards', error);
-		}
-	}
+	let selectedWeekFixed = selectedWeek;
+	let selectedPersonIDs = $derived(
+		selectedPeopleFixed.find((p) => p.person === selectedPerson?.person ?? '')?.ids ?? []
+	);
 	onMount(() => {
 		svg = d3.select('#bubble-chart');
-		svg
 		bubbles = svg.selectAll('.bubble');
 		loaded = true;
 		updateChart();
@@ -49,8 +37,9 @@
 
 		simulation = d3
 			.forceSimulation(selectedPeople)
-			.force('x', d3.forceX(width / 2.5).strength(0.2))
-			.force('y', d3.forceY(height / 2).strength(0.5))
+			.force('x', d3.forceX(width / 2.75).strength(0.1))
+			.force('y', d3.forceY(height / 1.5).strength(0.3))
+			.force('charge', d3.forceManyBody().strength(-50))
 			.force(
 				'collide',
 				d3.forceCollide((d) => scaleLog(d.count) + 30)
@@ -74,20 +63,39 @@
 			.attr('class', 'cursor-pointer')
 			.attr('stroke-width', 1)
 			.on('mouseover', function (event, d) {
+				if (selectedPerson && selectedPerson.person == d.person) return;
 				event.target.setAttribute(
 					'fill',
 					`var(--color-${selectedSource.toLocaleLowerCase()}-light)`
 				);
+				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 1);
 			})
 			.on('mouseout', function (event, d) {
+				if (selectedPerson && selectedPerson.person == d.person) return;
 				event.target.setAttribute('fill', `var(--color-ivory-default)`);
+				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 0);
 			})
 			.on('click', function (event, d) {
+				d3.selectAll('.cursor-pointer').attr('fill', `var(--color-ivory-default)`);
+				d3.selectAll('.selection-bubble').attr('opacity', 0);
+				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 1);
+				event.target.setAttribute(
+					'fill',
+					`var(--color-${selectedSource.toLocaleLowerCase()}-default)`
+				);
 				event.stopPropagation();
-				loading = true;
 				selectedPerson = d;
-				fetchArticlesForCards();
 			});
+		entered
+			.append('circle')
+			.attr('class', 'selection-bubble')
+			.attr('r', d => scaleLog(d.count) + 5)
+			.attr('fill', 'none')
+			.attr('stroke', selectedSource == 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)')
+			.attr('stroke-width', 1)
+			.attr('cx', (d) => 0)
+			.attr('cy', (d) => 0)
+			.attr('opacity', 0);
 
 		entered
 			.append('image')
@@ -159,45 +167,40 @@
 			return d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended);
 		}
 	}
-	// auto update the chart on change of the dataset
-	// $effect(() => {
-	// 	if (selectedPeople && loaded) {
-	// 		updateChart();
-	// 	}
-	// });
 </script>
 
-<div class="grid grid-cols-4 items-start justify-items-center gap-4 mt-4" bind:clientWidth={width} bind:clientHeight={height}>
-	<div class="col-span-1 flex flex-col gap-4">
-		<h2 class="font-serif text-xl">Exploration</h2>
-		<img src="/img/bubblechart-legend.svg" class="" alt="" />
-		<p class="mb-2">
-			Please click on a bubble to explore the articles in which the respective person appeared in the selected week.
-			
-		</p>
-		<div>
-			<ArticlesCard articles={data} {selectedSource} selectedPerson={selectedPerson?.person} selectedDate={selectedPerson.date} {loading}>
-				<div class="col-span-2">
-					<b>{translateMap[selectedPerson.person] ?? selectedPerson.person}</b><br />
-					Found in <u>{data.length == 0 ? '?' : data.length} articles</u>
-				</div>
-			</ArticlesCard>
-		</div>
-	</div>
-
-	<div class="col-span-3">
-			<div class="flex gap-2">
-		<BackwardButton>Back to Overview</BackwardButton>
+<div class="grid grid-cols-10 items-start justify-items-center gap-4" bind:clientWidth={width} bind:clientHeight={height}>
+	<div class="col-span-3 flex flex-col gap-4 p-6">
+		<h2 class="font-serif text-xl">1.1 Visual Exploration</h2>
 		<p>
-			Detected and labeled <u>{selectedPeopleFixed.reduce((acc, p) => acc + p.count, 0)} faces</u> for the week
+			Here you can <span class="w-content border rounded-full px-2"><img src="icons/ui-interact.svg" class="inline mr-1 pb-px" alt="interact">explore</span> the detected faces for the week
 			<u
 				>{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
 					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
 				).toLocaleDateString('de')}</u
 			>
 		</p>
+		<img src="/img/images-bubblechart-legend.svg" class="my-2" alt="" />
+		<div>
+			<ArticlesCard ids={selectedPersonIDs} {selectedSource}>
+				{#if selectedPerson}
+				<div class="col-span-2">
+					<span class="w-content border rounded-full px-2"><img src="icons/ui-interact.svg" class="inline mr-1 pb-px" alt="interact">{translateMap[selectedPerson?.person] ?? 'Selection'}</span> <br> visually appears in <span class="border rounded-full px-2 px-2">{selectedPersonIDs.length == 0 ? '?' : selectedPersonIDs.length} articles</span>
+				</div>
+				{:else}
+				<div class="col-span-2 w-content">
+					Select a <span class=" border rounded-full px-2"><img src="icons/ui-interact.svg" class="inline mr-1 pb-px" alt="interact">Bubble</span> to see its related articles here.
+				</div>
+				{/if}
+			</ArticlesCard>
+		</div>
 	</div>
-		<svg width = {width*0.75} height={height*1.15} id="bubble-chart" >
+
+	<div class="col-span-7 p-6">
+			<div class="flex gap-2">
+		<BackwardButton>Back to Overview</BackwardButton>
+	</div>
+		<svg width = {width*0.7} height={height*1.15} id="bubble-chart" >
 		<defs>
 			<circle id="circle" cx="25%" cy="25%" r="15" />
 			<clipPath id="clip">

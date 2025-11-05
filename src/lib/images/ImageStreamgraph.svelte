@@ -21,18 +21,16 @@
 	let height = $state(0);
 	let heightDerived = $derived(height * 0.75);
 	let loaded = $state(false);
-	let margin = { top: 40, right: 40, bottom: 110, left: 40 };
+	let margin = { top: 20, right: 40, bottom: 130, left: 40 };
 	let diagramInnerHeight = $derived(heightDerived - margin.top - margin.bottom);
 	let diagramCenterY = $derived(diagramInnerHeight / 2);
 	let circleRadius = 10;
-
-	let peopleSelected = $state([]);
 	function togglePerson(event) {
 		let person = event.target.dataset.person;
-		if (peopleSelected.includes(person)) {
-			peopleSelected = peopleSelected.filter((p) => p != person);
+		if (selectedPeople.includes(person)) {
+			selectedPeople = selectedPeople.filter((p) => p != person);
 		} else {
-			peopleSelected = [...peopleSelected, person];
+			selectedPeople = [...selectedPeople, person];
 		}
 	}
 	let currentDataset = $derived(selectedSource == 'NYT' ? dataNYT : dataZeit);
@@ -59,7 +57,7 @@
 	);
 	$effect(() => {
 		if (peopleOrdered) {
-			peopleSelected = [...peopleOrdered];
+			selectedPeople = [...peopleOrdered];
 		}
 	});
 	//dataset setup
@@ -225,7 +223,7 @@
 	});
 	function updateChart() {
 		const nodes = peopleData
-			.filter((d) => peopleSelected.includes(d.person))
+			.filter((d) => selectedPeople.includes(d.person))
 			.map((d) => {
 				let nodes = [];
 				for (let i = 0; i < Math.round(d.count / 10); i++) {
@@ -291,7 +289,7 @@
 			.on('mouseover', function (event, d) {
 				event.target.setAttribute(
 					'fill',
-					`var(--color-${selectedSource.toLocaleLowerCase()}-light)`
+					`var(--color-${selectedSource.toLocaleLowerCase()}-default)`
 				);
 			})
 			.on('mouseout', function (event, d) {
@@ -319,7 +317,7 @@
 	// auto update the chart on change of the dataset
 	$effect(() => {
 		if (
-			(peopleSelected && selectedSource && loaded) ||
+			(selectedPeople && selectedSource && loaded) ||
 			(peopleData && loaded) ||
 			($selectedView =='streamgraph' && loaded)
 		) {
@@ -332,7 +330,7 @@
 		<div class="grid grid-cols-3 gap-1">
 			{#each peopleOrdered as person, i}
 				<button
-					class="control text-left py grid w-full grid-cols-3 rounded-xl border px-2 hover:cursor-pointer"
+					class="control text-left py grid w-full grid-cols-3 rounded-xl border px-2 hover:cursor-pointer hover:bg-[var(--color-ivory-default)]"
 					class:pointer-events-none={false}
 					class:col-start-1={Math.floor(i / 5) == 0}
 					class:col-start-2={Math.floor(i / 5) == 1}
@@ -342,9 +340,9 @@
 					class:row-start-3={i % 5 == 2}
 					class:row-start-4={i % 5 == 3}
 					class:row-start-5={i % 5 == 4}
-					class:bg-[var(--color-nyt-light)]={peopleSelected.includes(person) &&
+					class:bg-[var(--color-nyt-light)]={selectedPeople.includes(person) &&
 						selectedSource == 'NYT'}
-					class:bg-[var(--color-zeit-light)]={peopleSelected.includes(person) &&
+					class:bg-[var(--color-zeit-light)]={selectedPeople.includes(person) &&
 						selectedSource == 'Zeit'}
 					onclick={togglePerson}
 					data-person={person}

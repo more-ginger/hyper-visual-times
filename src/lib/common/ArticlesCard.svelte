@@ -1,6 +1,17 @@
 <script lang="ts">
 	import * as d3 from 'd3';
-	let { children, articles, selectedSource, newsDesks=[], loading=null } = $props();
+	let { children, ids, selectedSource, newsDesks=[] } = $props();
+	let articles = $state([]);
+	async function fetchArticlesForCards() {
+		try {
+			const response = await fetch(
+					`/api/articles?source=${selectedSource.toLocaleLowerCase()}&id=${ids.join('&id=')}`
+			);
+			articles = [...(await response.json())];
+		} catch (error) {
+			console.log('Error in fetching articles inside fetchArticlesForCards', error);
+		}
+	}
 	function getAuthorSourceAgnostic(byline){
 		byline = byline.trim().replaceAll(/'/g, '"').replaceAll('None', '""')
 		try{
@@ -19,55 +30,41 @@
 	}
 	let colorScale = $derived(d3.scaleOrdinal(newsDesks, d3.schemeTableau10))
 	$effect(() => {
-		if(loading){
-			articles = [];
+		if(ids){
+			fetchArticlesForCards();
 		}
 	});
+
 </script>
 
-<div
-	class="h-60 w-[300px] overflow-scroll overscroll-none rounded-xl border border-black backdrop-blur-lg md:h-80">
+<div class="w-[300px] overflow-scroll overscroll-none rounded-xl border border-black backdrop-blur-lg md:max-h-80">
 	<div class="sticky top-0 flex justify-between p-2 backdrop-blur-sm shadow-md bg-[var(--color-ivory-default)]">
-		<div class="grid grid-cols-2 pt-1">
-		{#if articles.length == 0 && !loading}
-			<div class="col-span-2">
-				Select a <u>bubble</u> to inspect the <u>articles</u>.
-			</div>
-		{:else}
+		<div class="grid grid-cols-2 pt-1 w-full leading-relaxed">
 			{@render children()}
-		{/if}
 		</div>
 	</div>
-		{#if articles.length == 0}
-		<div class="flex h-max-content w-full flex-col items-center justify-center p-4">
-			{#if loading}
-				<p>Loading...</p>
-			{:else}
-				<p>No Data</p>
-			{/if}
-		</div>
-		{:else}
-			{#each articles as article}
+		{#each articles as article}
 				<div class="bg-[var(--color-ivory-default)] my-3 rounded-xl border border-black p-2 m-2">
 					<a href={article.web_url} target="_blank">
 						<div>
 							<div>{article.headline}</div>
 							<div class="py-2 text-sm">{article.snippet}</div>
-							<div>
+							<div class="italic text-sm mb-2">
 								{getAuthorSourceAgnostic(article.byline)}
 							</div>
 							<div class="grid grid-cols-3">
-								<span class="justify-self-start col-span-1">
+								<span class="justify-self-start col-span-1 text-sm">
 								{new Date(article.pub_date).toLocaleDateString('de')}
 								</span>
-								<span class="justify-self-end flex items-center gap-1 col-span-2">
-									<span class="w-[10px] h-[10px] block rounded-full" style="background-color: {colorScale(article.news_desk)};"></span>
-									{article.news_desk}
+								<span class="justify-self-end flex items-center gap-1 col-span-2 text-sm">
+									{#if newsDesks.length > 0}
+										<span class="w-[10px] h-[10px] block rounded-full" style="background-color: {colorScale(article.news_desk)};"></span>
+										{article.news_desk}
+									{/if}
 								</span>
 							</div>
 						</div>
 					</a>
 				</div>
 			{/each}
-		{/if}
 </div>

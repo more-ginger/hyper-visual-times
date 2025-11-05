@@ -24,37 +24,13 @@
 	let links;
 	let selection1 = $state(null);
 	let selection2 = $state(null);
-	let articles = $state([]);
 	let simulation = null;
-	let nArticles = 0;
-	let totalArticles= $state(0);
+	let selectedPairIDs = $state([]);
 	$effect(() => {
 		if (selection1 !== null && selection2 !== null) {
-			nArticles = 0;
-			articles = [];
-			fetchArticles();
+			selectedPairIDs = currentDataset.find((d) => (d.personA === selection1 && d.personB === selection2)||(d.personA === selection2 && d.personB === selection1))?.ids ?? [];
 		}
 	});
-	async function fetchArticles(){
-			let selectedConnection = currentDataset.find((d) => (d.personA === selection1 && d.personB === selection2)||(d.personA === selection2 && d.personB === selection1));
-			let truncatedIDs = selectedConnection?.ids // limit to first 100 IDs
-			totalArticles = selectedConnection?.ids?.length ?? 0;
-			loading = true;
-			try {
-				const response = await fetch(
-					`/api/articles?source=${selectedSource.toLocaleLowerCase()}&id=${truncatedIDs.join('&id=')}`
-				);
-				const result = await response.json();
-				articles = result;
-				loading = false;
-				nArticles += truncatedIDs.length;
-				console.log('Fetched articles:', articles);
-			} catch (error) {
-				console.log('Error in fetching total counts inside fetchTotalCounts', error);
-				articles = [];
-				loading = false;
-			 }
-	}
 	onMount(() => {
 		svg = d3.select('#network-graph');
 		nodes = svg.selectAll('.nodes');
@@ -109,7 +85,7 @@
 					.distance(d => width/3/d.total)
 			)
 			.force('charge', d3.forceManyBody().strength(-400))
-			.force('x', d3.forceX(widthDerived / 2).strength(0.1))
+			.force('x', d3.forceX(widthDerived / 2).strength(0.2))
 			.force('y', d3.forceY(height / 2).strength(0.5))
 			.force('collision', d3.forceCollide().radius(50));
 
@@ -167,7 +143,7 @@
 					selection1 = null;
 					selection2 = null;
 					if (!loading) {
-						articles = [];
+						selectedPairIDs = [];
 					}
 				}
 			});
@@ -258,7 +234,7 @@
 				})
 				.attr('stroke-width', (d) => {
 					if (selection1 == null || selection2 == null) {
-						return d.total * 0.5;
+						return d.total * 0.2;
 					} else {
 						return 0.5;
 					}
@@ -373,15 +349,19 @@
 <div class="h-full w-full grid grid-cols-3" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg class="col-span-2" width={widthDerived} {height} id="network-graph"> </svg>
 	<div class="col-span-1 flex flex-col items-center gap-4">
-		<img src="img/networkchart-legend.svg" alt="">
-		<ArticlesCard {articles} {selectedSource} {loading} newsDesks={newsDesksFix}>
-			<div class="col-span-2">
-				<span
-					><b>{translateMap[selection1 ?? '']}</b>
-					<img class="inline" src="/icons/ui-switch.svg" />
-					<b>{translateMap[selection2 ?? '']}</b></span
-				><br />
-				appear visually together in <u>{totalArticles} Articles.</u>
+		<h2 class="font-serif text-xl">2. Visual Coappearances</h2>	
+		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="">
+		<ArticlesCard ids={selectedPairIDs} {selectedSource} newsDesks={newsDesksFix}>
+			<div class="col-span-2 text-center">
+				<div class="flex gap-2 flex-wrap">
+					<span class="w-content border rounded-full px-2"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection1] ?? 'Selection 1'}</span>
+					<span class="grow flex items-center"><img class="mx-auto" src="icons/ui-switch.svg"></span> 
+					<span class="w-content border rounded-full px-2"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection2] ?? 'Selection 2'}</span>
+				</div>
+				<hr class="my-2">
+					<span class="text-center">
+						appear together in <span class="w-content border rounded-full px-2">{selectedPairIDs.length == 0?'?':selectedPairIDs.length} Articles</span>
+					</span>
 			</div>
 		</ArticlesCard>
 		<OutletSwitch bind:currentOutlet={selectedSource} />
