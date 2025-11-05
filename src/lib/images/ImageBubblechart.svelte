@@ -4,25 +4,27 @@
 	import BackwardButton from '$lib/common/BackwardButton.svelte';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	let { steamgraph = $bindable(), selectedWeek, width, height, people, currentSource } = $props();
+	let {selectedSource = $bindable(), selectedWeek, selectedPeople } = $props();
 	let svg;
+	let width = $state(0);
+	let height = $state(0);
 	let loaded = $state(false);
 	let bubbles;
 	let simulation;
 	let scaleLog = d3
 		.scaleLog()
-		.domain(d3.extent(people.map((p) => p.count)))
-		.range([10, 60]);
+		.domain(d3.extent(selectedPeople.map((p) => p.count)))
+		.range([20, 80]);
 	let data = $state([]);
 	let selectedPerson = $state(null);
 	let loading = $state(false);
-	let peopleFixed = people;
+	let selectedPeopleFixed = selectedPeople;
 	let selectedWeekFixed = selectedWeek
 	async function fetchArticlesForCards() {
 		try {
 			loading = true;
 			const response = await fetch(
-					`/api/articles?source=${currentSource.toLocaleLowerCase()}&id=${selectedPerson.ids.join('&id=')}`
+					`/api/articles?source=${selectedSource.toLocaleLowerCase()}&id=${selectedPerson.ids.join('&id=')}`
 			);
 			data = [...(await response.json())];
 			loading = false;
@@ -32,6 +34,7 @@
 	}
 	onMount(() => {
 		svg = d3.select('#bubble-chart');
+		svg
 		bubbles = svg.selectAll('.bubble');
 		loaded = true;
 		updateChart();
@@ -39,15 +42,15 @@
 	function updateChart() {
 		// Stop any running simulation
 		if (simulation) simulation.stop();
-		people.map((p) => {
-			p.x = width / 3;
-			p.y = height / 2;
+		selectedPeople.map((p) => {
+			p.x = width / 2 + Math.random() * 50 - 25;
+			p.y = height / 2 + Math.random() * 50 - 25;
 		});
 
 		simulation = d3
-			.forceSimulation(people)
-			.force('x', d3.forceX(width / 3).strength(0.1))
-			.force('y', d3.forceY(height / 2).strength(0.1))
+			.forceSimulation(selectedPeople)
+			.force('x', d3.forceX(width / 2.5).strength(0.2))
+			.force('y', d3.forceY(height / 2).strength(0.5))
 			.force(
 				'collide',
 				d3.forceCollide((d) => scaleLog(d.count) + 30)
@@ -56,7 +59,7 @@
 			.on('tick', ticked);
 
 		bubbles = bubbles.data(
-			people.sort((a, b) => d3.ascending(a.count, b.count)),
+			selectedPeople.sort((a, b) => d3.ascending(a.count, b.count)),
 			(d) => d.person + d.week
 		);
 		bubbles.exit().remove();
@@ -73,7 +76,7 @@
 			.on('mouseover', function (event, d) {
 				event.target.setAttribute(
 					'fill',
-					`var(--color-${currentSource.toLocaleLowerCase()}-light)`
+					`var(--color-${selectedSource.toLocaleLowerCase()}-light)`
 				);
 			})
 			.on('mouseout', function (event, d) {
@@ -158,26 +161,43 @@
 	}
 	// auto update the chart on change of the dataset
 	// $effect(() => {
-	// 	if (people && loaded) {
+	// 	if (selectedPeople && loaded) {
 	// 		updateChart();
 	// 	}
 	// });
 </script>
 
-<div class="flex gap-2">
-	<BackwardButton bind:back={steamgraph}>Back to Overview</BackwardButton>
-	<p>
-		Detected and labeled <u>{peopleFixed.reduce((acc, p) => acc + p.count, 0)} faces</u> for the week
-		<u
-			>{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
-				new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
-			).toLocaleDateString('de')}</u
-		>
-	</p>
-</div>
-<div class="grid grid-cols-5 items-start justify-items-center gap-4 mt-4">
-	<div class="col-span-3 relative">
-		<svg width={width / 1.5} {height} id="bubble-chart" >
+<div class="grid grid-cols-4 items-start justify-items-center gap-4 mt-4" bind:clientWidth={width} bind:clientHeight={height}>
+	<div class="col-span-1 flex flex-col gap-4">
+		<h2 class="font-serif text-xl">Exploration</h2>
+		<img src="/img/bubblechart-legend.svg" class="" alt="" />
+		<p class="mb-2">
+			Please click on a bubble to explore the articles in which the respective person appeared in the selected week.
+			
+		</p>
+		<div>
+			<ArticlesCard articles={data} {selectedSource} selectedPerson={selectedPerson?.person} selectedDate={selectedPerson.date} {loading}>
+				<div class="col-span-2">
+					<b>{translateMap[selectedPerson.person] ?? selectedPerson.person}</b><br />
+					Found in <u>{data.length == 0 ? '?' : data.length} articles</u>
+				</div>
+			</ArticlesCard>
+		</div>
+	</div>
+
+	<div class="col-span-3">
+			<div class="flex gap-2">
+		<BackwardButton>Back to Overview</BackwardButton>
+		<p>
+			Detected and labeled <u>{selectedPeopleFixed.reduce((acc, p) => acc + p.count, 0)} faces</u> for the week
+			<u
+				>{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
+					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
+				).toLocaleDateString('de')}</u
+			>
+		</p>
+	</div>
+		<svg width = {width*0.75} height={height*1.15} id="bubble-chart" >
 		<defs>
 			<circle id="circle" cx="25%" cy="25%" r="15" />
 			<clipPath id="clip">
@@ -186,15 +206,5 @@
 		</defs>
 	</svg>
 	</div>
-	<div class="col-span-2 flex flex-col items-center gap-4">
-		<img src="/img/bubblechart-legend.svg" alt="" />
-		<div>
-			<ArticlesCard articles={data} {currentSource} selectedPerson={selectedPerson?.person} selectedDate={selectedPerson.date} {loading}>
-				<div class="col-span-2">
-					<b>{translateMap[selectedPerson.person] ?? selectedPerson.person}</b><br />
-					Found in <u>{data.length == 0 ? '?' : data.length} articles</u>
-				</div>
-			</ArticlesCard>
-		</div>
-	</div>
+
 </div>

@@ -1,24 +1,25 @@
 <script>
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import translateCard from '../../content/data/images/translate_map.json';
+	import translateMap from '../../content/data/images/translate_map.json';
 	import dataNYT from '../../content/data/images/connections_with_news_desk_per_person_nyt.json';
 	import dataZeit from '../../content/data/images/connections_with_news_desk_per_person_zeit.json';
 	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
+	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//props
-	let { currentSource } = $props();
+	let { selectedSource } = $props();
 	//setup for the steamgraph svg
-	let currentDataset = $derived(currentSource === 'NYT' ? dataNYT : dataZeit);
+	let currentDataset = $derived(selectedSource === 'NYT' ? dataNYT : dataZeit);
 	let currentColor = $derived(
-		currentSource === 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)'
+		selectedSource === 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)'
 	);
+	let newsDesksFix = $state([]);
 	let svg;
 	let width = $state(0);
 	let height = $state(0);
-	let heightDerived = $derived(height);
+	let widthDerived = $derived(width*0.66);
 	let loaded = $state(false);
 	let loading = $state(false);
-	let tooltip;
 	let nodes;
 	let links;
 	let selection1 = $state(null);
@@ -32,22 +33,22 @@
 			nArticles = 0;
 			articles = [];
 			fetchArticles();
-			
 		}
 	});
 	async function fetchArticles(){
 			let selectedConnection = currentDataset.find((d) => (d.personA === selection1 && d.personB === selection2)||(d.personA === selection2 && d.personB === selection1));
-			let truncatedIDs = selectedConnection?.ids.slice(nArticles, nArticles+3) ?? []; // limit to first 100 IDs
+			let truncatedIDs = selectedConnection?.ids // limit to first 100 IDs
 			totalArticles = selectedConnection?.ids?.length ?? 0;
 			loading = true;
 			try {
 				const response = await fetch(
-					`/api/articles?source=${currentSource.toLocaleLowerCase()}&id=${truncatedIDs.join('&id=')}`
+					`/api/articles?source=${selectedSource.toLocaleLowerCase()}&id=${truncatedIDs.join('&id=')}`
 				);
 				const result = await response.json();
 				articles = result;
 				loading = false;
 				nArticles += truncatedIDs.length;
+				console.log('Fetched articles:', articles);
 			} catch (error) {
 				console.log('Error in fetching total counts inside fetchTotalCounts', error);
 				articles = [];
@@ -57,24 +58,6 @@
 	onMount(() => {
 		svg = d3.select('#network-graph');
 		nodes = svg.selectAll('.nodes');
-		d3.selectAll('.tooltip-networkgraph').remove();
-		tooltip = d3
-			.select('body')
-			.append('div')
-			.attr('class', 'tooltip-networkgraph')
-			.style('opacity', 0)
-			.style('position', 'absolute')
-			.style('text-align', 'left')
-			.style('width', 'auto')
-			.style('height', 'auto')
-			.style('padding', '8px')
-			.style('font', '12px sans-serif')
-			.style('background', 'rgba(255,255,255,0.25)')
-			.style('box-shadow', '0px 0px 6px #aaa')
-			.style('backdrop-filter', 'blur(5px)')
-			.style('border', '0px')
-			.style('border-radius', '8px')
-			.style('pointer-events', 'none');
 		loaded = true;
 		// Start with no bubbles shown
 		updateChart();
@@ -110,6 +93,7 @@
 		});
 		const newsDesks = Array.from(new Set(expandedLinks.map((d) => d.news_desk)));
 		const color = d3.scaleOrdinal(newsDesks, d3.schemeTableau10);
+		newsDesksFix = [...newsDesks];
 
 		// --- Force simulation ---
 		if (simulation) {
@@ -122,10 +106,10 @@
 				d3
 					.forceLink(expandedLinks)
 					.id((d) => d.id)
-					.distance(d => 300)
+					.distance(d => width/3/d.total)
 			)
-			.force('charge', d3.forceManyBody().strength(-500))
-			.force('x', d3.forceX(width / 2).strength(0.1))
+			.force('charge', d3.forceManyBody().strength(-400))
+			.force('x', d3.forceX(widthDerived / 2).strength(0.1))
 			.force('y', d3.forceY(height / 2).strength(0.5))
 			.force('collision', d3.forceCollide().radius(50));
 
@@ -164,7 +148,7 @@
 				if (selection1 != d.id && selection2 != d.id) {
 					event.target.setAttribute(
 						'fill',
-						`var(--color-${currentSource.toLocaleLowerCase()}-light)`
+						`var(--color-${selectedSource.toLocaleLowerCase()}-light)`
 					);
 				}
 				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 1);
@@ -175,16 +159,12 @@
 				}
 				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 0);
 			}).on('click', (event, d) => {
-				if (selection1 === null && d.id !== selection2) {
+				if (selection1 === null) {
 					selection1 = d.id;
-				} else if (selection1 !== null && selection2 === null && d.id !== selection1) {
+				} else if (selection2 === null && selection1 !== d.id) {
 					selection2 = d.id;
-				} else if (selection1 === d.id) {
+				} else if (selection1 === d.id || selection2 === d.id) {
 					selection1 = null;
-					if (!loading) {
-						articles = [];
-					}
-				} else if (selection2 === d.id) {
 					selection2 = null;
 					if (!loading) {
 						articles = [];
@@ -231,7 +211,7 @@
 			.style('font-size', '10px')
 			.style('text-align', 'left')
 			.style('pointer-events', 'none') // prevent mouse events
-			.text((d) => translateCard[d.id])
+			.text((d) => translateMap[d.id])
 			.each(function (d) {
 				// measure actual pill width after rendering
 				const bb = this.getBoundingClientRect();
@@ -322,7 +302,7 @@
 				});
 			nodes
 				.select('div')
-				.text((d) => translateCard[d.id])
+				.text((d) => translateMap[d.id])
 				.each(function (d) {
 					// measure actual pill width after rendering
 					const bb = this.getBoundingClientRect();
@@ -384,27 +364,26 @@
 	}
 	// auto update the chart on change of the dataset
 	$effect(() => {
-		if (currentSource && loaded) {
+		if (selectedSource && loaded) {
 			updateChart();
 		}
 	});
 </script>
 
-<div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
-	<svg {width} height={heightDerived} id="network-graph"> </svg>
-	<div
-		class="absolute top-[50%] left-[10%] -translate-y-[50%]"
-		class:hidden={!loading && articles.length === 0}
-	>
-		<ArticlesCard {articles} {currentSource} {loading}>
+<div class="h-full w-full grid grid-cols-3" bind:clientWidth={width} bind:clientHeight={height}>
+	<svg class="col-span-2" width={widthDerived} {height} id="network-graph"> </svg>
+	<div class="col-span-1 flex flex-col items-center gap-4">
+		<img src="img/networkchart-legend.svg" alt="">
+		<ArticlesCard {articles} {selectedSource} {loading} newsDesks={newsDesksFix}>
 			<div class="col-span-2">
 				<span
-					><b>{translateCard[selection1 ?? '']}</b>
+					><b>{translateMap[selection1 ?? '']}</b>
 					<img class="inline" src="/icons/ui-switch.svg" />
-					<b>{translateCard[selection2 ?? '']}</b></span
+					<b>{translateMap[selection2 ?? '']}</b></span
 				><br />
 				appear visually together in <u>{totalArticles} Articles.</u>
 			</div>
 		</ArticlesCard>
+		<OutletSwitch bind:currentOutlet={selectedSource} />
 	</div>
 </div>

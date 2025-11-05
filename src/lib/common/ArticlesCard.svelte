@@ -1,10 +1,10 @@
 <script lang="ts">
 	import * as d3 from 'd3';
-	let { children, articles, currentSource, newsDesks=[], loading=null } = $props();
+	let { children, articles, selectedSource, newsDesks=[], loading=null } = $props();
 	function getAuthorSourceAgnostic(byline){
 		byline = byline.trim().replaceAll(/'/g, '"').replaceAll('None', '""')
 		try{
-		 if (currentSource == 'NYT'){
+		 if (selectedSource == 'NYT'){
 			let by = JSON.parse(byline)
 			if (by.original.length == 0) return 'Author unknown'
 			return by.original ?? 'Author unknown'
