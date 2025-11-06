@@ -49,7 +49,7 @@
 					<a href={article.web_url} target="_blank">
 						<div>
 							<div>{article.headline}</div>
-							<div class="py-2 text-sm">{article.snippet}</div>
+							<div class="my-2 text-sm line-clamp-2 overflow-hidden">{article.snippet}</div>
 							<div class="italic text-sm mb-2">
 								{getAuthorSourceAgnostic(article.byline)}
 							</div>
