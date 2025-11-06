@@ -2,9 +2,13 @@
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 	import translateMap from '../../content/data/images/translate_map.json';
-	import dataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
-	import dataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
-	import { selectedView, selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import {
+		selectedView,
+		selectedOutlet,
+		currentVisualMentionsDataset,
+		currentColorDefault,
+		currentColorLight
+	} from '$lib/utils/state.images.svelte.ts';
 
 	//props
 	let { selectedWeek = $bindable(), selectedPeople = $bindable() } = $props();
@@ -34,24 +38,26 @@
 			selectedPeople = [...selectedPeople, person];
 		}
 	}
-	let currentDataset = $derived($selectedOutlet == 'NYT' ? dataNYT : dataZeit);
 	let peopleOrdered = $derived(
-		Object.keys(currentDataset.data).sort(
-			(a, b) => currentDataset.data[b].total - currentDataset.data[a].total
+		Object.keys($currentVisualMentionsDataset.data).sort(
+			(a, b) =>
+				$currentVisualMentionsDataset.data[b].total - $currentVisualMentionsDataset.data[a].total
 		)
 	);
 	let peopleData = $derived(
 		peopleOrdered
 			.map((person) => {
 				let entries = [];
-				Object.entries(currentDataset.data[person].timeframe).forEach(([week, ids]) => {
-					entries.push({
-						person: person,
-						week: new Date(week.slice(0, 10)), // Convert to Date object
-						count: ids.length,
-						ids
-					});
-				});
+				Object.entries($currentVisualMentionsDataset.data[person].timeframe).forEach(
+					([week, ids]) => {
+						entries.push({
+							person: person,
+							week: new Date(week.slice(0, 10)), // Convert to Date object
+							count: ids.length,
+							ids
+						});
+					}
+				);
 				return entries;
 			})
 			.flat()
@@ -288,10 +294,7 @@
 			.attr('class', 'cursor-pointer')
 			.attr('stroke-width', 1)
 			.on('mouseover', function (event, d) {
-				event.target.setAttribute(
-					'fill',
-					`var(--color-${$selectedOutlet.toLocaleLowerCase()}-default)`
-				);
+				event.target.setAttribute('fill', $currentColorDefault);
 			})
 			.on('mouseout', function (event, d) {
 				event.target.setAttribute('fill', `var(--color-ivory-default)`);
@@ -300,7 +303,9 @@
 				tooltip.remove();
 				selectedView.set('bubblechart');
 				selectedWeek = d.week;
-				selectedPeople = peopleData.filter((p) => p.week.getTime() == new Date(selectedWeek).getTime())
+				selectedPeople = peopleData.filter(
+					(p) => p.week.getTime() == new Date(selectedWeek).getTime()
+				);
 			});
 
 		entered
@@ -320,7 +325,7 @@
 		if (
 			(selectedPeople && $selectedOutlet && loaded) ||
 			(peopleData && loaded) ||
-			($selectedView =='streamgraph' && loaded)
+			($selectedView == 'streamgraph' && loaded)
 		) {
 			updateChart();
 		}
@@ -328,60 +333,60 @@
 </script>
 
 <div class="h-dvh w-full" bind:clientWidth={width} bind:clientHeight={height}>
-		<div class="grid grid-cols-3 gap-1">
-			{#each peopleOrdered as person, i}
-				<button
-					class="control text-left py grid w-full grid-cols-3 rounded-xl border px-2 hover:cursor-pointer hover:bg-[var(--color-ivory-default)]"
-					class:pointer-events-none={false}
-					class:col-start-1={Math.floor(i / 5) == 0}
-					class:col-start-2={Math.floor(i / 5) == 1}
-					class:col-start-3={Math.floor(i / 5) == 2}
-					class:row-start-1={i % 5 == 0}
-					class:row-start-2={i % 5 == 1}
-					class:row-start-3={i % 5 == 2}
-					class:row-start-4={i % 5 == 3}
-					class:row-start-5={i % 5 == 4}
-					class:bg-[var(--color-nyt-light)]={selectedPeople.includes(person) &&
-						$selectedOutlet == 'NYT'}
-					class:bg-[var(--color-zeit-light)]={selectedPeople.includes(person) &&
-						$selectedOutlet == 'Zeit'}
-					onclick={togglePerson}
-					data-person={person}
-				>
-					<span class:pointer-events-none={true} class="col-span-3 col-start-1 row-start-1">
-						{i + 1}. {translateMap[person]}
-					</span>
+	<div class="grid grid-cols-3 gap-1">
+		{#each peopleOrdered as person, i}
+			<button
+				class="control py grid w-full grid-cols-3 rounded-xl border px-2 text-left hover:cursor-pointer hover:bg-[var(--color-ivory-default)]"
+				class:pointer-events-none={false}
+				class:col-start-1={Math.floor(i / 5) == 0}
+				class:col-start-2={Math.floor(i / 5) == 1}
+				class:col-start-3={Math.floor(i / 5) == 2}
+				class:row-start-1={i % 5 == 0}
+				class:row-start-2={i % 5 == 1}
+				class:row-start-3={i % 5 == 2}
+				class:row-start-4={i % 5 == 3}
+				class:row-start-5={i % 5 == 4}
+				class:bg-[var(--color-nyt-light)]={selectedPeople.includes(person) &&
+					$selectedOutlet == 'NYT'}
+				class:bg-[var(--color-zeit-light)]={selectedPeople.includes(person) &&
+					$selectedOutlet == 'Zeit'}
+				onclick={togglePerson}
+				data-person={person}
+			>
+				<span class:pointer-events-none={true} class="col-span-3 col-start-1 row-start-1">
+					{i + 1}. {translateMap[person]}
+				</span>
 
-					<span
-						class:pointer-events-none={true}
-						class="self-center justify-self-end col-span-1 col-start-3 row-start-1"
-						style="font-size: 10px; pointer-events: none;"
-					>
-						({peopleData.filter((p) => p.person == person).reduce((acc, p) => acc + p.count, 0)} images)
-					</span>
-				</button>
-			{/each}
-		</div>
-
-		<svg {width} height={heightDerived} id="steamgraph-chart">
-			<defs>
-				<circle id="circle" cx="25%" cy="25%" r="15" />
-				<clipPath id="clip">
-					<use xlink:href="#circle" />
-				</clipPath>
-				<marker id="arrowhead" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto">
-					<path d="M2,2 L2,12 L10,7 L2,2"></path>
-				</marker>
-				<marker
-					id="arrowhead-reverse"
-					markerWidth="14"
-					markerHeight="14"
-					refX="8"
-					refY="7"
-					orient="auto"
+				<span
+					class:pointer-events-none={true}
+					class="col-span-1 col-start-3 row-start-1 self-center justify-self-end"
+					style="font-size: 10px; pointer-events: none;"
 				>
-					<path d="M8,2 L8,12 L0,7 L8,2"></path>
-				</marker>
-			</defs>
-		</svg>
+					({peopleData.filter((p) => p.person == person).reduce((acc, p) => acc + p.count, 0)} images)
+				</span>
+			</button>
+		{/each}
+	</div>
+
+	<svg {width} height={heightDerived} id="steamgraph-chart">
+		<defs>
+			<circle id="circle" cx="25%" cy="25%" r="15" />
+			<clipPath id="clip">
+				<use xlink:href="#circle" />
+			</clipPath>
+			<marker id="arrowhead" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto">
+				<path d="M2,2 L2,12 L10,7 L2,2"></path>
+			</marker>
+			<marker
+				id="arrowhead-reverse"
+				markerWidth="14"
+				markerHeight="14"
+				refX="8"
+				refY="7"
+				orient="auto"
+			>
+				<path d="M8,2 L8,12 L0,7 L8,2"></path>
+			</marker>
+		</defs>
+	</svg>
 </div>

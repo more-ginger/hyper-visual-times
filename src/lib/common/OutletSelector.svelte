@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import { selectedOutlet} from '$lib/utils/state.images.svelte.ts';
 </script>
 <div class="flex justify-center p-2 lg:justify-end lg:p-0 bg-[var(--color-ivory-default)] w-max z-50 rounded-xl border border-black px-2 py-1">
 	<div class="m-2">

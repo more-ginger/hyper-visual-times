@@ -2,25 +2,20 @@
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 	import translateMap from '../../content/data/images/translate_map.json';
-	import dataNYT from '../../content/data/images/connections_with_news_desk_per_person_nyt.json';
-	import dataZeit from '../../content/data/images/connections_with_news_desk_per_person_zeit.json';
-	import totalDataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
-	import totalDataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
 	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
-	import OutletSelector from '$lib/common/OutletSelector.svelte';
-	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import {
+		selectedOutlet,
+		currentCoappearanceDataset,
+		currentVisualMentionsDataset,
+		currentColorDefault
+	} from '$lib/utils/state.images.svelte.ts';
 	//props
 	//setup for the steamgraph svg
-	let currentDataset = $derived($selectedOutlet === 'NYT' ? dataNYT : dataZeit);
-	let currentTotalDataset = $derived($selectedOutlet === 'NYT' ? totalDataNYT : totalDataZeit);
-	let currentColor = $derived(
-		$selectedOutlet === 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)'
-	);
 	let newsDesksFix = $state([]);
 	let svg;
 	let width = $state(0);
 	let height = $state(0);
-	let widthDerived = $derived(width*0.66);
+	let widthDerived = $derived(width * 0.66);
 	let loaded = $state(false);
 	let loading = $state(false);
 	let nodes;
@@ -31,7 +26,12 @@
 	let selectedPairIDs = $state([]);
 	$effect(() => {
 		if (selection1 !== null && selection2 !== null) {
-			selectedPairIDs = currentDataset.find((d) => (d.personA === selection1 && d.personB === selection2)||(d.personA === selection2 && d.personB === selection1))?.ids ?? [];
+			selectedPairIDs =
+				$currentCoappearanceDataset.find(
+					(d) =>
+						(d.personA === selection1 && d.personB === selection2) ||
+						(d.personA === selection2 && d.personB === selection1)
+				)?.ids ?? [];
 		}
 	});
 	onMount(() => {
@@ -43,7 +43,7 @@
 	});
 	function updateChart() {
 		const nodesMap = new Map();
-		currentDataset.forEach((d) => {
+		$currentCoappearanceDataset.forEach((d) => {
 			if (!nodesMap.has(d.personA)) nodesMap.set(d.personA, { id: d.personA });
 			if (!nodesMap.has(d.personB)) nodesMap.set(d.personB, { id: d.personB });
 		});
@@ -51,7 +51,7 @@
 
 		// Expand into individual lines per news_desk per coappearance count
 		const expandedLinks = [];
-		currentDataset.forEach((d) => {
+		$currentCoappearanceDataset.forEach((d) => {
 			let total = 0;
 			let i = 0;
 			Object.entries(d.news_desks).forEach(([desk, count]) => {
@@ -85,7 +85,7 @@
 				d3
 					.forceLink(expandedLinks)
 					.id((d) => d.id)
-					.distance(d => width/3/d.total)
+					.distance((d) => width / 3 / d.total)
 			)
 			.force('charge', d3.forceManyBody().strength(-400))
 			.force('x', d3.forceX(widthDerived / 2).strength(0.2))
@@ -112,8 +112,8 @@
 			.enter()
 			.append('g')
 			.attr('class', 'nodes')
-			.attr('transform', (d) => `translate(${width/2}, ${height/2})`)
-			.call(drag(simulation))
+			.attr('transform', (d) => `translate(${width / 2}, ${height / 2})`)
+			.call(drag(simulation));
 
 		nodesEnter
 			.append('circle')
@@ -137,7 +137,8 @@
 					event.target.setAttribute('fill', `var(--color-ivory-default)`);
 				}
 				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 0);
-			}).on('click', (event, d) => {
+			})
+			.on('click', (event, d) => {
 				if (selection1 === null) {
 					selection1 = d.id;
 				} else if (selection2 === null && selection1 !== d.id) {
@@ -154,7 +155,7 @@
 		nodesEnter
 			.append('circle')
 			.attr('class', 'selection-bubble')
-			.attr('r', 30)
+			.attr('r', 25)
 			.attr('fill', 'none')
 			.attr('stroke-width', 1)
 			.attr('cx', (d) => 0)
@@ -207,7 +208,7 @@
 			links
 				.attr('stroke', (d) => {
 					if (selection1 == null || selection2 == null) {
-						return currentColor;
+						return $currentColorDefault;
 					} else if (
 						selection1 != null &&
 						selection2 != null &&
@@ -220,9 +221,14 @@
 				.attr('stroke-opacity', (d) => {
 					if (selection1 == null && selection2 == null) {
 						return 1;
-					}else if(
-						((selection1 != null && selection2 == null) || (selection2 != null && selection1 == null)) && 
-						(d.source.id !== selection1 && d.target.id !== selection2 && d.source.id !== selection2 && d.target.id !== selection1)){
+					} else if (
+						((selection1 != null && selection2 == null) ||
+							(selection2 != null && selection1 == null)) &&
+						d.source.id !== selection1 &&
+						d.target.id !== selection2 &&
+						d.source.id !== selection2 &&
+						d.target.id !== selection1
+					) {
 						return 0.05;
 					} else if (
 						selection1 != null &&
@@ -287,16 +293,11 @@
 					const bb = this.getBoundingClientRect();
 					d3.select(this.parentNode) // parent foreignObject
 						.attr('width', bb.width)
-						.attr('x', -bb.width/2) // center under node
+						.attr('x', -bb.width / 2) // center under node
 						.attr('y', 23); // position below the bubble
 				});
 			nodes.select('.node-circle').attr('fill', 'var(--color-ivory-default)');
-			nodes
-				.select('.selection-bubble')
-				.attr(
-					'stroke',
-					currentColor
-				);
+			nodes.select('.selection-bubble').attr('stroke', $currentColorDefault);
 			nodes
 				.attr('transform', (d) => `translate(${d.x},${d.y})`)
 				.attr('opacity', (d) => {
@@ -315,7 +316,7 @@
 
 			nodes.select('circle').attr('fill', (d) => {
 				if (d.id === selection1 || d.id === selection2) {
-					return currentColor;
+					return $currentColorDefault;
 				} else {
 					return 'var(--color-ivory-default)';
 				}
@@ -348,27 +349,46 @@
 		}
 	});
 </script>
-<div class="h-full w-full grid grid-cols-3" bind:clientWidth={width} bind:clientHeight={height}>
-	
+
+<div class="grid h-full w-full grid-cols-3" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg class="col-span-2" width={widthDerived} {height} id="network-graph"> </svg>
 	<div class="col-span-1 flex flex-col items-center gap-4">
-		<h2 class="font-serif text-xl">2. Visual Coappearances</h2>	
-		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="">
+		<h2 class="font-serif text-xl">2. Visual Coappearances</h2>
+		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="" />
 		<ArticlesCard ids={selectedPairIDs} newsDesks={newsDesksFix}>
 			<div class="col-span-2 text-center">
-				<div class="flex flex gap-2 flex-wrap">
+				<div class="flex flex flex-wrap gap-2">
 					<div class="flex">
-						<span class="w-fit border rounded-full px-2 bg-[var(--color-ivory-default)]"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection1] ?? 'Selection 1'}</span><span class="border rounded-full px-3 py-px bg-black text-white pl-10 -ml-8 -z-2 pr-2" class:hidden={selection1 == null}>{currentTotalDataset.data[selection1]?.total ?? ''} Images</span>
+						<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
+							><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[
+								selection1
+							] ?? 'Selection 1'}</span
+						><span
+							class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-10 text-white"
+							class:hidden={selection1 == null}
+							>{$currentVisualMentionsDataset.data[selection1]?.total ?? ''} Images</span
+						>
 					</div>
 					<div class="flex">
-						<span class="w-fit border rounded-full px-2 bg-[var(--color-ivory-default)]"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection2] ?? 'Selection 2'}</span><span class="border rounded-full px-3 py-px bg-black text-white pl-10 -ml-8 -z-2 pr-2" class:hidden={selection2 == null}>{currentTotalDataset.data[selection2]?.total ?? ''} Images</span>
+						<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
+							><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[
+								selection2
+							] ?? 'Selection 2'}</span
+						><span
+							class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-10 text-white"
+							class:hidden={selection2 == null}
+							>{$currentVisualMentionsDataset.data[selection2]?.total ?? ''} Images</span
+						>
 					</div>
 				</div>
-				<hr class="my-2">
-				<div class="flex gap-2 items-start justify-start">
-					<span class="border rounded-full px-3 py-px bg-[var(--color-ivory-default)] z-10" >Depicted Together</span><span class="border rounded-full px-3 py-px bg-black text-white pl-8 -ml-8 -z-2 pr-2">{selectedPairIDs.length == 0?'?':selectedPairIDs.length} Images</span>
+				<hr class="my-2" />
+				<div class="flex items-start justify-start gap-2">
+					<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
+						>Depicted Together</span
+					><span class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-8 text-white"
+						>{selectedPairIDs.length == 0 ? '?' : selectedPairIDs.length} Images</span
+					>
 				</div>
-
 			</div>
 		</ArticlesCard>
 	</div>
