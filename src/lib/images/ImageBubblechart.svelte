@@ -2,9 +2,12 @@
 	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
 	import translateMap from '../../content/data/images/translate_map.json';
 	import BackwardButton from '$lib/common/BackwardButton.svelte';
+	import totalDataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
+	import totalDataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 	let {selectedSource = $bindable(), selectedWeek ='2024-01-01', selectedPeople= [] } = $props();
+	let currentTotalDataset = $derived(selectedSource === 'NYT' ? totalDataNYT : totalDataZeit);
 	let width = $state(0);
 	let height = $state(0);
 	let loaded = $state(false);
@@ -181,19 +184,17 @@
 			>
 		</p>
 		<img src="/img/images-bubblechart-legend.svg" class="my-2" alt="" />
-		<div>
 			<ArticlesCard ids={selectedPersonIDs} {selectedSource}>
-				{#if selectedPerson}
-				<div class="col-span-2">
-					<span class="w-content border rounded-full px-2"><img src="icons/ui-interact.svg" class="inline mr-1 pb-px" alt="interact">{translateMap[selectedPerson?.person] ?? 'Selection'}</span> <br> visually appears in <span class="border rounded-full px-2 px-2">{selectedPersonIDs.length == 0 ? '?' : selectedPersonIDs.length} articles</span>
+				<div class="col-span-2 text-center">
+					<div class="col-span-2 flex">
+						<span class="w-fit border rounded-full px-2 bg-[var(--color-ivory-default)] z-10 inline"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selectedPerson?.person] ?? 'Selection'}</span><span class="border rounded-full px-3 py-px bg-black text-white pl-10 -ml-8 -z-2 pr-2 inline" class:hidden={selectedPerson == null}>{currentTotalDataset.data[selectedPerson?.person]?.total ?? ''} Articles</span>
+					</div>
+					<hr class="my-2">
+					<div class="flex gap-2 items-start justify-start">
+						<span class="border rounded-full px-3 py-px bg-[var(--color-ivory-default)] z-10" >This Week</span><span class="border rounded-full px-3 py-px bg-black text-white pl-8 -ml-8 -z-2 pr-2">{selectedPersonIDs.length == 0?'?':selectedPersonIDs.length} Articles</span>
+					</div>	
 				</div>
-				{:else}
-				<div class="col-span-2 w-content">
-					Select a <span class=" border rounded-full px-2"><img src="icons/ui-interact.svg" class="inline mr-1 pb-px" alt="interact">Bubble</span> to see its related articles here.
-				</div>
-				{/if}
 			</ArticlesCard>
-		</div>
 	</div>
 
 	<div class="col-span-7 p-6">

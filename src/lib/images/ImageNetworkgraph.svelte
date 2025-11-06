@@ -4,12 +4,15 @@
 	import translateMap from '../../content/data/images/translate_map.json';
 	import dataNYT from '../../content/data/images/connections_with_news_desk_per_person_nyt.json';
 	import dataZeit from '../../content/data/images/connections_with_news_desk_per_person_zeit.json';
+	import totalDataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
+	import totalDataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
 	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
 	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	//props
 	let { selectedSource } = $props();
 	//setup for the steamgraph svg
 	let currentDataset = $derived(selectedSource === 'NYT' ? dataNYT : dataZeit);
+	let currentTotalDataset = $derived(selectedSource === 'NYT' ? totalDataNYT : totalDataZeit);
 	let currentColor = $derived(
 		selectedSource === 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)'
 	);
@@ -353,15 +356,20 @@
 		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="">
 		<ArticlesCard ids={selectedPairIDs} {selectedSource} newsDesks={newsDesksFix}>
 			<div class="col-span-2 text-center">
-				<div class="flex gap-2 flex-wrap">
-					<span class="w-content border rounded-full px-2"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection1] ?? 'Selection 1'}</span>
-					<span class="grow flex items-center"><img class="mx-auto" src="icons/ui-switch.svg"></span> 
-					<span class="w-content border rounded-full px-2"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection2] ?? 'Selection 2'}</span>
+				<div class="flex flex gap-2 flex-wrap">
+					<div class="flex">
+						<span class="w-fit border rounded-full px-2 bg-[var(--color-ivory-default)]"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection1] ?? 'Selection 1'}</span><span class="border rounded-full px-3 py-px bg-black text-white pl-10 -ml-8 -z-2 pr-2" class:hidden={selection1 == null}>{currentTotalDataset.data[selection1]?.total ?? ''} Articles</span>
+					</div>
+					<div class="flex">
+						<span class="w-fit border rounded-full px-2 bg-[var(--color-ivory-default)]"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selection2] ?? 'Selection 2'}</span><span class="border rounded-full px-3 py-px bg-black text-white pl-10 -ml-8 -z-2 pr-2" class:hidden={selection2 == null}>{currentTotalDataset.data[selection2]?.total ?? ''} Articles</span>
+					</div>
+					<!-- <span class="grow flex items-center"><img class="mx-auto" src="icons/ui-switch.svg"></span>  -->
 				</div>
 				<hr class="my-2">
-					<span class="text-center">
-						appear together in <span class="w-content border rounded-full px-2">{selectedPairIDs.length == 0?'?':selectedPairIDs.length} Articles</span>
-					</span>
+				<div class="flex gap-2 items-start justify-start">
+					<span class="border rounded-full px-3 py-px bg-[var(--color-ivory-default)] z-10" >Depicted Together</span><span class="border rounded-full px-3 py-px bg-black text-white pl-8 -ml-8 -z-2 pr-2">{selectedPairIDs.length == 0?'?':selectedPairIDs.length} Articles</span>
+				</div>
+
 			</div>
 		</ArticlesCard>
 		<OutletSwitch bind:currentOutlet={selectedSource} />

@@ -37,9 +37,9 @@
 
 </script>
 
-<div class="w-[300px] overflow-scroll overscroll-none rounded-xl border border-black backdrop-blur-lg md:max-h-80">
-	<div class="sticky top-0 flex justify-between p-2 backdrop-blur-sm shadow-md bg-[var(--color-ivory-default)]">
-		<div class="grid grid-cols-2 pt-1 w-full leading-relaxed">
+<div class="w-[300px] overflow-scroll overscroll-none rounded-xl border border-black backdrop-blur-lg md:max-h-90">
+	<div class="sticky top-0 flex justify-between p-2 backdrop-blur-sm bg-[var(--color-ivory-default)]" class:border-b={articles.length > 0} class:border-0={articles.length == 0}>
+		<div class="grid grid-cols-2 w-full leading-relaxed">
 			{@render children()}
 		</div>
 	</div>
