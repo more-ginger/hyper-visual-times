@@ -1,11 +1,12 @@
 <script lang="ts">
 	import * as d3 from 'd3';
-	let { children, ids, selectedSource, newsDesks=[] } = $props();
+	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	let { children, ids, newsDesks=[] } = $props();
 	let articles = $state([]);
 	async function fetchArticlesForCards() {
 		try {
 			const response = await fetch(
-					`/api/articles?source=${selectedSource.toLocaleLowerCase()}&id=${ids.join('&id=')}`
+					`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids.join('&id=')}`
 			);
 			articles = [...(await response.json())];
 		} catch (error) {
@@ -15,7 +16,7 @@
 	function getAuthorSourceAgnostic(byline){
 		byline = byline.trim().replaceAll(/'/g, '"').replaceAll('None', '""')
 		try{
-		 if (selectedSource == 'NYT'){
+		 if ($selectedOutlet == 'NYT'){
 			let by = JSON.parse(byline)
 			if (by.original.length == 0) return 'Author unknown'
 			return by.original ?? 'Author unknown'

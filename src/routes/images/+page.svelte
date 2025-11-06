@@ -2,21 +2,19 @@
 
 	import scrollama from 'scrollama';
 	import { onMount } from 'svelte';
-	import translateMap from '../../content/data/images/translate_map.json';
 	import visualStoryline from '../../content/data/images/visual_mentions_storyline.json';
 	import rawIntroText from '@/content/images/images-intro.md?raw';
 	import rawOutroText from '@/content/images/images-outro.md?raw';
 
 	import BlocksRenderer from '$lib/common/BlocksRenderer.svelte';
-	import OutletSwitch from '$lib/common/OutletSwitch.svelte';
 	import ImageStreamgraph from '$lib/images/ImageStreamgraph.svelte';
 	import ImageNetworkgraph from '$lib/images/ImageNetworkgraph.svelte';
 	import ImageBubblechart from '$lib/images/ImageBubblechart.svelte';	
-	import { selectedView } from '$lib/utils/state.images.svelte.ts';
+	import { selectedView, selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import OutletSelector from '$lib/common/OutletSelector.svelte';
 
 	//scrollama setup
 	let step = $state(0);
-	let selectedSource = $state('NYT');
 	let selectedWeek = $state('');
 	let selectedPeople = $state([]);
 	onMount(async () => {
@@ -29,15 +27,14 @@
 			.onStepEnter((response) => {
 				step = response.index;
 				if (visualStoryline[step] && step > 0) {
-					selectedSource = visualStoryline[step].source;
+					selectedOutlet.set(visualStoryline[step].source);
 				} else {
-					selectedSource = 'NYT';
+					selectedOutlet.set('NYT');
 				}
 			});
 	});
 
 </script>
-
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
 	<div id="images-essay">
 		<video src="img/images_teaser_desktop.webm" autoplay muted loop></video>
@@ -49,11 +46,11 @@
 		<section id="scrolly-1" class="md:flex md:flex-row-reverse">	
 			{#if $selectedView == 'bubblechart'}
 			<figure class="sticky top-20 h-dvh w-full basis-full">
-				<ImageBubblechart {selectedSource} {selectedWeek} {selectedPeople}  />
+				<ImageBubblechart {selectedWeek} {selectedPeople}  />
 			</figure>	
 			{:else if $selectedView == 'streamgraph'}
 			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-7/10 xl:p-4">
-				<ImageStreamgraph {selectedSource}  bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
+				<ImageStreamgraph  bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>
 			{/if}
 			<article class={`relative w-full basis-1/2 md:basis-3/10 ${$selectedView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
@@ -85,6 +82,7 @@
 				</div>
 				<div data-step="2" class="step p-6" style="height:100vh">
 					<div class="table-cell align-middle">Donald Trump</div>
+					<OutletSelector />
 				</div>
 			</article>	
 			
@@ -100,7 +98,7 @@
 					Israel–Palestine ones.
 				</article>
 				<figure class="h-screen w-full p-4 xl:p-4 xl:pt-20">
-					<ImageNetworkgraph {selectedSource} />
+					<ImageNetworkgraph />
 				</figure>
 		</section>
 		<section class="mt-2" id="outro">

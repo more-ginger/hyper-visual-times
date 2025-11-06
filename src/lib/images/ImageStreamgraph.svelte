@@ -4,9 +4,10 @@
 	import translateMap from '../../content/data/images/translate_map.json';
 	import dataNYT from '../../content/data/images/visual_mentions_per_person_and_week_nyt.json';
 	import dataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
-	import { selectedView } from '$lib/utils/state.images.svelte.ts';
+	import { selectedView, selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+
 	//props
-	let {selectedSource, selectedWeek = $bindable(), selectedPeople = $bindable() } = $props();
+	let { selectedWeek = $bindable(), selectedPeople = $bindable() } = $props();
 	//setup for the steamgraph svg
 	let svg;
 	let xScale;
@@ -33,7 +34,7 @@
 			selectedPeople = [...selectedPeople, person];
 		}
 	}
-	let currentDataset = $derived(selectedSource == 'NYT' ? dataNYT : dataZeit);
+	let currentDataset = $derived($selectedOutlet == 'NYT' ? dataNYT : dataZeit);
 	let peopleOrdered = $derived(
 		Object.keys(currentDataset.data).sort(
 			(a, b) => currentDataset.data[b].total - currentDataset.data[a].total
@@ -289,7 +290,7 @@
 			.on('mouseover', function (event, d) {
 				event.target.setAttribute(
 					'fill',
-					`var(--color-${selectedSource.toLocaleLowerCase()}-default)`
+					`var(--color-${$selectedOutlet.toLocaleLowerCase()}-default)`
 				);
 			})
 			.on('mouseout', function (event, d) {
@@ -317,7 +318,7 @@
 	// auto update the chart on change of the dataset
 	$effect(() => {
 		if (
-			(selectedPeople && selectedSource && loaded) ||
+			(selectedPeople && $selectedOutlet && loaded) ||
 			(peopleData && loaded) ||
 			($selectedView =='streamgraph' && loaded)
 		) {
@@ -341,9 +342,9 @@
 					class:row-start-4={i % 5 == 3}
 					class:row-start-5={i % 5 == 4}
 					class:bg-[var(--color-nyt-light)]={selectedPeople.includes(person) &&
-						selectedSource == 'NYT'}
+						$selectedOutlet == 'NYT'}
 					class:bg-[var(--color-zeit-light)]={selectedPeople.includes(person) &&
-						selectedSource == 'Zeit'}
+						$selectedOutlet == 'Zeit'}
 					onclick={togglePerson}
 					data-person={person}
 				>

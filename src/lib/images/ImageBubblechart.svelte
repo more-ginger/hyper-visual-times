@@ -6,8 +6,9 @@
 	import totalDataZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	let {selectedSource = $bindable(), selectedWeek ='2024-01-01', selectedPeople= [] } = $props();
-	let currentTotalDataset = $derived(selectedSource === 'NYT' ? totalDataNYT : totalDataZeit);
+	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	let {selectedWeek ='2024-01-01', selectedPeople= [] } = $props();
+	let currentTotalDataset = $derived($selectedOutlet === 'NYT' ? totalDataNYT : totalDataZeit);
 	let width = $state(0);
 	let height = $state(0);
 	let loaded = $state(false);
@@ -69,7 +70,7 @@
 				if (selectedPerson && selectedPerson.person == d.person) return;
 				event.target.setAttribute(
 					'fill',
-					`var(--color-${selectedSource.toLocaleLowerCase()}-light)`
+					`var(--color-${$selectedOutlet.toLocaleLowerCase()}-light)`
 				);
 				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 1);
 			})
@@ -79,12 +80,21 @@
 				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 0);
 			})
 			.on('click', function (event, d) {
+				if(selectedPerson && selectedPerson.person == d.person){
+					//deselect
+					d3.selectAll('.cursor-pointer').attr('fill', `var(--color-ivory-default)`);
+					d3.selectAll('.selection-bubble').attr('opacity', 0);
+					selectedPerson = null;
+					event.stopPropagation();
+					return;
+				}
+				event.stopPropagation();
 				d3.selectAll('.cursor-pointer').attr('fill', `var(--color-ivory-default)`);
 				d3.selectAll('.selection-bubble').attr('opacity', 0);
 				event.target.parentNode.querySelector('.selection-bubble').setAttribute('opacity', 1);
 				event.target.setAttribute(
 					'fill',
-					`var(--color-${selectedSource.toLocaleLowerCase()}-default)`
+					`var(--color-${$selectedOutlet.toLocaleLowerCase()}-default)`
 				);
 				event.stopPropagation();
 				selectedPerson = d;
@@ -94,7 +104,7 @@
 			.attr('class', 'selection-bubble')
 			.attr('r', d => scaleLog(d.count) + 5)
 			.attr('fill', 'none')
-			.attr('stroke', selectedSource == 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)')
+			.attr('stroke', $selectedOutlet == 'NYT' ? 'var(--color-nyt-default)' : 'var(--color-zeit-default)')
 			.attr('stroke-width', 1)
 			.attr('cx', (d) => 0)
 			.attr('cy', (d) => 0)
@@ -176,22 +186,22 @@
 	<div class="col-span-3 flex flex-col gap-4 p-6">
 		<h2 class="font-serif text-xl">1.1 Visual Exploration</h2>
 		<p>
-			Here you can <span class="w-content border rounded-full px-2"><img src="icons/ui-interact.svg" class="inline mr-1 pb-px" alt="interact">explore</span> the detected faces for the week
-			<u
-				>{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
+			Here you can explore the detected faces for the week
+			<span class="w-fit border rounded-full px-2">
+				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
 					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
-				).toLocaleDateString('de')}</u
-			>
+				).toLocaleDateString('de')} 
+				</span>in total we have detected faces on <span class="w-fit border rounded-full px-2">{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} images</span>.
 		</p>
-		<img src="/img/images-bubblechart-legend.svg" class="my-2" alt="" />
-			<ArticlesCard ids={selectedPersonIDs} {selectedSource}>
+		<img src="/img/images-bubblechart-legend.svg" class="mb-2" alt="" />
+			<ArticlesCard ids={selectedPersonIDs}>
 				<div class="col-span-2 text-center">
 					<div class="col-span-2 flex">
-						<span class="w-fit border rounded-full px-2 bg-[var(--color-ivory-default)] z-10 inline"><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selectedPerson?.person] ?? 'Selection'}</span><span class="border rounded-full px-3 py-px bg-black text-white pl-10 -ml-8 -z-2 pr-2 inline" class:hidden={selectedPerson == null}>{currentTotalDataset.data[selectedPerson?.person]?.total ?? ''} Articles</span>
+						<span class="w-fit border rounded-full px-2 bg-[var(--color-ivory-default)] z-10 "><img class="inline mr-1 pb-px" src="icons/ui-interact.svg">{translateMap[selectedPerson?.person] ?? 'Selection'}</span><span class="border rounded-full px-3 py-px bg-black text-white pl-10 -ml-8 -z-2 pr-2" class:hidden={selectedPerson == null}>{currentTotalDataset.data[selectedPerson?.person]?.total ?? ''} Images</span>
 					</div>
 					<hr class="my-2">
 					<div class="flex gap-2 items-start justify-start">
-						<span class="border rounded-full px-3 py-px bg-[var(--color-ivory-default)] z-10" >This Week</span><span class="border rounded-full px-3 py-px bg-black text-white pl-8 -ml-8 -z-2 pr-2">{selectedPersonIDs.length == 0?'?':selectedPersonIDs.length} Articles</span>
+						<span class="border rounded-full px-3 py-px bg-[var(--color-ivory-default)] z-10" >This Week</span><span class="border rounded-full px-3 py-px bg-black text-white pl-8 -ml-8 -z-2 pr-2">{selectedPersonIDs.length == 0?'?':selectedPersonIDs.length} Images </span>
 					</div>	
 				</div>
 			</ArticlesCard>
