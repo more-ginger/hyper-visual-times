@@ -10,12 +10,14 @@
         }
     }
 </script>
-<button onclick={handleBack}
-	><span class="mr-1"
+<button class="flex items-center justify-items-center gap-2" onclick={handleBack}
+	><span 
 		><img
 			src="./icons/ui-forward.svg"
-			class="inline-block align-middle rotate-180"
+			class="inline-block align-middle rotate-180 pt-px"
 			alt="arrow backward"
 		/></span>
-   {@render children()}
+        <span>
+               {@render children()}
+        </span>
 </button>

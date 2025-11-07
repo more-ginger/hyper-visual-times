@@ -2,13 +2,14 @@
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 	import translateMap from '../../content/data/images/translate_map.json';
-	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
 	import {
 		selectedOutlet,
 		currentCoappearanceDataset,
 		currentVisualMentionsDataset,
-		currentColorDefault
+		currentColorDefault,
+		colorScale
 	} from '$lib/utils/state.images.svelte.ts';
+	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
 	//props
 	//setup for the steamgraph svg
 	let newsDesksFix = $state([]);
@@ -71,7 +72,6 @@
 			});
 		});
 		const newsDesks = Array.from(new Set(expandedLinks.map((d) => d.news_desk)));
-		const color = d3.scaleOrdinal(newsDesks, d3.schemeTableau10);
 		newsDesksFix = [...newsDesks];
 
 		// --- Force simulation ---
@@ -215,7 +215,7 @@
 						(d.source.id === selection1 || d.source.id === selection2) &&
 						(d.target.id === selection1 || d.target.id === selection2)
 					) {
-						return color(d.news_desk);
+						return $colorScale(d.news_desk);
 					}
 				})
 				.attr('stroke-opacity', (d) => {
@@ -350,12 +350,12 @@
 	});
 </script>
 
-<div class="grid h-full w-full grid-cols-3" bind:clientWidth={width} bind:clientHeight={height}>
-	<svg class="col-span-2" width={widthDerived} {height} id="network-graph"> </svg>
-	<div class="col-span-1 flex flex-col items-center gap-4">
-		<h2 class="font-serif text-xl">2. Visual Coappearances</h2>
+<div class="grid h-full w-full grid-cols-10" bind:clientWidth={width} bind:clientHeight={height}>
+	<svg class="col-span-7" width={widthDerived} {height} id="network-graph"> </svg>
+	<div class="col-span-3 flex flex-col items-center gap-4">
+		<h2 class="font-serif text-xl pb-4">Visual Coappearances</h2>
 		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="" />
-		<ArticlesCard ids={selectedPairIDs} newsDesks={newsDesksFix}>
+		<ArticlesCardWrapper ids={selectedPairIDs} newsDesks={newsDesksFix}>
 			<div class="col-span-2 text-center">
 				<div class="flex flex flex-wrap gap-2">
 					<div class="flex">
@@ -390,6 +390,6 @@
 					>
 				</div>
 			</div>
-		</ArticlesCard>
+		</ArticlesCardWrapper>
 	</div>
 </div>

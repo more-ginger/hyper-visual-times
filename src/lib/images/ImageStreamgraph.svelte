@@ -6,8 +6,7 @@
 		selectedView,
 		selectedOutlet,
 		currentVisualMentionsDataset,
-		currentColorDefault,
-		currentColorLight
+		currentColorDefault
 	} from '$lib/utils/state.images.svelte.ts';
 
 	//props

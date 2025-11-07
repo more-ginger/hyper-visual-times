@@ -1,5 +1,5 @@
 <script>
-	import ArticlesCard from '$lib/common/ArticlesCard.svelte';
+	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
 	import translateMap from '../../content/data/images/translate_map.json';
 	import BackwardButton from '$lib/common/BackwardButton.svelte';
 	import * as d3 from 'd3';
@@ -9,9 +9,9 @@
 		currentColorDefault,
 		currentColorLight
 	} from '$lib/utils/state.images.svelte.ts';
-	let { selectedWeek = '2024-01-01', selectedPeople = [] } = $props();
+	let { selectedWeek = $bindable('2024-01-01'), selectedPeople = $bindable([]) } = $props();
 	let width = $state(0);
-	let height = $state(0);
+	let height = $state(600);
 	let loaded = $state(false);
 	let svg;
 	let bubbles;
@@ -43,7 +43,7 @@
 		simulation = d3
 			.forceSimulation(selectedPeople)
 			.force('x', d3.forceX(width / 2.75).strength(0.1))
-			.force('y', d3.forceY(height / 1.5).strength(0.3))
+			.force('y', d3.forceY(height / 2).strength(0.3))
 			.force('charge', d3.forceManyBody().strength(-50))
 			.force(
 				'collide',
@@ -177,25 +177,15 @@
 </script>
 
 <div
-	class="grid grid-cols-10 items-start justify-items-center gap-4"
+	class="grid grid-cols-10 items-start justify-items-center gap-4 max-h-[90vh]"
 	bind:clientWidth={width}
 	bind:clientHeight={height}
 >
 	<div class="col-span-3 flex flex-col gap-4 p-6">
-		<h2 class="font-serif text-xl">1.1 Visual Exploration</h2>
-		<p>
-			Here you can explore the detected faces for the week
-			<span class="w-fit rounded-full border px-2">
-				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
-					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
-				).toLocaleDateString('de')}
-			</span>in total we have detected faces on
-			<span class="w-fit rounded-full border px-2"
-				>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} images</span
-			>.
-		</p>
+		<h2 class="font-serif text-xl">Visual Exploration</h2>
+
 		<img src="/img/images-bubblechart-legend.svg" class="mb-2" alt="" />
-		<ArticlesCard ids={selectedPersonIDs}>
+		<ArticlesCardWrapper ids={selectedPersonIDs}>
 			<div class="col-span-2 text-center">
 				<div class="col-span-2 flex">
 					<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
@@ -217,14 +207,23 @@
 					</span>
 				</div>
 			</div>
-		</ArticlesCard>
+		</ArticlesCardWrapper>
 	</div>
 
 	<div class="col-span-7 p-6">
 		<div class="flex gap-2">
 			<BackwardButton>Back to Overview</BackwardButton>
+					<p>
+			Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
+			on images released in week
+			<u>
+				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
+					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
+				).toLocaleDateString('de')}.
+				</u>
+		</p>
 		</div>
-		<svg width={width * 0.7} height={height * 1.15} id="bubble-chart">
+		<svg width={width * 0.7} {height} id="bubble-chart">
 			<defs>
 				<circle id="circle" cx="25%" cy="25%" r="15" />
 				<clipPath id="clip">
