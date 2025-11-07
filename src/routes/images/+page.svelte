@@ -26,6 +26,7 @@
 			})
 			.onStepEnter((response) => {
 				step = response.index;
+				if ($selectedView != 'streamgraph') return;
 				if (visualStoryline[step] && step > 0) {
 					selectedOutlet.set(visualStoryline[step].source);
 				} else {
@@ -46,26 +47,23 @@
 		<section id="scrolly-1" class="md:flex md:flex-row-reverse">	
 			{#if $selectedView == 'bubblechart'}
 			<figure class="sticky top-20 h-dvh w-full basis-full">
-				<ImageBubblechart {selectedWeek} {selectedPeople}  />
+				<ImageBubblechart bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>	
 			{:else if $selectedView == 'streamgraph'}
-			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-7/10 xl:p-4">
+			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-7/10">
 				<ImageStreamgraph  bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>
 			{/if}
 			<article class={`relative w-full basis-1/2 md:basis-3/10 ${$selectedView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
 				<div data-step="0" class="step p-6" style="height: 100vh;">
 					<div class="table-cell align-middle">
-						<h2 class="font-serif text-xl">1. Visual Domination</h2>
+						<h2 class="font-serif text-xl pb-4">Visual Domination</h2>
 						<p>
-							Grassland (2023) has already observed how Western European newspapers tend to cover
-							macro-regions.
+							Which persons are visually represented in news images? The streamgraph on the
+							right shows the weekly number of images featuring persons from different regions
+							of the world in two Western European newspapers: <span class="zeit">Zeit Online</span> and <span class="nyt">The New York Times</span>.
 						</p>
-						<img src="img/images-streamgraph-legend.svg" class="my-2" alt="">
-						<p>
-							Grassland (2023) has already observed how Western European newspapers tend to cover
-							macro-regions.
-						</p>
+						<img src="img/images-streamgraph-legend.svg" class="my-8" alt="">
 
 					</div>
 				</div>

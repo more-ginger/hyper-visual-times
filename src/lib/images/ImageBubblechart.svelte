@@ -7,7 +7,10 @@
 	import {
 		currentVisualMentionsDataset,
 		currentColorDefault,
-		currentColorLight
+		currentColorLight,
+
+		selectedOutlet
+
 	} from '$lib/utils/state.images.svelte.ts';
 	let { selectedWeek = $bindable('2024-01-01'), selectedPeople = $bindable([]) } = $props();
 	let width = $state(0);
@@ -175,7 +178,41 @@
 		}
 	}
 </script>
-
+			{#snippet context()}
+									<p>
+			Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
+			on images released in week
+			<u>
+				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
+					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
+				).toLocaleDateString('de')}.
+				</u> on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
+				</p>
+			{/snippet}
+			{#snippet legend()}
+				<img src="img/images-bubblechart-legend.svg" class="my-2" alt="" />
+			{/snippet}
+			{#snippet data()}
+			<div class="col-span-2 text-center flex flex-wrap gap-2" slot="data">
+				<div class="flex w-full">
+					<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
+						><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[
+							selectedPerson?.person
+						] ?? 'Selection'}</span
+					><span
+						class="grow -z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-4 pl-10 text-white text-right"
+						>{$currentVisualMentionsDataset.data[selectedPerson?.person]?.total ?? '?'} images</span
+					>
+				</div>
+				<div class="flex items-start justify-start gap-2 w-full">
+					<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
+						>Selected Timeframe</span
+					><span class="grow -z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-4 pl-8 text-white text-right"
+						>{selectedPersonIDs.length == 0 ? '?' : selectedPersonIDs.length} images
+					</span>
+				</div>
+			</div>
+			{/snippet}
 <div
 	class="grid grid-cols-10 items-start justify-items-center gap-4 max-h-[90vh]"
 	bind:clientWidth={width}
@@ -183,45 +220,12 @@
 >
 	<div class="col-span-3 flex flex-col gap-4 p-6">
 		<h2 class="font-serif text-xl">Visual Exploration</h2>
-
-		<img src="/img/images-bubblechart-legend.svg" class="mb-2" alt="" />
-		<ArticlesCardWrapper ids={selectedPersonIDs}>
-			<div class="col-span-2 text-center">
-				<div class="col-span-2 flex">
-					<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-						><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[
-							selectedPerson?.person
-						] ?? 'Selection'}</span
-					><span
-						class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-10 text-white"
-						class:hidden={selectedPerson == null}
-						>{$currentVisualMentionsDataset.data[selectedPerson?.person]?.total ?? ''} Images</span
-					>
-				</div>
-				<hr class="my-2" />
-				<div class="flex items-start justify-start gap-2">
-					<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
-						>This Week</span
-					><span class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-8 text-white"
-						>{selectedPersonIDs.length == 0 ? '?' : selectedPersonIDs.length} Images
-					</span>
-				</div>
-			</div>
-		</ArticlesCardWrapper>
+		<ArticlesCardWrapper ids={selectedPersonIDs} {context} {legend} {data} />
 	</div>
 
 	<div class="col-span-7 p-6">
 		<div class="flex gap-2">
 			<BackwardButton>Back to Overview</BackwardButton>
-					<p>
-			Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
-			on images released in week
-			<u>
-				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
-					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
-				).toLocaleDateString('de')}.
-				</u>
-		</p>
 		</div>
 		<svg width={width * 0.7} {height} id="bubble-chart">
 			<defs>
