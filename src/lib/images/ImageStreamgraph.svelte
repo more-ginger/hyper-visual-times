@@ -1,9 +1,9 @@
 <script>
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import translateMap from '../../content/data/images/translate_map.json';
+	import nameTranslationMap from '../../content/data/images/name_translations.json';
 	import {
-		selectedView,
+		currentView,
 		selectedOutlet,
 		currentVisualMentionsDataset,
 		currentColorDefault
@@ -276,7 +276,7 @@
 				tooltip.transition().duration(200).style('opacity', 1);
 				tooltip
 					.html(
-						`<strong>${translateMap[d.person]}</strong><br>${d3.timeFormat('%d/%m/%Y')(d.week)}<br>${d.count} mentions`
+						`<strong>${nameTranslationMap[d.person]}</strong><br>${d3.timeFormat('%d/%m/%Y')(d.week)}<br>${d.count} mentions`
 					)
 					.style('left', bb.left + bb.width / 2 - bbTooltip.width / 2 + 'px')
 					.style('top', bb.top + window.scrollY - bbTooltip.height - 5 + 'px');
@@ -300,7 +300,7 @@
 			})
 			.on('click', function (event, d) {
 				tooltip.remove();
-				selectedView.set('bubblechart');
+				currentView.set('bubblechart');
 				selectedWeek = d.week;
 				selectedPeople = peopleData.filter(
 					(p) => p.week.getTime() == new Date(selectedWeek).getTime()
@@ -324,7 +324,7 @@
 		if (
 			(selectedPeople && $selectedOutlet && loaded) ||
 			(peopleData && loaded) ||
-			($selectedView == 'streamgraph' && loaded)
+			($currentView == 'streamgraph' && loaded)
 		) {
 			updateChart();
 		}
@@ -353,7 +353,7 @@
 				data-person={person}
 			>
 				<span class:pointer-events-none={true} class="col-span-3 col-start-1 row-start-1">
-					{i + 1}. {translateMap[person]}
+					{i + 1}. {nameTranslationMap[person]}
 				</span>
 
 				<span
@@ -369,10 +369,6 @@
 
 	<svg {width} height={heightDerived} id="steamgraph-chart">
 		<defs>
-			<circle id="circle" cx="25%" cy="25%" r="15" />
-			<clipPath id="clip">
-				<use xlink:href="#circle" />
-			</clipPath>
 			<marker id="arrowhead" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto">
 				<path d="M2,2 L2,12 L10,7 L2,2"></path>
 			</marker>

@@ -1,12 +1,12 @@
 <script>
-	import { selectedView } from "$lib/utils/state.images.svelte";
+	import { currentView } from "$lib/utils/state.images.svelte";
 
     let {children,} = $props()
     function handleBack(){
-        if ($selectedView == "streamgraph"){
-            selectedView.set("bubblechart");
+        if ($currentView == "streamgraph"){
+            currentView.set("bubblechart");
         }else{
-            selectedView.set("streamgraph");
+            currentView.set("streamgraph");
         }
     }
 </script>

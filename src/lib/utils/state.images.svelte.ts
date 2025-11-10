@@ -4,7 +4,7 @@ import visualMentionsNYT from '../../content/data/images/visual_mentions_per_per
 import visualMentionsZeit from '../../content/data/images/visual_mentions_per_person_and_week_zeit.json';
 import coappearanceNYT from '../../content/data/images/visual_coappearance_nyt.json';
 import coappearanceZeit from '../../content/data/images/visual_coappearance_zeit.json';
-export const selectedView = writable<'bubblechart' | 'streamgraph'>('streamgraph');
+export const currentView = writable<'bubblechart' | 'streamgraph'>('streamgraph');
 export const selectedOutlet = writable<'NYT' | 'Zeit'>('NYT');
 export const currentVisualMentionsDataset = writable<any>(visualMentionsNYT);
 export const currentCoappearanceDataset = writable<any>(coappearanceNYT);

@@ -1,7 +1,7 @@
 <script>
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import translateMap from '../../content/data/images/translate_map.json';
+	import nameTranslationMap from '../../content/data/images/name_translations.json';
 	import {
 		selectedOutlet,
 		currentCoappearanceDataset,
@@ -36,9 +36,7 @@
 			if (pair) {
 				selectedPairIDs = pair.ids;
 				let legend = d3.select('#network-legend');
-				legendItems = legend
-					.selectAll('.legendItems')
-					.data(Object.keys(pair.news_desks));
+				legendItems = legend.selectAll('.legendItems').data(Object.keys(pair.news_desks));
 				legendItems.exit().remove();
 				let legendItemsEnter = legendItems.enter().append('g').attr('class', 'legendItems');
 				// Clear previous legend items
@@ -51,31 +49,27 @@
 					.attr('x', 10)
 					.attr('y', (d, i) => 10 + i * 20)
 					.attr('width', 12)
-					.attr('height', 12)
+					.attr('height', 12);
 
 				legendItemsEnter
 					.append('text')
 					.attr('x', 30)
 					.attr('y', (d, i) => 20 + i * 20)
 					.attr('font-size', 12)
-					.attr('fill', 'var(--color-text-default)')
-				
+					.attr('fill', 'var(--color-text-default)');
+
 				legendItems = legendItemsEnter.merge(legendItems);
 
-				legendItems
-					.select('rect')
-					.attr('fill', (d) => $colorScale(d));
-				
-				legendItems
-					.select('text')
-					.text((d) => d);
+				legendItems.select('rect').attr('fill', (d) => $colorScale(d));
+
+				legendItems.select('text').text((d) => d);
 
 				d3.select('#network-legend').attr('opacity', 1);
 			} else {
 				selectedPairIDs = [];
 				d3.select('#network-legend').attr('opacity', 0);
 			}
-		} else if (selection1 == null && selection2 == null){
+		} else if (selection1 == null && selection2 == null) {
 			selectedPairIDs = [];
 			d3.select('#network-legend').attr('opacity', 0);
 		}
@@ -237,7 +231,7 @@
 			.style('font-size', '10px')
 			.style('text-align', 'left')
 			.style('pointer-events', 'none') // prevent mouse events
-			.text((d) => translateMap[d.id])
+			.text((d) => nameTranslationMap[d.id])
 			.each(function (d) {
 				// measure actual pill width after rendering
 				const bb = this.getBoundingClientRect();
@@ -333,7 +327,7 @@
 				});
 			nodes
 				.select('div')
-				.text((d) => translateMap[d.id])
+				.text((d) => nameTranslationMap[d.id])
 				.each(function (d) {
 					// measure actual pill width after rendering
 					const bb = this.getBoundingClientRect();
@@ -396,6 +390,16 @@
 	});
 </script>
 
+{#snippet selectionPill(selection)}
+	<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
+		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[selection] ??
+			'Selection 1'}</span
+	><span
+		class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-10 text-white"
+		class:hidden={selection == null}
+		>{$currentVisualMentionsDataset.data[selection]?.total ?? ''} Images</span
+	>
+{/snippet}
 <div class="grid h-full w-full grid-cols-10" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg class="col-span-7" width={widthDerived} {height} id="network-graph"> </svg>
 	<div class="col-span-3 flex flex-col items-center gap-4">
@@ -405,26 +409,10 @@
 			<div class="col-span-2 text-center">
 				<div class="flex flex flex-wrap gap-2">
 					<div class="flex">
-						<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-							><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[
-								selection1
-							] ?? 'Selection 1'}</span
-						><span
-							class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-10 text-white"
-							class:hidden={selection1 == null}
-							>{$currentVisualMentionsDataset.data[selection1]?.total ?? ''} Images</span
-						>
+						{@render selectionPill(selection1)}
 					</div>
 					<div class="flex">
-						<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-							><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[
-								selection2
-							] ?? 'Selection 2'}</span
-						><span
-							class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-10 text-white"
-							class:hidden={selection2 == null}
-							>{$currentVisualMentionsDataset.data[selection2]?.total ?? ''} Images</span
-						>
+						{@render selectionPill(selection2)}
 					</div>
 				</div>
 				<hr class="my-2" />

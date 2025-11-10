@@ -10,7 +10,7 @@
 	import ImageStreamgraph from '$lib/images/ImageStreamgraph.svelte';
 	import ImageNetworkgraph from '$lib/images/ImageNetworkgraph.svelte';
 	import ImageBubblechart from '$lib/images/ImageBubblechart.svelte';	
-	import { selectedView, selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import { currentView, selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 	import OutletSelector from '$lib/common/OutletSelector.svelte';
 
 	//scrollama setup
@@ -18,7 +18,7 @@
 	let selectedWeek = $state('');
 	let selectedPeople = $state([]);
 	onMount(async () => {
-		selectedView.set('streamgraph');
+		currentView.set('streamgraph');
 		scrollama().setup({
 				step: '.step',
 				offset: 0.3,
@@ -44,16 +44,16 @@
 			</div>
 		</section>
 		<section id="scrolly-1" class="md:flex md:flex-row-reverse">	
-			{#if $selectedView == 'bubblechart'}
+			{#if $currentView == 'bubblechart'}
 			<figure class="sticky top-20 h-dvh w-full basis-full">
 				<ImageBubblechart {selectedWeek} {selectedPeople}  />
 			</figure>	
-			{:else if $selectedView == 'streamgraph'}
+			{:else if $currentView == 'streamgraph'}
 			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-7/10 xl:p-4">
 				<ImageStreamgraph  bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>
 			{/if}
-			<article class={`relative w-full basis-1/2 md:basis-3/10 ${$selectedView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
+			<article class={`relative w-full basis-1/2 md:basis-3/10 ${$currentView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
 				<div data-step="0" class="step p-6" style="height: 100vh;">
 					<div class="table-cell align-middle">
 						<h2 class="font-serif text-xl">1. Visual Domination</h2>
