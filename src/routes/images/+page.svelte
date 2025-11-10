@@ -61,31 +61,31 @@
 					<div class="table-cell align-middle">
 						<h2 class="font-serif text-xl">1. Visual Domination</h2>
 						<p>
-							Grassland (2023) has already observed how Western European newspapers tend to cover
-							macro-regions.
+							This is how it works
 						</p>
 						<img src="img/images-streamgraph-legend.svg" class="my-2" alt="">
 						<p>
-							Grassland (2023) has already observed how Western European newspapers tend to cover
-							macro-regions.
+							this isnt
 						</p>
 
 					</div>
 				</div>
 				<div data-step="1" class="step p-6" style="height:100vh">
 					<div class="table-cell align-middle">
-						Grassland (2023) has already observed how Western European newspapers tend to cover
-						macro-regions of interests: areas that have geographical and political significance for
-						the host country of the newspaper. Looking at the visualization on the right, this
-						observation seems to be confirmed: for Zeit, Central and Western Europe are the main
-						regions of interest. Even in relation to conflict and against the cultural background
-						that ties Germany and Israel, the use of Russia-Ukraine keywords is much higher than
-						Israel–Palestine ones.
+						Presidents
 						<OutletSelector />
 					</div>
 				</div>
 				<div data-step="2" class="step p-6" style="height:100vh">
-					<div class="table-cell align-middle">Donald Trump</div>
+					Role of US Politics
+					<OutletSelector />
+				</div>
+				<div data-step="3" class="step p-6" style="height:100vh">
+					Ukraine War & Middle East War
+					<OutletSelector />
+				</div>
+				<div data-step="4" class="step p-6" style="height:100vh">
+					Local Interests
 					<OutletSelector />
 				</div>
 			</article>	
