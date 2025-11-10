@@ -27,11 +27,14 @@
 			.onStepEnter((response) => {
 				step = response.index;
 				if (visualStoryline[step] && step > 0) {
-					selectedOutlet.set(visualStoryline[step].source);
-				} else {
-					selectedOutlet.set('NYT');
+					selectedPeople = [...visualStoryline[step][$selectedOutlet]]
 				}
 			});
+	});
+	$effect(() => {
+		if ($selectedOutlet) {
+			selectedPeople = [...visualStoryline[step][$selectedOutlet]]
+		}
 	});
 
 </script>
@@ -78,6 +81,7 @@
 						regions of interest. Even in relation to conflict and against the cultural background
 						that ties Germany and Israel, the use of Russia-Ukraine keywords is much higher than
 						Israel–Palestine ones.
+						<OutletSelector />
 					</div>
 				</div>
 				<div data-step="2" class="step p-6" style="height:100vh">

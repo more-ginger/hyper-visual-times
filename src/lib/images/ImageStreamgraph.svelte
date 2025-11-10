@@ -61,11 +61,11 @@
 			})
 			.flat()
 	);
-	$effect(() => {
-		if (peopleOrdered) {
-			selectedPeople = [...peopleOrdered];
-		}
-	});
+	// $effect(() => {
+	// 	if (peopleOrdered) {
+	// 		selectedPeople = [...peopleOrdered];
+	// 	}
+	// });
 	//dataset setup
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
