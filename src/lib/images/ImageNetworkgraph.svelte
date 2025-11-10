@@ -395,35 +395,41 @@
 		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[selection] ??
 			'Selection 1'}</span
 	><span
-		class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-10 text-white"
-		class:hidden={selection == null}
-		>{$currentVisualMentionsDataset.data[selection]?.total ?? ''} Images</span
+		class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
+		>{$currentVisualMentionsDataset.data[selection]?.total ?? '?'} images</span
 	>
+{/snippet}
+{#snippet context()}
+	<p>Hello</p>
+{/snippet}
+{#snippet legend()}
+	<img src="img/images-networkgraph-legend.svg" class="my-2" alt="" />
+{/snippet}
+{#snippet data()}
+	<div class="col-span-2 text-center" slot="data">
+		<div class="flex flex flex-wrap gap-2">
+			<div class="flex w-full">
+				{@render selectionPill(selection1)}
+			</div>
+			<div class="flex w-full">
+				{@render selectionPill(selection2)}
+			</div>
+			<div class="flex w-full">
+				<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
+					>Co-Appearances</span
+				><span
+					class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
+					>{selectedPairIDs.length == 0 ? '?' : selectedPairIDs.length} images</span
+				>
+			</div>
+		</div>
+		<div class="flex items-start justify-start gap-2"></div>
+	</div>
 {/snippet}
 <div class="grid h-full w-full grid-cols-10" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg class="col-span-7" width={widthDerived} {height} id="network-graph"> </svg>
 	<div class="col-span-3 flex flex-col items-center gap-4">
 		<h2 class="pb-4 font-serif text-xl">Visual Coappearances</h2>
-		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="" />
-		<ArticlesCardWrapper ids={selectedPairIDs}>
-			<div class="col-span-2 text-center">
-				<div class="flex flex flex-wrap gap-2">
-					<div class="flex">
-						{@render selectionPill(selection1)}
-					</div>
-					<div class="flex">
-						{@render selectionPill(selection2)}
-					</div>
-				</div>
-				<hr class="my-2" />
-				<div class="flex items-start justify-start gap-2">
-					<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
-						>Depicted Together</span
-					><span class="-z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-2 pl-8 text-white"
-						>{selectedPairIDs.length == 0 ? '?' : selectedPairIDs.length} Images</span
-					>
-				</div>
-			</div>
-		</ArticlesCardWrapper>
+		<ArticlesCardWrapper ids={selectedPairIDs} {context} {legend} {data} />
 	</div>
 </div>

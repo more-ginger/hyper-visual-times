@@ -4,6 +4,7 @@
 @tailwind utilities;
 
 :root {
+
     /* font-synthesis: none !important; */
     /* background-color: var(--color-ivory-default); */
     html,
@@ -46,15 +47,15 @@
 
 
 
-@theme {  
+@theme {
     /* Typography */
-    --font-sans: "Atkinson_Hyperlegible_Next", "sans-serif"; 
+    --font-sans: "Atkinson_Hyperlegible_Next", "sans-serif";
     --font-serif: "Baskerville_Bold", "serif";
     --font-serif-italic: "Baskerville_Italic", "serif";
 
     /* Sizes */
     --container-desktop-size: 1920px;
-    
+
     /* Colors */
     --color-ivory-default: #fcf4e9;
     --color-ivory-dark: #82561b;
@@ -72,35 +73,44 @@
     --animate-bounce-icon-3: bounceicon 6s ease-in-out infinite;
 
     @keyframes bounce {
-        0%, 100% {
-          transform: translateY(20%);
-          animation-timing-function: ease-in-out;
+
+        0%,
+        100% {
+            transform: translateY(20%);
+            animation-timing-function: ease-in-out;
         }
+
         50% {
-          transform: none;
-          animation-timing-function: ease-in-out;
+            transform: none;
+            animation-timing-function: ease-in-out;
         }
     }
 
     @keyframes bouncetwo {
-        0%, 100% {
-          transform: translateY(40%);
-          animation-timing-function: ease-in-out;
+
+        0%,
+        100% {
+            transform: translateY(40%);
+            animation-timing-function: ease-in-out;
         }
+
         50% {
-          transform: none;
-          animation-timing-function: ease-in-out;
+            transform: none;
+            animation-timing-function: ease-in-out;
         }
     }
 
     @keyframes bounceicon {
-        0%, 100% {
-          transform: translateY(10%);
-          animation-timing-function: ease-in-out;
+
+        0%,
+        100% {
+            transform: translateY(10%);
+            animation-timing-function: ease-in-out;
         }
+
         50% {
-          transform: none;
-          animation-timing-function: ease-in-out;
+            transform: none;
+            animation-timing-function: ease-in-out;
         }
     }
 }
@@ -118,9 +128,19 @@
         background-color: white;
     }
 
+    .nyt {
+        color: var(--color-nyt-default);
+    }
+
+    .zeit {
+        color: var(--color-zeit-default);
+    }
+
     .essay {
 
-        h3, h4, p {
+        h3,
+        h4,
+        p {
             margin-bottom: 2rem;
         }
 
@@ -128,13 +148,13 @@
             font-family: var(--font-serif);
             font-size: var(--font-xl);
         }
-        
+
         h3 {
             font-style: italic;
             margin-bottom: 2rem;
         }
 
-        h4 > span {
+        h4>span {
             vertical-align: super;
             font-size: smaller;
             padding-left: 5px;
@@ -182,7 +202,7 @@
         background-color: white;
         padding: 0rem 0.5rem;
         border: 1px solid black;
-        
+
     }
 
     .optional-hidden {
@@ -193,16 +213,16 @@
             p {
                 visibility: hidden;
             }
-        } 
+        }
     }
 
     .visualization {
         text.NYT {
-            filter: drop-shadow( 1px 1px 1px var(--color-nyt-dark));
+            filter: drop-shadow(1px 1px 1px var(--color-nyt-dark));
         }
 
         text.Zeit {
-            filter: drop-shadow( 1px 1px 1px var(--color-zeit-dark));
+            filter: drop-shadow(1px 1px 1px var(--color-zeit-dark));
         }
 
         &.venn {
