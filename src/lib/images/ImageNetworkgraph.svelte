@@ -21,18 +21,63 @@
 	let loading = $state(false);
 	let nodes;
 	let links;
+	let legendItems;
 	let selection1 = $state(null);
 	let selection2 = $state(null);
 	let simulation = null;
 	let selectedPairIDs = $state([]);
 	$effect(() => {
 		if (selection1 !== null && selection2 !== null) {
-			selectedPairIDs =
-				$currentCoappearanceDataset.find(
-					(d) =>
-						(d.personA === selection1 && d.personB === selection2) ||
-						(d.personA === selection2 && d.personB === selection1)
-				)?.ids ?? [];
+			let pair = $currentCoappearanceDataset.find(
+				(d) =>
+					(d.personA === selection1 && d.personB === selection2) ||
+					(d.personA === selection2 && d.personB === selection1)
+			);
+			if (pair) {
+				selectedPairIDs = pair.ids;
+				let legend = d3.select('#network-legend');
+				legendItems = legend
+					.selectAll('.legendItems')
+					.data(Object.keys(pair.news_desks));
+				legendItems.exit().remove();
+				let legendItemsEnter = legendItems.enter().append('g').attr('class', 'legendItems');
+				// Clear previous legend items
+				legendItemsEnter.selectAll('rect').remove();
+				legendItemsEnter.selectAll('text').remove();
+				// Draw legend items
+
+				legendItemsEnter
+					.append('rect')
+					.attr('x', 10)
+					.attr('y', (d, i) => 10 + i * 20)
+					.attr('width', 12)
+					.attr('height', 12)
+
+				legendItemsEnter
+					.append('text')
+					.attr('x', 30)
+					.attr('y', (d, i) => 20 + i * 20)
+					.attr('font-size', 12)
+					.attr('fill', 'var(--color-text-default)')
+				
+				legendItems = legendItemsEnter.merge(legendItems);
+
+				legendItems
+					.select('rect')
+					.attr('fill', (d) => $colorScale(d));
+				
+				legendItems
+					.select('text')
+					.text((d) => d);
+
+				d3.select('#network-legend').attr('opacity', 1);
+			} else {
+				selectedPairIDs = [];
+				d3.select('#network-legend').attr('opacity', 0);
+			}
+		} else if (selection1 == null && selection2 == null){
+			selectedPairIDs = [];
+			d3.select('#network-legend').attr('opacity', 0);
 		}
 	});
 	onMount(() => {
@@ -73,6 +118,7 @@
 		});
 		const newsDesks = Array.from(new Set(expandedLinks.map((d) => d.news_desk)));
 		newsDesksFix = [...newsDesks];
+		svg.append('g').attr('id', 'network-legend').attr('opacity', 0);
 
 		// --- Force simulation ---
 		if (simulation) {
@@ -353,7 +399,7 @@
 <div class="grid h-full w-full grid-cols-10" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg class="col-span-7" width={widthDerived} {height} id="network-graph"> </svg>
 	<div class="col-span-3 flex flex-col items-center gap-4">
-		<h2 class="font-serif text-xl pb-4">Visual Coappearances</h2>
+		<h2 class="pb-4 font-serif text-xl">Visual Coappearances</h2>
 		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="" />
 		<ArticlesCardWrapper ids={selectedPairIDs} newsDesks={newsDesksFix}>
 			<div class="col-span-2 text-center">
