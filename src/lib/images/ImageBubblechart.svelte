@@ -1,6 +1,6 @@
 <script>
 	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
-	import translateMap from '../../content/data/images/translate_map.json';
+	import nameTranslationMap from '../../content/data/images/name_translations.json';
 	import BackwardButton from '$lib/common/BackwardButton.svelte';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
@@ -136,7 +136,7 @@
 			.style('font-size', '10px')
 			.style('text-align', 'center')
 			.style('pointer-events', 'none') // prevent mouse events
-			.text((d) => translateMap[d.person])
+			.text((d) => nameTranslationMap[d.person])
 			.each(function (d) {
 				// measure actual pill width after rendering
 				const bb = this.getBoundingClientRect();
@@ -189,7 +189,7 @@
 			<div class="col-span-2 text-center">
 				<div class="col-span-2 flex">
 					<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-						><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[
+						><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[
 							selectedPerson?.person
 						] ?? 'Selection'}</span
 					><span
@@ -223,13 +223,6 @@
 				</u>
 		</p>
 		</div>
-		<svg width={width * 0.7} {height} id="bubble-chart">
-			<defs>
-				<circle id="circle" cx="25%" cy="25%" r="15" />
-				<clipPath id="clip">
-					<use xlink:href="#circle" />
-				</clipPath>
-			</defs>
-		</svg>
+		<svg width={width * 0.7} {height} id="bubble-chart"></svg>
 	</div>
 </div>
