@@ -75,7 +75,7 @@
 					<div><p class="text-sm">Design and Development</p></div>
 					<div class="relative h-[400px] overflow-hidden rounded-xl border bg-white">
 						<img
-							class="h-[300px] w-96 object-cover"
+							class="h-[350px] w-96 object-cover"
 							src="img/team/pp_team.webp"
 							alt="Portrait of Philipp Proff"
 						/>
