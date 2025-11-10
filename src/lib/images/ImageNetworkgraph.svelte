@@ -401,7 +401,7 @@
 	<div class="col-span-3 flex flex-col items-center gap-4">
 		<h2 class="pb-4 font-serif text-xl">Visual Coappearances</h2>
 		<img src="img/images-networkgraph-legend.svg" class="my-2" alt="" />
-		<ArticlesCardWrapper ids={selectedPairIDs} newsDesks={newsDesksFix}>
+		<ArticlesCardWrapper ids={selectedPairIDs}>
 			<div class="col-span-2 text-center">
 				<div class="flex flex flex-wrap gap-2">
 					<div class="flex">
