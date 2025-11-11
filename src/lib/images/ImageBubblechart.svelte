@@ -9,7 +9,6 @@
 		currentColorDefault,
 		currentColorLight,
 		selectedOutlet
-
 	} from '$lib/utils/state.images.svelte.ts';
 	let { selectedWeek = $bindable('2024-01-01'), selectedPeople = $bindable([]) } = $props();
 	let width = $state(0);
@@ -177,48 +176,50 @@
 		}
 	}
 </script>
-			{#snippet context()}
-									<p>
+
+{#snippet context()}{/snippet}
+{#snippet legend()}
+	<img src="img/images-bubblechart-legend.svg" class="my-2 w-full" alt="" />
+{/snippet}
+{#snippet data()}
+	<div class="col-span-2 flex flex-wrap gap-2 text-center" slot="data">
+		<div class="flex w-full">
+			<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
+				><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[
+					selectedPerson?.person
+				] ?? 'Selection'}</span
+			><span
+				class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
+				>{$currentVisualMentionsDataset.data[selectedPerson?.person]?.total ?? '?'} images</span
+			>
+		</div>
+		<div class="flex w-full items-start justify-start gap-2">
+			<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
+				>Selected Timeframe</span
+			><span
+				class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-8 text-right text-white"
+				>{selectedPersonIDs.length == 0 ? '?' : selectedPersonIDs.length} images
+			</span>
+		</div>
+	</div>
+{/snippet}
+<div
+	class="grid max-h-[90vh] grid-cols-9 items-start justify-items-center gap-4"
+	bind:clientWidth={width}
+	bind:clientHeight={height}
+>
+	<div class="col-span-3 flex flex-col gap-4 p-6">
+		<h2 class="font-serif text-xl">Visual Exploration</h2>
+		<p>
 			Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
 			on images released in week
 			<u>
 				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
 					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
 				).toLocaleDateString('de')}.
-				</u> on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
-				</p>
-			{/snippet}
-			{#snippet legend()}
-				<img src="img/images-bubblechart-legend.svg" class="my-2 w-full" alt="" />
-			{/snippet}
-			{#snippet data()}
-			<div class="col-span-2 text-center flex flex-wrap gap-2" slot="data">
-				<div class="flex w-full">
-					<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-						><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[
-							selectedPerson?.person
-						] ?? 'Selection'}</span
-					><span
-						class="grow -z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-4 pl-10 text-white text-right"
-						>{$currentVisualMentionsDataset.data[selectedPerson?.person]?.total ?? '?'} images</span
-					>
-				</div>
-				<div class="flex items-start justify-start gap-2 w-full">
-					<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
-						>Selected Timeframe</span
-					><span class="grow -z-2 -ml-8 rounded-full border bg-black px-3 py-px pr-4 pl-8 text-white text-right"
-						>{selectedPersonIDs.length == 0 ? '?' : selectedPersonIDs.length} images
-					</span>
-				</div>
-			</div>
-			{/snippet}
-<div
-	class="grid grid-cols-9 items-start justify-items-center gap-4 max-h-[90vh]"
-	bind:clientWidth={width}
-	bind:clientHeight={height}
->
-	<div class="col-span-3 flex flex-col gap-4 p-6">
-		<h2 class="font-serif text-xl">Visual Exploration</h2>
+			</u>
+			on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
+		</p>
 		<ArticlesCardWrapper ids={selectedPersonIDs} {context} {legend} {data} />
 	</div>
 

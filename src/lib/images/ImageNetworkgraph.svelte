@@ -430,6 +430,10 @@
 	<svg class="col-span-6" width={widthDerived} {height} id="network-graph"> </svg>
 	<div class="col-span-3 flex flex-col items-center gap-4 p-6">
 		<h2 class="pb-4 font-serif text-xl">Visual Coappearances</h2>
+		<p>
+			Found <u>{$currentCoappearanceDataset.length} pairs</u> of persons co-appearing together
+			on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
+		</p>
 		<ArticlesCardWrapper ids={selectedPairIDs} {context} {legend} {data} />
 	</div>
 </div>
