@@ -34,11 +34,11 @@
 				}
 			});
 	});
-
 </script>
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
 	<div id="images-essay">
-		<video src="img/images_teaser_desktop.webm" autoplay muted loop></video>
+		<video class="z-10 relative" src="img/images_teaser_desktop.webm" autoplay muted loop></video>
+		<h1 class="z-1 mx-auto md:w-4/7 text-center leading-normal font-bold font-serif text-4xl md:text-5xl -mt-[50vh] mb-[50vh]">The Visual Panopticon <br> of News</h1>
 		<section id="intro" class="mb-30">
 			<div class="m-auto w-full md:w-3/7">
 				<BlocksRenderer rawtext={rawIntroText} />
