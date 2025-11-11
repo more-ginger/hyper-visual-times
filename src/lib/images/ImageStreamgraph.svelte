@@ -66,6 +66,13 @@
 			selectedPeople = [...peopleOrdered];
 		}
 	});
+	function adjustTooltipPosition(node) {
+				let bbTooltip = tooltip.node().getBoundingClientRect();
+				let bb = node.getBoundingClientRect();
+				tooltip
+					.style('left', bb.left + bb.width / 2 - bbTooltip.width / 2 + 'px')
+					.style('top', bb.top + window.scrollY - bbTooltip.height - 5 + 'px');
+	}
 	//dataset setup
 	onMount(() => {
 		svg = d3.select('#steamgraph-chart');
@@ -89,6 +96,12 @@
 			.style('border', '0px')
 			.style('border-radius', '8px')
 			.style('pointer-events', 'none');
+
+		window.addEventListener('scroll', () => {
+				let bbTooltip = tooltip.node().getBoundingClientRect();
+				
+				tooltip.style('top', bbTooltip.top + (bbTooltip.top - window.scrollY) + 'px');
+		});
 		yScale = d3
 			.scaleLinear()
 			.domain([0, d3.max(peopleData, (d) => d.count)])
@@ -270,19 +283,16 @@
 			.attr('class', 'bubble')
 			.attr('transform', (d) => `translate(${xScale(d.week)}, ${heightDerived / 2})`)
 			.on('mouseover', function (event, d) {
-				console.log(event.target.getBoundingClientRect());
-				let bbTooltip = tooltip.node().getBoundingClientRect();
-				let bb = event.target.getBoundingClientRect();
+				adjustTooltipPosition(event.target);
 				tooltip.transition().duration(200).style('opacity', 1);
-				tooltip
-					.html(
+				tooltip.html(
 						`<strong>${nameTranslationMap[d.person]}</strong><br>${d3.timeFormat('%d/%m/%Y')(d.week)}<br>${d.count} mentions`
 					)
-					.style('left', bb.left + bb.width / 2 - bbTooltip.width / 2 + 'px')
-					.style('top', bb.top + window.scrollY - bbTooltip.height - 5 + 'px');
+				window.addEventListener('scroll', () => adjustTooltipPosition(event.target));
 			})
-			.on('mouseout', function () {
+			.on('mouseout', function (event,d) {
 				tooltip.transition().duration(300).style('opacity', 0);
+				window.removeEventListener('scroll', () => adjustTooltipPosition(event.target));
 			});
 
 		entered
