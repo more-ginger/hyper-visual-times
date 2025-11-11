@@ -47,14 +47,14 @@
 				legendItemsEnter
 					.append('rect')
 					.attr('x', 10)
-					.attr('y', (d, i) => 10 + i * 20)
+					.attr('y', (d, i) => 40 + i * 20)
 					.attr('width', 12)
 					.attr('height', 12);
 
 				legendItemsEnter
 					.append('text')
 					.attr('x', 30)
-					.attr('y', (d, i) => 20 + i * 20)
+					.attr('y', (d, i) => 50 + i * 20)
 					.attr('font-size', 12)
 					.attr('fill', 'var(--color-text-default)');
 
@@ -426,9 +426,9 @@
 		<div class="flex items-start justify-start gap-2"></div>
 	</div>
 {/snippet}
-<div class="grid h-full w-full grid-cols-10" bind:clientWidth={width} bind:clientHeight={height}>
-	<svg class="col-span-7" width={widthDerived} {height} id="network-graph"> </svg>
-	<div class="col-span-3 flex flex-col items-center gap-4">
+<div class="grid h-full w-full grid-cols-9" bind:clientWidth={width} bind:clientHeight={height}>
+	<svg class="col-span-6" width={widthDerived} {height} id="network-graph"> </svg>
+	<div class="col-span-3 flex flex-col items-center gap-4 p-6">
 		<h2 class="pb-4 font-serif text-xl">Visual Coappearances</h2>
 		<ArticlesCardWrapper ids={selectedPairIDs} {context} {legend} {data} />
 	</div>

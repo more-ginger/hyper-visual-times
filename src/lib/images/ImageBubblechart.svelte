@@ -213,7 +213,7 @@
 			</div>
 			{/snippet}
 <div
-	class="grid grid-cols-10 items-start justify-items-center gap-4 max-h-[90vh]"
+	class="grid grid-cols-9 items-start justify-items-center gap-4 max-h-[90vh]"
 	bind:clientWidth={width}
 	bind:clientHeight={height}
 >
@@ -222,7 +222,7 @@
 		<ArticlesCardWrapper ids={selectedPersonIDs} {context} {legend} {data} />
 	</div>
 
-	<div class="col-span-7 p-6">
+	<div class="col-span-6 p-6">
 		<div class="flex gap-2">
 			<BackwardButton>Back to Overview</BackwardButton>
 		</div>

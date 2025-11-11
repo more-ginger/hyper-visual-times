@@ -50,11 +50,11 @@
 				<ImageBubblechart bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>	
 			{:else if $currentView == 'streamgraph'}
-			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-7/10 xl:p-4">
+			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-6/9 xl:p-4">
 				<ImageStreamgraph  bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>
 			{/if}
-			<article class={`relative w-full basis-1/2 md:basis-3/10 ${$currentView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
+			<article class={`relative w-full basis-1/2 md:basis-3/9 ${$currentView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
 				<div data-step="0" class="step p-6" style="height: 100vh;">
 					<div class="table-cell align-middle">
 						<h2 class="font-serif text-xl pb-4">Visual Domination</h2>
