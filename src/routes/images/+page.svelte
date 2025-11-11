@@ -35,6 +35,9 @@
 			});
 	});
 </script>
+<div class="fixed z-100 top-4 left-[50%] -translate-x-[50%]">
+	<OutletSelector />
+</div>
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
 	<div id="images-essay">
 		<video class="z-10 relative" src="img/images_teaser_desktop.webm" autoplay muted loop></video>
