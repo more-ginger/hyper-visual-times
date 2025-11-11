@@ -63,7 +63,7 @@
 							right shows the weekly number of images featuring persons from different regions
 							of the world in two Western European newspapers: <span class="zeit">Zeit Online</span> and <span class="nyt">The New York Times</span>.
 						</p>
-						<img src="img/images-streamgraph-legend.svg" class="my-8" alt="">
+						<!-- <img src="img/images-streamgraph-legend.svg" class="my-8 w-full" alt=""> -->
 
 					</div>
 				</div>

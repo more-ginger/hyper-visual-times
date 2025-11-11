@@ -189,7 +189,7 @@
 				</p>
 			{/snippet}
 			{#snippet legend()}
-				<img src="img/images-bubblechart-legend.svg" class="my-2" alt="" />
+				<img src="img/images-bubblechart-legend.svg" class="my-2 w-full" alt="" />
 			{/snippet}
 			{#snippet data()}
 			<div class="col-span-2 text-center flex flex-wrap gap-2" slot="data">
