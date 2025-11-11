@@ -24,26 +24,33 @@
 		if (ids.length > 0 && !initialFetchDone) {
 			fetchArticlesForCards();
 			initialFetchDone = true;
-		}else if (ids.length == 0){
+		} else if (ids.length == 0) {
 			articles = [];
 			nArticles = 0;
 			initialFetchDone = false;
 		}
 	});
-	function toggleOpen(name, open) {
+	function toggleOpen(name) {
 		switch (name) {
 			case 'Context':
-				contextOpen = !open;
+				contextOpen = true;
+				legendOpen = false;
+				dataOpen = false;
 				break;
 			case 'Legend':
-				legendOpen = !open;
+				legendOpen = true;
+				contextOpen = false;
+				dataOpen = false;
 				break;
 			case 'Articles':
-				dataOpen = !open;
+				dataOpen = true;
+				contextOpen = false;
+				legendOpen = false;
 				break;
 		}
 	}
 </script>
+
 {#snippet cardSection(name, open)}
 	<!-- svelte-ignore a11y_no_static_element_interactions-->
 	<div
@@ -61,10 +68,42 @@
 		/>
 	</div>
 {/snippet}
+<div class="flex w-full justify-items-start items-">
+	<p onclick={() => toggleOpen('Context')} class="grow text-center -mb-[17px] bg-[var(--color-ivory-default)] px-4 py-2 cursor-pointer rounded-tl-xl border-t border-l" class:border-r={!legendOpen} class:z-10={contextOpen} class:border-dashed={!contextOpen}>Context</p>
+	<p onclick={() => toggleOpen('Legend')} class="grow text-center -mb-[17px] bg-[var(--color-ivory-default)] px-4 py-2 cursor-pointer border-t" class:z-10={legendOpen} class:border-l={legendOpen} class:border-r={legendOpen} class:border-dashed={!legendOpen}>Legend</p>
+	<p onclick={() => toggleOpen('Articles')} class="grow text-center -mb-[17px] bg-[var(--color-ivory-default)] px-4 py-2 cursor-pointer rounded-tr-xl border-t border-r" class:border-l={!legendOpen} class:z-10={dataOpen} class:border-dashed={!dataOpen}>Articles</p>
+</div>
 <div
-	class="overflow-hidden overscroll-none rounded-xl border border-black backdrop-blur-lg relative"
+	class="w-full relative overflow-hidden overscroll-none rounded-bl-xl rounded-br-xl border-b border-l border-r border-t backdrop-blur-lg p-2"
 >
-	<div class="w-full">
+		<div class:hidden={!contextOpen}>
+			{@render context()}
+		</div>
+		<div  class:hidden={!legendOpen}>
+			{@render legend()}
+		</div>
+		<div class="max-h-[50vh] !overflow-scroll overscroll-none" class:hidden={!dataOpen}>
+			<div
+				class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-2 shadow-md"
+			>
+				<div class="grid w-full grid-cols-2 leading-relaxed">
+					{@render data()}
+				</div>
+			</div>
+			<div class="relative">
+				{#each articles as article}
+					<ArticleCard {article} />
+				{/each}
+				<div
+					onclick={fetchArticlesForCards}
+					class:hidden={articles.length == 0 || nArticles == ids.length}
+					class="absolute -bottom-4 left-[50%] z-10 -translate-x-1/2 cursor-pointer rounded-full border bg-[var(--color-ivory-default)] px-2 py-px"
+				>
+					Load More
+				</div>
+			</div>
+	</div>
+	<!-- <div class="w-full">
 		{@render cardSection('Context', contextOpen)}
 		<div class={"h-0 overflow-hidden border-t border-black " + (contextOpen ? '!h-full border-dashed ' : '')}>
 			<div class={"p-2 " + (contextOpen ? 'border-solid border-b' : '')}>
@@ -95,5 +134,5 @@
 				<div onclick={fetchArticlesForCards} class:hidden={articles.length == 0 || nArticles== ids.length} class="absolute border rounded-full px-2 py-px left-[50%] -translate-x-1/2 -bottom-4 z-10 bg-[var(--color-ivory-default)] cursor-pointer">Load More</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
