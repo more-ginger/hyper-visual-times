@@ -26,6 +26,14 @@
 	let selection2 = $state(null);
 	let simulation = null;
 	let selectedPairIDs = $state([]);
+	let eligibleSecondSelections = $derived(() => {
+		if (selection1 === null) return [];
+		return $currentCoappearanceDataset
+			.filter(
+				(d) => d.personA === selection1 || d.personB === selection1
+			)
+			.map((d) => (d.personA === selection1 ? d.personB : d.personA));
+	});
 	$effect(() => {
 		if (selection1 !== null && selection2 !== null) {
 			let pair = $currentCoappearanceDataset.find(
@@ -88,7 +96,7 @@
 			if (!nodesMap.has(d.personB)) nodesMap.set(d.personB, { id: d.personB });
 		});
 		const nodesData = Array.from(nodesMap.values());
-
+		
 		// Expand into individual lines per news_desk per coappearance count
 		const expandedLinks = [];
 		$currentCoappearanceDataset.forEach((d) => {
@@ -283,7 +291,7 @@
 				})
 				.attr('stroke-width', (d) => {
 					if (selection1 == null || selection2 == null) {
-						return d.total * 0.2;
+						return d.total * 0.4;
 					} else {
 						return 0.5;
 					}
@@ -341,16 +349,20 @@
 			nodes
 				.attr('transform', (d) => `translate(${d.x},${d.y})`)
 				.attr('opacity', (d) => {
-					if (selection1 == null || selection2 == null) {
+					if (selection1 == null && selection2 == null) {
 						return 1;
 					} else if (
-						selection1 != null &&
-						selection2 != null &&
+						(selection1 != null && selection2 == null) &&
+						(eligibleSecondSelections().includes(d.id) || d.id === selection1)
+					) {
+						return 1;
+					} else if (
+						(selection1 != null && selection2 != null) &&
 						(d.id === selection1 || d.id === selection2)
 					) {
 						return 1;
-					} else {
-						return 0.05;
+					}else {
+						return 0.05
 					}
 				});
 
