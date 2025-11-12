@@ -1,7 +1,7 @@
 <script>
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import translateMap from '../../content/data/images/translate_map.json';
+	import nameTranslationMap from '../../content/data/images/name_translations.json';
 	import {
 		selectedOutlet,
 		currentCoappearanceDataset,
@@ -21,18 +21,65 @@
 	let loading = $state(false);
 	let nodes;
 	let links;
+	let legendItems;
 	let selection1 = $state(null);
 	let selection2 = $state(null);
 	let simulation = null;
 	let selectedPairIDs = $state([]);
+	let eligibleSecondSelections = $derived(() => {
+		if (selection1 === null) return [];
+		return $currentCoappearanceDataset
+			.filter(
+				(d) => d.personA === selection1 || d.personB === selection1
+			)
+			.map((d) => (d.personA === selection1 ? d.personB : d.personA));
+	});
 	$effect(() => {
-		if (selection1 !== null && selection2 !== null) {
-			selectedPairIDs =
-				$currentCoappearanceDataset.find(
-					(d) =>
-						(d.personA === selection1 && d.personB === selection2) ||
-						(d.personA === selection2 && d.personB === selection1)
-				)?.ids ?? [];
+		if (selection1 !== null && selection2 !== null && selectedPairIDs.length === 0) {
+			let pair = $currentCoappearanceDataset.find(
+				(d) =>
+					(d.personA === selection1 && d.personB === selection2) ||
+					(d.personA === selection2 && d.personB === selection1)
+			);
+			if (pair) {
+				selectedPairIDs = pair.ids;
+				let legend = d3.select('#network-legend');
+				legendItems = legend.selectAll('.legendItems').data(Object.keys(pair.news_desks));
+				legendItems.exit().remove();
+				let legendItemsEnter = legendItems.enter().append('g').attr('class', 'legendItems');
+				// Clear previous legend items
+				legendItemsEnter.selectAll('rect').remove();
+				legendItemsEnter.selectAll('text').remove();
+				// Draw legend items
+
+				legendItemsEnter
+					.append('rect')
+					.attr('x', 10)
+					.attr('y', (d, i) => 40 + i * 20)
+					.attr('width', 12)
+					.attr('height', 12);
+
+				legendItemsEnter
+					.append('text')
+					.attr('x', 30)
+					.attr('y', (d, i) => 50 + i * 20)
+					.attr('font-size', 12)
+					.attr('fill', 'var(--color-text-default)');
+
+				legendItems = legendItemsEnter.merge(legendItems);
+
+				legendItems.select('rect').attr('fill', (d) => $colorScale(d));
+
+				legendItems.select('text').text((d) => d);
+
+				d3.select('#network-legend').attr('opacity', 1);
+			} else {
+				selectedPairIDs = [];
+				d3.select('#network-legend').attr('opacity', 0);
+			}
+		} else if (selection1 == null && selection2 == null) {
+			selectedPairIDs = [];
+			d3.select('#network-legend').attr('opacity', 0);
 		}
 	});
 	onMount(() => {
@@ -49,7 +96,7 @@
 			if (!nodesMap.has(d.personB)) nodesMap.set(d.personB, { id: d.personB });
 		});
 		const nodesData = Array.from(nodesMap.values());
-
+		
 		// Expand into individual lines per news_desk per coappearance count
 		const expandedLinks = [];
 		$currentCoappearanceDataset.forEach((d) => {
@@ -73,6 +120,7 @@
 		});
 		const newsDesks = Array.from(new Set(expandedLinks.map((d) => d.news_desk)));
 		newsDesksFix = [...newsDesks];
+		svg.append('g').attr('id', 'network-legend').attr('opacity', 0);
 
 		// --- Force simulation ---
 		if (simulation) {
@@ -191,7 +239,7 @@
 			.style('font-size', '10px')
 			.style('text-align', 'left')
 			.style('pointer-events', 'none') // prevent mouse events
-			.text((d) => translateMap[d.id])
+			.text((d) => nameTranslationMap[d.id])
 			.each(function (d) {
 				// measure actual pill width after rendering
 				const bb = this.getBoundingClientRect();
@@ -243,7 +291,7 @@
 				})
 				.attr('stroke-width', (d) => {
 					if (selection1 == null || selection2 == null) {
-						return d.total * 0.2;
+						return d.total * 0.4;
 					} else {
 						return 0.5;
 					}
@@ -287,7 +335,7 @@
 				});
 			nodes
 				.select('div')
-				.text((d) => translateMap[d.id])
+				.text((d) => nameTranslationMap[d.id])
 				.each(function (d) {
 					// measure actual pill width after rendering
 					const bb = this.getBoundingClientRect();
@@ -301,16 +349,20 @@
 			nodes
 				.attr('transform', (d) => `translate(${d.x},${d.y})`)
 				.attr('opacity', (d) => {
-					if (selection1 == null || selection2 == null) {
+					if (selection1 == null && selection2 == null) {
 						return 1;
 					} else if (
-						selection1 != null &&
-						selection2 != null &&
+						(selection1 != null && selection2 == null) &&
+						(eligibleSecondSelections().includes(d.id) || d.id === selection1)
+					) {
+						return 1;
+					} else if (
+						(selection1 != null && selection2 != null) &&
 						(d.id === selection1 || d.id === selection2)
 					) {
 						return 1;
-					} else {
-						return 0.05;
+					}else {
+						return 0.05
 					}
 				});
 
@@ -350,32 +402,29 @@
 	});
 </script>
 
+{#snippet selectionPill(selection)}
+	<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
+		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[selection] ??
+			'Selection 1'}</span
+	><span
+		class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
+		>{$currentVisualMentionsDataset.data[selection]?.total ?? '?'} images</span
+	>
+{/snippet}
 {#snippet context()}
 	<p>Hello</p>
 {/snippet}
 {#snippet legend()}
-	<img src="img/images-networkgraph-legend.svg" class="my-2" alt="" />
+	<img src="img/images-networkgraph-legend.svg" class="my-2 w-full" alt="" />
 {/snippet}
 {#snippet data()}
 	<div class="col-span-2 text-center" slot="data">
 		<div class="flex flex flex-wrap gap-2">
 			<div class="flex w-full">
-				<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-					><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[selection1] ??
-						'Selection 1'}</span
-				><span
-					class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
-					>{$currentVisualMentionsDataset.data[selection1]?.total ?? '?'} images</span
-				>
+				{@render selectionPill(selection1)}
 			</div>
 			<div class="flex w-full">
-				<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-					><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{translateMap[selection2] ??
-						'Selection 2'}</span
-				><span
-					class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
-					>{$currentVisualMentionsDataset.data[selection2]?.total ?? '?'} images</span
-				>
+				{@render selectionPill(selection2)}
 			</div>
 			<div class="flex w-full">
 				<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
@@ -389,10 +438,14 @@
 		<div class="flex items-start justify-start gap-2"></div>
 	</div>
 {/snippet}
-<div class="grid h-full w-full grid-cols-10" bind:clientWidth={width} bind:clientHeight={height}>
-	<svg class="col-span-7" width={widthDerived} {height} id="network-graph"> </svg>
-	<div class="col-span-3 flex flex-col items-center gap-4">
+<div class="grid h-full w-full grid-cols-9" bind:clientWidth={width} bind:clientHeight={height}>
+	<svg class="col-span-6" width={widthDerived} {height} id="network-graph"> </svg>
+	<div class="col-span-3 flex flex-col items-center gap-4 p-6">
 		<h2 class="pb-4 font-serif text-xl">Visual Coappearances</h2>
+		<p>
+			Found <u>{$currentCoappearanceDataset.length} pairs</u> of persons co-appearing together
+			on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
+		</p>
 		<ArticlesCardWrapper ids={selectedPairIDs} {context} {legend} {data} />
 	</div>
 </div>

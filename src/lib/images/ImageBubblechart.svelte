@@ -1,6 +1,6 @@
 <script>
 	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
-	import translateMap from '../../content/data/images/translate_map.json';
+	import nameTranslationMap from '../../content/data/images/name_translations.json';
 	import BackwardButton from '$lib/common/BackwardButton.svelte';
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
@@ -137,7 +137,7 @@
 			.style('font-size', '10px')
 			.style('text-align', 'center')
 			.style('pointer-events', 'none') // prevent mouse events
-			.text((d) => translateMap[d.person])
+			.text((d) => nameTranslationMap[d.person])
 			.each(function (d) {
 				// measure actual pill width after rendering
 				const bb = this.getBoundingClientRect();
@@ -221,20 +221,23 @@
 >
 	<div class="col-span-3 flex flex-col gap-4 p-6">
 		<h2 class="font-serif text-xl">Visual Exploration</h2>
+		<p>
+			Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
+			on images released in week
+			<u>
+				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
+					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
+				).toLocaleDateString('de')}.
+			</u>
+			on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
+		</p>
 		<ArticlesCardWrapper ids={selectedPersonIDs} {context} {legend} {data} />
 	</div>
 
-	<div class="col-span-7 p-6">
+	<div class="col-span-6 p-6">
 		<div class="flex gap-2">
 			<BackwardButton>Back to Overview</BackwardButton>
 		</div>
-		<svg width={width * 0.7} {height} id="bubble-chart">
-			<defs>
-				<circle id="circle" cx="25%" cy="25%" r="15" />
-				<clipPath id="clip">
-					<use xlink:href="#circle" />
-				</clipPath>
-			</defs>
-		</svg>
+		<svg width={width * 0.7} {height} id="bubble-chart"></svg>
 	</div>
 </div>

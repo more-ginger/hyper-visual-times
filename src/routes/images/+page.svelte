@@ -10,7 +10,7 @@
 	import ImageStreamgraph from '$lib/images/ImageStreamgraph.svelte';
 	import ImageNetworkgraph from '$lib/images/ImageNetworkgraph.svelte';
 	import ImageBubblechart from '$lib/images/ImageBubblechart.svelte';	
-	import { selectedView, selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import { currentView, selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 	import OutletSelector from '$lib/common/OutletSelector.svelte';
 
 	//scrollama setup
@@ -18,7 +18,7 @@
 	let selectedWeek = $state('');
 	let selectedPeople = $state([]);
 	onMount(async () => {
-		selectedView.set('streamgraph');
+		currentView.set('streamgraph');
 		scrollama().setup({
 				step: '.step',
 				offset: 0.3,
@@ -26,7 +26,7 @@
 			})
 			.onStepEnter((response) => {
 				step = response.index;
-				if ($selectedView != 'streamgraph') return;
+				if ($currentView != 'streamgraph') return;
 				if (visualStoryline[step] && step > 0) {
 					selectedOutlet.set(visualStoryline[step].source);
 				} else {
@@ -34,27 +34,30 @@
 				}
 			});
 	});
-
 </script>
+<div class="fixed z-100 top-4 left-[50%] -translate-x-[50%]">
+	<OutletSelector />
+</div>
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
 	<div id="images-essay">
-		<video src="img/images_teaser_desktop.webm" autoplay muted loop></video>
+		<video class="z-10 relative" src="img/images_teaser_desktop.webm" autoplay muted loop></video>
+		<h1 class="z-1 mx-auto md:w-4/7 text-center leading-normal font-bold font-serif text-4xl md:text-5xl -mt-[50vh] mb-[50vh]">The Visual Panopticon <br> of News</h1>
 		<section id="intro" class="mb-30">
 			<div class="m-auto w-full md:w-3/7">
 				<BlocksRenderer rawtext={rawIntroText} />
 			</div>
 		</section>
 		<section id="scrolly-1" class="md:flex md:flex-row-reverse">	
-			{#if $selectedView == 'bubblechart'}
+			{#if $currentView == 'bubblechart'}
 			<figure class="sticky top-20 h-dvh w-full basis-full">
 				<ImageBubblechart bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>	
-			{:else if $selectedView == 'streamgraph'}
-			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-7/10">
+			{:else if $currentView == 'streamgraph'}
+			<figure class="sticky top-20 h-dvh w-full basis-1/2 p-6 md:basis-6/9 xl:p-4">
 				<ImageStreamgraph  bind:selectedWeek={selectedWeek} bind:selectedPeople={selectedPeople} />
 			</figure>
 			{/if}
-			<article class={`relative w-full basis-1/2 md:basis-3/10 ${$selectedView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
+			<article class={`relative w-full basis-1/2 md:basis-3/9 ${$currentView == 'bubblechart' ? '!basis-0 invisible !w-0' : ''}`}>
 				<div data-step="0" class="step p-6" style="height: 100vh;">
 					<div class="table-cell align-middle">
 						<h2 class="font-serif text-xl pb-4">Visual Domination</h2>
@@ -63,7 +66,7 @@
 							right shows the weekly number of images featuring persons from different regions
 							of the world in two Western European newspapers: <span class="zeit">Zeit Online</span> and <span class="nyt">The New York Times</span>.
 						</p>
-						<img src="img/images-streamgraph-legend.svg" class="my-8" alt="">
+						<!-- <img src="img/images-streamgraph-legend.svg" class="my-8 w-full" alt=""> -->
 
 					</div>
 				</div>

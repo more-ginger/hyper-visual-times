@@ -5,19 +5,29 @@
 	let articles = $state<any>([]);
 	let contextOpen = $state(false);
 	let legendOpen = $state(false);
+	let articlesFetched = $state(0);
+	let fetchWait = $state(false);
 	let dataOpen = $state(true);
+	let oids = []
 	async function fetchArticlesForCards() {
 		try {
+			if (ids.length == 0) return;
+			let loadedIDs = ids.slice(articlesFetched, articlesFetched + 3);
 			const response = await fetch(
-				`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids.join('&id=')}`
+				`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${loadedIDs.join('&id=')}`
 			);
-			articles = [...(await response.json())];
+			articles.push(...(await response.json()));
+			articlesFetched += loadedIDs.length;
+			fetchWait = false;
 		} catch (error) {
 			console.log('Error in fetching articles inside fetchArticlesForCards', error);
 		}
 	}
 	$effect(() => {
-		if (ids) {
+		if (ids != oids){
+			oids = ids;
+			articles = [];
+			articlesFetched = 0;
 			fetchArticlesForCards();
 		}
 	});
@@ -35,7 +45,6 @@
 		}
 	}
 </script>
-
 {#snippet cardSection(name, open)}
 	<button
 		type="button"
@@ -54,7 +63,7 @@
 	</button>
 {/snippet}
 <div
-	class="w-[300px] overflow-hidden overscroll-none rounded-xl border border-black backdrop-blur-lg"
+	class="overflow-hidden overscroll-none rounded-xl border border-black backdrop-blur-lg relative"
 >
 	<div class="w-full">
 		{@render cardSection('Context', contextOpen)}
@@ -91,9 +100,12 @@
 					{@render data()}
 				</div>
 			</div>
-			{#each articles as article}
-				<ArticleCard {article} />
-			{/each}
+			<div class="relative">
+				{#each articles as article}
+					<ArticleCard {article} />
+				{/each}
+				<div onclick={fetchArticlesForCards} class:hidden={articles.length == 0 || articlesFetched== ids.length} class="absolute border rounded-full px-2 py-px left-[50%] -translate-x-1/2 -bottom-4 z-10 bg-[var(--color-ivory-default)] cursor-pointer">Load More</div>
+			</div>
 		</div>
 	</div>
 </div>
