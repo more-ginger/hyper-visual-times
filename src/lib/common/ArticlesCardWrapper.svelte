@@ -6,7 +6,7 @@
 	let contextOpen = $state(false);
 	let legendOpen = $state(false);
 	let nArticles = $state(0);
-	let initialFetchDone = $state(false);
+	let fetchWait = $state(false);
 	let dataOpen = $state(true);
 	async function fetchArticlesForCards() {
 		try {
@@ -15,19 +15,20 @@
 				`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${loadedIDs.join('&id=')}`
 			);
 			articles.push(...(await response.json()));
-			nArticles += loadedIDs.length;
+			// nArticles += loadedIDs.length;
+			fetchWait = false;
 		} catch (error) {
 			console.log('Error in fetching articles inside fetchArticlesForCards', error);
 		}
 	}
 	$effect(() => {
-		if (ids.length > 0 && !initialFetchDone) {
-			fetchArticlesForCards();
-			initialFetchDone = true;
-		}else if (ids.length == 0){
+		if (ids != null && ids.length != nArticles && !fetchWait) {
 			articles = [];
 			nArticles = 0;
-			initialFetchDone = false;
+			fetchArticlesForCards();
+		}else{
+			articles = [];
+			nArticles = 0;
 		}
 	});
 	function toggleOpen(name, open) {
