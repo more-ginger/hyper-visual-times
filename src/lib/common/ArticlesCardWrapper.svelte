@@ -46,9 +46,9 @@
 	}
 </script>
 {#snippet cardSection(name, open)}
-	<!-- svelte-ignore a11y_no_static_element_interactions-->
-	<div
-		class="grid cursor-pointer grid-cols-2 p-2"
+	<button
+		type="button"
+		class="grid w-full cursor-pointer grid-cols-2 rounded-none border-none p-2 text-left"
 		onclick={() => {
 			toggleOpen(name, open);
 		}}
@@ -60,22 +60,28 @@
 			src="icons/ui-scroll.svg"
 			alt=""
 		/>
-	</div>
+	</button>
 {/snippet}
 <div
 	class="overflow-hidden overscroll-none rounded-xl border border-black backdrop-blur-lg relative"
 >
 	<div class="w-full">
 		{@render cardSection('Context', contextOpen)}
-		<div class={"h-0 overflow-hidden border-t border-black " + (contextOpen ? '!h-full border-dashed ' : '')}>
-			<div class={"p-2 " + (contextOpen ? 'border-solid border-b' : '')}>
+		<div
+			class={'h-0 overflow-hidden border-t border-black ' +
+				(contextOpen ? '!h-full border-dashed ' : '')}
+		>
+			<div class={'p-2 ' + (contextOpen ? 'border-b border-solid' : '')}>
 				{@render context()}
 			</div>
 		</div>
 	</div>
 	<div class="w-full">
 		{@render cardSection('Legend', legendOpen)}
-		<div class={"h-0 overflow-hidden border-t border-black " + (legendOpen ? '!h-full border-dashed' : '')}>
+		<div
+			class={'h-0 overflow-hidden border-t border-black ' +
+				(legendOpen ? '!h-full border-dashed' : '')}
+		>
 			<div class="border-b border-black p-2">
 				{@render legend()}
 			</div>
@@ -83,8 +89,13 @@
 	</div>
 	<div class="w-full">
 		{@render cardSection('Articles', dataOpen)}
-		<div class={"h-0 max-h-[50vh] !overflow-scroll overscroll-none " + (dataOpen ? 'border-t border-dashed border-black !h-full' : '')}>
-			<div class="sticky top-0 flex justify-between p-2 bg-[var(--color-ivory-default)] shadow-md z-10">
+		<div
+			class={'h-0 max-h-[50vh] !overflow-scroll overscroll-none ' +
+				(dataOpen ? '!h-full border-t border-dashed border-black' : '')}
+		>
+			<div
+				class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-2 shadow-md"
+			>
 				<div class="grid w-full grid-cols-2 leading-relaxed">
 					{@render data()}
 				</div>
