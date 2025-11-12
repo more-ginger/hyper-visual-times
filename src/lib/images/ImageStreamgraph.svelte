@@ -335,7 +335,7 @@
 	<div class="grid grid-cols-3 gap-1">
 		{#each peopleOrdered as person, i}
 			<button
-				class="control py grid w-full grid-cols-3 rounded-xl border px-2 text-left hover:cursor-pointer hover:bg-[var(--color-ivory-default)]"
+				class="control py grid w-full grid-cols-3 rounded-xl border px-2 text-left cursor-pointer"
 				class:pointer-events-none={false}
 				class:col-start-1={Math.floor(i / 5) == 0}
 				class:col-start-2={Math.floor(i / 5) == 1}
@@ -345,6 +345,11 @@
 				class:row-start-3={i % 5 == 2}
 				class:row-start-4={i % 5 == 3}
 				class:row-start-5={i % 5 == 4}
+				class:hover:bg-[var(--color-ivory-default)]={selectedPeople.includes(person)}
+				class:hover:bg-[var(--color-nyt-light)]={!selectedPeople.includes(person) &&
+					$selectedOutlet == 'NYT'}
+				class:hover:bg-[var(--color-zeit-light)]={!selectedPeople.includes(person) &&
+					$selectedOutlet == 'Zeit'}
 				class:bg-[var(--color-nyt-light)]={selectedPeople.includes(person) &&
 					$selectedOutlet == 'NYT'}
 				class:bg-[var(--color-zeit-light)]={selectedPeople.includes(person) &&
