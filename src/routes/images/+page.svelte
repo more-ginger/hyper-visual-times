@@ -14,26 +14,28 @@
 	import OutletSelector from '$lib/common/OutletSelector.svelte';
 
 	//scrollama setup
-	let step = $state(0);
-	let selectedWeek = $state('');
-	let selectedPeople = $state([]);
-	onMount(async () => {
-		currentView.set('streamgraph');
-		scrollama().setup({
-				step: '.step',
-				offset: 0.3,
-				debug: false
-			})
-			.onStepEnter((response) => {
-				step = response.index;
-				if ($currentView != 'streamgraph') return;
-				if (visualStoryline[step] && step > 0) {
-					selectedOutlet.set(visualStoryline[step].source);
-				} else {
-					selectedOutlet.set('NYT');
-				}
-			});
-	});
+    let step = $state(0);
+    let selectedWeek = $state('');
+    let selectedPeople = $state([]);
+    onMount(async () => {
+        currentView.set('streamgraph');
+        scrollama().setup({
+                step: '.step',
+                offset: 0.3,
+                debug: false
+            })
+            .onStepEnter((response) => {
+                step = response.index;
+                if (visualStoryline[step] && step > 0) {
+                    selectedPeople = [...visualStoryline[step][$selectedOutlet]]
+                }
+            });
+    });
+    $effect(() => {
+        if ($selectedOutlet) {
+            selectedPeople = [...visualStoryline[step][$selectedOutlet]]
+        }
+    });
 </script>
 <div class="fixed z-100 top-4 left-[50%] -translate-x-[50%]">
 	<OutletSelector />
@@ -82,6 +84,14 @@
 					</div>
 				</div>
 				<div data-step="2" class="step p-6" style="height:100vh">
+					<div class="table-cell align-middle">Donald Trump</div>
+					<OutletSelector />
+				</div>
+				<div data-step="3" class="step p-6" style="height:100vh">
+					<div class="table-cell align-middle">Donald Trump</div>
+					<OutletSelector />
+				</div>
+				<div data-step="4" class="step p-6" style="height:100vh">
 					<div class="table-cell align-middle">Donald Trump</div>
 					<OutletSelector />
 				</div>
