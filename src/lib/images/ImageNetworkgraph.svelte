@@ -229,7 +229,7 @@
 		pills
 			.append('xhtml:div') // HTML inside SVG
 			.style('display', 'inline-block')
-			.style('width', 'fit-content')
+			.style('width', 'max-content')
 			.style('margin', 'auto')
 			.style('padding', '4px 8px')
 			.style('backdrop-filter', 'blur(5px)')
