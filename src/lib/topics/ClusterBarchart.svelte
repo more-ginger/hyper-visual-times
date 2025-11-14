@@ -6,11 +6,9 @@
 	let width = $state(0);
 	let height = $state(0);
 
-	$inspect(data.map((d: {}, i: number) => d))
+	$inspect(data.map((d: {}, i: number) => d));
 
-	let maxValue = $derived(
-		d3.max(data.map((d: {value: number}, i: number) => d.value ))
-	)
+	let maxValue = $derived(d3.max(data.map((d: { value: number }, i: number) => d.value)));
 
 	let yScale = $derived(
 		d3
@@ -37,7 +35,7 @@
 	}
 </script>
 
-<div class="m-2">
+<div class="m-2 mb-15">
 	<div class="mb-2 flex items-center justify-between">
 		<p class="border-b font-serif text-xs">{selectedCluster[0].manualLabel}</p>
 		<button
@@ -78,13 +76,18 @@
 							stroke-dasharray="2 2"
 						/>
 						{#if t === axisTicks.length - 1}
-							<text x="12" y={height - yScale(tick) - 2} font-size="10" fill="transparent" stroke="white">
+							<text
+								x="12"
+								y={height - yScale(tick) - 2}
+								font-size="10"
+								fill="transparent"
+								stroke="white"
+							>
 								{tick} mentions within cluster
 							</text>
 							<text x="12" y={height - yScale(tick) - 2} font-size="10">
 								{tick} mentions within cluster
 							</text>
-							
 						{:else}
 							<text x="12" y={height - yScale(tick) - 2} font-size="10">{tick}</text>
 						{/if}
