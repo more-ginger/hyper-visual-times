@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ArticleCard from '$lib/common/ArticleCard.svelte';
 	import { onMount } from 'svelte';
 
 	let { primaryCountryKey, currentNode, selectedOutlet, onCardReset, onPrimaryCountryChange } =
@@ -7,6 +8,7 @@
 		headline: string;
 		web_url: string;
 		snippet: string;
+		news_desk: string;
 		pub_date: string | number;
 		byline: string;
 		parsed_date: Date;
@@ -28,6 +30,7 @@
 			const data = await response.json();
 			if (data.length > 0) {
 				const headlines = data.map((article: Article) => {
+					article.byline = article.byline.replaceAll(/'/g, '"').replaceAll('None', '""');
 					let parsedByline = JSON.parse(article.byline);
 					let byline = parsedByline.length > 0 ? `${parsedByline[0]['name']},` : '';
 
@@ -38,6 +41,7 @@
 						headline: article.headline,
 						snippet: article.snippet,
 						web_url: article.web_url,
+						news_desk: article.news_desk,
 						pub_date: fullDate,
 						parsed_date: parsedPubDate,
 						byline
@@ -137,15 +141,7 @@
 	{:then orderedArticles}
 		<div class="px-2">
 			{#each orderedArticles as article}
-				<div class="my-3 rounded-xl border border-black p-2 hover:bg-white">
-					<a href={article.web_url} target="_blank">
-						<div>
-							<div>{article.headline}</div>
-							<div class="py-2 text-sm">{article.snippet}</div>
-							<div class="text-xs">{article.byline} {article.pub_date}</div>
-						</div>
-					</a>
-				</div>
+			<ArticleCard {article}/>
 			{/each}
 		</div>
 	{/await}

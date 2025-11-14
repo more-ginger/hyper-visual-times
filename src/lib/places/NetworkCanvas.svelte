@@ -251,7 +251,7 @@
 				}}>+ Zoom to selection</button
 			>
 		</div>
-		<div class="bg-ivory-default/50 border-ivory-dark h-full rounded-xl border backdrop-blur-sm">
+		<div class="bg-ivory-default border-ivory-dark h-full rounded-xl border backdrop-blur-sm">
 			{#if isListMode}
 				<div>
 					<div class="h-14 border-b text-center italic">
