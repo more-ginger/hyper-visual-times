@@ -23,9 +23,10 @@
 	});
 </script>
 
-{#snippet selectionPill(selection)}
+{#snippet selectionPill(selection, i)}
 	<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{selection ?? 'Selection 1'}</span
+		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{selection ??
+			'Selection ' + (i + 1)}</span
 	>
 {/snippet}
 <div
@@ -34,14 +35,14 @@
 	<div class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-2 shadow-md">
 		<div class="flex w-full flex-wrap gap-2">
 			<div class="flex">
-				{@render selectionPill(selectedPair[0])}
+				{@render selectionPill(selectedPair[0], 0)}
 			</div>
 			<div class="flex grow items-center justify-center">
 				<img class="inline-block" src="icons/ui-forward.svg" alt="forward" />
 			</div>
 
 			<div class="flex">
-				{@render selectionPill(selectedPair[1])}
+				{@render selectionPill(selectedPair[1], 1)}
 			</div>
 		</div>
 	</div>
@@ -50,6 +51,10 @@
 			{#each articlesHeadlines as article}
 				<ArticleCard {article} />
 			{/each}
+		{:else}
+			<div class="w-full py-4">
+				<img class="m-auto" src="img/topics-selection-legend.svg" />
+			</div>
 		{/if}
 	</div>
 </div>
