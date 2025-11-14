@@ -10,9 +10,9 @@
 		colorScale
 	} from '$lib/utils/state.images.svelte.ts';
 	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
+	import OutletSelector from '$lib/common/OutletSelector.svelte';
 	//props
 	//setup for the steamgraph svg
-	let newsDesksFix = $state([]);
 	let svg;
 	let width = $state(0);
 	let height = $state(0);
@@ -118,8 +118,6 @@
 				expandedLinks.push(...lines);
 			});
 		});
-		const newsDesks = Array.from(new Set(expandedLinks.map((d) => d.news_desk)));
-		newsDesksFix = [...newsDesks];
 		svg.append('g').attr('id', 'network-legend').attr('opacity', 0);
 
 		// --- Force simulation ---
@@ -229,7 +227,7 @@
 		pills
 			.append('xhtml:div') // HTML inside SVG
 			.style('display', 'inline-block')
-			.style('width', 'fit-content')
+			.style('width', 'max-content')
 			.style('margin', 'auto')
 			.style('padding', '4px 8px')
 			.style('backdrop-filter', 'blur(5px)')
@@ -403,16 +401,16 @@
 </script>
 
 {#snippet selectionPill(selection)}
-	<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
+	<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-3 "
 		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[selection] ??
 			'Selection 1'}</span
 	><span
-		class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
-		>{$currentVisualMentionsDataset.data[selection]?.total ?? '?'} images</span
+		class="-z-2 -ml-8 grow rounded-full border bg-black px-3 pr-4 pl-10 text-right text-white -pb-px"
+		>{$currentVisualMentionsDataset.data[selection]?.total ?? '–'} images</span
 	>
 {/snippet}
 {#snippet context()}
-	<p>Hello</p>
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo eros vitae pretium. Maecenas tristique odio ac pellentesque malesuada. Donec malesuada, orci sit amet mollis tempus, sem urna lobortis purus, at sagittis ante massa et ex.
 {/snippet}
 {#snippet legend()}
 	<img src="img/images-networkgraph-legend.svg" class="my-2 w-full" alt="" />
@@ -427,11 +425,11 @@
 				{@render selectionPill(selection2)}
 			</div>
 			<div class="flex w-full">
-				<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3 py-px"
+				<span class="z-10 rounded-full border bg-[var(--color-ivory-default)] px-3"
 					>Co-Appearances</span
 				><span
-					class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
-					>{selectedPairIDs.length == 0 ? '?' : selectedPairIDs.length} images</span
+					class="-z-2 -ml-8 grow rounded-full border bg-black px-3 pr-4 pl-10 text-right text-white"
+					>{selectedPairIDs.length == 0 ? '–' : selectedPairIDs.length} images</span
 				>
 			</div>
 		</div>
@@ -441,11 +439,7 @@
 <div class="grid h-full w-full grid-cols-9" bind:clientWidth={width} bind:clientHeight={height}>
 	<svg class="col-span-6" width={widthDerived} {height} id="network-graph"> </svg>
 	<div class="col-span-3 flex flex-col items-center gap-4 p-6">
-		<h2 class="pb-4 font-serif text-xl">Visual Coappearances</h2>
-		<p>
-			Found <u>{$currentCoappearanceDataset.length} pairs</u> of persons co-appearing together
-			on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
-		</p>
+		<OutletSelector/>
 		<ArticlesCardWrapper ids={selectedPairIDs} {context} {legend} {data} />
 	</div>
 </div>

@@ -1,51 +1,94 @@
 [
 	{
-	"source": "NYT",
-	"visible": [
-		"anthony-blinken",
-		"benjamin-netanjahu",
-		"bob-menendez",
-		"donald-trump",
-		"elon-musk",
-		"eric-adams",
-		"jd-vance",
-		"joe-biden",
-		"kamala-harris",
-		"mike-johnson",
-		"nikki-haley",
-		"robert-kennedy",
-		"tim-walz",
-		"todd-blanche",
-		"vladimir-putin"
-	]
-},{
-	"source": "Zeit",
-	"visible": ["annalena-baerbock",
-		"christian-lindner",
-		"dietmar-woidtke",
-		"donald-trump",
-		"friedrich-merz",
-		"joe-biden",
-		"kamala-harris",
-		"mario-voigt",
-		"markus-soeder",
-		"michael-kretschmer",
-		"olaf-scholz",
-		"robert-habeck",
-		"sahra-wagenknecht",
-		"vladimir-putin",
-		"wolodimir-selenski"]
-},
-{
-	"source": "NYT",
-	"visible": [
-		"donald-trump"
-	]
-},
-{
-	"source": "Zeit",
-	"visible": [
-		"olaf-scholz"
-	]
-}
+		"NYT": [
+			"anthony-blinken",
+			"benjamin-netanjahu",
+			"bob-menendez",
+			"donald-trump",
+			"elon-musk",
+			"eric-adams",
+			"jd-vance",
+			"joe-biden",
+			"kamala-harris",
+			"mike-johnson",
+			"nikki-haley",
+			"robert-kennedy",
+			"tim-walz",
+			"todd-blanche",
+			"vladimir-putin"
+		],
+		"Zeit": [
+			"annalena-baerbock",
+			"christian-lindner",
+			"dietmar-woidtke",
+			"donald-trump",
+			"friedrich-merz",
+			"joe-biden",
+			"kamala-harris",
+			"mario-voigt",
+			"markus-soeder",
+			"michael-kretschmer",
+			"olaf-scholz",
+			"robert-habeck",
+			"sahra-wagenknecht",
+			"vladimir-putin",
+			"wolodimir-selenski"
+		]
+	},
+	{
+		"NYT": [
+			"donald-trump"
+		],
+		"Zeit": [
+			"olaf-scholz"
+		]
+	},{
+		"NYT": [
+			"anthony-blinken",
+			"kamala-harris",
+			"nikki-haley",
+			"mike-johnson"
+		],
+		"Zeit": [
+			"christian-lindner",
+			"robert-habeck",
+			"markus-soeder",
+			"friedrich-merz"
+
+		]
+	},
+	{
+		"NYT": [
+			"joe-biden",
+			"kamala-harris"
+		],
+		"Zeit": [
+			"joe-biden",
+			"kamala-harris"
+		]
+	},
+	{
+		"NYT": [
+			"benjamin-netanjahu",
+			"vladimir-putin"
+		],
+		"Zeit": [
+			"wolodimir-selenski",
+			"vladimir-putin"
+		]
+	},
+	{
+		"NYT": [
+			"jd-vance",
+			"robert-kennedy",
+			"elon-musk"
+		],
+		"Zeit": [
+			"sahra-wagenknecht",
+			"dietmar-woidtke",
+			"christian-lindner"
+			
+		]
+	}
+
 ]
