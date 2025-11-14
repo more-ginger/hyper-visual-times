@@ -61,8 +61,8 @@
 </span>
 {/snippet}
 {#snippet pill(text)}
-	<span class="w-fit inline-block rounded-full border bg-[var(--color-ivory-default)] px-2">
-		{text}
+	<span class="flex inline-block w-max gap-px font-bold ">
+		<img class="max-w-[25px] inline pb-px" src="img/images-person.svg" alt="" /> <span>{text}</span>
 	</span>
 {/snippet}
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
