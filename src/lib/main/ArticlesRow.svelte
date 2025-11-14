@@ -23,5 +23,5 @@
 			onerror={handleImgError}
 		/>
 	</div>
-	<h4 class="pb-0 text-xs md:text-lg">{article.headline}</h4>
+	<h4 class="pb-0 text-xs md:text-base line-clamp-3">{article.headline}</h4>
 </div>

@@ -35,7 +35,7 @@
 				{/each}
 			</div>
 		</div>
-		<div class="absolute top-10 w-fit md:top-25 md:left-0">
+		<div class="absolute top-10 w-fit md:top-15 md:left-0">
 			<div
 				class="m-auto grid w-11/12 grid-cols-4 md:w-full md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18"
 			>
@@ -50,7 +50,7 @@
 				{/await}
 			</div>
 		</div>
-		<div class="absolute top-65 w-fit md:top-100 md:left-0">
+		<div class="absolute top-65 w-fit md:top-85 md:left-0">
 			<div
 				class="m-auto grid w-11/12 grid-cols-4 md:w-full md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18"
 			>
