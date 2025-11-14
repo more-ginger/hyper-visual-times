@@ -1,9 +1,8 @@
 <script lang="ts">
-	import {
-		selectedOutlet,
-		colorScale
-	} from '$lib/utils/state.images.svelte.ts';
+	import { selectedOutlet, colorScale } from '$lib/utils/state.images.svelte.ts';
+
 	let { article } = $props();
+
 	function getAuthorSourceAgnostic(byline) {
 		byline = byline.trim().replaceAll(/'/g, '"').replaceAll('None', '""');
 		try {
@@ -20,9 +19,22 @@
 			return 'Author unknown';
 		}
 	}
+
+	function formatArticleDate(date) {
+		const articleDate: Date | number = new Date(date);
+		if (articleDate instanceof Date && !isNaN(articleDate)) {
+			return new Date(article.pub_date).toLocaleDateString('de');
+		} else {
+			return '';
+		}
+	}
 </script>
 
-<div class={"m-2 my-3 rounded-xl border border-black p-2"} style={"background-color: "+$colorScale(article.news_desk)+"1a"} id={"article_" + article._id}>
+<div
+	class={'m-2 my-3 rounded-xl border border-black p-2'}
+	style={'background-color: ' + $colorScale(article.news_desk) + '1a'}
+	id={'article_' + article._id}
+>
 	<a href={article.web_url} target="_blank">
 		<div>
 			<div>{article.headline}</div>
@@ -32,7 +44,7 @@
 			</div>
 			<div class="grid grid-cols-3">
 				<span class="col-span-1 justify-self-start text-sm">
-					{new Date(article.pub_date).toLocaleDateString('de')}
+					{formatArticleDate(article.pub_date)}
 				</span>
 				<span class="col-span-2 flex items-center gap-1 justify-self-end text-sm">
 					{#if article.news_desk.length > 0}
