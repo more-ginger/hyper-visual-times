@@ -40,7 +40,7 @@
 <div class="base relative m-auto flex h-[100vh] pt-20 md:w-full">
 	<div class="flex h-full overflow-scroll px-2 pb-2 md:w-full">
 		<div class="w-4/12 pb-150">
-			<div class="pb-15 2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2">
+			<div class="2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15">
 				<div class="mt-2 mb-6">
 					<p class="text-sm">Currently selected:</p>
 					<h1 class="my-2 font-serif text-xl md:text-2xl">
@@ -56,7 +56,7 @@
 					<NetworkCard {selectedPair} {selectedIds} />
 				{/if}
 			</div>
-			<div class="">
+			<div>
 				<p class="text-sm"></p>
 				<p class="mb-2">
 					This project frames the patterns of language and narrative of a year's corpus of news

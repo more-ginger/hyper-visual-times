@@ -30,7 +30,7 @@
 	>
 {/snippet}
 <div
-	class={'no-scrollbar no-scrollbar::-webkit-scrollbar max-h-[50vh] !overflow-scroll overscroll-none rounded-xl border'}
+	class={'no-scrollbar no-scrollbar::-webkit-scrollbar mb-6 max-h-[50vh] !overflow-scroll overscroll-none rounded-xl border'}
 >
 	<div class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-2 shadow-md">
 		<div class="flex w-full flex-wrap gap-2">
