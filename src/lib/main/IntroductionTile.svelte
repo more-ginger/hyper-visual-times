@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ArticlesRow from './ArticlesRow.svelte';
+	import MainLogo from './MainLogo.svelte';
 	let { data } = $props();
 	let w = $state(0);
 	let NYTSelectionBasedOnW = $derived(
@@ -18,13 +19,7 @@
 </script>
 
 <div class="h-full w-full" bind:clientWidth={w}>
-	<div class="z-20 flex h-full items-center">
-		<img
-			class="sticky top-20 m-2 w-full"
-			src="img/hvtms-main.svg"
-			alt="The Hyper-Visual Times logo"
-		/>
-	</div>
+	<MainLogo />
 	<div class="absolute top-15 m-auto h-full w-full md:left-0 md:w-11/12 md:w-full">
 		<div class="relative -z-10 h-full w-full xl:h-[95vh] 2xl:h-[76.6vh]">
 			<div class="grid h-full grid-cols-4 md:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-18">
