@@ -112,7 +112,9 @@
 									</li>
 									<li class="pb-4">
 										<button class="flex items-center px-2 py-[2px]"
-											><div class="mr-[5px] h-[15px] w-[15px] rounded-xl bg-green-500"></div>
+											><div
+												class="mr-[5px] h-[15px] w-[15px] animate-pulse rounded-xl bg-green-500"
+											></div>
 											<a href="/images">The language of images</a></button
 										>
 									</li>
@@ -139,12 +141,14 @@
 				<div>
 					<Chapters />
 				</div>
-				<BlocksRenderer rawtext={rawOutroText} />
+			</section>
+			<section class="py-10">
+				<div>
+					<About />
+				</div>
 			</section>
 			<section>
-			<div>
-				<About />
-			</div>
+				<BlocksRenderer rawtext={rawOutroText} />
 			</section>
 		</div>
 	</div>
