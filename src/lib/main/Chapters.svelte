@@ -81,9 +81,12 @@
 				</div>
 			</div>
 		</a>
-		<a href="/images" class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:m-0 lg:self-start">
+		<a
+			href="/images"
+			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:m-0 lg:self-start"
+		>
 			<span>3.</span>
-			<div class="bg-ivory-default rounded-xl border">
+			<div class="bg-ivory-default rounded-xl border shadow-lg">
 				<div class="p-5">
 					<div class="flex justify-between">
 						<div>
@@ -96,7 +99,7 @@
 						</div>
 						<div class="ml-2 flex items-center">
 							<div class="">
-								<div class="mr-[5px] h-[25px] w-[25px] rounded-xl bg-green-500"></div>
+								<div class="mr-[5px] h-[25px] w-[25px] animate-pulse rounded-xl bg-green-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
 								<img src="icons/ui-forward.svg" alt="forward" />
