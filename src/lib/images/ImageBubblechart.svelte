@@ -13,7 +13,6 @@
 	let { selectedWeek = $bindable('2024-01-01'), selectedPeople = $bindable([]) } = $props();
 	let width = $state(0);
 	let height = $state(600);
-	let loaded = $state(false);
 	let svg;
 	let bubbles;
 	let simulation;
@@ -30,7 +29,6 @@
 	onMount(() => {
 		svg = d3.select('#bubble-chart');
 		bubbles = svg.selectAll('.bubble');
-		loaded = true;
 		updateChart();
 	});
 	function updateChart() {
@@ -180,9 +178,11 @@
 	}
 </script>
 
-{#snippet context()}{/snippet}
+{#snippet context()}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo eros vitae pretium. Maecenas tristique odio ac pellentesque malesuada. Donec malesuada, orci sit amet mollis tempus, sem urna lobortis purus, at sagittis ante massa et ex.
+{/snippet}
 {#snippet legend()}
-	<img src="img/images-bubblechart-legend.svg" class="my-2" alt="" />
+	<img src="img/images-bubblechart-legend.svg" class="my-2 w-full" alt="" />
 {/snippet}
 {#snippet data()}
 	<div class="col-span-2 flex flex-wrap gap-2 text-center" slot="data">
@@ -193,7 +193,7 @@
 				] ?? 'Selection'}</span
 			><span
 				class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
-				>{$currentVisualMentionsDataset.data[selectedPerson?.person]?.total ?? '?'} images</span
+				>{$currentVisualMentionsDataset.data[selectedPerson?.person]?.total ?? '–'} images</span
 			>
 		</div>
 		<div class="flex w-full items-start justify-start gap-2">
@@ -201,7 +201,7 @@
 				>Selected Timeframe</span
 			><span
 				class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-8 text-right text-white"
-				>{selectedPersonIDs.length == 0 ? '?' : selectedPersonIDs.length} images
+				>{selectedPersonIDs.length == 0 ? '–' : selectedPersonIDs.length} images
 			</span>
 		</div>
 	</div>
@@ -212,7 +212,14 @@
 	bind:clientHeight={height}
 >
 	<div class="col-span-3 flex flex-col gap-4 p-6">
-		<h2 class="font-serif text-xl">Visual Exploration</h2>
+		<div class="w-max">
+			<BackwardButton>Back to Overview</BackwardButton>
+		</div>
+		<ArticlesCardWrapper ids={selectedPersonIDs} {context} {legend} {data} />
+	</div>
+
+	<div class="col-span-6 p-6">
+		<div class="w-full text-center">
 		<p>
 			Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
 			on images released in week
@@ -223,12 +230,6 @@
 			</u>
 			on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
 		</p>
-		<ArticlesCardWrapper ids={selectedPersonIDs} {context} {legend} {data} />
-	</div>
-
-	<div class="col-span-6 p-6">
-		<div class="flex gap-2">
-			<BackwardButton>Back to Overview</BackwardButton>
 		</div>
 		<svg width={width * 0.7} {height} id="bubble-chart"></svg>
 	</div>
