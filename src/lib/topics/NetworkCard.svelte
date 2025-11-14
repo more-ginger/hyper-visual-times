@@ -28,9 +28,11 @@
 		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{selection ?? 'Selection 1'}</span
 	>
 {/snippet}
-<div class={'max-h-[50vh] !overflow-scroll overscroll-none border rounded-xl '}>
+<div
+	class={'no-scrollbar no-scrollbar::-webkit-scrollbar max-h-[50vh] !overflow-scroll overscroll-none rounded-xl border'}
+>
 	<div class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-2 shadow-md">
-		<div class="w-full flex flex-wrap gap-2">
+		<div class="flex w-full flex-wrap gap-2">
 			<div class="flex">
 				{@render selectionPill(selectedPair[0])}
 			</div>
