@@ -10,12 +10,18 @@
 		currentColorLight,
 		selectedOutlet
 	} from '$lib/utils/state.images.svelte.ts';
+
+	// Init comp variables
 	let { selectedWeek = $bindable('2024-01-01'), selectedPeople = $bindable([]) } = $props();
 	let width = $state(0);
 	let height = $state(600);
+
+	// Init empty containers
 	let svg;
 	let bubbles;
 	let simulation;
+
+	// Scales & other vars
 	let scaleLog = d3
 		.scaleLog()
 		.domain(d3.extent(selectedPeople.map((p) => p.count)))
@@ -26,11 +32,21 @@
 	let selectedPersonIDs = $derived(
 		selectedPeopleFixed.find((p) => p.person === selectedPerson?.person ?? '')?.ids ?? []
 	);
+
 	onMount(() => {
 		svg = d3.select('#bubble-chart');
 		bubbles = svg.selectAll('.bubble');
 		updateChart();
 	});
+
+	const datesInterval = $derived.by(() => {
+		const currentWeek = new Date(selectedWeekFixed);
+		return {
+			start: currentWeek.toLocaleDateString('de'),
+			end: new Date(currentWeek.getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('de')
+		};
+	});
+
 	function updateChart() {
 		// Stop any running simulation
 		if (simulation) simulation.stop();
@@ -39,6 +55,7 @@
 			p.y = height / 2 + Math.random() * 50 - 25;
 		});
 
+		// Good ol' simulation the D3 way
 		simulation = d3
 			.forceSimulation(selectedPeople)
 			.force(
@@ -179,7 +196,9 @@
 </script>
 
 {#snippet context()}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo eros vitae pretium. Maecenas tristique odio ac pellentesque malesuada. Donec malesuada, orci sit amet mollis tempus, sem urna lobortis purus, at sagittis ante massa et ex.
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo eros vitae pretium.
+	Maecenas tristique odio ac pellentesque malesuada. Donec malesuada, orci sit amet mollis tempus,
+	sem urna lobortis purus, at sagittis ante massa et ex.
 {/snippet}
 {#snippet legend()}
 	<img src="img/images-bubblechart-legend.svg" class="my-2 w-full" alt="" />
@@ -188,9 +207,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo ero
 	<div class="col-span-2 flex flex-wrap gap-2 text-center" slot="data">
 		<div class="flex w-full">
 			<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
-				><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[
-					selectedPerson?.person
-				] ?? 'Selection'}</span
+				><img
+					class="mr-1 inline pb-px"
+					src="icons/ui-interact.svg"
+					alt="Select person"
+				/>{nameTranslationMap[selectedPerson?.person] ?? 'Selection'}</span
 			><span
 				class="-z-2 -ml-8 grow rounded-full border bg-black px-3 py-px pr-4 pl-10 text-right text-white"
 				>{$currentVisualMentionsDataset.data[selectedPerson?.person]?.total ?? '–'} images</span
@@ -220,16 +241,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo ero
 
 	<div class="col-span-6 p-6">
 		<div class="w-full text-center">
-		<p>
-			Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
-			on images released in week
-			<u>
-				{new Date(selectedWeekFixed).toLocaleDateString('de')} - {new Date(
-					new Date(selectedWeekFixed).getTime() + 7 * 24 * 60 * 60 * 1000
-				).toLocaleDateString('de')}.
-			</u>
-			on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
-		</p>
+			<p>
+				Detected <u>{selectedPeopleFixed.reduce((acc, person) => acc + person.count, 0)} faces</u>
+				on images released in week
+				<u> {datesInterval.start} – {datesInterval.end}</u>
+				on <span class={$selectedOutlet.toLocaleLowerCase()}>{$selectedOutlet}</span>.
+			</p>
 		</div>
 		<svg width={width * 0.7} {height} id="bubble-chart"></svg>
 	</div>
