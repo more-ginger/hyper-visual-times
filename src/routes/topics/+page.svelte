@@ -37,37 +37,10 @@
 	}
 </script>
 
-<div class="base m-auto h-[100vh] relative flex pt-20 md:w-full">
-	<div class="flex h-full px-2 pb-2 md:w-full overflow-scroll">
-		<div class="w-4/12 pb-250">
-			<div class="">
-				<p class="text-sm">
-					<p class="mb-2">
-					This project frames the patterns of language and narrative of a year's corpus of news data, digging into the divergent simultaneous discourses discourses that occur across the newspaper's articles, sections, and timeframes.
-					</p>
-					One bubble represents a topic, a cluster of common words extracted from The New York Times' articles. The most common topics are marked in <span
-						class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
-						>orange</span
-					>
-					and are related to foreign politics and conflict. followed by internal politics and economy
-					– here in
-					<span
-						class="rounded-xl border border-[#FFBC35] px-2 before:pr-1 before:text-[#FFBC35] before:content-['•']"
-						>yellow</span
-					>
-					. Miscellaneous topics like culture, health, society, and sports are represented in
-					<span
-						class="rounded-xl border border-[#FFDAB9] px-2 before:pr-1 before:text-[#FFDAB9] before:content-['•']"
-						>pink</span
-					>. Orange bubbles represent topics connected to foreign politics. Climate-related topics
-					are
-					<span
-						class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
-						>green</span
-					>.
-				
-			</div>
-			<div class="2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15">
+<div class="base relative m-auto flex h-[100vh] pt-20 md:w-full">
+	<div class="flex h-full overflow-scroll px-2 pb-2 md:w-full">
+		<div class="w-4/12 pb-150">
+			<div class="pb-15 2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2">
 				<div class="mt-2 mb-6">
 					<p class="text-sm">Currently selected:</p>
 					<h1 class="my-2 font-serif text-xl md:text-2xl">
@@ -83,8 +56,36 @@
 					<NetworkCard {selectedPair} {selectedIds} />
 				{/if}
 			</div>
+			<div class="">
+				<p class="text-sm"></p>
+				<p class="mb-2">
+					This project frames the patterns of language and narrative of a year's corpus of news
+					data, digging into the divergent simultaneous discourses discourses that occur across the
+					newspaper's articles, sections, and timeframes.
+				</p>
+				One bubble represents a topic, a cluster of common words extracted from The New York Times' articles.
+				The most common topics are marked in<span
+					class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
+					>orange</span
+				>
+				and are related to foreign politics and conflict. followed by internal politics and economy –
+				here in
+				<span
+					class="rounded-xl border border-[#FFBC35] px-2 before:pr-1 before:text-[#FFBC35] before:content-['•']"
+					>yellow</span
+				>
+				. Miscellaneous topics like culture, health, society, and sports are represented in
+				<span
+					class="rounded-xl border border-[#FFDAB9] px-2 before:pr-1 before:text-[#FFDAB9] before:content-['•']"
+					>pink</span
+				>. Orange bubbles represent topics connected to foreign politics. Climate-related topics are
+				<span
+					class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
+					>green</span
+				>.
+			</div>
 		</div>
-		<div class="w-8/12 sticky top-0">
+		<div class="sticky top-0 w-8/12">
 			{#if selectionIsActive && !networkIsActive}
 				<BubbleChart {TopicClusters} {selectNewCluster} {switchView} {selectedClusterLabel} />
 			{:else}
