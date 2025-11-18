@@ -10,8 +10,9 @@
 	import LinkBetweenCountries from './canvas/LinkBetweenCountries.svelte';
 	import DataPlaceholder from './canvas/DataPlaceholder.svelte';
 	import type { countryDataForComparison } from '../../types';
+	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 
-	const { nodes, links, selectedOutlet, primaryCountryKey, onDropdownChange } = $props();
+	const { nodes, links, primaryCountryKey, onDropdownChange } = $props();
 	let w = $state(0);
 	let h = $state(0);
 
@@ -41,8 +42,8 @@
 	let isListMode: boolean = $state(true);
 	let currentNode: countryDataForComparison | null = $state(null);
 
-	const darkAccentHex = $derived(selectedOutlet === 'zeit' ? '#0036AC' : '#ECA547');
-	const lightAccentHex = $derived(selectedOutlet === 'zeit' ? '#D9E5FF' : '#FFE8BA');
+	const darkAccentHex = $derived($selectedOutlet === 'Zeit' ? '#0036AC' : '#ECA547');
+	const lightAccentHex = $derived($selectedOutlet === 'Zeit' ? '#D9E5FF' : '#FFE8BA');
 
 
 	const orderedListOfNodes = $derived(
@@ -178,10 +179,10 @@
 		if (isZoomedOut) {
 			revertZoom();
 		} else {
-			if (nodes[0][`count_${selectedOutlet}`] > 0) {
+			if (nodes[0][`count_${$selectedOutlet.toLocaleLowerCase()}`] > 0) {
 				zoomToCountry();
 			} else {
-				if (nodes[0][`count_${selectedOutlet}`] === 0) {
+				if (nodes[0][`count_${$selectedOutlet.toLocaleLowerCase()}`] === 0) {
 					revertZoom();
 				}
 			}
@@ -214,7 +215,7 @@
 					priority={1}
 				/>
 			{/each}
-			{#if nodes[0][`count_${selectedOutlet}`]}
+			{#if nodes[0][`count_${$selectedOutlet.toLocaleLowerCase()}`] > 0}
 				{#each nodes as node}
 					<CountryFeature
 						{node}
@@ -259,7 +260,7 @@
 							There are {nodes.length} countries sharing coverage with {primaryCountryKey ===
 							'The Democratic Republic of the Congo'
 								? 'DR of Congo'
-								: primaryCountryKey} in {selectedOutlet === 'zeit'
+								: primaryCountryKey} in {$selectedOutlet === 'Zeit'
 								? 'Zeit Online'
 								: 'The New York Times'}
 						</p>
@@ -303,7 +304,6 @@
 							<CountryCard
 								{primaryCountryKey}
 								{currentNode}
-								{selectedOutlet}
 								{onCardReset}
 								{onPrimaryCountryChange}
 							/>
