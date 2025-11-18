@@ -1,8 +1,9 @@
 <script lang="ts">
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
 	import { onMount } from 'svelte';
+	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 
-	let { primaryCountryKey, currentNode, selectedOutlet, onCardReset, onPrimaryCountryChange } =
+	let { primaryCountryKey, currentNode, onCardReset, onPrimaryCountryChange } =
 		$props();
 	type Article = {
 		headline: string;
@@ -26,7 +27,7 @@
 		const ids = sliced.map((id) => encodeURIComponent(id)).join('&id=');
 
 		try {
-			const response = await fetch(`/api/articles?source=${selectedOutlet}&id=${ids}`);
+			const response = await fetch(`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids}`);
 			const data = await response.json();
 			if (data.length > 0) {
 				const headlines = data.map((article: Article) => {
