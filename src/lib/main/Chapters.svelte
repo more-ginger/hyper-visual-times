@@ -96,7 +96,7 @@
 						</div>
 						<div class="ml-2 flex items-center">
 							<div class="">
-								<div class="mr-[5px] h-[25px] w-[25px] rounded-xl bg-green-500"></div>
+								<div class="mr-[5px] h-[25px] w-[25px] animate-pulse rounded-xl bg-green-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
 								<img src="icons/ui-forward.svg" alt="forward" />
