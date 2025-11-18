@@ -2,7 +2,7 @@
 	// @ts-expect-error
 	import * as d3 from 'd3';
 	let { selectedCluster, switchView } = $props();
-	let data = $derived(selectedCluster[0].topWords);
+	let data = $derived(selectedCluster[0].topWords.sort((a,b) => b.value-a.value));
 	let width = $state(0);
 	let height = $state(0);
 
