@@ -127,11 +127,11 @@
 				</div>
 				<div data-step="3" class="step p-6 leading-relaxed" style="height:150vh">
 					<h3 class="font-bold text-xl">Governments</h3>
-					People who are associated with the government or its opposition are represented disproportionately in comparision to other prominent figures from pop culture.
-					For {@render pillOutlet('Zeit Online', 'Zeit')} we have {@render pill('Robert Habeck')} and {@render pill('Christian Lidner')}, but also figures from the opposition such as {@render pill('Markus Söder')} or {@render pill('Friedrich Merz')}.
+					People who are associated with the government or their opposition are represented disproportionately in comparision to other prominent figures from pop culture.
+					For {@render pillOutlet('Zeit Online', 'Zeit')} we have {@render pill('Robert Habeck')}, {@render pill('Annalena Baerbock')} and {@render pill('Christian Lidner')}, but also figures from the opposition such as {@render pill('Markus Söder')} or {@render pill('Friedrich Merz')}.
 					<br>
 					<br>
-					For {@render pillOutlet('The New York Times', 'NYT')} we have {@render pill('Kamala Harris')} and {@render pill('Anthony Blinken')}, 
+					{@render pillOutlet('The New York Times', 'NYT')} features government officials like {@render pill('Kamala Harris')} and {@render pill('Anthony Blinken')}, as well as opposition leaders including {@render pill('Mike Johnson')} and {@render pill('Nikki Haley')}.
 				</div>
 				<div data-step="3" class="step p-6 leading-relaxed" style="height:150vh">
 					<h3 class="font-bold text-xl">US Elections</h3>
