@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div class="m-2 ml-0">
-					<div><p class="text-sm">Design and Development</p></div>
+					<div><p class="text-sm">Research Associate</p></div>
 					<div class="relative h-[400px] overflow-hidden rounded-xl border bg-white">
 						<img
 							class="h-[350px] w-96 object-cover"
@@ -162,21 +162,27 @@
 					<ul>
 						<li class="pb-4">
 							<button class="flex items-center px-2 py-[2px]">
-								<a href="/places">Documentation</a>
+								<a href="https://github.com/ctechfilmuniversity/splee_data_viz" target="_blank"
+									>Documentation</a
+								>
 								<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span
 								>
 							</button>
 						</li>
 						<li class="pb-4">
 							<button class="flex items-center px-2 py-[2px]">
-								<a href="/topics">Github repository</a>
+								<a href="https://github.com/more-ginger/hyper-visual-times" target="_blank"
+									>Github repository</a
+								>
 								<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span
 								>
 							</button>
 						</li>
 						<li class="pb-4">
 							<button class="pointer-events-none flex items-center px-2 py-[2px]">
-								<a href="/images">Impressum</a>
+								<a href="https://www.filmuniversitaet.de/footer/kontakt/impressum" target="_blank"
+									>Impressum</a
+								>
 								<span class="ml-2"><img src="icons/ui-forward.svg" alt="Forward arrow icon" /></span
 								>
 							</button>
