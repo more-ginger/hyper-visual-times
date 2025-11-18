@@ -136,14 +136,11 @@
 				<div data-step="3" class="step p-6 leading-relaxed" style="height:150vh">
 					<h3 class="font-bold text-xl">US Elections</h3>
 					Furthermore, we have the presidential elections in the US in November 2024, which stood out as one of the great events that surged the visual mentions of certain people. An outstanding
-					phenomena in this regard is the clear cut of visual mentions after the drop out of {@render pill(
+					phenomena in this regard is the clear cut off of visual mentions after the drop out of {@render pill(
 						'Joe Biden'
 					)} from the presidential race. In contrast {@render pill('Kamala Harris')}, who was
 					previously visually invisible, sees a steep rise in visual mentions. This phenomena is
-					observable in both newspapers, {@render pillOutlet('Zeit Online', 'Zeit')} and {@render pillOutlet(
-						'The New York Times',
-						'NYT'
-					)}.
+					especially present in {@render pillOutlet('The New York Times','NYT')}, where the visual mentions of Harris also end with the her defeat in November 2024. <br><br>Although this phenomena is also observable in {@render pillOutlet('Zeit Online', 'Zeit')}, the overall numbers are not comparable to NYT and Kamala Harris is featured much less.
 				</div>
 				<div data-step="4" class="step p-6 leading-relaxed" style="height:150vh">
 					<h3 class="font-bold text-xl">Wars</h3>
