@@ -20,7 +20,7 @@
 			class="sticky top-20 m-2 w-full"
 			src={logos[index]}
 			alt="The Hyper-Visual Times logo"
-			transition:fade={{ duration: 300 }}
+			transition:fade={{ duration: 100 }}
 		/>
 	{/key}
 </div>
