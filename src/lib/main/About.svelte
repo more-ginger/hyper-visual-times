@@ -35,7 +35,7 @@
 					articles are used to uncover the geopolitical alignment of the newspapers. In chapter 2
 					"Discoursive interrelations", the textual metadata of news pieces (titles, descriptions,
 					and keywords) are aggregated into clusters of topics – exposing common patterns of
-					conversation in the New York Times. In chapter 3 "The Language of Images", all header
+					conversation in the New York Times. In chapter 3 "Person of interest", all header
 					images from the two newspapers have been subjected to facial recognition and clustered to
 					showcase the most represented people over the course of one year of coverage.
 				</p>
