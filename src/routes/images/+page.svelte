@@ -93,22 +93,12 @@
 			>
 				<div data-step="0" class="step p-6" style="height: 150vh;">
 					<div class="table-cell align-middle">
-						<h2 class="pb-4 font-serif text-xl">Visual Domination</h2>
+						<h2 class="pb-4 font-serif text-xl">Visual Stockpile</h2>
 						<p>
 							<span>
-								Which persons are visually represented in news images? The streamgraph on the right
-								shows the weekly number of images featuring persons from different regions of the
-								world in two Western newspapers: Zeit Online and
-								The New York Times.
-								You can interact change the outlet shown in the visualization by {@render pillInteract('clicking')} on the newspapers in the text: <br><br>{@render pillOutlet('The New York Times','NYT')} and {@render pillOutlet('Zeit Online','Zeit')} <br><br>
-								Furthermore, you can alter the shown people in the visualization by toggling their respective name in the pills above the visualization.
-								Lastly, you can inspect the poeple represented the most for a specific week, by {@render pillInteract('clicking')} on one of the bubbles.
+Which persons are visually represented in news images? The streamgraph on the right represents the weekly number of images featuring different persons of Zeit Online and The New York Times. Each pill represents 10 visual appearances in a week. You can alter the shown people in the visualization by toggling their respective name in the pills above the visualization. If you want to inspect the distribution of visual appearances for a specific week, you can {@render pillInteract('clicking')} on one of the bubbles. Lastly, you can change the outlet shown by the visualization by {@render pillInteract('clicking')} on the newspapers in the text:<br><br>
+{@render pillOutlet('The New York Times','NYT')} and {@render pillOutlet('Zeit Online','Zeit')} 
 							</span>
-							<!-- <img
-								src="img/images-streamgraph-legend.svg"
-								class="w-9/10 mt-8"
-								alt="Legend for the streamgraph visualization"
-							/> -->
 						</p>
 					</div>
 				</div>
@@ -161,13 +151,32 @@
 		</section>
 		<section class="mt-2">
 			<article class="m-auto w-full md:w-3/7">
-				<h2 class="font-serif text-xl pb-4">Visual Coappearances</h2>
-				Grassland (2023) has already observed how Western European newspapers tend to cover
-				macro-regions of interests: areas that have geographical and political significance for the
-				host country of the newspaper. Looking at the visualization on the right, this observation
-				seems to be confirmed: for Zeit, Central and Western Europe are the main regions of
-				interest. Even in relation to conflict and against the cultural background that ties Germany
-				and Israel, the use of Russia-Ukraine keywords is much higher than Israel–Palestine ones.
+				<h2 class="font-serif text-xl pb-4">Visual Co-appearances</h2>
+
+While individual visibility highlights which public figures dominate the visual field of a newspaper, <i>visual co-appearances</i> reveal how newsrooms construct relationships, oppositions, and political constellations. When two political actors appear together in the same image, this juxtaposition often encodes editorial interpretations of alliances, institutional proximity, rivalry, or shared involvement in major events. Analyzing these co-appearance patterns therefore provides insight into how newspapers visually stage political dynamics.
+
+Our analysis of article teaser images in <span class="zeit">Zeit Online</span> and <span class="nyt">The New York Times</span> reveals distinct structural tendencies in how each outlet visually pairs public figures.
+
+<h4 class="text-lg font-bold py-2">Zeit Online: Visualizing Political Constellations</h4>
+
+For <span class="zeit">Zeit Online</span>, co-appearances are dominated by <i>intra-German political relations</i>. The most frequent visual pairings involve key government figures—most notably {@render pill('Olaf Scholz')} with {@render pill('Robert Habeck')}, who appear together across more than two dozen images . These repeated pairings reflect the centrality of coalition politics in the national news agenda and illustrate how the newspaper frames the internal workings and public presence of the governing alliance.
+
+Similarly, {@render pill('Friedrich Merz')} frequently co-appears with both {@render pill('Olaf Scholz')} and {@render pill('Markus Söder')}, highlighting the visibility of opposition leadership and inter-party competition. Another recurring cluster involves {@render pill('Christian Lindner')}, whose frequent co-appearances with {@render pill('Robert Habeck')} and {@render pill('Olaf Scholz')} indicate the visual prominence of fiscal and economic debates within the government.
+
+In contrast, international figures appear far less often in joint depictions. Exceptions include occasional images pairing {@render pill('Olaf Scholz')} or {@render pill('Annalena Baerbock')} with {@render pill('Volodymyr Zelenskyy')}, reflecting coverage of German involvement in the Ukraine conflict. However, these pairings occur at substantially lower rates than domestic political co-appearances.
+
+Overall, Zeit’s visual pairings emphasize <i>coalition governance</i>, <i>domestic conflict</i>, and <i>regional political networks</i>—a pattern consistent with its editorial focus on German national politics.
+
+<h4 class="text-lg font-bold py-2">The New York Times: Elections and Legal Entanglements</h4>
+
+In <span class="nyt">The New York Times</span>, visual co-appearances reflect a markedly different structure. The dataset is dominated by U.S. federal politics and the 2024 presidential election. The most frequent pairing by far is {@render pill('Donald Trump')} with his lawyer {@render pill('Todd Blanche')}, appearing across <i>over sixty images</i> . This extraordinarily high volume underscores the centrality of Trump’s legal challenges in <span class="nyt">The New York Times</span>’s visual narrative.
+Election-related pairings are similarly prominent. {@render pill('Donald Trump')} frequently co-appears with {@render pill('Kamala Harris')}, but these are largely found in <i>graphics, opinion pages, and <span class="nyt">The New York Times</span> Now</i>—often representing hypothetical matchups or comparative analyses rather than literal photographic scenes. In contrast, {@render pill('Joe Biden')} and {@render pill('Kamala Harris')} co-appear primarily in political and Washington desks, reflecting their real-world institutional partnership.
+
+<span class="nyt">The New York Times</span>’s co-appearance structure also reveals the newspaper’s focus on the shifting political coalitions surrounding Trump’s candidacy. For instance, images pairing {@render pill('Donald Trump')} with {@render pill('JD Vance')}, or appearances of {@render pill('JD Vance')} with {@render pill('Tim Walz')}, visually foreground the evolving electoral landscape and vice-presidential contest.
+
+International co-appearances remain rare and episodic. Images pairing {@render pill('Benjamin Netanyahu')} with {@render pill('Joe Biden')} or {@render pill('Kamala Harris')} appear only a handful of times, primarily tied to U.S. diplomatic engagement in the Gaza conflict. Co-appearances involving {@render pill('Vladimir Putin')} are extremely limited, reflecting a narrower visual focus on Russia in comparison to <span class="zeit">Zeit</span>.
+
+In sum, <span class="nyt">The New York Times</span>’s co-appearance patterns center on <i>legal proceedings</i>, <i>electoral competition</i>, and <i>key moments in U.S. foreign policy</i>, with image pairings used to stage political conflict, institutional relationships, and campaign dynamics.
 			</article>
 			<figure class="h-screen w-full p-4 xl:p-4 xl:pt-20">
 				<ImageNetworkgraph />
