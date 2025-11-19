@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="z-10 flex w-max justify-center bg-[var(--color-ivory-default)] p-2 lg:justify-end lg:p-0"
+	class="z-1 flex w-max justify-center bg-[var(--color-ivory-default)] p-2 lg:justify-end lg:p-0"
 >
 	<div class="m-2 grow">
 		<button
