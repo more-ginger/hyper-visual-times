@@ -14,13 +14,17 @@
 	});
 </script>
 
-<div class="z-20 flex h-full items-center">
-	{#key index}
-		<img
-			class="sticky top-20 m-2 w-full"
-			src={logos[index]}
-			alt="The Hyper-Visual Times logo"
-			transition:fade={{ duration: 100 }}
-		/>
-	{/key}
+<div class="z-20 flex h-[75vh] items-center">
+	<div class="sticky top-10 w-full">
+		{#key index}
+			<div class="relative">
+				<img
+					class="absolute"
+					src={logos[index]}
+					alt="The Hyper-Visual Times logo"
+					transition:fade={{ duration: 100 }}
+				/>
+			</div>
+		{/key}
+	</div>
 </div>
