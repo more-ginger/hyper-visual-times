@@ -2,10 +2,11 @@
 	import type { countryDataForComparison } from '../../types';
 	import { onMount } from 'svelte';
 	import Dropdown from '$lib/common/Dropdown.svelte';
+	import OutletSelector from '$lib/common/OutletSelector.svelte';
+	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 
 	let { data, onMounted = () => {} } = $props();
 	const outlets = ['zeit', 'nyt'];
-	let selectedOutlet = $state(outlets[0]);
 	let isHelp = $state(false);
 
 	// The first dropdown lets the user
@@ -178,37 +179,18 @@
 			>
 		</h3>
 		<div>
-			<div class="flex justify-center p-2 lg:justify-end lg:p-0">
-				<div class="m-2">
-					<button
-						class={selectedOutlet === outlets[0] ? `bg-zeit-light` : `bg-default`}
-						onclick={() => {
-							selectedOutlet = outlets[0];
-						}}>Zeit</button
-					>
-				</div>
-				<img class="inline" src="icons/ui-switch.svg" alt="Switch with The New York Times" />
-				<div class="m-2">
-					<button
-						class={selectedOutlet === outlets[1] ? `bg-nyt-light` : `bg-default`}
-						onclick={() => {
-							selectedOutlet = outlets[1];
-						}}>The New York Times</button
-					>
-				</div>
-			</div>
+			<OutletSelector/>
 		</div>
 	</div>
 </div>
 {#if primaryCountryKey}
 	<div class="w-full">
 		<div class="w-full">
-			{#if selectedOutlet}
+			{#if $selectedOutlet}
 				{#await import('./NetworkCanvas.svelte') then { default: NetworkCanvas }}
 					<NetworkCanvas
-						nodes={nodes[selectedOutlet]}
-						links={links[selectedOutlet]}
-						{selectedOutlet}
+						nodes={nodes[$selectedOutlet.toLocaleLowerCase()]}
+						links={links[$selectedOutlet.toLocaleLowerCase()]}
 						{primaryCountryKey}
 						{onDropdownChange}
 					/>
