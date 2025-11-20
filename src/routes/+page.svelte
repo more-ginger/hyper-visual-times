@@ -139,12 +139,14 @@
 				<div>
 					<Chapters />
 				</div>
-				<BlocksRenderer rawtext={rawOutroText} />
+			</section>
+			<section class="py-10">
+				<div>
+					<About />
+				</div>
 			</section>
 			<section>
-			<div>
-				<About />
-			</div>
+				<BlocksRenderer rawtext={rawOutroText} />
 			</section>
 		</div>
 	</div>

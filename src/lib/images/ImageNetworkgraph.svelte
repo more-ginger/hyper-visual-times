@@ -34,6 +34,11 @@
 			)
 			.map((d) => (d.personA === selection1 ? d.personB : d.personA));
 	});
+	selectedOutlet.subscribe((value) => {
+		selection1 = null;
+		selection2 = null;
+		selectedPairIDs = [];
+	});
 	$effect(() => {
 		if (selection1 !== null && selection2 !== null && selectedPairIDs.length === 0) {
 			let pair = $currentCoappearanceDataset.find(
