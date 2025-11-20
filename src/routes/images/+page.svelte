@@ -68,11 +68,6 @@
 <div class="base m-auto w-11/12 pt-20" class:opacity-0={!true} class:opacity-100={true}>
 	<div id="images-essay">
 		<video id="intro-video" class="relative z-10 opacity-0" src="img/images_teaser_desktop.webm" muted loop></video>
-		<h1
-			class="z-1 mx-auto -mt-[50vh] mb-[45vh] text-center font-serif text-4xl leading-normal font-bold md:w-5/7 md:text-7xl"
-		>
-			Persons of Interest
-		</h1>
 		<section id="intro" class="mb-30">
 			<div class="m-auto w-full md:w-3/7">
 				<BlocksRenderer rawtext={rawIntroText} />
