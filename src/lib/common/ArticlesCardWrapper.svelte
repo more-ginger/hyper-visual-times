@@ -4,7 +4,6 @@
 	let { data, context, legend, ids } = $props();
 	let articles = $state<any>([]);
 	let contextOpen = $state(false);
-	let legendOpen = $state(false);
 	let articlesFetched = $state(0);
 	let fetchWait = $state(false);
 	let dataOpen = $state(true);
@@ -35,9 +34,6 @@
 		switch (name) {
 			case 'Context':
 				contextOpen = !open;
-				break;
-			case 'Legend':
-				legendOpen = !open;
 				break;
 			case 'Articles':
 				dataOpen = !open;
@@ -77,24 +73,13 @@
 		</div>
 	</div>
 	<div class="w-full">
-		{@render cardSection('Legend', legendOpen)}
-		<div
-			class={'h-0 overflow-hidden border-t border-black ' +
-				(legendOpen ? '!h-full border-dashed' : '')}
-		>
-			<div class="border-b border-black p-2">
-				{@render legend()}
-			</div>
-		</div>
-	</div>
-	<div class="w-full">
 		{@render cardSection('Articles', dataOpen)}
 		<div
-			class={'h-0 max-h-[50vh] !overflow-scroll overscroll-none ' +
+			class={'h-0 max-h-[60vh] !overflow-scroll overscroll-none ' +
 				(dataOpen ? '!h-full border-t border-dashed border-black' : '')}
 		>
 			<div
-				class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-2 shadow-md"
+				class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-4 border-b border-dashed border-black"
 			>
 				<div class="grid w-full grid-cols-2 leading-relaxed">
 					{@render data()}
@@ -105,6 +90,9 @@
 					<ArticleCard {article} />
 				{/each}
 				<div onclick={fetchArticlesForCards} class:hidden={articles.length == 0 || articlesFetched== ids.length} class="absolute border rounded-full px-2 py-px left-[50%] -translate-x-1/2 -bottom-4 z-10 bg-[var(--color-ivory-default)] cursor-pointer">Load More</div>
+				<div class="px-2 py-4" class:hidden={articles.length > 0}>
+					{@render legend()}
+				</div>
 			</div>
 		</div>
 	</div>
