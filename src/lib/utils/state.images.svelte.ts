@@ -10,22 +10,85 @@ export const currentVisualMentionsDataset = writable<any>(visualMentionsNYT);
 export const currentCoappearanceDataset = writable<any>(coappearanceNYT);
 export const currentColorDefault = writable<string>('var(--color-nyt-default)');
 export const currentColorLight = writable<string>('var(--color-nyt-light)');
+const newsDesksNYT = ["Politics",
+"Washington",
+"OpEd",
+"Metro",
+"NYTNow",
+"Business",
+"Foreign",
+"Graphics",
+"Podcasts",
+"Letters",
+"Culture",
+"National",
+"Styles",
+"Upshot",
+"Climate",
+"U.S.",
+"Briefing",
+"Arts",
+"Editorial",
+"Science",
+"Express",
+"BookReview",
+"Election", 
+"Analytics",
+"Opinion",
+"Magazine",
+"Learning",
+"Investigative",
+"Metropolitan",
+"Insider",
+"New York",
+"RealEstate",
+"Dining",
+"Well",
+"Obits",
+"Live",
+"Summary",
+"SundayBusiness",
+"Books",
+"Weekend"
+]
+const newsDesksZeit = [
+"News",
+"Politik",
+"Kultur",
+"Wirtschaft",
+"Gesellschaft",
+"Wissen",
+"Digital",
+"Hamburg",
+"Entdecken",
+"Mobilitaet",
+"Social Media",
+"Video",
+"Geld",
+"Björn Höcke",
+"Olaf Scholz",
+"Donald Trump",
+"Sinn",
+"Sport",
+"USA",
+"Arbeit"
+]
 const colorScheme = [
     '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'
 ]
-export const colorScale = writable(d3.scaleOrdinal([...new Set(coappearanceNYT.map((d) => Object.keys(d.news_desks)).flat())], colorScheme))
+export const colorScale = writable(d3.scaleOrdinal(newsDesksNYT, colorScheme))
 selectedOutlet.subscribe((outlet) => {
     if (outlet === 'NYT') {
         currentVisualMentionsDataset.set(visualMentionsNYT);
         currentCoappearanceDataset.set(coappearanceNYT);
         currentColorDefault.set('var(--color-nyt-default)');
         currentColorLight.set('var(--color-nyt-light)');
-        colorScale.set(d3.scaleOrdinal([...new Set(coappearanceNYT.map((d) => Object.keys(d.news_desks)).flat())], colorScheme))
+        colorScale.set(d3.scaleOrdinal(newsDesksNYT, colorScheme))
     } else {
         currentVisualMentionsDataset.set(visualMentionsZeit);
         currentCoappearanceDataset.set(coappearanceZeit);
         currentColorDefault.set('var(--color-zeit-default)');
         currentColorLight.set('var(--color-zeit-light)');
-        colorScale.set(d3.scaleOrdinal([...new Set(coappearanceZeit.map((d) => Object.keys(d.news_desks)).flat())], colorScheme))
+        colorScale.set(d3.scaleOrdinal(newsDesksZeit, colorScheme))
     }
 });

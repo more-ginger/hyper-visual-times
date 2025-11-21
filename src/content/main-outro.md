@@ -1,5 +1,5 @@
 <div class="w-full lg:w-6/12 m-auto pb-10 text-sm">
-<h2>References:</h2>
+<h2>Essay References:</h2>
 <div class="my-2">Barnhurst, K. G., & Nerone, J. (2001). The form of news: A history.</div>
 <div class="my-2">Bødker, H. (2015). Journalism as Cultures of Circulation. Digital Journalism, 3(1), 101–115. https://doi.org/10.1080/21670811.2014.928106</div>
 <div class="my-2">Bolter, J. D., & Grusin, R. A. (1999). Remediation: Understanding new media. MIT Press.</div>
