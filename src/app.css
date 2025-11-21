@@ -134,6 +134,8 @@
         cursor: pointer;
     }
 
+  
+
     button:hover {
         background-color: white;
     }
@@ -186,6 +188,10 @@
 
         .zeit {
             color: var(--color-zeit-default);
+        }
+
+        a {
+            text-decoration: underline;
         }
 
         .footnotes {

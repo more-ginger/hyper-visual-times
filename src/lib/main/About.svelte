@@ -1,55 +1,14 @@
 <script lang="ts">
+	import BlocksRenderer from '$lib/common/BlocksRenderer.svelte';
+	import aboutText from '@/content/about.md?raw';
 </script>
 
 <div class="m-auto flex w-4/5 pb-20">
 	<div class="w-3/5">
 		<div>
 			<h2 class="font-serif text-2xl">About the project</h2>
-			<div class="mt-8">
-				<p class="mb-2">
-					Panopticum News investigates journalism through the use of visual methods and data
-					visualization, the project aims at charting the landscape of online news.
-				</p>
-				<p class="mb-2">
-					In contrast to its past made of ink and paper, digital news is a volatile, lightweight,
-					and ambiguous item. News has absorbed the characteristics and affordances of digital
-					media. These affordances are remodeling the social and cultural role of news and
-					journalism at large. For instance, news articles and snippets are published across
-					platforms, copied, edited, and repurposed. Online news is shape-shifting. It is impossible
-					to talk about the “news flow”, it is more appropriate to talk about “flows” – plural. It
-					is also difficult to account for its volume and boundaries. The quantity of news items
-					published daily is humongous, even concerning one specific outlet, country, or topic.
-					Given these premises, the creation of a comprehensive impression of what is published by
-					news outlets has become a complex endeavor.
-				</p>
-				<p class="mb-2">
-					Motivated by this premise, Panopticum News is an artistic and investigative project
-					dedicated to exploring the material characteristics of online news, by testing potential
-					ways of consumption that transcend the individual article. By using one year of data from
-					two large Western news outlets – The New York Times (USA) and Zeit Online (DE) – the
-					project introduces a series of essays, visualisation-driven interfaces and widgets that
-					experiment with news articles as quantitative data.
-				</p>
-				<p class="mb-2">
-					In chapter 1 "The geo-politics of news", geographical entities extracted from individual
-					articles are used to uncover the geopolitical alignment of the newspapers. In chapter 2
-					"Discoursive interrelations", the textual metadata of news pieces (titles, descriptions,
-					and keywords) are aggregated into clusters of topics – exposing common patterns of
-					conversation in the New York Times. In chapter 3 "The Language of Images", all header
-					images from the two newspapers have been subjected to facial recognition and clustered to
-					showcase the most represented people over the course of one year of coverage.
-				</p>
-				<p class="mb-2">
-					The results bring forward the underlying mechanisms of journalism and make them visible.
-					These experiments are not only a form of reflection and critique of current journalism
-					practice, but also evidence to the potential of data visualisation in supporting readers'
-					experience with news content on a large scale.
-				</p>
-				<p class="mb-2">
-					Panopticum News is part of project SPLEE (Streaming Platform für Longreads und Essays aus
-					Europa). SPLEE aims to create a pilot model for a pan-European communication channel that
-					enables access to quality media across national and linguistic borders.
-				</p>
+			<div class="essay">
+				<BlocksRenderer rawtext={aboutText} />
 			</div>
 		</div>
 		<div class="mt-10">
