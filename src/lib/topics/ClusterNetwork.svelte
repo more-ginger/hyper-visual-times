@@ -178,11 +178,6 @@
 			> Back to clusters</button
 		>
 	</div>
-	<div class="absolute right-0 bottom-0">
-		<div>
-			<img src="img/topics-networkgraph-legend.svg" class="my-2 w-full" alt="" />
-		</div>
-	</div>
 	{#await nodesForRender then nodesForRender}
 		<svg {width} {height} viewBox={`-${width / 2}, ${-height / 2}, ${width}, ${height}`}>
 			<g>
