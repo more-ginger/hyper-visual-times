@@ -35,13 +35,33 @@
 	function selectOverlappingArticleIds(ids: { selectedIds: string[] }) {
 		selectedIds = ids.selectedIds;
 	}
+	let contextOpen = $state(false);
+	function toggleOpen(name, open) {
+		switch (name) {
+			case 'Context':
+				contextOpen = !open;
+				break;
+		}
+	}
 </script>
 
+{#snippet cardSection(name, open)}
+	<button
+		type="button"
+		class="grid w-full cursor-pointer grid-cols-2 rounded-none border-none p-2 text-left"
+		onclick={() => {
+			toggleOpen(name, open);
+		}}
+	>
+		<p class="font-bold">{name}</p>
+		<img class="h-4 self-center justify-self-end" class:rotate-180={open} src="icons/ui-scroll.svg" alt="" />
+	</button>
+{/snippet}
 <div class="base relative m-auto flex h-[100vh] pt-20 md:w-full">
 	<div class="flex h-full overflow-scroll px-2 pb-2 md:w-full">
 		<div class="w-4/12 pb-150">
 			<div class="2xl:mt-10 2xl:rounded-xl 2xl:border 2xl:p-2 2xl:pb-15">
-				<div class="mt-2 mb-6">
+				<div class="mt-2 mb-2">
 					<p class="text-sm">Currently selected:</p>
 					<h1 class="my-2 font-serif text-xl md:text-2xl">
 						{selectedCluster[0].manualLabel}
@@ -50,39 +70,48 @@
 						{selectedCluster[0].description}
 					</p>
 				</div>
+				<div class:hidden={networkIsActive} class="relative overflow-hidden overscroll-none rounded-xl border border-black backdrop-blur-lg my-2">
+					<div class="w-full">
+						{@render cardSection('Context', contextOpen)}
+						<div class={'h-0 overflow-hidden ' + (contextOpen ? '!h-full border-t border-dashed ' : '')}>
+							<div class={'p-2 ' + (contextOpen ? 'border-solid' : '')}>
+								<div>
+									<p class="text-sm"></p>
+									<p class="mb-2">
+										This project frames the patterns of language and narrative of a year's corpus of news
+										data, digging into the divergent simultaneous discourses discourses that occur across the
+										newspaper's articles, sections, and timeframes.
+									</p>
+									One bubble represents a topic, a cluster of common words extracted from The New York Times' articles.
+									The most common topics are marked in<span
+										class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
+										>orange</span
+									>
+									and are related to foreign politics and conflict. followed by internal politics and economy –
+									here in
+									<span
+										class="rounded-xl border border-[#FFBC35] px-2 before:pr-1 before:text-[#FFBC35] before:content-['•']"
+										>yellow</span
+									>
+									. Miscellaneous topics like culture, health, society, and sports are represented in
+									<span
+										class="rounded-xl border border-[#FFDAB9] px-2 before:pr-1 before:text-[#FFDAB9] before:content-['•']"
+										>pink</span
+									>. Orange bubbles represent topics connected to foreign politics. Climate-related topics are
+									<span
+										class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
+										>green</span
+									>.
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				{#if selectionIsActive && !networkIsActive}
-					<ClusterBarchart {selectedCluster} {switchView} />
+					<ClusterBarchart {selectedCluster} />
 				{:else}
 					<NetworkCard {selectedPair} {selectedIds} />
 				{/if}
-			</div>
-			<div>
-				<p class="text-sm"></p>
-				<p class="mb-2">
-					This project frames the patterns of language and narrative of a year's corpus of news
-					data, digging into the divergent simultaneous discourses discourses that occur across the
-					newspaper's articles, sections, and timeframes.
-				</p>
-				One bubble represents a topic, a cluster of common words extracted from The New York Times' articles.
-				The most common topics are marked in<span
-					class="rounded-xl border border-orange-700 px-2 before:pr-1 before:text-orange-700 before:content-['•']"
-					>orange</span
-				>
-				and are related to foreign politics and conflict. followed by internal politics and economy –
-				here in
-				<span
-					class="rounded-xl border border-[#FFBC35] px-2 before:pr-1 before:text-[#FFBC35] before:content-['•']"
-					>yellow</span
-				>
-				. Miscellaneous topics like culture, health, society, and sports are represented in
-				<span
-					class="rounded-xl border border-[#FFDAB9] px-2 before:pr-1 before:text-[#FFDAB9] before:content-['•']"
-					>pink</span
-				>. Orange bubbles represent topics connected to foreign politics. Climate-related topics are
-				<span
-					class="rounded-xl border border-[#EAFFC0] px-2 before:pr-1 before:text-[#EAFFC0] before:content-['•']"
-					>green</span
-				>.
 			</div>
 		</div>
 		<div class="sticky top-0 w-8/12">
