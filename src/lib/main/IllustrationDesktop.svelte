@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { viewBox, isVisible } = $props();
+	let { viewBox, isVisible, step } = $props();
 </script>
 
 <svg

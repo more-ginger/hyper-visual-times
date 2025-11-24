@@ -16,26 +16,29 @@
 
 	// Define zoom positions for each step
 	const zoomPositions = $derived([
+		// Step 0: map is not visible
 		{ x: 0, y: 0, width: svgWidth, height: svgHeight },
-		// Step 0: Default view (no zoom)0.2
+		// Step 1: Default view (no zoom)0.2
 		{ x: 0, y: 0, width: svgWidth, height: svgHeight },
-		// Step 1: Zoom to top-center, individual layer
+		// Step 2: Zoom to top-center, individual layer
 		{ x: 0, y: svgHeight / 10, width: svgWidth, height: svgHeight * 0.2 },
-		//Step 2: Citizen journalists
+		// Step 3: Zoom to top-left, journalists
+		{ x: svgWidth * 0.1, y: svgHeight / 6, width: svgWidth * 0.5, height: svgHeight * 0.2 },
+		//Step 4: Citizen journalists
 		{
 			x: svgWidth * 0.28,
 			y: svgHeight / 6,
 			width: svgWidth * 0.5,
 			height: svgHeight * 0.2
 		},
-		//Step 3: Bridge between layers
+		//Step 5: Bridge between layers
 		{
 			x: svgWidth * 0.6,
 			y: 0,
 			width: svgWidth * 0.5,
-			height: svgHeight * 0.5
+			height: svgHeight * 0.3
 		},
-		// Step 4: Zoom to bottom-center, societal layer
+		// Step 6: Zoom to bottom-center, societal layer
 		{
 			x: 0,
 			y: svgHeight * 0.7,
@@ -43,7 +46,15 @@
 			height: svgHeight * 0.5,
 			zoom: 2
 		},
-		// Step 5: Zoom to bottom-center, societal layer – focus on platforms
+		// Step 7: Red accent on groups
+		{
+			x: 0,
+			y: svgHeight * 0.7,
+			width: svgWidth,
+			height: svgHeight * 0.5,
+			zoom: 2
+		},
+		// Step 8: Zoom to bottom-center, societal layer – focus on platforms
 		{
 			x: 0,
 			y: svgHeight * 0.6,
@@ -51,7 +62,7 @@
 			height: svgHeight * 0.5,
 			zoom: 2
 		},
-		// Step 6: Bridge between societal and material
+		// Step 9: Bridge between societal and material
 		{
 			x: svgWidth * 0.2,
 			y: svgHeight * 0.3,
@@ -59,8 +70,17 @@
 			height: svgHeight * 0.5,
 			zoom: 2
 		},
-		// Step 7: Zoom to center, material layer
-		{ x: 0, y: svgHeight * 0.5, width: svgWidth, height: svgHeight * 0.2, zoom: 2 },
+		// Step 10: Zoom to center, rules for publication should be red
+		{
+			x: svgWidth * 0.3,
+			y: svgHeight * 0.28,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.3,
+			zoom: 1
+		},
+		// Step 11: Zoom to center, material layer
+		{ x: 0, y: svgHeight * 0.5, width: svgWidth, height: svgHeight * 0.2, zoom: 3 },
+
 		// Step 8: Zoom into article structure
 		{
 			x: svgWidth * 0.3,
@@ -152,11 +172,13 @@
 		}
 
 		let targetPosition = zoomPositions[0];
+		// sets the map to invisible if the step is zero
 		if (step === 0) {
 			isVisible = false;
 		} else {
 			isVisible = true;
 		}
+
 		// Only update if step actually changed
 		if (step !== currentStep) {
 			currentStep = step;
@@ -171,7 +193,7 @@
 </script>
 
 {#if bodyWidth > 820}
-	<IllustrationDesktop {viewBox} {isVisible} />
+	<IllustrationDesktop {viewBox} {isVisible} {step} />
 {:else}
-	<IllustrationMobile {viewBox} />
+	<IllustrationMobile {viewBox} {isVisible} />
 {/if}
