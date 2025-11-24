@@ -9,13 +9,14 @@
 	let svgWidth = $state(2383.94);
 	let svgHeight = $state(2944.08);
 	let viewBox = $state({ x: 0, y: 0, width: 2383.94, height: 2944.08 });
-	$inspect(bodyWidth, svgWidth);
+	let isVisible = $state(true);
 	// Animation state
 	let isAnimating = $state(false);
 	let animationFrame: number;
 
 	// Define zoom positions for each step
 	const zoomPositions = $derived([
+		{ x: 0, y: 0, width: svgWidth, height: svgHeight },
 		// Step 0: Default view (no zoom)0.2
 		{ x: 0, y: 0, width: svgWidth, height: svgHeight },
 		// Step 1: Zoom to top-center, individual layer
@@ -151,6 +152,11 @@
 		}
 
 		let targetPosition = zoomPositions[0];
+		if (step === 0) {
+			isVisible = false;
+		} else {
+			isVisible = true;
+		}
 		// Only update if step actually changed
 		if (step !== currentStep) {
 			currentStep = step;
@@ -165,7 +171,7 @@
 </script>
 
 {#if bodyWidth > 820}
-	<IllustrationDesktop {viewBox} />
+	<IllustrationDesktop {viewBox} {isVisible} />
 {:else}
 	<IllustrationMobile {viewBox} />
 {/if}
