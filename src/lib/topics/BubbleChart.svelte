@@ -81,9 +81,33 @@
 	function simulationUpdate() {
 		finalClusters = TopicClusters;
 	}
+
+	function goToClusterNetwork() {
+		switchView({
+			selectionIsActive: false,
+			networkIsActive: true
+		});
+	}
+
+
 </script>
 
 <div class="h-full w-full" bind:clientWidth={width} bind:clientHeight={height}>
+	<div class="absolute m-2">
+		<button
+			class="flex"
+			onclick={() => {
+				goToClusterNetwork();
+			}}
+			><span class="mr-2 "
+				><img
+					src="./icons/ui-forward.svg"
+					class="inline-block align-middle pb-px"
+					alt="arrow back"
+				/></span
+			> Go to network</button
+		>
+	</div>
 	<svg {width} {height}>
 		{#await finalClusters then finalClusters}
 			{#each finalClusters as cluster, c}

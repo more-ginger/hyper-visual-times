@@ -172,7 +172,7 @@
 			><span class="mr-2 -rotate-180"
 				><img
 					src="./icons/ui-forward.svg"
-					class="inline-block align-middle"
+					class="inline-block align-middle pb-1"
 					alt="arrow back"
 				/></span
 			> Back to clusters</button
