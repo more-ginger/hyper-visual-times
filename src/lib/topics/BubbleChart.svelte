@@ -43,7 +43,7 @@
 					})
 				)
 			)
-			.range([12, 180])
+			.range([30, 140])
 	);
 
 	const categoryScale = $derived(
