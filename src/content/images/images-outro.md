@@ -14,6 +14,10 @@ Ultimately, the comparative analysis highlights how images operate as a powerful
 
 Barnhurst, K. G., & Nerone, J. (2001). *The form of news*. New York, NY: Guilford Publications.
 
+Boomgaarden, Hajo & Boukes, Mark & Iorgoveanu, Aurora. (2016). Image Versus Text: How Newspaper Reports Affect Evaluations of Political Candidates. *International Journal of Communication.* 10. 2529-2555. 
+
+Caprini, G. (2023). *Visual bias.* University of Oxford.
+
 Sontag, S. (2008). *On Photography*. Harlow, England: Penguin Classics.
 
 Vos, D., & Van Aelst, P. (2017). Does the Political System Determine Media Visibility of Politicians? A Comparative Analysis of Political Functions in the News in Sixteen Countries. *Political Communication, 35*(3), 371–392. https://doi.org/10.1080/10584609.2017.1383953
