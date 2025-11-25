@@ -111,7 +111,7 @@
 									class="block p-4 hover:underline focus:italic"
 									role="menuitem"
 									tabindex="-1"
-									id="menu-item-2">Chapter 3: The language of images</a
+									id="menu-item-2">Chapter 3: Person of interest</a
 								>
 							</div>
 						</div>

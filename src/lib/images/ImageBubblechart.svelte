@@ -196,9 +196,7 @@
 </script>
 
 {#snippet context()}
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo eros vitae pretium.
-	Maecenas tristique odio ac pellentesque malesuada. Donec malesuada, orci sit amet mollis tempus,
-	sem urna lobortis purus, at sagittis ante massa et ex.
+	The bubble chart visualizes the frequency of visual appearances of selected public figures in news images for a given week. Each bubble represents a person, with the size corresponding to the number of images they appeared in during that week. You can click on bubbles to investigate the associated articles.
 {/snippet}
 {#snippet legend()}
 	<img src="img/images-bubblechart-legend.svg" class="my-2 w-full" alt="" />

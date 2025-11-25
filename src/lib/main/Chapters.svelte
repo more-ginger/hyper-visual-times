@@ -106,7 +106,7 @@
 							</div>
 						</div>
 					</div>
-					<h2 class="my-2 font-serif text-lg">The language of images</h2>
+					<h2 class="my-2 font-serif text-lg">Person of interest</h2>
 					<p>
 						This chapter focuses on images of people as cultural artefacts built using
 						long-established conventions of visual depictions. By extracting facial features from

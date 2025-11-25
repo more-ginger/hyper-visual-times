@@ -112,10 +112,8 @@
 									</li>
 									<li class="pb-4">
 										<button class="flex items-center px-2 py-[2px]"
-											><div
-												class="mr-[5px] h-[15px] w-[15px] animate-pulse rounded-xl bg-green-500"
-											></div>
-											<a href="/images">The language of images</a></button
+											><div class="mr-[5px] h-[15px] w-[15px] rounded-xl bg-green-500"></div>
+											<a href="/images">Person of interest</a></button
 										>
 									</li>
 								</ul>
