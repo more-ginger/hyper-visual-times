@@ -31,14 +31,22 @@
 			width: svgWidth * 0.5,
 			height: svgHeight * 0.2
 		},
-		//Step 5: Bridge between layers
+		// Step 5: editorial boards
+		{
+			x: svgWidth * 0.3,
+			y: svgHeight / 1.5,
+			width: svgWidth * 0.2,
+			height: svgHeight * 0.3,
+			zoom: 2
+		},
+		// Step 6: readers
 		{
 			x: svgWidth * 0.6,
 			y: 0,
 			width: svgWidth * 0.5,
 			height: svgHeight * 0.3
 		},
-		// Step 6: Zoom to bottom-center, societal layer
+		// Step 7: Zoom to bottom-center, societal layer
 		{
 			x: 0,
 			y: svgHeight * 0.7,
@@ -46,7 +54,7 @@
 			height: svgHeight * 0.5,
 			zoom: 2
 		},
-		// Step 7: Red accent on groups
+		// Step 8: Red accent on groups
 		{
 			x: 0,
 			y: svgHeight * 0.7,
@@ -54,7 +62,7 @@
 			height: svgHeight * 0.5,
 			zoom: 2
 		},
-		// Step 8: Zoom to bottom-center, societal layer – focus on platforms
+		// Step 9: Zoom to bottom-center, societal layer – focus on platforms
 		{
 			x: 0,
 			y: svgHeight * 0.6,
@@ -62,7 +70,7 @@
 			height: svgHeight * 0.5,
 			zoom: 2
 		},
-		// Step 9: Bridge between societal and material
+		// Step 10: Bridge between societal and material, red highlight on content pipeline
 		{
 			x: svgWidth * 0.2,
 			y: svgHeight * 0.3,
@@ -70,7 +78,7 @@
 			height: svgHeight * 0.5,
 			zoom: 2
 		},
-		// Step 10: Zoom to center, rules for publication should be red
+		// Step 11: Zoom to center, rules for publication should be red
 		{
 			x: svgWidth * 0.3,
 			y: svgHeight * 0.28,
@@ -78,43 +86,104 @@
 			height: svgHeight * 0.3,
 			zoom: 1
 		},
-		// Step 11: Zoom to center, material layer
+		// Step 12: Zoom to center, material layer
 		{ x: 0, y: svgHeight * 0.5, width: svgWidth, height: svgHeight * 0.2, zoom: 3 },
 
-		// Step 8: Zoom into article structure
+		// Step 13: Zoom to article
 		{
-			x: svgWidth * 0.3,
-			y: svgHeight * 0.5,
-			width: svgWidth * 0.8,
+			x: svgWidth * 0.4,
+			y: svgHeight * 0.45,
+			width: svgWidth * 0.4,
 			height: svgHeight * 0.25,
 			zoom: 3
 		},
-		// Step 9: Zoom into rules label
+		// Step 14: Zoom to circulation
 		{
-			x: svgWidth * 0.2,
-			y: svgHeight * 0.4,
+			x: svgWidth * 0.7,
+			y: svgHeight * 0.48,
 			width: svgWidth * 0.5,
 			height: svgHeight * 0.1,
 			zoom: 3
 		},
-		// Step 10: Zoom into SEO labels
+		// Step 15: Move to platforms
 		{
-			x: svgWidth * 0.2,
-			y: svgHeight * 0.52,
+			x: svgWidth * 0.0,
+			y: svgHeight * 0.8,
 			width: svgWidth * 0.3,
 			height: svgHeight * 0.1,
 			zoom: 3
 		},
-		// Step 11: Zoom into article structure
+		// Step 16: Move to constraints
 		{
-			x: svgWidth * 0.35,
-			y: svgHeight * 0.5,
-			width: svgWidth * 0.5,
+			x: svgWidth * 0.05,
+			y: svgHeight * 0.55,
+			width: svgWidth * 0.3,
 			height: svgHeight * 0.1,
 			zoom: 3
 		},
-		// Step 12: Zoom out
-		{ x: 0, y: 10, width: svgWidth, height: svgHeight }
+		// Step 17: Move to titles
+		{
+			x: svgWidth * 0.4,
+			y: svgHeight * 0.5,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
+		},
+		// Step 18: Zoom out, move to encoding rules
+		{
+			x: svgWidth * 0.3,
+			y: svgHeight * 0.5,
+			width: svgWidth * 0.4,
+			height: svgHeight * 0.1
+		},
+		// Step 19: Move to encoding/decoding layers
+		{
+			x: svgWidth * 0.38,
+			y: svgHeight * 0.45,
+			width: svgWidth * 0.4,
+			height: svgHeight * 0.1
+		},
+		// Step 20: Move to decoding
+		{
+			x: svgWidth * 0.5,
+			y: svgHeight * 0.5,
+			width: svgWidth * 0.4,
+			height: svgHeight * 0.1
+		},
+		// Step 21: Zoom out, move to encoding
+		{
+			x: svgWidth * 0.35,
+			y: svgHeight * 0.53,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
+		},
+		// Step 22: Zoom out, move to encoding
+		{
+			x: svgWidth * 0.55,
+			y: svgHeight * 0.53,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
+		},
+		// Step 23: Move to keywords
+		{
+			x: svgWidth * 0.3,
+			y: svgHeight * 0.63,
+			width: svgWidth * 0.2,
+			height: svgHeight * 0.1
+		},
+		// Step 23: Move to context
+		{
+			x: svgWidth * 0.7,
+			y: svgHeight * 0.63,
+			width: svgWidth * 0.2,
+			height: svgHeight * 0.1
+		},
+		// Step 24: readers
+		{
+			x: svgWidth * 0.6,
+			y: 0,
+			width: svgWidth * 0.5,
+			height: svgHeight * 0.3
+		}
 	]);
 	// Easing function for smooth animations
 	function easeInOutCubic(t: number): number {
