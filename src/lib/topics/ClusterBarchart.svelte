@@ -1,7 +1,7 @@
 <script lang="ts">
 	// @ts-expect-error
 	import * as d3 from 'd3';
-	let { selectedCluster, switchView } = $props();
+	let { selectedCluster } = $props();
 	let data = $derived(selectedCluster[0].topWords.sort((a,b) => b.value-a.value));
 	let width = $state(0);
 	let height = $state(0);
@@ -26,32 +26,10 @@
 
 	let leftAxis = $derived(d3.axisLeft(yScale));
 	let axisTicks = $derived(leftAxis.scale().ticks());
-
-	function handleClusterSelection() {
-		switchView({
-			selectionIsActive: false,
-			networkIsActive: true
-		});
-	}
 </script>
 
-<div class="m-2 mb-15">
-	<div class="mb-2 flex items-center justify-between">
-		<p class="border-b font-serif text-xs">{selectedCluster[0].manualLabel}</p>
-		<button
-			onclick={() => {
-				handleClusterSelection();
-			}}
-			><span class="mr-2"
-				><img
-					src="./icons/ui-forward.svg"
-					class="inline-block align-middle"
-					alt="arrow forward"
-				/></span
-			>Go to Network</button
-		>
-	</div>
-	<div class="h-70 w-full" bind:clientWidth={width} bind:clientHeight={height}>
+<div class="my-4">
+	<div class="h-[45vh] w-full" bind:clientWidth={width} bind:clientHeight={height}>
 		<svg {width} {height}>
 			<g class="-translate-y-2">
 				{#each data as word, w}
@@ -78,15 +56,13 @@
 						{#if t === axisTicks.length - 1}
 							<text
 								x="12"
-								y={height - yScale(tick) - 2}
+								y={height - yScale(tick) - 30}
 								font-size="10"
-								fill="transparent"
-								stroke="white"
 							>
-								{tick} mentions within cluster
+								Mentions within cluster
 							</text>
 							<text x="12" y={height - yScale(tick) - 2} font-size="10">
-								{tick} mentions within cluster
+								{tick}
 							</text>
 						{:else}
 							<text x="12" y={height - yScale(tick) - 2} font-size="10">{tick}</text>

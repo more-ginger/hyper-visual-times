@@ -415,7 +415,7 @@
 	>
 {/snippet}
 {#snippet context()}
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ornare commodo eros vitae pretium. Maecenas tristique odio ac pellentesque malesuada. Donec malesuada, orci sit amet mollis tempus, sem urna lobortis purus, at sagittis ante massa et ex.
+	The network graph visualizes co-appearances of public figures in news images. Each node represents a person, and edges indicate instances where two individuals appeared together in the same image. The thickness and color of the edges correspond to the frequency and context (news desk) of these co-appearances. You can select up to two persons by clicking on their respective nodes to explore their shared visual representation in news coverage. The legend indicates the news desks associated with the co-appearances.
 {/snippet}
 {#snippet legend()}
 	<img src="img/images-networkgraph-legend.svg" class="my-2 w-full" alt="" />

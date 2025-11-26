@@ -30,7 +30,7 @@
 	>
 {/snippet}
 <div
-	class={'no-scrollbar no-scrollbar::-webkit-scrollbar mb-6 max-h-[50vh] !overflow-scroll overscroll-none rounded-xl border'}
+	class={'no-scrollbar no-scrollbar::-webkit-scrollbar mb-6 max-h-[60vh] !overflow-scroll overscroll-none rounded-xl border'}
 >
 	<div class="sticky top-0 z-10 flex justify-between bg-[var(--color-ivory-default)] p-2 shadow-md">
 		<div class="flex w-full flex-wrap gap-2">
@@ -52,8 +52,8 @@
 				<ArticleCard {article} />
 			{/each}
 		{:else}
-			<div class="w-full py-4">
-				<img class="m-auto" src="img/topics-selection-legend.svg" />
+			<div class="w-full p-6">
+				<img class="w-full" src="img/topics-selection-legend.svg" />
 			</div>
 		{/if}
 	</div>
