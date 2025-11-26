@@ -36,8 +36,7 @@
 			x: svgWidth * 0.3,
 			y: svgHeight / 1.5,
 			width: svgWidth * 0.2,
-			height: svgHeight * 0.3,
-			zoom: 2
+			height: svgHeight * 0.3
 		},
 		// Step 6: readers
 		{
@@ -51,40 +50,35 @@
 			x: 0,
 			y: svgHeight * 0.7,
 			width: svgWidth,
-			height: svgHeight * 0.5,
-			zoom: 2
+			height: svgHeight * 0.5
 		},
 		// Step 8: Red accent on groups
 		{
 			x: 0,
 			y: svgHeight * 0.7,
 			width: svgWidth,
-			height: svgHeight * 0.5,
-			zoom: 2
+			height: svgHeight * 0.5
 		},
 		// Step 9: Zoom to bottom-center, societal layer – focus on platforms
 		{
 			x: 0,
 			y: svgHeight * 0.6,
 			width: svgWidth * 0.4,
-			height: svgHeight * 0.5,
-			zoom: 2
+			height: svgHeight * 0.5
 		},
 		// Step 10: Bridge between societal and material, red highlight on content pipeline
 		{
 			x: svgWidth * 0.2,
 			y: svgHeight * 0.3,
 			width: svgWidth * 0.8,
-			height: svgHeight * 0.5,
-			zoom: 2
+			height: svgHeight * 0.5
 		},
 		// Step 11: Zoom to center, rules for publication should be red
 		{
 			x: svgWidth * 0.3,
 			y: svgHeight * 0.28,
 			width: svgWidth * 0.3,
-			height: svgHeight * 0.3,
-			zoom: 1
+			height: svgHeight * 0.3
 		},
 		// Step 12: Zoom to center, material layer
 		{ x: 0, y: svgHeight * 0.5, width: svgWidth, height: svgHeight * 0.2, zoom: 3 },
@@ -94,32 +88,28 @@
 			x: svgWidth * 0.4,
 			y: svgHeight * 0.45,
 			width: svgWidth * 0.4,
-			height: svgHeight * 0.25,
-			zoom: 3
+			height: svgHeight * 0.25
 		},
 		// Step 14: Zoom to circulation
 		{
 			x: svgWidth * 0.7,
 			y: svgHeight * 0.48,
 			width: svgWidth * 0.5,
-			height: svgHeight * 0.1,
-			zoom: 3
+			height: svgHeight * 0.1
 		},
 		// Step 15: Move to platforms
 		{
 			x: svgWidth * 0.0,
 			y: svgHeight * 0.8,
 			width: svgWidth * 0.3,
-			height: svgHeight * 0.1,
-			zoom: 3
+			height: svgHeight * 0.1
 		},
 		// Step 16: Move to constraints
 		{
 			x: svgWidth * 0.05,
 			y: svgHeight * 0.55,
 			width: svgWidth * 0.3,
-			height: svgHeight * 0.1,
-			zoom: 3
+			height: svgHeight * 0.1
 		},
 		// Step 17: Move to titles
 		{
