@@ -14,6 +14,7 @@
 	// init scroller for scrollytelling
 	const scroller = scrollama();
 	let step = $state(0);
+	let direction: 'up' | 'down' | null = $state(null);
 	// checks if essay is rendered
 	let essayIsRendered = $state(false);
 	// checks if essay has step to attach scroller
@@ -32,6 +33,15 @@
 		essayHasSteps = data.hasSteps;
 	}
 
+	function scrollToParagraph(paragraph: string) {
+		const el = document.getElementById(`${paragraph}`);
+		console.log(el);
+		if (!el) return;
+		el.scrollIntoView({
+			behavior: 'smooth'
+		});
+	}
+
 	$effect(() => {
 		if (essayIsRendered && essayHasSteps) {
 			// Wait a bit more to ensure DOM is ready
@@ -45,6 +55,7 @@
 					})
 					.onStepEnter((response) => {
 						step = response.index;
+						direction = response.direction;
 					})
 					.onStepProgress((response) => {})
 					.onStepExit((response) => {});
@@ -58,7 +69,7 @@
 	class:opacity-0={!essayIsRendered}
 	class:opacity-100={essayIsRendered}
 >
-	<div class="z-0 m-auto">
+	<div class="z-0 m-auto" id="intro">
 		<div class="m-auto w-full md:w-11/12">
 			<div class="h-dvh w-full 2xl:max-h-[80vh]">
 				<IntroductionTile {data} />
@@ -131,13 +142,32 @@
 		<div class="z-0 m-auto w-full">
 			<section>
 				<figure class="sticky top-10 h-[80vh] h-dvh w-full">
-					<Illustration {step} {bodyWidth} />
+					<Illustration {step} {bodyWidth} {direction} />
 				</figure>
 				<article class="relative w-full">
 					<BlocksRenderer rawtext={rawEssayText} {onEssayRender} />
+					<div class="sticky bottom-10 pl-10">
+						{#if direction === 'up'}
+							<div>
+								<button
+									class="bg-ivory-default"
+									onclick={() => {
+										scrollToParagraph('intro');
+									}}>Go back to intro</button
+								>
+							</div>
+						{:else}
+							<button
+								class="bg-ivory-default"
+								onclick={() => {
+									scrollToParagraph('chapters');
+								}}>Skip to chapters</button
+							>
+						{/if}
+					</div>
 				</article>
 			</section>
-			<section class="m-auto w-11/12">
+			<section id="chapters" class="m-auto w-11/12">
 				<div>
 					<Chapters />
 				</div>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IllustrationDesktop from './IllustrationDesktop.svelte';
 	import IllustrationMobile from './IllustrationMobile.svelte';
-	let { step, bodyWidth } = $props();
+	let { step, bodyWidth, direction } = $props();
 
 	let currentStep = $state(-1); // Track the current step to avoid unnecessary updates
 
