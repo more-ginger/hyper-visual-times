@@ -39,9 +39,7 @@
 									src="img/pn-logo.png"
 									alt="Panopticum News half circle logo"
 								/>
-								<span class="ml-2 w-11/12 self-center text-lg focus:italic"
-									>The Hyper-Visual Times</span
-								>
+								<span class="ml-2 w-11/12 self-center text-lg focus:italic">Panopticum News</span>
 							</div>
 						</a>
 					</div>
@@ -102,55 +100,21 @@
 										tabindex="-1"
 										id="menu-item-0">Chapter 1: The Geo-politics of news</a
 									>
-										<circle
-											cx="35"
-											cy="10.5"
-											r="10"
-											fill="black"
-											stroke="#fcf4e9"
-											stroke-width="2"
-										/>
-										<text x="32" y="14" fill="#fcf4e9" font-size="10">3</text>
-										<circle cx="23" cy="10.5" r="10" fill="black" stroke="#fcf4e9" />
-										<text x="20" y="14" fill="#fcf4e9" font-size="10">2</text>
-										<circle cx="11" cy="10.5" r="10" fill="black" stroke="#fcf4e9" />
-										<text x="9" y="14" fill="#fcf4e9" font-size="10">1</text>
-									</svg>
-								</span>
-							</button>
-						</div>
-						<div
-							style:visibility={isDropdownOpen ? 'visible' : 'hidden'}
-							class="bg-ivory-default absolute top-8 right-0 z-10 mt-2 mt-2 w-80 rounded-md border shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-							role="menu"
-							aria-orientation="vertical"
-							aria-labelledby="menu-button"
-							tabindex="-1"
-						>
-							<div class="py-1" role="none">
-								<a
-									href="/places"
-									data-sveltekit-preload-code="eager"
-									data-sveltekit-preload-data="hover"
-									class="block border-b p-4 hover:underline focus:italic"
-									role="menuitem"
-									tabindex="-1"
-									id="menu-item-0">Chapter 1: The Geo-politics of news</a
-								>
-								<a
-									href="/topics"
-									class="block border-b p-4 hover:underline focus:italic"
-									role="menuitem"
-									tabindex="-1"
-									id="menu-item-1">Chapter 2: Discoursive interrelations</a
-								>
-								<a
-									href="/images"
-									class="block p-4 hover:underline focus:italic"
-									role="menuitem"
-									tabindex="-1"
-									id="menu-item-2">Chapter 3: Person of interest</a
-								>
+									<a
+										href="/topics"
+										class="block border-b p-4 hover:underline focus:italic"
+										role="menuitem"
+										tabindex="-1"
+										id="menu-item-1">Chapter 2: Discoursive interrelations</a
+									>
+									<a
+										href="/images"
+										class="block p-4 hover:underline focus:italic"
+										role="menuitem"
+										tabindex="-1"
+										id="menu-item-2">Chapter 3: Person of interest</a
+									>
+								</div>
 							</div>
 						</div>
 					</div>
