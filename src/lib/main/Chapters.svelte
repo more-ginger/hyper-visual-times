@@ -1,3 +1,7 @@
+<script>
+	import { LinkHandler } from "$lib/utils/pathhelper.svelte";
+
+</script>
 <div class="w-full md:my-20">
 	<div class="mx-2 lg:w-3/7">
 		<h1 class="my-2 font-serif text-2xl md:text-2xl">The Hyper-visual Times</h1>
@@ -13,7 +17,7 @@
 	</div>
 	<div class="w-full lg:grid lg:h-2/3 lg:grid-cols-3 lg:grid-cols-7 lg:gap-2 lg:self-center">
 		<a
-			href="/places"
+			href={LinkHandler("/places")}
 			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:col-start-2 lg:m-0 lg:mt-4 lg:self-start"
 		>
 			<span>1.</span>
@@ -48,7 +52,7 @@
 			</div>
 		</a>
 		<a
-			href="/topics"
+			href={LinkHandler("/topics")}
 			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:m-0 lg:mt-20 lg:self-start"
 		>
 			<span>2.</span>
@@ -82,7 +86,7 @@
 			</div>
 		</a>
 		<a
-			href="/images"
+			href={LinkHandler("/images")}
 			class="m-4 transition-all hover:-translate-y-[2px] lg:col-span-2 lg:m-0 lg:self-start"
 		>
 			<span>3.</span>

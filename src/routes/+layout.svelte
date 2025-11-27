@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { navigating } from '$app/state';
 	import Load from '$lib/common/Load.svelte';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
 	let { children } = $props();
 	let isDropdownOpen = $state(false);
 
@@ -32,7 +33,7 @@
 			<nav class="bg-ivory-default absolute w-full border-b p-4">
 				<div class="m-auto flex items-center justify-between">
 					<div class="w-2/3">
-						<a href="/" data-sveltekit-preload-data="hover">
+						<a href={LinkHandler("/")} data-sveltekit-preload-data="hover">
 							<div class="flex w-full">
 								<img
 									class="max-h-full w-1/12 min-w-[50px] object-scale-down"
@@ -92,7 +93,7 @@
 							>
 								<div class="py-1" role="none">
 									<a
-										href="/places"
+										href={LinkHandler("/places")}
 										data-sveltekit-preload-code="eager"
 										data-sveltekit-preload-data="hover"
 										class="block border-b p-4 hover:underline focus:italic"
@@ -101,14 +102,14 @@
 										id="menu-item-0">Chapter 1: The Geo-politics of news</a
 									>
 									<a
-										href="/topics"
+										href={LinkHandler("/topics")}
 										class="block border-b p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
 										id="menu-item-1">Chapter 2: Discoursive interrelations</a
 									>
 									<a
-										href="/images"
+										href={LinkHandler("/images")}
 										class="block p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
