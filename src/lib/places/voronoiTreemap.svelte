@@ -10,6 +10,7 @@
 	import VoronoiSegment from './voronoiSegment.svelte';
 	import VoronoiRegionLabels from './voronoiRegionLabels.svelte';
 	import VoronoiCountriesLabels from './voronoiCountriesLabels.svelte';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
 
 	// set up
 	let { regionData, step } = $props();
@@ -164,7 +165,7 @@
 				<span
 					><img
 						class="inline"
-						src="icons/ui-interact.svg"
+						src={LinkHandler("/icons/ui-interact.svg")}
 						alt="Hover or click on visualization for details"
 					/></span
 				>
@@ -172,7 +173,7 @@
 				<span
 					><img
 						class="inline"
-						src="icons/ui-scroll.svg"
+						src={LinkHandler("/icons/ui-scroll.svg")}
 						alt="Hover or click on visualization for details"
 					/></span
 				> for details.

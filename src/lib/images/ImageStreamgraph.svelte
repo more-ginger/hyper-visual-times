@@ -8,6 +8,7 @@
 		currentVisualMentionsDataset,
 		currentColorDefault
 	} from '$lib/utils/state.images.svelte.ts';
+	import { base } from '$app/paths';
 
 	//props
 	let { selectedWeek = $bindable(), selectedPeople = $bindable() } = $props();
@@ -319,7 +320,7 @@
 
 		entered
 			.append('image')
-			.attr('xlink:href', (d) => `/img/people/${d.person}.webp`)
+			.attr('xlink:href', (d) => `${base}/img/people/${d.person}.webp`)
 			.attr('width', circleRadius * 2)
 			.attr('height', circleRadius * 2)
 			.attr('x', -circleRadius)

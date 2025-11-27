@@ -10,6 +10,8 @@
 		currentColorLight,
 		selectedOutlet
 	} from '$lib/utils/state.images.svelte.ts';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { base } from '$app/paths';
 
 	// Init comp variables
 	let { selectedWeek = $bindable('2024-01-01'), selectedPeople = $bindable([]) } = $props();
@@ -126,7 +128,7 @@
 
 		entered
 			.append('image')
-			.attr('xlink:href', (d) => `/img/people/${d.person}.webp`)
+			.attr('xlink:href', (d) => `${base}/img/people/${d.person}.webp`)
 			.attr('width', (d) => scaleLog(d.count) * 2)
 			.attr('height', (d) => scaleLog(d.count) * 2)
 			.attr('x', (d) => -scaleLog(d.count))
@@ -199,7 +201,7 @@
 	The bubble chart visualizes the frequency of visual appearances of selected public figures in news images for a given week. Each bubble represents a person, with the size corresponding to the number of images they appeared in during that week. You can click on bubbles to investigate the associated articles.
 {/snippet}
 {#snippet legend()}
-	<img src="img/images-bubblechart-legend.svg" class="my-2 w-full" alt="" />
+	<img src={LinkHandler("/img/images-bubblechart-legend.svg")} class="my-2 w-full" alt="" />
 {/snippet}
 {#snippet data()}
 	<div class="col-span-2 flex flex-wrap gap-2 text-center" slot="data">
@@ -207,7 +209,7 @@
 			<span class="z-10 w-fit rounded-full border bg-[var(--color-ivory-default)] px-2"
 				><img
 					class="mr-1 inline pb-px"
-					src="icons/ui-interact.svg"
+					src={LinkHandler("/icons/ui-interact.svg")}
 					alt="Select person"
 				/>{nameTranslationMap[selectedPerson?.person] ?? 'Selection'}</span
 			><span

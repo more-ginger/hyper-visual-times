@@ -11,6 +11,8 @@
 	} from '$lib/utils/state.images.svelte.ts';
 	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
 	import OutletSelector from '$lib/common/OutletSelector.svelte';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { base } from '$app/paths';
 	//props
 	//setup for the steamgraph svg
 	let svg;
@@ -377,7 +379,7 @@
 				}
 			});
 
-			nodes.select('image').attr('xlink:href', (d) => `/img/people/${d.id}.webp`);
+			nodes.select('image').attr('xlink:href', (d) => `${base}/img/people/${d.id}.webp`);
 		});
 
 		// --- Dragging behavior ---
@@ -407,7 +409,7 @@
 
 {#snippet selectionPill(selection)}
 	<span class="w-fit rounded-full border bg-[var(--color-ivory-default)] px-3 "
-		><img class="mr-1 inline pb-px" src="icons/ui-interact.svg" />{nameTranslationMap[selection] ??
+		><img class="mr-1 inline pb-px" src={LinkHandler("/icons/ui-interact.svg")} />{nameTranslationMap[selection] ??
 			'Selection 1'}</span
 	><span
 		class="-z-2 -ml-8 grow rounded-full border bg-black px-3 pr-4 pl-10 text-right text-white -pb-px"
@@ -418,7 +420,7 @@
 	The network graph visualizes co-appearances of public figures in news images. Each node represents a person, and edges indicate instances where two individuals appeared together in the same image. The thickness and color of the edges correspond to the frequency and context (news desk) of these co-appearances. You can select up to two persons by clicking on their respective nodes to explore their shared visual representation in news coverage. The legend indicates the news desks associated with the co-appearances.
 {/snippet}
 {#snippet legend()}
-	<img src="img/images-networkgraph-legend.svg" class="my-2 w-full" alt="" />
+	<img src={LinkHandler("/img/images-networkgraph-legend.svg")} class="my-2 w-full" alt="" />
 {/snippet}
 {#snippet data()}
 	<div class="col-span-2 text-center" slot="data">

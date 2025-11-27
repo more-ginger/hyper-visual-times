@@ -9,6 +9,7 @@
 	import Chapters from '$lib/main/Chapters.svelte';
 	import Load from '$lib/common/Load.svelte';
 	import About from '$lib/main/About.svelte';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte.js';
 
 	let { data } = $props();
 	// init scroller for scrollytelling
@@ -79,7 +80,7 @@
 					<button class="bg-ivory-default" onclick={handleInitScroll}>
 						<span>Scroll down to read</span>
 						<span
-							><img class="inline" src="icons/ui-scroll.svg" alt="Arrow pointing downwards" /></span
+							><img class="inline" src={LinkHandler("/icons/ui-scroll.svg")} alt="Arrow pointing downwards" /></span
 						>
 					</button>
 				</div>
@@ -87,7 +88,7 @@
 			<div class="m-auto grid h-2 w-11/12 grid-cols-11">
 				<div class="col-span-5 border-b"></div>
 				<div class="col-span-1 m-auto w-1/2">
-					<img src="img/pn-logo.png" alt="Publication logo" />
+					<img src={LinkHandler("/img/pn-logo.png")} alt="Publication logo" />
 				</div>
 				<div class="col-span-5 border-b"></div>
 			</div>
@@ -110,7 +111,7 @@
 											><div
 												class="mr-[5px] h-[15px] w-[15px] animate-pulse rounded-xl bg-green-500"
 											></div>
-											<a href="/places">The Geo-politics of news</a></button
+											<a href={LinkHandler("/places")}>The Geo-politics of news</a></button
 										>
 									</li>
 									<li class="pb-4">
@@ -118,13 +119,13 @@
 											><div
 												class="mr-[5px] h-[15px] w-[15px] animate-pulse rounded-xl bg-green-500"
 											></div>
-											<a href="/topics">Discoursive interrelations</a></button
+											<a href={LinkHandler("/topics")}>Discoursive interrelations</a></button
 										>
 									</li>
 									<li class="pb-4">
 										<button class="flex items-center px-2 py-[2px]"
 											><div class="mr-[5px] h-[15px] w-[15px] rounded-xl bg-green-500"></div>
-											<a href="/images">Person of interest</a></button
+											<a href={LinkHandler("/images")}>Person of interest</a></button
 										>
 									</li>
 								</ul>

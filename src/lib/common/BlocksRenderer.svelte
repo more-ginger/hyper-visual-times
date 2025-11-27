@@ -1,6 +1,7 @@
 <script lang="ts">
 	import markedFootnote from 'marked-footnote';
 	import { marked } from 'marked';
+	import {base} from '$app/paths';
 
 	// onEssayRender is optional, we pass it only if we have scrolly blocks
 	let { rawtext, onEssayRender = undefined } = $props();
@@ -8,7 +9,7 @@
 
 	// marked.js is used to render markdown into html
 	marked.use({ async: true, breaks: true }, markedFootnote());
-	const essayContent = marked.parse(rawtext);
+	const essayContent = marked.parse(rawtext.replaceAll('src="\.?\/?(.*?)"', `src="${base}/$1"`));
 
 	// we evaluate what to send back to the parent.
 	// If steps are present the scroller will be attached after some delay

@@ -4,6 +4,7 @@
 	import ClusterNetwork from '$lib/topics/ClusterNetwork.svelte';
 	import NetworkCard from '$lib/topics/NetworkCard.svelte';
 	import TopicClusters from '../../content/data/topics/topics.json';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte.js';
 
 	let selectionIsActive = $state(true);
 	let networkIsActive = $state(false);
@@ -54,7 +55,7 @@
 		}}
 	>
 		<p class="font-bold">{name}</p>
-		<img class="h-4 self-center justify-self-end" class:rotate-180={open} src="icons/ui-scroll.svg" alt="" />
+		<img class="h-4 self-center justify-self-end" class:rotate-180={open} src={LinkHandler("/icons/ui-scroll.svg")} alt="" />
 	</button>
 {/snippet}
 <div class="base relative m-auto flex h-[100vh] pt-20 md:w-full">

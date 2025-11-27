@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { LinkHandler } from "$lib/utils/pathhelper.svelte";
+
 	let { cluster, c, radiusScale, selectedClusterLabel } = $props();
 </script>
 
@@ -18,7 +20,7 @@
 			`}
 			/>
 			<text font-size="16" text-anchor="middle">
-				<textPath href={`#cluster-${c}`} startOffset="25%">{cluster.manualLabel}</textPath>
+				<textPath href={LinkHandler(`/topics#cluster-${c}`)} startOffset="25%">{cluster.manualLabel}</textPath>
 			</text>
 		</g>
 	{:else if radiusScale(cluster.count) <= 50 && radiusScale(cluster.count) > 30}
@@ -35,7 +37,7 @@
 			`}
 			/>
 			<text font-size="10">
-				<textPath href={`#cluster-${c}`}>{cluster.manualLabel}</textPath>
+				<textPath href={LinkHandler(`/topics#cluster-${c}`)}>{cluster.manualLabel}</textPath>
 			</text>
 		</g>
 	{/if}

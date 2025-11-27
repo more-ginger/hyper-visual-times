@@ -11,6 +11,7 @@
 	import DataPlaceholder from './canvas/DataPlaceholder.svelte';
 	import type { countryDataForComparison } from '../../types';
 	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
 
 	const { nodes, links, primaryCountryKey, onDropdownChange } = $props();
 	let w = $state(0);
@@ -288,7 +289,7 @@
 													isListMode = false;
 												}}
 												>Browse {node.shared_articles.length} articles
-												<img class="mx-auto inline" src="icons/ui-forward.svg" alt="arrow right" />
+												<img class="mx-auto inline" src={LinkHandler("/icons/ui-forward.svg")} alt="arrow right" />
 											</button>
 										</div>
 									</div>

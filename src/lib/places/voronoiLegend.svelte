@@ -1,16 +1,20 @@
+<script>
+	import { LinkHandler } from "$lib/utils/pathhelper.svelte";
+
+</script>
 <div class="w-full ">
     <div class="border-b"><h5>How to read the chart:</h5></div>
     <div class="flex my-4">
     <div class="w-1/2">
         <div>
             <div class="mb-2">
-                <img src="img/voronoi_legend1.svg"/>
+                <img src={LinkHandler("/img/voronoi_legend1.svg")}/>
             </div>
             <div class="mb-2">
-                <img src="img/voronoi_legend2.svg"/>
+                <img src={LinkHandler("/img/voronoi_legend2.svg")}/>
             </div>
             <div class="mb-2">
-                <img src="img/voronoi_legend3.svg"/>
+                <img src={LinkHandler("/img/voronoi_legend3.svg")}/>
             </div>
         </div>
     </div>

@@ -2,6 +2,8 @@
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
 	import { onMount } from 'svelte';
 	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { base } from '$app/paths';
 
 	let { primaryCountryKey, currentNode, onCardReset, onPrimaryCountryChange } =
 		$props();
@@ -27,7 +29,7 @@
 		const ids = sliced.map((id) => encodeURIComponent(id)).join('&id=');
 
 		try {
-			const response = await fetch(`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids}`);
+			const response = await fetch(`${base}/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids}`);
 			const data = await response.json();
 			if (data.length > 0) {
 				const headlines = data.map((article: Article) => {
@@ -97,7 +99,7 @@
 	<div class=" bg-ivory-default sticky top-0 flex justify-between px-2 pt-2">
 		<div>
 			<button onclick={resetCard}
-				><img src="icons/ui-forward.svg" class="rotate-180 py-2" alt="arrow back" /></button
+				><img src={LinkHandler("/icons/ui-forward.svg")} class="rotate-180 py-2" alt="arrow back" /></button
 			>
 		</div>
 		<div class="flex pt-1">
@@ -107,7 +109,7 @@
 					: primaryCountryKey}
 			</div>
 			<div class="pr-2">
-				<img class="mx-auto inline" src="icons/ui-forward.svg" alt="arrow right" />
+				<img class="mx-auto inline" src={LinkHandler("/icons/ui-forward.svg")} alt="arrow right" />
 			</div>
 			<div class="pr-2">
 				{currentNode.country === 'The Democratic Republic of the Congo'

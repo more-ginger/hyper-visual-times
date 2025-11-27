@@ -4,6 +4,7 @@
 	import BubbleChartLabels from './BubbleChartLabels.svelte';
 	import type { cluster } from '../../types';
 	import { distance } from '../utils/actions.svelte';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
 
 	let { TopicClusters, selectNewCluster, selectedClusterLabel, switchView } = $props();
 
@@ -101,7 +102,7 @@
 			}}
 			><span class="mr-2 "
 				><img
-					src="./icons/ui-forward.svg"
+					src={LinkHandler("/icons/ui-forward.svg")}
 					class="inline-block align-middle pb-px"
 					alt="arrow back"
 				/></span
