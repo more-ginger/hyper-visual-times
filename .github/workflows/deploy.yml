@@ -18,20 +18,13 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: envsubst-action
-        uses: danielr1996/envsubst-action@1.1.0
-        env:
-            SUPABASE_URL: ${{ vars.SUPABASE_URL }}
-            SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-        with:
-            input: .env.ci
-            output: .env
-
       - name: Install dependencies
         run: npm install
 
       - name: build
         env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_KEY }}
           BASE_PATH: '/${{ github.event.repository.name }}'
         run: |
           npm run build
