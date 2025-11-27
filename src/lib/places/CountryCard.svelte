@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { base } from '$app/paths';
 
 	let { primaryCountryKey, currentNode, onCardReset, onPrimaryCountryChange } =
 		$props();
@@ -28,7 +29,7 @@
 		const ids = sliced.map((id) => encodeURIComponent(id)).join('&id=');
 
 		try {
-			const response = await fetch(`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids}`);
+			const response = await fetch(`${base}/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids}`);
 			const data = await response.json();
 			if (data.length > 0) {
 				const headlines = data.map((article: Article) => {

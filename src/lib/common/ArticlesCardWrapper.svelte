@@ -2,6 +2,7 @@
 	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
 	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { base } from '$app/paths';
 	let { data, context, legend, ids } = $props();
 	let articles = $state<any>([]);
 	let contextOpen = $state(false);
@@ -14,7 +15,7 @@
 			if (ids.length == 0) return;
 			let loadedIDs = ids.slice(articlesFetched, articlesFetched + 3);
 			const response = await fetch(
-				`/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${loadedIDs.join('&id=')}`
+				`${base}/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${loadedIDs.join('&id=')}`
 			);
 			articles.push(...(await response.json()));
 			articlesFetched += loadedIDs.length;

@@ -12,6 +12,7 @@
 	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
 	import OutletSelector from '$lib/common/OutletSelector.svelte';
 	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { base } from '$app/paths';
 	//props
 	//setup for the steamgraph svg
 	let svg;
@@ -378,7 +379,7 @@
 				}
 			});
 
-			nodes.select('image').attr('xlink:href', (d) => `/img/people/${d.id}.webp`);
+			nodes.select('image').attr('xlink:href', (d) => `${base}/img/people/${d.id}.webp`);
 		});
 
 		// --- Dragging behavior ---

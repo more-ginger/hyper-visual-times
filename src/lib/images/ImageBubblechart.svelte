@@ -11,6 +11,7 @@
 		selectedOutlet
 	} from '$lib/utils/state.images.svelte.ts';
 	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { base } from '$app/paths';
 
 	// Init comp variables
 	let { selectedWeek = $bindable('2024-01-01'), selectedPeople = $bindable([]) } = $props();
@@ -127,7 +128,7 @@
 
 		entered
 			.append('image')
-			.attr('xlink:href', (d) => `/img/people/${d.person}.webp`)
+			.attr('xlink:href', (d) => `${base}/img/people/${d.person}.webp`)
 			.attr('width', (d) => scaleLog(d.count) * 2)
 			.attr('height', (d) => scaleLog(d.count) * 2)
 			.attr('x', (d) => -scaleLog(d.count))
