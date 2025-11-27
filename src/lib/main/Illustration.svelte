@@ -1,7 +1,7 @@
 <script lang="ts">
 	import IllustrationDesktop from './IllustrationDesktop.svelte';
 	import IllustrationMobile from './IllustrationMobile.svelte';
-	let { step, bodyWidth } = $props();
+	let { step, bodyWidth, direction } = $props();
 
 	let currentStep = $state(-1); // Track the current step to avoid unnecessary updates
 
@@ -9,91 +9,171 @@
 	let svgWidth = $state(2383.94);
 	let svgHeight = $state(2944.08);
 	let viewBox = $state({ x: 0, y: 0, width: 2383.94, height: 2944.08 });
-	$inspect(bodyWidth, svgWidth);
+	let isVisible = $state(true);
 	// Animation state
 	let isAnimating = $state(false);
 	let animationFrame: number;
 
 	// Define zoom positions for each step
 	const zoomPositions = $derived([
-		// Step 0: Default view (no zoom)0.2
+		// Step 0: map is not visible
 		{ x: 0, y: 0, width: svgWidth, height: svgHeight },
-		// Step 1: Zoom to top-center, individual layer
+		// Step 1: Default view (no zoom)0.2
+		{ x: 0, y: 0, width: svgWidth, height: svgHeight },
+		// Step 2: Zoom to top-center, individual layer
 		{ x: 0, y: svgHeight / 10, width: svgWidth, height: svgHeight * 0.2 },
-		//Step 2: Citizen journalists
+		// Step 3: Zoom to top-left, journalists
+		{ x: svgWidth * 0.1, y: svgHeight / 6, width: svgWidth * 0.5, height: svgHeight * 0.2 },
+		//Step 4: Citizen journalists
 		{
 			x: svgWidth * 0.28,
 			y: svgHeight / 6,
 			width: svgWidth * 0.5,
 			height: svgHeight * 0.2
 		},
-		//Step 3: Bridge between layers
+		// Step 5: editorial boards
+		{
+			x: svgWidth * 0.3,
+			y: svgHeight / 1.5,
+			width: svgWidth * 0.2,
+			height: svgHeight * 0.3
+		},
+		// Step 6: readers
 		{
 			x: svgWidth * 0.6,
 			y: 0,
 			width: svgWidth * 0.5,
-			height: svgHeight * 0.5
+			height: svgHeight * 0.3
 		},
-		// Step 4: Zoom to bottom-center, societal layer
+		// Step 7: Zoom to bottom-center, societal layer
 		{
 			x: 0,
 			y: svgHeight * 0.7,
 			width: svgWidth,
-			height: svgHeight * 0.5,
-			zoom: 2
+			height: svgHeight * 0.5
 		},
-		// Step 5: Zoom to bottom-center, societal layer – focus on platforms
+		// Step 8: Red accent on groups
+		{
+			x: 0,
+			y: svgHeight * 0.7,
+			width: svgWidth,
+			height: svgHeight * 0.5
+		},
+		// Step 9: Zoom to bottom-center, societal layer – focus on platforms
 		{
 			x: 0,
 			y: svgHeight * 0.6,
 			width: svgWidth * 0.4,
-			height: svgHeight * 0.5,
-			zoom: 2
+			height: svgHeight * 0.5
 		},
-		// Step 6: Bridge between societal and material
+		// Step 10: Bridge between societal and material, red highlight on content pipeline
 		{
 			x: svgWidth * 0.2,
 			y: svgHeight * 0.3,
 			width: svgWidth * 0.8,
-			height: svgHeight * 0.5,
-			zoom: 2
+			height: svgHeight * 0.5
 		},
-		// Step 7: Zoom to center, material layer
-		{ x: 0, y: svgHeight * 0.5, width: svgWidth, height: svgHeight * 0.2, zoom: 2 },
-		// Step 8: Zoom into article structure
+		// Step 11: Zoom to center, rules for publication should be red
+		{
+			x: svgWidth * 0.3,
+			y: svgHeight * 0.28,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.3
+		},
+		// Step 12: Zoom to center, material layer
+		{ x: 0, y: svgHeight * 0.5, width: svgWidth, height: svgHeight * 0.2, zoom: 3 },
+
+		// Step 13: Zoom to article
+		{
+			x: svgWidth * 0.4,
+			y: svgHeight * 0.45,
+			width: svgWidth * 0.4,
+			height: svgHeight * 0.25
+		},
+		// Step 14: Zoom to circulation
+		{
+			x: svgWidth * 0.7,
+			y: svgHeight * 0.48,
+			width: svgWidth * 0.5,
+			height: svgHeight * 0.1
+		},
+		// Step 15: Move to platforms
+		{
+			x: svgWidth * 0.0,
+			y: svgHeight * 0.8,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
+		},
+		// Step 16: Move to constraints
+		{
+			x: svgWidth * 0.05,
+			y: svgHeight * 0.55,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
+		},
+		// Step 17: Move to titles
+		{
+			x: svgWidth * 0.4,
+			y: svgHeight * 0.5,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
+		},
+		// Step 18: Zoom out, move to encoding rules
 		{
 			x: svgWidth * 0.3,
 			y: svgHeight * 0.5,
-			width: svgWidth * 0.8,
-			height: svgHeight * 0.25,
-			zoom: 3
+			width: svgWidth * 0.4,
+			height: svgHeight * 0.1
 		},
-		// Step 9: Zoom into rules label
+		// Step 19: Move to encoding/decoding layers
 		{
-			x: svgWidth * 0.2,
-			y: svgHeight * 0.4,
-			width: svgWidth * 0.5,
-			height: svgHeight * 0.1,
-			zoom: 3
+			x: svgWidth * 0.38,
+			y: svgHeight * 0.45,
+			width: svgWidth * 0.4,
+			height: svgHeight * 0.1
 		},
-		// Step 10: Zoom into SEO labels
+		// Step 20: Move to decoding
 		{
-			x: svgWidth * 0.2,
-			y: svgHeight * 0.52,
-			width: svgWidth * 0.3,
-			height: svgHeight * 0.1,
-			zoom: 3
+			x: svgWidth * 0.5,
+			y: svgHeight * 0.5,
+			width: svgWidth * 0.4,
+			height: svgHeight * 0.1
 		},
-		// Step 11: Zoom into article structure
+		// Step 21: Zoom out, move to encoding
 		{
 			x: svgWidth * 0.35,
-			y: svgHeight * 0.5,
-			width: svgWidth * 0.5,
-			height: svgHeight * 0.1,
-			zoom: 3
+			y: svgHeight * 0.53,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
 		},
-		// Step 12: Zoom out
-		{ x: 0, y: 10, width: svgWidth, height: svgHeight }
+		// Step 22: Zoom out, move to encoding
+		{
+			x: svgWidth * 0.55,
+			y: svgHeight * 0.53,
+			width: svgWidth * 0.3,
+			height: svgHeight * 0.1
+		},
+		// Step 23: Move to keywords
+		{
+			x: svgWidth * 0.3,
+			y: svgHeight * 0.63,
+			width: svgWidth * 0.2,
+			height: svgHeight * 0.1
+		},
+		// Step 23: Move to context
+		{
+			x: svgWidth * 0.7,
+			y: svgHeight * 0.63,
+			width: svgWidth * 0.2,
+			height: svgHeight * 0.1
+		},
+		// Step 24: readers
+		{
+			x: svgWidth * 0.6,
+			y: 0,
+			width: svgWidth * 0.5,
+			height: svgHeight * 0.3
+		}
 	]);
 	// Easing function for smooth animations
 	function easeInOutCubic(t: number): number {
@@ -151,6 +231,13 @@
 		}
 
 		let targetPosition = zoomPositions[0];
+		// sets the map to invisible if the step is zero
+		if (step === 0) {
+			isVisible = false;
+		} else {
+			isVisible = true;
+		}
+
 		// Only update if step actually changed
 		if (step !== currentStep) {
 			currentStep = step;
@@ -165,7 +252,7 @@
 </script>
 
 {#if bodyWidth > 820}
-	<IllustrationDesktop {viewBox} />
+	<IllustrationDesktop {viewBox} {isVisible} {step} />
 {:else}
-	<IllustrationMobile {viewBox} />
+	<IllustrationMobile {viewBox} {isVisible} />
 {/if}

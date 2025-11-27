@@ -1,8 +1,9 @@
 <script lang="ts">
-	let { viewBox } = $props();
+	let { viewBox, isVisible, step } = $props();
 </script>
 
 <svg
+	class={isVisible ? '' : 'opacity-10'}
 	width="100%"
 	height="100%"
 	viewBox={`${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`}
