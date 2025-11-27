@@ -13,6 +13,7 @@
 	import VoronoiLegend from '$lib/places/voronoiLegend.svelte';
 	import NetworkContainer from '$lib/places/NetworkContainer.svelte';
 	import Load from '$lib/common/Load.svelte';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
 
 	let { data }: PageProps = $props();
 	const scroller = scrollama();
@@ -89,7 +90,7 @@
 								their country and assign each region and country to macro-regions, we can observe
 								how newspapers have different areas of interest.
 								<img
-									src="img/localities-keywords.svg"
+									src={LinkHandler("/img/localities-keywords.svg")}
 									alt="Diagram of the process of keywords abstraction, 
 									from top to down: localities, provinces and states, countries, and regions. 
 									The top layers are shown to flow into the bottom ones with arrows pointing down."

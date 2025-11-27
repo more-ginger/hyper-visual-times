@@ -37,7 +37,7 @@
 							<div class="flex w-full">
 								<img
 									class="max-h-full w-1/12 min-w-[50px] object-scale-down"
-									src="img/pn-logo.png"
+									src={LinkHandler("/img/pn-logo.png")}
 									alt="Panopticum News half circle logo"
 								/>
 								<span class="ml-2 w-11/12 self-center text-lg focus:italic">Panopticum News</span>

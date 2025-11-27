@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
 	let { data, context, legend, ids } = $props();
 	let articles = $state<any>([]);
 	let contextOpen = $state(false);
@@ -53,7 +54,7 @@
 		<img
 			class="h-4 self-center justify-self-end"
 			class:rotate-180={open}
-			src="icons/ui-scroll.svg"
+			src={LinkHandler("/icons/ui-scroll.svg")}
 			alt=""
 		/>
 	</button>

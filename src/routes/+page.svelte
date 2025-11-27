@@ -80,7 +80,7 @@
 					<button class="bg-ivory-default" onclick={handleInitScroll}>
 						<span>Scroll down to read</span>
 						<span
-							><img class="inline" src="icons/ui-scroll.svg" alt="Arrow pointing downwards" /></span
+							><img class="inline" src={LinkHandler("/icons/ui-scroll.svg")} alt="Arrow pointing downwards" /></span
 						>
 					</button>
 				</div>
@@ -88,7 +88,7 @@
 			<div class="m-auto grid h-2 w-11/12 grid-cols-11">
 				<div class="col-span-5 border-b"></div>
 				<div class="col-span-1 m-auto w-1/2">
-					<img src="img/pn-logo.png" alt="Publication logo" />
+					<img src={LinkHandler("/img/pn-logo.png")} alt="Publication logo" />
 				</div>
 				<div class="col-span-5 border-b"></div>
 			</div>

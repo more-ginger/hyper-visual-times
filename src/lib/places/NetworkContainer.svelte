@@ -4,6 +4,7 @@
 	import Dropdown from '$lib/common/Dropdown.svelte';
 	import OutletSelector from '$lib/common/OutletSelector.svelte';
 	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
 
 	let { data, onMounted = () => {} } = $props();
 	const outlets = ['zeit', 'nyt'];
@@ -138,23 +139,23 @@
 				<li class="pb-2">
 					Use the dropdown menu <img
 						class="inline rotate-180"
-						src="/icons/ui-scroll.svg"
+						src={LinkHandler("/icons/ui-scroll.svg")}
 						alt="arrow up label"
 					/>
 					to select a new country or region.
 				</li>
 				<li class="pb-2">
-					Use the toggle <img class="inline" src="/icons/ui-switch.svg" alt="switch label" /> at the
+					Use the toggle <img class="inline" src={LinkHandler("/icons/ui-switch.svg")} alt="switch label" /> at the
 					top right of the screen to switch between outlets.
 				</li>
 				<li class="pb-2">
-					Use the card <img class="inline" src="/icons/ui-interact.svg" alt="interact label" /> at the
+					Use the card <img class="inline" src={LinkHandler("/icons/ui-interact.svg")} alt="interact label" /> at the
 					bottom left of the screen to see the shared coverage between two countries.
 				</li>
 				<li class="pb-2">
 					Zoom in and out using the toggles <img
 						class="inline"
-						src="/icons/ui-interact.svg"
+						src={LinkHandler("/icons/ui-interact.svg")}
 						alt="interact label"
 					/> above the bottom left card. This will allow you to shift focus between a close view of the
 					country and a broader overview.

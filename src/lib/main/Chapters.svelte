@@ -26,7 +26,7 @@
 					<div class="flex justify-between">
 						<div>
 							<img
-								src="img/places_header.svg"
+								src={LinkHandler("/img/places_header.svg")}
 								alt="Preview of the visualizations: yellow and blue triangles horizontally aligned"
 							/>
 						</div>
@@ -35,7 +35,7 @@
 								<div class="mr-[5px] h-[25px] w-[25px] animate-pulse rounded-xl bg-green-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
-								<img src="icons/ui-forward.svg" alt="right arrow" />
+								<img src={LinkHandler("/icons/ui-forward.svg")} alt="right arrow" />
 							</div>
 						</div>
 					</div>
@@ -61,7 +61,7 @@
 					<div class="flex justify-between">
 						<div>
 							<img
-								src="img/texts_header.svg"
+								src={LinkHandler("/img/texts_header.svg")}
 								alt="Preview of the visualizations: 11 yellow and orange circles of different sizes"
 							/>
 						</div>
@@ -70,7 +70,7 @@
 								<div class="mr-[5px] h-[25px] w-[25px] animate-pulse rounded-xl bg-green-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
-								<img src="icons/ui-forward.svg" alt="forward" />
+								<img src={LinkHandler("/icons/ui-forward.svg")} alt="forward" />
 							</div>
 						</div>
 					</div>
@@ -95,7 +95,7 @@
 					<div class="flex justify-between">
 						<div>
 							<img
-								src="img/images_header.svg"
+								src={LinkHandler("/img/images_header.svg")}
 								alt="Preview of the visualizations: 
 								5 silhouttes of faces colored in light blue, 
 								pink, orange, yellow and light blue"
@@ -106,7 +106,7 @@
 								<div class="mr-[5px] h-[25px] w-[25px] animate-pulse rounded-xl bg-green-500"></div>
 							</div>
 							<div class="rounded-2xl border px-4 py-2">
-								<img src="icons/ui-forward.svg" alt="forward" />
+								<img src={LinkHandler("/icons/ui-forward.svg")} alt="forward" />
 							</div>
 						</div>
 					</div>
