@@ -18,6 +18,15 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: "Replace env variables (dev)"
+        uses: danielr1996/envsubst-action@1.0.0
+        env:
+            PUBLIC_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+            PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_KEY }}
+        with:
+            input: .env.ci
+            output: .env
+
       - name: Install dependencies
         run: npm install
 
