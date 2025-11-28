@@ -1,4 +1,4 @@
-Both visualizations offer a general overview of Zeit Online and The New York Times publishing strategies, by centering the individual keywords and scaling up their relevance based on the number of articles associated with them. Another valuable approach is to work with these keywords to explore other intersecting keywords and news items published by the newspaper.  In other words, we can compare countries with one another to find out if they share common keywords or news content throughout the data. 
+Both visualizations offer a general overview of <span class="zeit">Zeit Online</span> and <span class="nyt">The New York Times</span> publishing strategies, by centering the individual keywords and scaling up their relevance based on the number of articles associated with them. Another valuable approach is to work with these keywords to explore other intersecting keywords and news items published by the newspaper.  In other words, we can compare countries with one another to find out if they share common keywords or news content throughout the data. 
 
 ## Popular Geo-Politics of News
 

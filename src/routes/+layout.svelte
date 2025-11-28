@@ -101,21 +101,21 @@
 										class="block border-b p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
-										id="menu-item-0">Chapter 1: The Geo-politics of news</a
+										id="menu-item-0">Chapter 1: The Geo-politics of News</a
 									>
 									<a
 										href={LinkHandler('/topics')}
 										class="block border-b p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
-										id="menu-item-1">Chapter 2: Discoursive interrelations</a
+										id="menu-item-1">Chapter 2: Discoursive Interrelations</a
 									>
 									<a
 										href={LinkHandler('/images')}
 										class="block p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
-										id="menu-item-2">Chapter 3: Person of interest</a
+										id="menu-item-2">Chapter 3: Person of Interest</a
 									>
 								</div>
 							</div>
