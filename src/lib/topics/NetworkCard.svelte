@@ -4,13 +4,13 @@
 	let firstFiveArticles = $derived(selectedIds.length > 5 ? selectedIds.slice(0, 6) : selectedIds);
 	let articlesHeadlines = $state<{ headline: string }[]>([]);
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
+	import { getArticles } from '$lib/utils/request.svelte';
+
 	async function fetchArticlesForCards() {
-		const ids = firstFiveArticles.map((id: string) => encodeURIComponent(id)).join('&id=');
 		try {
-			const response = await fetch(`${base}/api/articles?source=nyt&${ids}`);
-			const data = await response.json();
-			articlesHeadlines = data;
+			const data = await getArticles('nyt', firstFiveArticles);
+			articlesHeadlines = data.data;
 		} catch (error) {
 			console.log('Error in fetching articles inside fetchArticlesForCards', error);
 		}

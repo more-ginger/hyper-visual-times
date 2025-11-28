@@ -9,9 +9,9 @@
 	import Chapters from '$lib/main/Chapters.svelte';
 	import Load from '$lib/common/Load.svelte';
 	import About from '$lib/main/About.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte.js';
-
-	let { data } = $props();
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte.js';
+	import { onMount } from 'svelte';
+	import { getArticles } from '$lib/utils/request.svelte.js';
 	// init scroller for scrollytelling
 	const scroller = scrollama();
 	let step = $state(0);
@@ -22,7 +22,17 @@
 	let essayHasSteps = $state(false);
 	// get body width to decide which graphic to load
 	let bodyWidth: number = $state(0);
-
+	let data = $state<any>(null);
+	onMount(async () => {
+		let randomZeitSelection =  await getArticles('zeit',['2024-01-209251386','2024-01-230179681','2024-01-229968742','2024-01-230174863'])
+		await new Promise(resolve => setTimeout(resolve, 100)); // needed to avoid rate limiting
+		let randomNYTSelection =  await getArticles('nyt',['nyt://article/007aece2-7926-5653-9d0c-2221b9f363b2','nyt://article/007afda5-8628-520a-9dc0-0c4c30697599','nyt://article/007ba0db-2193-5f5f-9183-b128bee142e1','nyt://article/003d9955-5a7d-5b37-8e8d-780b1d3732e5'] )
+		console.log(randomNYTSelection, randomZeitSelection);
+		data = {
+			randomZeitSelection: randomZeitSelection.data,
+			randomNYTSelection: randomNYTSelection.data
+		};
+	})
 	// trigger initial scroll on button click
 	function handleInitScroll() {
 		scrollTo({ top: 600, behavior: 'smooth' });
@@ -64,7 +74,7 @@
 		}
 	});
 </script>
-
+{#if data}
 <main
 	bind:clientWidth={bodyWidth}
 	class:opacity-0={!essayIsRendered}
@@ -182,6 +192,7 @@
 		</div>
 	</div>
 </main>
+{/if}
 
 <!-- Loading state -->
 {#if !essayIsRendered}
