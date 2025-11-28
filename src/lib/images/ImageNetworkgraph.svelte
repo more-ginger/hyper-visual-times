@@ -8,10 +8,10 @@
 		currentVisualMentionsDataset,
 		currentColorDefault,
 		colorScale
-	} from '$lib/utils/state.images.svelte.ts';
+	} from '$lib/utils/state.svelte';
 	import ArticlesCardWrapper from '$lib/common/ArticlesCardWrapper.svelte';
 	import OutletSelector from '$lib/common/OutletSelector.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 	import { base } from '$app/paths';
 	//props
 	//setup for the steamgraph svg

@@ -10,8 +10,8 @@
 	import LinkBetweenCountries from './canvas/LinkBetweenCountries.svelte';
 	import DataPlaceholder from './canvas/DataPlaceholder.svelte';
 	import type { countryDataForComparison } from '../../types';
-	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { selectedOutlet } from '$lib/utils/state.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 
 	const { nodes, links, primaryCountryKey, onDropdownChange } = $props();
 	let w = $state(0);

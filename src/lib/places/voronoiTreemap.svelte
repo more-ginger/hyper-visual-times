@@ -10,7 +10,7 @@
 	import VoronoiSegment from './voronoiSegment.svelte';
 	import VoronoiRegionLabels from './voronoiRegionLabels.svelte';
 	import VoronoiCountriesLabels from './voronoiCountriesLabels.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 
 	// set up
 	let { regionData, step } = $props();

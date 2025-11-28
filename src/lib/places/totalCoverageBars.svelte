@@ -3,7 +3,7 @@
 	import * as d3 from 'd3';
 	import TotalCovSvgBar from './totalCovSvgBar.svelte';
 	import TotalCovSvgLabels from './totalCovSvgLabels.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 
 	interface parsedCountryData {
 		country: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
-	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
+	import { selectedOutlet } from '$lib/utils/state.svelte';
 </script>
 
 <div

@@ -1,5 +1,5 @@
 <script>
-	import { LinkHandler } from "$lib/utils/pathhelper.svelte";
+	import { LinkHandler } from "$lib/utils/linkhandler.svelte";
 
     let {goto} = $props()
 </script>
