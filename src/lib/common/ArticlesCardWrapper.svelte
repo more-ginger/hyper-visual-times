@@ -3,6 +3,7 @@
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
 	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 	import {getArticles} from '$lib/utils/request.svelte.ts';
+	import Load from './Load.svelte';
 	let { data, context, legend, ids } = $props();
 	let articles = $state<any>([]);
 	let contextOpen = $state(false);
@@ -11,17 +12,21 @@
 	let dataOpen = $state(true);
 	let oids = []
 	async function fetchArticlesForCards() {
+		fetchWait = true;
 		try {
-			if (ids.length == 0) return;
+			if (ids.length == 0){
+				fetchWait = false;
+				return
+			};
 			let loadedIDs = ids.slice(articlesFetched, articlesFetched + 3);
 			const response = await getArticles($selectedOutlet.toLocaleLowerCase(), loadedIDs);
 			console.log(response)
 			articles.push(...response.data);
 			articlesFetched += loadedIDs.length;
-			fetchWait = false;
 		} catch (error) {
 			console.log('Error in fetching articles inside fetchArticlesForCards', error);
 		}
+		fetchWait = false;
 	}
 	$effect(() => {
 		if (ids != oids){
@@ -76,7 +81,7 @@
 	<div class="w-full">
 		{@render cardSection('Articles', dataOpen)}
 		<div
-			class={'h-0 max-h-[60vh] !overflow-scroll overscroll-none ' +
+			class={'h-0 max-h-[55vh] !overflow-scroll overscroll-none ' +
 				(dataOpen ? '!h-full border-t border-dashed border-black' : '')}
 		>
 			<div
@@ -87,6 +92,9 @@
 				</div>
 			</div>
 			<div class="relative">
+				{#if fetchWait}
+					<Load />
+				{/if}
 				{#each articles as article}
 					<ArticleCard {article} />
 				{/each}
