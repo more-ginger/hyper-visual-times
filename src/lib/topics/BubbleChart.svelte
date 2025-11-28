@@ -4,7 +4,7 @@
 	import BubbleChartLabels from './BubbleChartLabels.svelte';
 	import type { cluster } from '../../types';
 	import { distance } from '../utils/actions.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 
 	let { TopicClusters, selectNewCluster, selectedClusterLabel, switchView } = $props();
 

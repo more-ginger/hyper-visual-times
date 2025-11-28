@@ -1,9 +1,11 @@
 <script lang="ts">
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
 	import { onMount } from 'svelte';
-	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { selectedOutlet } from '$lib/utils/state.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 	import { base } from '$app/paths';
+	import { getArticles } from '$lib/utils/request.svelte';
+	import Load from '$lib/common/Load.svelte';
 
 	let { primaryCountryKey, currentNode, onCardReset, onPrimaryCountryChange } =
 		$props();
@@ -19,18 +21,17 @@
 	let articles = $state<Article[]>([]);
 	let firstArticleIndex = $state(0);
 	let lastArticleIndex = $state(3);
-
+	let fetchWait = $state(false);
 	async function fetchArticles(country: { country: string; shared_articles: string[] }) {
 		if (country.shared_articles.length === 0) {
 			return { countryName: country.country, headlines: [], count: country.shared_articles.length };
 		}
-
+		fetchWait = true;
 		const sliced = country.shared_articles.slice(firstArticleIndex, lastArticleIndex);
-		const ids = sliced.map((id) => encodeURIComponent(id)).join('&id=');
-
 		try {
-			const response = await fetch(`${base}/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids}`);
-			const data = await response.json();
+			
+			const response = await getArticles($selectedOutlet.toLocaleLowerCase(), sliced);
+			const data = response.data;
 			if (data.length > 0) {
 				const headlines = data.map((article: Article) => {
 					article.byline = article.byline.replaceAll(/'/g, '"').replaceAll('None', '""');
@@ -50,11 +51,13 @@
 						byline
 					});
 				});
-
+				fetchWait = false;
 				return { countryName: country.country, headlines, count: country.shared_articles.length };
 			}
 		} catch (error) {
 			console.error('Error fetching article headlines:', error);
+		} finally {
+			fetchWait = false;
 		}
 	}
 
@@ -139,15 +142,15 @@
 			>
 		</div>
 	</div>
-	{#await articles}
-		<div>Loading articles</div>
-	{:then orderedArticles}
+	{#if fetchWait}
+		<Load />
+	{:else}
 		<div class="px-2">
 			{#each orderedArticles as article}
 			<ArticleCard {article}/>
 			{/each}
 		</div>
-	{/await}
+	{/if}
 	{#if orderedArticles.length > 0}
 		<div class="absolute bottom-0 my-2 w-full text-center">
 			{#if currentNode.shared_articles.length > lastArticleIndex}

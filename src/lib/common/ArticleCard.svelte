@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedOutlet, colorScale } from '$lib/utils/state.images.svelte.ts';
+	import { selectedOutlet, colorScale } from '$lib/utils/state.svelte';
 
 	let { article } = $props();
 
@@ -47,12 +47,12 @@
 					{formatArticleDate(article.pub_date)}
 				</span>
 				<span class="col-span-2 flex items-center gap-1 justify-self-end text-sm">
-					{#if article.news_desk.length > 0}
+					{#if article.news_desk?.length > 0}
 						<span
 							class="block h-[10px] w-[10px] rounded-full"
-							style="background-color: {$colorScale(article.news_desk)};"
+							style="background-color: {$colorScale(article.news_desk ?? 'Unknown')};"
 						></span>
-						{article.news_desk}
+						{article.news_desk ?? 'Unknown'} 
 					{/if}
 				</span>
 			</div>

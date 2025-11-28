@@ -2,7 +2,7 @@
 	import '../app.css';
 	import { navigating } from '$app/state';
 	import Load from '$lib/common/Load.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 	let { children } = $props();
 	let isDropdownOpen = $state(false);
 

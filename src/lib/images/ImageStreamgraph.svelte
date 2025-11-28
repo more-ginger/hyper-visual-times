@@ -7,7 +7,7 @@
 		selectedOutlet,
 		currentVisualMentionsDataset,
 		currentColorDefault
-	} from '$lib/utils/state.images.svelte.ts';
+	} from '$lib/utils/state.svelte';
 	import { base } from '$app/paths';
 
 	//props

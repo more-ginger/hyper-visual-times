@@ -4,7 +4,7 @@
 	import ClusterNetwork from '$lib/topics/ClusterNetwork.svelte';
 	import NetworkCard from '$lib/topics/NetworkCard.svelte';
 	import TopicClusters from '../../content/data/topics/topics.json';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte.js';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte.js';
 
 	let selectionIsActive = $state(true);
 	let networkIsActive = $state(false);
@@ -77,7 +77,6 @@
 						<div class={'h-0 overflow-hidden ' + (contextOpen ? '!h-full border-t border-dashed ' : '')}>
 							<div class={'p-2 ' + (contextOpen ? 'border-solid' : '')}>
 								<div>
-									<p class="text-sm"></p>
 									<p class="mb-2">
 										This project frames the patterns of language and narrative of a year's corpus of news
 										data, digging into the divergent simultaneous discourses discourses that occur across the

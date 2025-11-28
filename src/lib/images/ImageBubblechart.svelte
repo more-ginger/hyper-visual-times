@@ -9,8 +9,8 @@
 		currentColorDefault,
 		currentColorLight,
 		selectedOutlet
-	} from '$lib/utils/state.images.svelte.ts';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	} from '$lib/utils/state.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 	import { base } from '$app/paths';
 
 	// Init comp variables
