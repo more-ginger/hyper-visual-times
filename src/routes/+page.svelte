@@ -12,6 +12,7 @@
 	import { LinkHandler } from '$lib/utils/linkhandler.svelte.ts';
 	import { onMount } from 'svelte';
 	import { getArticles } from '$lib/utils/request.svelte.ts';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	// init scroller for scrollytelling
 	const scroller = scrollama();
@@ -86,6 +87,35 @@
 		}
 	});
 </script>
+<!-- Meta Tags for SEO and Social Media -->
+<MetaTags
+  title="Hyper Visual Times - Exploring News Data through Visualization"
+  description="Hyper Visual Times investigates journalism through the use of visual methods and data visualization, the project aims at charting the landscape of online news."
+  canonical="https://ctechfilmuniversity.github.io/hyper-visual-times/"
+  openGraph={{
+    url: 'https://ctechfilmuniversity.github.io/hyper-visual-times/',
+    title: 'Hyper Visual Times - Exploring News Data through Visualization',
+    description: 'Hyper Visual Times investigates journalism through the use of visual methods and data visualization, the project aims at charting the landscape of online news.',
+    images: [
+      {
+        url: 'https://www.example.ie/og-image-01.jpg',
+        width: 800,
+        height: 600,
+        alt: 'Og Image Alt'
+      },
+      {
+        url: 'https://www.example.ie/og-image-02.jpg',
+        width: 900,
+        height: 800,
+        alt: 'Og Image Alt Second'
+      },
+      { url: 'https://www.example.ie/og-image-03.jpg' },
+      { url: 'https://www.example.ie/og-image-04.jpg' }
+    ],
+    siteName: 'Hyper Visual Times'
+  }}
+/>
+
 {#if data}
 <main
 	bind:clientWidth={bodyWidth}

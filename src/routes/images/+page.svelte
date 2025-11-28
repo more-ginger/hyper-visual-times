@@ -11,6 +11,7 @@
 	import ImageBubblechart from '$lib/images/ImageBubblechart.svelte';
 	import { currentView, selectedOutlet } from '$lib/utils/state.svelte';
 	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	//scrollama setup
 	let step = $state(0);
@@ -42,7 +43,33 @@
 		}
 	});
 </script>
-
+<MetaTags
+  title="Hyper Visual Times | Images"
+  description="This chapter focuses on images of people as cultural artefacts built using long-established conventions of visual depictions."
+  canonical="https://ctechfilmuniversity.github.io/hyper-visual-times/images"
+  openGraph={{
+    url: 'https://ctechfilmuniversity.github.io/hyper-visual-times/images',
+    title: 'Hyper Visual Times | Images',
+    description: 'This chapter focuses on images of people as cultural artefacts built using long-established conventions of visual depictions.',
+    images: [
+      {
+        url: 'https://www.example.ie/og-image-01.jpg',
+        width: 800,
+        height: 600,
+        alt: 'Og Image Alt'
+      },
+      {
+        url: 'https://www.example.ie/og-image-02.jpg',
+        width: 900,
+        height: 800,
+        alt: 'Og Image Alt Second'
+      },
+      { url: 'https://www.example.ie/og-image-03.jpg' },
+      { url: 'https://www.example.ie/og-image-04.jpg' }
+    ],
+    siteName: 'Hyper Visual Times | Images'
+  }}
+/>
 {#snippet pillOutlet(text, outlet)}
 	<button
 		type="button"

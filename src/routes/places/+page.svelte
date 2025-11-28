@@ -16,6 +16,7 @@
 	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 	import { onMount } from 'svelte';
 	import {getCoveragePerCountry} from '$lib/utils/request.svelte.ts';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	//let { data }: PageProps = $props();
 	const scroller = scrollama();
@@ -46,7 +47,33 @@
 		networkMounted = true;
 	}
 </script>
-
+<MetaTags
+  title="Hyper Visual Times | Places"
+  description="This chapter focuses on how geographic keywords are used across the online coverage of two newspapers: The New York Times and Zeit Online."
+  canonical="https://ctechfilmuniversity.github.io/hyper-visual-times/places"
+  openGraph={{
+    url: 'https://ctechfilmuniversity.github.io/hyper-visual-times/places',
+    title: 'Hyper Visual Times | Places',
+    description: 'This chapter focuses on how geographic keywords are used across the online coverage of two newspapers: The New York Times and Zeit Online.',
+    images: [
+      {
+        url: 'https://www.example.ie/og-image-01.jpg',
+        width: 800,
+        height: 600,
+        alt: 'Og Image Alt'
+      },
+      {
+        url: 'https://www.example.ie/og-image-02.jpg',
+        width: 900,
+        height: 800,
+        alt: 'Og Image Alt Second'
+      },
+      { url: 'https://www.example.ie/og-image-03.jpg' },
+      { url: 'https://www.example.ie/og-image-04.jpg' }
+    ],
+    siteName: 'Hyper Visual Times | Places'
+  }}
+/>
 {#if !data}
 	<p>Waiting for data</p>
 {:else}

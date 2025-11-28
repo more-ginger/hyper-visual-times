@@ -5,6 +5,7 @@
 	import NetworkCard from '$lib/topics/NetworkCard.svelte';
 	import TopicClusters from '../../content/data/topics/topics.json';
 	import { LinkHandler } from '$lib/utils/linkhandler.svelte.js';
+	import { MetaTags } from 'svelte-meta-tags';
 
 	let selectionIsActive = $state(true);
 	let networkIsActive = $state(false);
@@ -45,7 +46,33 @@
 		}
 	}
 </script>
-
+<MetaTags
+  title="Hyper Visual Times | Topics"
+  description="This chapter focuses on how machine learning and topic modeling techniques have been used to extract key terms from one year worth of articles from The New York Times archives."
+  canonical="https://ctechfilmuniversity.github.io/hyper-visual-times/topics"
+  openGraph={{
+    url: 'https://ctechfilmuniversity.github.io/hyper-visual-times/topics',
+    title: 'Hyper Visual Times | Topics',
+    description: 'This chapter focuses on how machine learning and topic modeling techniques have been used to extract key terms from one year worth of articles from The New York Times archives.',
+    images: [
+      {
+        url: 'https://www.example.ie/og-image-01.jpg',
+        width: 800,
+        height: 600,
+        alt: 'Og Image Alt'
+      },
+      {
+        url: 'https://www.example.ie/og-image-02.jpg',
+        width: 900,
+        height: 800,
+        alt: 'Og Image Alt Second'
+      },
+      { url: 'https://www.example.ie/og-image-03.jpg' },
+      { url: 'https://www.example.ie/og-image-04.jpg' }
+    ],
+    siteName: 'Hyper Visual Times | Topics'
+  }}
+/>
 {#snippet cardSection(name, open)}
 	<button
 		type="button"
