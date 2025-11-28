@@ -91,13 +91,14 @@
 					{@render data()}
 				</div>
 			</div>
-			<div class="relative">
+			<div class="relative min-h-[20vh]">
 				{#if fetchWait}
 					<Load />
+				{:else if articles.length > 0}
+					{#each articles as article}
+						<ArticleCard {article} />
+					{/each}
 				{/if}
-				{#each articles as article}
-					<ArticleCard {article} />
-				{/each}
 				<div onclick={fetchArticlesForCards} class:hidden={articles.length == 0 || articlesFetched== ids.length} class="absolute border rounded-full px-2 py-px left-[50%] -translate-x-1/2 -bottom-4 z-10 bg-[var(--color-ivory-default)] cursor-pointer">Load More</div>
 				<div class="p-6" class:hidden={articles.length > 0}>
 					{@render legend()}
