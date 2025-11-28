@@ -1,4 +1,4 @@
-<div class="bg-ivory-default absolute inset-0 z-100 flex items-center justify-center">
+<div class="bg-ivory-default absolute inset-0 z-100 flex items-center justify-center rounded-xl">
 	<div class="justify-center justify-center">
 		<svg
 			width="100"

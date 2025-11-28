@@ -33,14 +33,16 @@
 			<nav class="bg-ivory-default absolute w-full border-b p-4">
 				<div class="m-auto flex items-center justify-between">
 					<div class="w-2/3">
-						<a href={LinkHandler("/")} data-sveltekit-preload-data="hover">
+						<a href={LinkHandler('/')} data-sveltekit-preload-data="hover">
 							<div class="flex w-full">
 								<img
 									class="max-h-full w-1/12 min-w-[50px] object-scale-down"
-									src={LinkHandler("/img/pn-logo.png")}
-									alt="Panopticum News half circle logo"
+									src={LinkHandler('/img/pn-logo.png')}
+									alt="The Hyper-Visual Times half circle logo"
 								/>
-								<span class="ml-2 w-11/12 self-center text-lg focus:italic">Panopticum News</span>
+								<span class="ml-2 w-11/12 self-center text-lg focus:italic"
+									>The Hyper-Visual Times</span
+								>
 							</div>
 						</a>
 					</div>
@@ -93,27 +95,27 @@
 							>
 								<div class="py-1" role="none">
 									<a
-										href={LinkHandler("/places")}
+										href={LinkHandler('/places')}
 										data-sveltekit-preload-code="eager"
 										data-sveltekit-preload-data="hover"
 										class="block border-b p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
-										id="menu-item-0">Chapter 1: The Geo-politics of news</a
+										id="menu-item-0">Chapter 1: The Geo-politics of News</a
 									>
 									<a
-										href={LinkHandler("/topics")}
+										href={LinkHandler('/topics')}
 										class="block border-b p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
-										id="menu-item-1">Chapter 2: Discoursive interrelations</a
+										id="menu-item-1">Chapter 2: Discoursive Interrelations</a
 									>
 									<a
-										href={LinkHandler("/images")}
+										href={LinkHandler('/images')}
 										class="block p-4 hover:underline focus:italic"
 										role="menuitem"
 										tabindex="-1"
-										id="menu-item-2">Chapter 3: Person of interest</a
+										id="menu-item-2">Chapter 3: Person of Interest</a
 									>
 								</div>
 							</div>
