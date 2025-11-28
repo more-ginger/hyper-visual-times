@@ -1,7 +1,7 @@
 <script lang="ts">
 	import BlocksRenderer from '$lib/common/BlocksRenderer.svelte';
 	import aboutText from '@/content/about.md?raw';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 </script>
 
 <div class="m-auto flex w-4/5 pb-20">

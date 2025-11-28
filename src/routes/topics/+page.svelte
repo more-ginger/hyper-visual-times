@@ -4,7 +4,7 @@
 	import ClusterNetwork from '$lib/topics/ClusterNetwork.svelte';
 	import NetworkCard from '$lib/topics/NetworkCard.svelte';
 	import TopicClusters from '../../content/data/topics/topics.json';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte.js';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte.js';
 
 	let selectionIsActive = $state(true);
 	let networkIsActive = $state(false);

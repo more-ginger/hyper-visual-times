@@ -5,7 +5,7 @@
 	import NetworksData from '../../content/data/topics/networks.json';
 	import type { clusterNodes, clusterLinks, renderedLinks } from '../../types';
 	import NetworkLabel from './NetworkLabel.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 
 	let {
 		selectedCluster,

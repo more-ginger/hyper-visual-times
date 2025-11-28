@@ -1,6 +1,6 @@
 <script>
-	import { LinkHandler } from "$lib/utils/pathhelper.svelte";
-	import { currentView } from "$lib/utils/state.images.svelte";
+	import { LinkHandler } from "$lib/utils/linkhandler.svelte";
+	import { currentView } from "$lib/utils/state.svelte";
 
     let {children,} = $props()
     function handleBack(){

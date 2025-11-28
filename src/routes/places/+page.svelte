@@ -13,14 +13,18 @@
 	import VoronoiLegend from '$lib/places/voronoiLegend.svelte';
 	import NetworkContainer from '$lib/places/NetworkContainer.svelte';
 	import Load from '$lib/common/Load.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
+	import { onMount } from 'svelte';
+	import {getCoveragePerCountry} from '$lib/utils/request.svelte.ts';
 
-	let { data }: PageProps = $props();
+	//let { data }: PageProps = $props();
 	const scroller = scrollama();
 	let step = $state(0);
 	let networkMounted = $state(false);
-
-	$effect(() => {
+	let data = $state(null);
+	onMount(async () => {
+		data = await getCoveragePerCountry();
+		await new Promise(resolve => setTimeout(resolve, 100)); // wait a tick to ensure DOM is ready
 		scroller
 			.setup({
 				step: '.step',
@@ -43,9 +47,9 @@
 	}
 </script>
 
-{#await data}
+{#if !data}
 	<p>Waiting for data</p>
-{:then data}
+{:else}
 	<div
 		class="bg-ivory-default/90 fixed fixed z-100 h-[200vh] w-full overflow-hidden backdrop-blur-sm md:hidden"
 	>
@@ -194,7 +198,7 @@
 					<BlocksRenderer rawtext={rawChapter3Text} />
 				</article>
 				<figure class="w-full md:top-0 md:basis-2/3 md:py-4 xl:p-4 xl:py-10">
-					<NetworkContainer data={data.data} onMounted={handleNetworkMount} />
+					<NetworkContainer dataRaw={data.data} onMounted={handleNetworkMount} />
 				</figure>
 			</section>
 			<section class="mt-2" id="outro">
@@ -204,7 +208,7 @@
 			</section>
 		</div>
 	</div>
-{/await}
+{/if}
 
 <!-- Loading state -->
 {#if !networkMounted}

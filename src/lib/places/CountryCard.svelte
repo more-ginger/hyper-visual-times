@@ -1,9 +1,10 @@
 <script lang="ts">
 	import ArticleCard from '$lib/common/ArticleCard.svelte';
 	import { onMount } from 'svelte';
-	import { selectedOutlet } from '$lib/utils/state.images.svelte.ts';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte';
+	import { selectedOutlet } from '$lib/utils/state.svelte';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte';
 	import { base } from '$app/paths';
+	import { getArticles } from '$lib/utils/request.svelte';
 
 	let { primaryCountryKey, currentNode, onCardReset, onPrimaryCountryChange } =
 		$props();
@@ -29,8 +30,8 @@
 		const ids = sliced.map((id) => encodeURIComponent(id)).join('&id=');
 
 		try {
-			const response = await fetch(`${base}/api/articles?source=${$selectedOutlet.toLocaleLowerCase()}&id=${ids}`);
-			const data = await response.json();
+			const response = await getArticles($selectedOutlet.toLocaleLowerCase(), sliced);
+			const data = response.data;
 			if (data.length > 0) {
 				const headlines = data.map((article: Article) => {
 					article.byline = article.byline.replaceAll(/'/g, '"').replaceAll('None', '""');

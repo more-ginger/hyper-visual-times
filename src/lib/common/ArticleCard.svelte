@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { selectedOutlet, colorScale } from '$lib/utils/state.images.svelte.ts';
+	import { selectedOutlet, colorScale } from '$lib/utils/state.svelte';
 
 	let { article } = $props();
 
