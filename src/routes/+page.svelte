@@ -9,7 +9,7 @@
 	import Chapters from '$lib/main/Chapters.svelte';
 	import Load from '$lib/common/Load.svelte';
 	import About from '$lib/main/About.svelte';
-	import { LinkHandler } from '$lib/utils/pathhelper.svelte.js';
+	import { LinkHandler } from '$lib/utils/linkhandler.svelte.ts';
 	import { onMount } from 'svelte';
 	import { getArticles } from '$lib/utils/request.svelte.ts';
 
