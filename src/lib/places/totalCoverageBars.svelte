@@ -96,9 +96,9 @@
 
 	// controls data sorting on step
 	$effect(() => {
-		if (step === 7 || step === 9) {
+		if (step === 8 || step === 10) {
 			currentOutlet = 'NYT';
-		} else if (step === 8 || step === 10) {
+		} else if (step === 7 || step === 9) {
 			currentOutlet = 'Zeit';
 		}
 	});
@@ -119,12 +119,16 @@
 			{#if currentOutlet == 'Zeit'}
 				<button onclick={switchPrimaryCountry}>
 					<span class="text-zeit-dark">Zeit Online</span>
-					<img class="inline" src={LinkHandler("/icons/ui-switch.svg")} alt="Switch with The New York Times" />
+					<img
+						class="inline"
+						src={LinkHandler('/icons/ui-switch.svg')}
+						alt="Switch with The New York Times"
+					/>
 				</button>
 			{:else}
 				<button onclick={switchPrimaryCountry}>
 					<span class="text-nyt-dark">The New York Times</span>
-					<img class="inline" src={LinkHandler("/icons/ui-switch.svg")} alt="Switch with Zeit" />
+					<img class="inline" src={LinkHandler('/icons/ui-switch.svg')} alt="Switch with Zeit" />
 				</button>
 			{/if}
 			top 20 keywords.
