@@ -29,7 +29,20 @@
 <MetaTags
 	title="The Hyper-Visual Times"
 	titleTemplate=""
-	description="Essays on digital news production, materiality and consumption"
+	description="Three interactive essays on digital news production, materiality and consumption. 
+	The Hyper-Visual Times is a collection of essays, experimental interfaces, and reflections on contemporary practices of news production and how consumption is tied to its materiality."
+	canonical="ctechfilmuniversity.github.io/hyper-visual-times/"
+	openGraph={{
+		title: 'The Hyper-Visual Times',
+		images: [
+			{
+				url: LinkHandler('/img/og-preview.jpg'),
+				width: 1200,
+				height: 630,
+				alt: 'The Hyper-Visual Times header preview'
+			}
+		]
+	}}
 />
 {#if navigating.to}
 	<div class="h-full"><Load /></div>
