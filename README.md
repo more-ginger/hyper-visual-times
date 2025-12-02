@@ -1,6 +1,6 @@
 # The Hyper-Visual Times
 
-The Hyper-Visual Times (hvts) is a multi-media investigative project on patterns of news production. This folder contains the source code for the hvts website, currently hosted [here](https://hvts.francescamorini.com).
+The Hyper-Visual Times (hvts) is a multi-media investigative project on patterns of news production. This folder contains the source code for the hvts website, currently hosted [here](https://ctechfilmuniversity.github.io/hyper-visual-times/).
 
 The project is built on top of svelte and uses D3.js to develop custom visualization interfaces. The data are hosted using [Supabase](https://supabase.com/). [Here](https://github.com/ctechfilmuniversity/splee_data_viz) you can find the GitHub repository for the data analysis and documentation.
 
