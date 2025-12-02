@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { MetaTags } from 'svelte-meta-tags';
 	import '../app.css';
 	import { navigating } from '$app/state';
 	import Load from '$lib/common/Load.svelte';
@@ -25,6 +26,11 @@
 	};
 </script>
 
+<MetaTags
+	title="The Hyper-Visual Times"
+	titleTemplate=""
+	description="Essays on digital news production, materiality and consumption"
+/>
 {#if navigating.to}
 	<div class="h-full"><Load /></div>
 {:else}
