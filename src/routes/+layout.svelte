@@ -31,7 +31,6 @@
 	titleTemplate=""
 	description="Three interactive essays on digital news production, materiality and consumption. 
 	The Hyper-Visual Times is a collection of essays, experimental interfaces, and reflections on contemporary practices of news production and how consumption is tied to its materiality."
-	canonical="ctechfilmuniversity.github.io/hyper-visual-times/"
 	openGraph={{
 		title: 'The Hyper-Visual Times',
 		images: [
