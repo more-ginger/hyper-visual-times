@@ -35,7 +35,7 @@
 		title: 'The Hyper-Visual Times',
 		images: [
 			{
-				url: LinkHandler('/img/og-preview.jpg'),
+				url: 'https://ctechfilmuniversity.github.io/hyper-visual-times/img/og-preview.jpg'),
 				width: 1200,
 				height: 630,
 				alt: 'The Hyper-Visual Times header preview'
